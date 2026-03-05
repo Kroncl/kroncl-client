@@ -213,7 +213,7 @@ export default function Page() {
             
           case 'provisioning':
             // Продолжаем проверять
-            setProvisioningMessage(`Готовим экземпляр учётной системы...`);
+            setProvisioningMessage(`Готовим экземпляр учётной системы. Процесс не займёт больше минуты.`);
             break;
             
           default:
@@ -363,21 +363,13 @@ switch (pageState) {
   case 'success':
     return (
       <PlatformResult
-        title="Компания создана!"
+        title="Компания создана."
         description={`Компания "${createdCompany?.name}" успешно создана и развернута. Теперь вы можете начать работу.`}
-        actions={[
-          {
-            label: 'Открыть компанию',
-            href: `/platform/${createdCompany?.id}`,
-            variant: 'contrast' as const
-          }
-        ]}
         redirect={{
           href: `/platform/${createdCompany?.id}`,
-          delay: 5000,
-          label: 'Автоматический переход в компанию через {seconds} сек.'
+          delay: 0,
+          label: 'Перенаправляем...'
         }}
-        showIcon
         status="success"
       />
     );

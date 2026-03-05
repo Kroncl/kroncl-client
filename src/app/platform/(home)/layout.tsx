@@ -36,9 +36,10 @@ export default function Layout({
   ];
   const actions: PanelAction[] = [
     {
-      label: "Создать",
+      children: "Создать",
       href: "/platform/companies/new",
-      variant: "accent"
+      variant: "accent",
+      as: 'link'
     }
   ];
   return (

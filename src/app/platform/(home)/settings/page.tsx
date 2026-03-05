@@ -3,24 +3,28 @@
 import { PlatformHead } from '@/app/platform/components/lib/head/head';
 import styles from './page.module.scss';
 import { useState, useEffect } from 'react';
-import Switch from '@/assets/ui-kit/switch/switch';
+import { ThemeCard } from './components/theme-card/card';
+import { _themes, Theme } from '@/assets/styles/base/themes/_themes';
 
 export default function Page() {
-    const [theme, setTheme] = useState<'light' | 'dark'>('light');
+    const [currentTheme, setCurrentTheme] = useState<string>('light');
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
+        const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
         const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-        setTheme(initialTheme);
+        setCurrentTheme(initialTheme);
+        
+        // Применяем тему при загрузке
+        document.documentElement.setAttribute('data-theme', initialTheme);
     }, []);
 
-    const setThemeMode = (newTheme: 'light' | 'dark') => {
-        if (theme !== newTheme) {
-            setTheme(newTheme);
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+    const handleThemeSelect = (themeId: string) => {
+        if (currentTheme !== themeId) {
+            setCurrentTheme(themeId);
+            document.documentElement.setAttribute('data-theme', themeId);
+            localStorage.setItem('theme', themeId);
         }
     };
 
@@ -35,20 +39,14 @@ export default function Page() {
                     <div className={styles.capture}>Тема</div>
                     <div className={styles.description}>Берегите свои глаза.</div>
                     <div className={styles.themes}>
-                        <button 
-                            type="button"
-                            className={`${styles.theme} ${theme === 'dark' ? styles.active : ''}`} 
-                            onClick={() => setThemeMode('dark')}
-                            aria-label="Тёмная тема"
-                            data-theme='dark'
-                        />
-                        <button 
-                            type="button"
-                            className={`${styles.theme} ${theme === 'light' ? styles.active : ''}`} 
-                            onClick={() => setThemeMode('light')}
-                            aria-label="Светлая тема"
-                            data-theme='light'
-                        />
+                        {_themes.map((theme: Theme) => (
+                            <ThemeCard 
+                                theme={theme} 
+                                key={theme.id}
+                                onSelect={handleThemeSelect}
+                                className={`${styles.item} ${currentTheme === theme.id ? styles.active : ''}`}
+                            />
+                        ))}
                     </div>
                 </section>
             </div>

@@ -22,5 +22,11 @@ export const quickAccess = [
     title: 'Аккаунт',
     href: '/platform/account',
     icon: Account
+  },
+  {
+    id: 'fingerprint',
+    title: 'Выдать доступ к аккаунту',
+    href: '/platform/security/create-fingerprint',
+    icon: Keyhole
   }
 ];

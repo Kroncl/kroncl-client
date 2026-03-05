@@ -29,23 +29,7 @@
     gap: 1em;
     justify-content: start;
 
-    .theme {
-        display: flex;
-        width: 16em;
-        height: 3em;
-        border: 2px solid transparent;
-        outline: 1px solid var(--color-stroke-primary);
-        border-radius: .5em;
-        transition: border-color var(--transition);
-        @include cursor(pointer);
-
-        &[data-theme="dark"] {
-            background-color: #222222;
-        }
-        &[data-theme="light"] {
-            background-color: #eee;
-        }
-
+    .item {
         &.active, &:hover {
             border-color: var(--color-blue);
             border-width: 2px;

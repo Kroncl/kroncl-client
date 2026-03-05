@@ -225,32 +225,11 @@ export default function ClientPanel({
           <div className={styles.actions}>
             {actions.map((action, index) => {
               return (
-                <ModalTooltip
-                  content={action.label}
-                  side='right'
-                  compact
-                  key={index}
-                >
-                  {action.href ? (
-                  <Link href={action.href}>
-                    <Button
-                      className={clsx(styles.action, action.className)}
-                      variant={action.variant || 'default'}
-                      onClick={action.onClick}
-                    >
-                      {action.label}
-                    </Button>
-                  </Link>
-                  ) : (
-                    <Button
-                      className={clsx(styles.action, action.className)}
-                      variant={action.variant || 'default'}
-                      onClick={action.onClick}
-                    >
-                      {action.label}
-                    </Button>
-                  )}
-                </ModalTooltip>
+                  <Button
+                    key={index}
+                    className={clsx(styles.action, action.className)}
+                    {...action}
+                  />
               );
             })}
           </div>

@@ -76,4 +76,12 @@
     --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
     --shadow-gentle: 0 4px 6px rgba(0, 0, 0, 0.03);
     --shadow-floating: 0 10px 25px rgba(0, 0, 0, 0.05);
+    
+    // ==================== PLATFORM SPECIFIC =======================
+    --platform-background: var(--color-surface-area);
+    --platform-active-area: var(--color-leader);
+    --platform-active-area-blur: 0px;
+    --platform-active-area-breadcrumbs: var(--platform-active-area);
+    --platform-active-area-breadcrumbs-blur: var(--platform-active-area-blur);
+    --platform-modal: var(--color-surface-area);
 }

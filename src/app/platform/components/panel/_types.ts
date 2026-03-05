@@ -1,5 +1,5 @@
 import { ComponentType } from "react";
-import { ButtonVariant } from '@/assets/ui-kit/button/button';
+import { ButtonProps, ButtonVariant } from '@/assets/ui-kit/button/button';
 
 export type IconComponent = ComponentType<{ className?: string }>;
 
@@ -17,11 +17,4 @@ export interface CompanySection {
   icon?: string;
 }
 
-export interface PanelAction {
-  label: string;
-  variant?: ButtonVariant;
-  icon?: string;
-  href?: string;
-  onClick?: () => void;
-  className?: string;
-}
+export type PanelAction = ButtonProps;

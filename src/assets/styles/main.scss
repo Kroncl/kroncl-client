@@ -1,7 +1,9 @@
 @use 'base/reset';
 @use 'base/typography' as *;
-@use 'base/themes/dark' as dark;
-@use 'base/themes/light' as light;
+@use 'base/themes/dark/classic.scss' as dark-classic;
+@use 'base/themes/dark/violet.scss' as dark-violet;
+@use 'base/themes/light/classic.scss' as light-classic;
+@use 'base/themes/light/violet.scss' as light-violet;
 
 :root {
   @include font-styles;
@@ -57,15 +59,22 @@ html, body {
 // Темная тема по умолчанию (на время загрузки)
 // Это временное состояние, пока скрипт не выполнится
 html:not([data-theme]) {
-  @include dark.theme;
+  @include dark-classic.theme;
 }
 
 // После выполнения скрипта применяется правильная тема
-html[data-theme="light"] {
-  @include light.theme;
-}
 html[data-theme="dark"] {
-  @include dark.theme;
+  @include dark-classic.theme;
+}
+html[data-theme="dark-violet"] {
+  @include dark-violet.theme;
+}
+
+html[data-theme="light"] {
+  @include light-classic.theme;
+}
+html[data-theme="light-violet"] {
+  @include light-violet.theme;
 }
 
 // Убираем переходы во время загрузки, чтобы избежать мерцания

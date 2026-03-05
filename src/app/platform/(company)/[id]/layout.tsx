@@ -92,9 +92,10 @@ export default async function CompanyLayout({
 
   const actions: PanelAction[] = [
     {
-      label: "Новая сделка",
+      children: "Новая сделка",
       href: `/platform/${companyId}/dm/new`,
-      variant: 'accent'
+      variant: 'accent',
+      as: 'link'
     }
   ];
 

@@ -4,9 +4,7 @@
     display: flex;
     flex-flow: column nowrap;
     flex: 1;
-    background-color: var(--color-surface-area);
-    
-    // background: linear-gradient(135deg, #242424, #230f27);
+    background: var(--platform-background);
 }
 
 .container {

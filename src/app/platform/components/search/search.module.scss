@@ -59,7 +59,7 @@
         display: block;
         width: 100%;
         max-width: 30rem;
-        background-color: var(--color-surface-area);
+        background: var(--platform-modal);
         min-height: 20rem;
         max-height: calc(100% - 5rem);
         border-radius: .6rem;
