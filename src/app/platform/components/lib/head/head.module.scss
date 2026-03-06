@@ -125,6 +125,7 @@
                 border-top-right-radius: .5em;
                 transition: color var(--transition), background-color var(--transition), border-color var(--transition);
                 @include cursor(pointer);
+                white-space: nowrap;
 
                 &:hover {
                     background-color: var(--color-surface-tertiary);

@@ -36,6 +36,7 @@ interface PlatformPanelProps {
   initialCollapsed?: boolean;
   actions?: PanelAction[];
   children?: React.ReactNode;
+  head?: React.ReactNode;
 }
 
 const iconComponents: Record<string, ComponentType<{ className?: string }>> = {
@@ -65,7 +66,8 @@ export default function ClientPanel({
   companies = [],
   initialCollapsed = false,
   actions = [],
-  children = ''
+  children = '',
+  head
 }: Readonly<PlatformPanelProps>) {
   const pathname = usePathname();
   
@@ -131,7 +133,9 @@ export default function ClientPanel({
         className
       )}
     >
-      <div className={styles.head}></div>
+      <div className={styles.head}>
+        {head}
+      </div>
       <div className={styles.scroll}>
         {sections.length > 0 && (
           <div className={styles.sections}>

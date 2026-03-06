@@ -12,6 +12,8 @@ import { ModalPageProvider } from "../../components/lib/modal-page/context";
 import { PlatformModalPage } from "../../components/lib/modal-page/modal";
 import { PlatformSideContent } from "../../components/side-content/content";
 import { SideContentProvider } from "../../components/side-content/context";
+import { PlatformHead } from "../../components/lib/head/head";
+import { PlatformCompanyPanelHead } from "./components/panel-head/head";
 
 export interface CompanyLayoutProps extends CompanyParams {
   children: React.ReactNode;
@@ -109,6 +111,7 @@ export default async function CompanyLayout({
           title={company.name} 
           children={storageWidget}
           actions={actions}
+          head={<PlatformCompanyPanelHead />}
         />
 
         <PlatformContent>

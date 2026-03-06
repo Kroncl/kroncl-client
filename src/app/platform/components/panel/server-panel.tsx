@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { CompanySection, PanelAction, PanelSection } from './_types';
 import ClientPanel from './client-panel';
+import React from 'react';
 
 interface ServerPanelProps {
   className?: string;
@@ -9,6 +10,7 @@ interface ServerPanelProps {
   companies?: CompanySection[];
   actions?: PanelAction[];
   children?: React.ReactNode;
+  head?: React.ReactNode;
 }
 
 export default async function PlatformPanel({
@@ -17,7 +19,8 @@ export default async function PlatformPanel({
   sections = [],
   companies = [],
   actions = [],
-  children = ''
+  children = '',
+  head
 }: ServerPanelProps) {
   const cookieStore = await cookies();
   const initialCollapsed = cookieStore.get('panel-collapsed')?.value === 'true';
@@ -35,6 +38,7 @@ export default async function PlatformPanel({
       companies={companies}
       actions={actions}
       children={children}
+      head={head}
     />
   );
 }

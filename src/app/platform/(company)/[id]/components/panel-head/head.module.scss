@@ -1,0 +1,35 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.grid {
+    display: flex;
+    flex-flow: row wrap;
+    gap: .5em;
+    flex: 1;
+    margin-bottom: .8em;
+    overflow: hidden;
+
+    .block {
+        display: flex;
+        flex: 1;
+        border-radius: .8em;
+        height: 4em;
+        background-color: var(--color-surface-glass-secondary);
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-flow: column nowrap;
+        gap: .4em;
+        color: var(--color-text-primary);
+
+        svg {
+            width: 1.4em;
+            height: 1.4em;
+            // fill: var(--color-icon-primary);
+        }
+        .name {
+            text-align: center;
+            @include text-ellipsis();
+            font-size: .85em;
+        }
+    }
+}
