@@ -103,13 +103,14 @@ export default async function CompanyLayout({
 
   return (
     <>
-      <PlatformPanel
-        sections={sections} 
-        title={company.name} 
-        children={storageWidget}
-        actions={actions}
-      />
       <SideContentProvider>
+        <PlatformPanel
+          sections={sections} 
+          title={company.name} 
+          children={storageWidget}
+          actions={actions}
+        />
+
         <PlatformContent>
           <PlatformContentWrapper>
             <AuthGuard>
@@ -122,7 +123,9 @@ export default async function CompanyLayout({
             </AuthGuard>
           </PlatformContentWrapper>
         </PlatformContent>
+        
         <PlatformSideContent />
+
       </SideContentProvider>
     </>
   );
