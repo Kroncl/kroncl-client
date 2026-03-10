@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
 import styles from './page.module.scss';
 import Link from "next/link";
 import clsx from "clsx";
+import { getTrackingDetailLabel, getTrackedTypeLabel } from "./_utils";
 
 export default function UnitPage() {
     const params = useParams();
@@ -185,7 +186,8 @@ export default function UnitPage() {
     const isActive = unit.status === 'active';
     const typeLabel = unit.type === 'product' ? 'Товар' : 'Услуга';
     const inventoryLabel = unit.inventory_type === 'tracked' ? 'Складской учет' : 'Без учета';
-    const trackedLabel = unit.tracked_type === 'fifo' ? 'FIFO' : unit.tracked_type === 'lifo' ? 'LIFO' : null;
+    const trackingDetailLabel = unit.tracking_detail ? getTrackingDetailLabel(unit.tracking_detail) : null; // НОВОЕ
+    const trackedLabel = unit.tracked_type ? getTrackedTypeLabel(unit.tracked_type) : null; // ИСПРАВЛЕНО
 
     const actions = [
         {
@@ -250,7 +252,7 @@ export default function UnitPage() {
                     <section className={styles.section}>
                         <div className={styles.capture}>Категория</div>
                         <Link 
-                            href={`/platform/${companyId}/wm/${parentCategory.id}`} 
+                            href={`/platform/${companyId}/wm/categories/${parentCategory.id}`}
                             className={clsx(styles.value, styles.link)}
                         >
                             {parentCategory.name}
@@ -268,7 +270,16 @@ export default function UnitPage() {
                     <div className={styles.value}>{inventoryLabel}</div>
                 </section>
 
-                {trackedLabel && (
+                {/* НОВАЯ СЕКЦИЯ: Детализация учета */}
+                {unit.inventory_type === 'tracked' && unit.tracking_detail && (
+                    <section className={styles.section}>
+                        <div className={styles.capture}>Детализация учета</div>
+                        <div className={styles.value}>{trackingDetailLabel}</div>
+                    </section>
+                )}
+
+                {/* ИСПРАВЛЕНО: теперь показывает нормальный текст для FIFO/LIFO */}
+                {unit.inventory_type === 'tracked' && unit.tracking_detail === 'batch' && unit.tracked_type && (
                     <section className={styles.section}>
                         <div className={styles.capture}>Метод учета</div>
                         <div className={styles.value}>{trackedLabel}</div>

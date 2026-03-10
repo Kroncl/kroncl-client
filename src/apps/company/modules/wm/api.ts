@@ -76,6 +76,7 @@ export const wmModule = (companyApi: CompanyApi) => ({
             if (params.type !== undefined) queryParams.type = params.type;
             if (params.status !== undefined) queryParams.status = params.status;
             if (params.inventory_type !== undefined) queryParams.inventory_type = params.inventory_type;
+            if (params.tracking_detail !== undefined) queryParams.tracking_detail = params.tracking_detail; // НОВЫЙ ФИЛЬТР
             if (params.category_id !== undefined) {
                 queryParams.category_id = params.category_id === null ? undefined : params.category_id;
             }

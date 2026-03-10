@@ -11,9 +11,5 @@ export const _units: Unit[] = [
     { value: 'l', label: 'Литр (л)' },
     { value: 'ml', label: 'Миллилитр (мл)' },
     { value: 'm', label: 'Метр (м)' },
-    { value: 'cm', label: 'Сантиметр (см)' },
-    { value: 'hour', label: 'Час', description: 'Для почасовых услуг' },
-    { value: 'day', label: 'День', description: 'Для услуг с посуточной оплатой' },
-    { value: 'month', label: 'Месяц', description: 'Для услуг с помесячной оплатой' },
-    { value: 'service', label: 'Услуга (ед.)', description: 'Разовая услуга' }
+    { value: 'cm', label: 'Сантиметр (см)' }
 ];

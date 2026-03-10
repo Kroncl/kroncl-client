@@ -52,6 +52,7 @@ export interface CategoriesResponse {
 export type UnitType = 'product' | 'service';
 export type UnitStatus = 'active' | 'inactive';
 export type InventoryType = 'tracked' | 'untracked';
+export type TrackingDetail = 'batch' | 'serial';  // НОВЫЙ ТИП
 export type TrackedType = 'fifo' | 'lifo';
 export type CurrencyType = 'RUB';
 
@@ -62,6 +63,7 @@ export interface CatalogUnit {
     type: UnitType;
     status: UnitStatus;
     inventory_type: InventoryType;
+    tracking_detail?: TrackingDetail | null;  // НОВОЕ ПОЛЕ
     tracked_type: TrackedType | null;
     unit: string;
     sale_price: number;
@@ -79,6 +81,7 @@ export interface CreateUnitRequest {
     type: UnitType;
     status?: UnitStatus;
     inventory_type: InventoryType;
+    tracking_detail?: TrackingDetail | null;  // НОВОЕ ПОЛЕ
     tracked_type?: TrackedType | null;
     unit: string;
     sale_price: number;
@@ -94,6 +97,7 @@ export interface UpdateUnitRequest {
     type?: UnitType;
     status?: UnitStatus;
     inventory_type?: InventoryType;
+    tracking_detail?: TrackingDetail | null;  // НОВОЕ ПОЛЕ
     tracked_type?: TrackedType | null;
     unit?: string;
     sale_price?: number;
@@ -109,6 +113,7 @@ export interface GetUnitsParams {
     type?: UnitType;
     status?: UnitStatus;
     inventory_type?: InventoryType;
+    tracking_detail?: TrackingDetail;  // НОВЫЙ ПАРАМЕТР ФИЛЬТРАЦИИ
     category_id?: string;
     search?: string;
 }

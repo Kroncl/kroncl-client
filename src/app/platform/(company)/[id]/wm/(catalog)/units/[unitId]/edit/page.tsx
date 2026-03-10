@@ -9,7 +9,7 @@ import { useWm } from '@/apps/company/modules';
 import { useRouter, useParams } from 'next/navigation';
 import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
 import { ChooseCategoryModal } from "../../../../components/choose-category-modal/modal";
-import { CatalogCategory, UnitType, InventoryType, TrackedType } from '@/apps/company/modules/wm/types';
+import { CatalogCategory, UnitType, InventoryType, TrackedType, TrackingDetail } from '@/apps/company/modules/wm/types';
 import styles from './page.module.scss';
 import { CategoryCard } from "../../../../components/category-card/card";
 import Spinner from '@/assets/ui-kit/spinner/spinner';
@@ -35,7 +35,8 @@ export default function EditUnitPage() {
         comment: '',
         type: 'product' as UnitType,
         inventory_type: 'tracked' as InventoryType,
-        tracked_type: 'fifo' as TrackedType,
+        tracking_detail: 'batch' as TrackingDetail | undefined,
+        tracked_type: 'fifo' as TrackedType | undefined,
         unit: '',
         sale_price: '',
         purchase_price: '',
@@ -60,7 +61,8 @@ export default function EditUnitPage() {
                     comment: unit.comment || '',
                     type: unit.type,
                     inventory_type: unit.inventory_type,
-                    tracked_type: unit.tracked_type || 'fifo',
+                    tracking_detail: unit.tracking_detail || undefined,
+                    tracked_type: unit.tracked_type || undefined,
                     unit: unit.unit,
                     sale_price: unit.sale_price.toString(),
                     purchase_price: unit.purchase_price?.toString() || '',
@@ -114,20 +116,36 @@ export default function EditUnitPage() {
             type: newType,
             // Сбрасываем inventory_type при смене типа
             inventory_type: newType === 'service' ? 'untracked' : prev.inventory_type,
-            // Для услуги убираем purchase_price
-            purchase_price: newType === 'service' ? '' : prev.purchase_price
+            // Для услуги убираем purchase_price и tracking_detail
+            purchase_price: newType === 'service' ? '' : prev.purchase_price,
+            tracking_detail: newType === 'service' ? undefined : prev.tracking_detail
         }));
     };
 
     const handleInventoryTypeChange = (value: string) => {
+        const newInventoryType = value as InventoryType;
         setFormData(prev => ({ 
             ...prev, 
-            inventory_type: value as InventoryType,
-            // Если выбрали untracked, убираем tracked_type и purchase_price
-            ...(value === 'untracked' ? { 
+            inventory_type: newInventoryType,
+            // Если выбрали untracked, убираем tracked_type, purchase_price и tracking_detail
+            ...(newInventoryType === 'untracked' ? { 
                 tracked_type: undefined,
-                purchase_price: ''
-            } : {})
+                purchase_price: '',
+                tracking_detail: undefined
+            } : {
+                // Если tracked, оставляем текущий tracking_detail или ставим batch по умолчанию
+                tracking_detail: prev.tracking_detail || 'batch'
+            })
+        }));
+    };
+
+    const handleTrackingDetailChange = (value: string) => {
+        const newTrackingDetail = value as TrackingDetail;
+        setFormData(prev => ({ 
+            ...prev, 
+            tracking_detail: newTrackingDetail,
+            // Если выбрали serial, убираем tracked_type
+            ...(newTrackingDetail === 'serial' ? { tracked_type: undefined } : {})
         }));
     };
 
@@ -140,13 +158,11 @@ export default function EditUnitPage() {
     };
 
     const handleSalePriceChange = (value: string) => {
-        // Разрешаем только числа и точку
         const cleaned = value.replace(/[^\d.]/g, '');
         setFormData(prev => ({ ...prev, sale_price: cleaned }));
     };
 
     const handlePurchasePriceChange = (value: string) => {
-        // Разрешаем только числа и точку
         const cleaned = value.replace(/[^\d.]/g, '');
         setFormData(prev => ({ ...prev, purchase_price: cleaned }));
     };
@@ -183,15 +199,28 @@ export default function EditUnitPage() {
             return;
         }
 
-        // Для tracked товаров проверяем purchase_price и tracked_type
+        // Для tracked товаров проверяем все поля
         if (formData.inventory_type === 'tracked') {
+            if (!formData.tracking_detail) {
+                showMessage({ label: 'Укажите детализацию учета (batch/serial)', variant: 'error' });
+                return;
+            }
+
             const purchasePrice = parseFloat(formData.purchase_price);
             if (isNaN(purchasePrice) || purchasePrice < 0) {
                 showMessage({ label: 'Укажите корректную закупочную цену', variant: 'error' });
                 return;
             }
-            if (!formData.tracked_type) {
-                showMessage({ label: 'Укажите тип учета (FIFO/LIFO)', variant: 'error' });
+
+            // Для batch-учета проверяем tracked_type
+            if (formData.tracking_detail === 'batch' && !formData.tracked_type) {
+                showMessage({ label: 'Укажите метод учета (FIFO/LIFO)', variant: 'error' });
+                return;
+            }
+
+            // Для serial-учета проверяем что tracked_type не указан
+            if (formData.tracking_detail === 'serial' && formData.tracked_type) {
+                showMessage({ label: 'Для поштучного учета метод списания не применяется', variant: 'error' });
                 return;
             }
         }
@@ -215,12 +244,19 @@ export default function EditUnitPage() {
                 category_id: selectedCategory.id
             };
 
-            // Добавляем tracked_type для tracked товаров
+            // Добавляем поля для tracked товаров
             if (formData.inventory_type === 'tracked') {
-                request.tracked_type = formData.tracked_type;
+                request.tracking_detail = formData.tracking_detail;
                 request.purchase_price = parseFloat(formData.purchase_price);
+                
+                if (formData.tracking_detail === 'batch') {
+                    request.tracked_type = formData.tracked_type;
+                } else {
+                    request.tracked_type = null;
+                }
             } else {
-                // Для untracked убираем tracked_type и purchase_price
+                // Для untracked убираем все поля учета
+                request.tracking_detail = null;
                 request.tracked_type = null;
                 request.purchase_price = null;
             }
@@ -255,9 +291,12 @@ export default function EditUnitPage() {
         if (isNaN(salePrice) || salePrice < 0) return false;
         
         if (formData.inventory_type === 'tracked') {
+            if (!formData.tracking_detail) return false;
+            
             const purchasePrice = parseFloat(formData.purchase_price);
             if (isNaN(purchasePrice) || purchasePrice < 0) return false;
-            if (!formData.tracked_type) return false;
+            
+            if (formData.tracking_detail === 'batch' && !formData.tracked_type) return false;
         }
         
         if (formData.type === 'service' && formData.inventory_type !== 'untracked') return false;
@@ -366,7 +405,7 @@ export default function EditUnitPage() {
                             { 
                                 value: 'tracked', 
                                 label: 'Складской учет',
-                                description: 'Отслеживание остатков на складе с FIFO/LIFO методом',
+                                description: 'Отслеживание остатков на складе',
                                 disabled: formData.type === 'service' 
                             },
                             { 
@@ -382,25 +421,49 @@ export default function EditUnitPage() {
                 </PlatformFormSection>
 
                 {formData.inventory_type === 'tracked' && (
-                    <PlatformFormSection title='Метод учета'>
-                        <PlatformFormVariants
-                            options={[
-                                { 
-                                    value: 'fifo', 
-                                    label: 'FIFO',
-                                    description: 'Первым пришел — первым ушел (First In, First Out). Подходит для скоропортящихся товаров.'
-                                },
-                                { 
-                                    value: 'lifo', 
-                                    label: 'LIFO',
-                                    description: 'Последним пришел — первым ушел (Last In, First Out). Используется для не скоропортящихся товаров.'
-                                }
-                            ]}
-                            value={formData.tracked_type || 'fifo'}
-                            onChange={handleTrackedTypeChange}
-                            disabled={isLoading}
-                        />
-                    </PlatformFormSection>
+                    <>
+                        <PlatformFormSection title='Детализация учета'>
+                            <PlatformFormVariants
+                                options={[
+                                    { 
+                                        value: 'batch', 
+                                        label: 'Партионный учет',
+                                        description: 'Учет по партиям с FIFO/LIFO. Подходит для массовых товаров.'
+                                    },
+                                    { 
+                                        value: 'serial', 
+                                        label: 'Поштучный учет',
+                                        description: 'Каждый экземпляр учитывается отдельно. Для уникальных товаров.'
+                                    }
+                                ]}
+                                value={formData.tracking_detail || 'batch'}
+                                onChange={handleTrackingDetailChange}
+                                disabled={isLoading}
+                            />
+                        </PlatformFormSection>
+
+                        {formData.tracking_detail === 'batch' && (
+                            <PlatformFormSection title='Метод учета партий'>
+                                <PlatformFormVariants
+                                    options={[
+                                        { 
+                                            value: 'fifo', 
+                                            label: 'FIFO',
+                                            description: 'Первым пришел — первым ушел (First In, First Out).'
+                                        },
+                                        { 
+                                            value: 'lifo', 
+                                            label: 'LIFO',
+                                            description: 'Последним пришел — первым ушел (Last In, First Out).'
+                                        }
+                                    ]}
+                                    value={formData.tracked_type || 'fifo'}
+                                    onChange={handleTrackedTypeChange}
+                                    disabled={isLoading}
+                                />
+                            </PlatformFormSection>
+                        )}
+                    </>
                 )}
 
                 <PlatformFormSection title='Единица измерения'>
