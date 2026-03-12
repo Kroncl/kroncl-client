@@ -17,11 +17,6 @@ export const sectionsList = (companyId: string): PlatformHeadSection[] => {
             label: 'Движение товаров',
             href: `/platform/${companyId}/wm/movement`,
             strongParams: true,
-        },
-        {
-            label: 'Акции & Предложения',
-            href: `/platform/${companyId}/wm/offers`,
-            strongParams: true
         }
     ]);
 }

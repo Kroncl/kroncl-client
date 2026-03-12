@@ -134,7 +134,7 @@ export default function MovementsPage() {
                 ]}
                 sections={sectionsList(companyId)}
                 searchProps={{
-                    placeholder: 'Поиск по документам',
+                    placeholder: 'Поиск по поставкам/отгрузкам',
                     defaultValue: searchParams.get('search') || '',
                     onSearch: handleSearch
                 }}
