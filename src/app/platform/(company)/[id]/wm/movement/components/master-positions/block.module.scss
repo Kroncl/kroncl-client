@@ -42,6 +42,19 @@
         flex-flow: column nowrap;
         border-top: 1px solid var(--color-stroke-primary);
         border-bottom: 1px solid var(--color-stroke-primary);
-        min-height: 10em;
+        // min-height: 10em;
+
+        .item {
+            border-top: 1px solid var(--color-stroke-secondary);
+
+            &:last-child {
+                border-bottom: 1px solid var(--color-stroke-secondary);
+            }
+
+            &.contrast {
+                border-top: 1px solid var(--color-green);
+                border-bottom: 1px solid var(--color-green);
+            }
+        }
     }
 }

@@ -1,0 +1,91 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.position {
+    display: flex;
+    flex-flow: row nowrap;
+    min-height: 3.5em;
+    padding: .4 1em;
+    gap: 1em;
+    transition: background-color var(--transition);
+
+    .info {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        flex-flow: row nowrap;
+        overflow: hidden;
+        gap: 1em;
+
+        .quantity {
+            border-radius: .5em;
+            width: 4em;
+            height: 2.3em;
+        }
+        .prices {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: .5em;
+
+            .input {
+                border-radius: .5em;
+                width: 8em;
+                height: 2.3em;
+            }
+        }
+        .name {
+            display: flex;
+            flex: 1;
+            @include text-ellipsis();
+        }
+        .section {
+            @include text-ellipsis();
+            width: fit-content;
+            color: var(--color-text-secondary);
+        }
+        .id {
+            color: var(--color-text-hint);
+        }
+    }
+    .actions {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: .3em;
+        align-items: center;
+
+        .button {
+            width: 2.3em;
+            height: 2.3em;
+            border-radius: .5em;
+            @include cursor(pointer);
+            background-color: transparent;
+            border: 1px solid var(--color-stroke-secondary);
+            color: var(--color-icon-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color var(--transition);
+
+            svg {
+                width: .9em;
+                height: .9em;
+            }
+
+            &:last-child {
+                margin-left: 1em;
+
+                svg {
+                    width: 1.1em;
+                    height: 1.1em;
+                }
+            }
+
+            &:hover {
+                background-color: var(--color-surface-light);
+            }
+        }
+    }
+
+    &:hover {
+        background-color: var(--color-surface-glass-secondary);
+    }
+}

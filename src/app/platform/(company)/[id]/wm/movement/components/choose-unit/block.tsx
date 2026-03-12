@@ -11,7 +11,7 @@ import { UnitCard } from '../../../components/unit-card/card';
 export interface ChooseUnitBlockProps {
     className?: string;
     searchValue: string;
-    onSelect: (unitId: string) => void;
+    onSelect: (unit: CatalogUnit) => void;
 }
 
 export const ChooseUnitBlock = forwardRef<HTMLDivElement, ChooseUnitBlockProps>(({
@@ -67,7 +67,7 @@ export const ChooseUnitBlock = forwardRef<HTMLDivElement, ChooseUnitBlockProps>(
                             unit={unit}
                             compact
                             showDefaultActions={false}
-                            onClick={() => onSelect(unit.id)}
+                            onClick={() => onSelect(unit)}
                         />
                     ))}
                 </div>
