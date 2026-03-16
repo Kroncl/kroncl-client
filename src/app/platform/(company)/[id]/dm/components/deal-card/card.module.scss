@@ -65,7 +65,35 @@
         @include lines-ellipsis(3);
     }
 
+    .type {
+        margin-left: -.3em;
+    }
+
+    .action {
+        position: absolute;
+        z-index: 10;
+        top: 1em;
+        right: 1em;
+        display: inline-flex;
+        font-size: .7em;
+        border-radius: 2em;
+        transition: transform var(--transition);
+
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+
     &:hover {
         background-color: var(--color-surface-glass-secondary);
+    }
+    
+    &[draggable="true"] {
+        cursor: grab;
+        user-select: none;
+        
+        &:active {
+            cursor: grabbing;
+        }
     }
 }

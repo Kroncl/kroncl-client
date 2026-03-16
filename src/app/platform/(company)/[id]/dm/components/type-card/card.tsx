@@ -5,6 +5,7 @@ import styles from './card.module.scss';
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { DealType } from "@/apps/company/modules/dm/types";
+import { ModalTooltip } from "@/app/components/tooltip/tooltip";
 
 export interface TypeCardProps {
     type: DealType;
@@ -12,6 +13,8 @@ export interface TypeCardProps {
     onSelect?: (type: DealType) => void;
     selectable?: boolean;
     isSelected?: boolean;
+    variant?: 'default' | 'tag';
+    disableLinks?: boolean;
 }
 
 export function TypeCard({
@@ -19,7 +22,9 @@ export function TypeCard({
     className,
     onSelect,
     selectable = false,
-    isSelected
+    isSelected,
+    variant = 'default',
+    disableLinks = false
 }: TypeCardProps) {
     const params = useParams();
     const companyId = params.id as string;
@@ -40,23 +45,27 @@ export function TypeCard({
         </div>
     );
 
-    if (selectable) {
+    if (selectable || disableLinks) {
         return (
+            <ModalTooltip content={type.name}>
             <div 
-                className={clsx(styles.card, isSelected && styles.selected, className)}
+                className={clsx(styles.type, styles[variant], isSelected && styles.selected, className)}
                 onClick={handleClick}
             >
                 {cardContent}
             </div>
+            </ModalTooltip>
         );
     }
 
     return (
+        <ModalTooltip content={type.name}>
         <Link 
             href={`/platform/${companyId}/dm/types/${type.id}`} 
-            className={clsx(styles.type, className)}
+            className={clsx(styles.type, styles[variant], className)}
         >
             {cardContent}
         </Link>
+        </ModalTooltip>
     );
 }

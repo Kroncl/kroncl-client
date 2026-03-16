@@ -1,31 +1,56 @@
 @use '@/assets/styles/_mixins.scss' as *;
 
 .type {
-    display: inline-flex;
-    flex-flow: column nowrap;
-    min-height: 3em;
     border: 1px dashed var(--color-stroke-secondary);
     transition: background-color var(--transition);
-    padding: .8em;
     background-color: var(--color-surface-glass-secondary);
-    border-radius: .4em;
-    min-width: 10em;
-    max-width: 15em;
-    gap: .2em;
     @include cursor(pointer);
 
-    .name {
-        font-weight: 600;
-        letter-spacing: .02em;
-        color: var(--color-text-primary);
-        @include lines-ellipsis(2);
-        line-height: 1.2;
+    &.default {
+        border-radius: .4em;
+        min-width: 10em;
+        max-width: 15em;
+        padding: .8em;
+        display: inline-flex;
+        flex-flow: column nowrap;
+        min-height: 3em;
+        gap: .2em;
+        
+        .name {
+            font-weight: 600;
+            letter-spacing: .02em;
+            color: var(--color-text-primary);
+            @include lines-ellipsis(2);
+            line-height: 1.3;
+        }
+        .comment {
+            font-size: .7em;
+            color: var(--color-text-secondary);
+            @include lines-ellipsis(2);
+            line-height: 1.3;
+        }
     }
-    .comment {
-        font-size: .7em;
+
+    &.tag {
+        display: inline-block;
+        padding: .3em .5em;
+        border: 2px dashed var(--color-stroke-secondary);
         color: var(--color-text-secondary);
-        @include lines-ellipsis(2);
-        line-height: 1.3;
+        border-radius: 1em;
+        width: fit-content;
+
+        .name {
+            font-size: .9em;
+            @include text-ellipsis();
+            width: fit-content;
+        }
+        .comment {
+            display: none;
+        }
+    }
+
+    &.selected {
+        border: 2px solid var(--color-accent);
     }
 
     &:hover {

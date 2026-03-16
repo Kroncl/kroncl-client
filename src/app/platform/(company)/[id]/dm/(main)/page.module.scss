@@ -21,13 +21,25 @@ $row-gap: 0em;
             display: flex;
             flex-flow: column nowrap;
             justify-content: start;
-            gap: $row-gap;
             width: $col-width;
             min-width: $col-width;
             border-left: 1px dashed var(--color-stroke-primary);
+            position: relative;
+            transition: background-color 0.15s ease;
 
             &:last-child {
                 border-right: 1px dashed var(--color-stroke-primary);
+            }
+
+            &.dragOver {
+                background-color: rgba(var(--color-accent-rgb), 0.03);
+                
+                .deals {
+                    border-left: 2px dashed var(--color-accent);
+                    border-right: 2px dashed var(--color-accent);
+                    margin-left: -1px;
+                    margin-right: -1px;
+                }
             }
 
             .head {
@@ -60,10 +72,31 @@ $row-gap: 0em;
                     height: .2em;
                 }
             }
-            .item {
-                min-height: 11em;
-                font-size: .87em;
-                border-bottom: 1px dashed var(--color-stroke-primary);
+
+            .deals {
+                display: flex;
+                height: 100%;
+                gap: $row-gap;
+                flex-flow: column;
+                justify-content: start;
+                transition: border 0.15s ease;
+
+                .item {
+                    font-size: .87em;
+                    border-bottom: 1px dashed var(--color-stroke-primary);
+                    cursor: grab;
+                    user-select: none;
+                    transition: opacity 0.2s ease;
+
+                    &:active {
+                        cursor: grabbing;
+                    }
+
+                    &.dragging {
+                        opacity: 0.5;
+                        cursor: grabbing;
+                    }
+                }
             }
         }
     }
