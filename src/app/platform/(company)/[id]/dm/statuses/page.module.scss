@@ -1,0 +1,11 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.grid {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .item.dragged {
+        cursor: grab;
+        border: 2px dashed var(--color-stroke-primary);
+    }
+}

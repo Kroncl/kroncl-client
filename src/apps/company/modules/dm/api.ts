@@ -16,16 +16,23 @@ import {
     Deal,
     DealWithPositions,
     DealsResponse,
-    DealsGroupedResponse,
     CreateDealRequest,
     UpdateDealRequest,
     GetDealsParams,
+    DealGroup,
 } from "./types";
 
 export const dmModule = (companyApi: CompanyApi) => ({
     // --------
     // DEAL TYPES
     // --------
+
+    async reorderDealStatuses(statusIds: string[]) {
+        return companyApi.put<{ reordered: boolean; status_ids: string[] }>(
+            "/modules/dm/statuses/reorder", 
+            { status_ids: statusIds }
+        );
+    },
     
     async getDealTypes(
         params?: GetDealTypesParams
@@ -117,7 +124,7 @@ export const dmModule = (companyApi: CompanyApi) => ({
         
         // Если group_by=status, ответ будет DealsGroupedResponse, иначе DealsResponse
         if (params?.group_by === 'status') {
-            return companyApi.get<DealsGroupedResponse>("/modules/dm/deals", {
+            return companyApi.get<DealGroup[]>("/modules/dm/deals", {
                 params: queryParams
             });
         }

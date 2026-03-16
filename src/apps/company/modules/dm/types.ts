@@ -173,8 +173,3 @@ export interface DealGroup {
     deals: Deal[];
     count: number;
 }
-
-export interface DealsGroupedResponse {
-    groups: DealGroup[];
-    total: number;
-}

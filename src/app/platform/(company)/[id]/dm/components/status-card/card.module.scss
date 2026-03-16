@@ -1,0 +1,73 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.status {
+    display: flex;
+    flex-flow: row nowrap;
+    min-height: 3em;
+    border: 1px dashed var(--color-stroke-secondary);
+    transition: background-color var(--transition);
+    align-items: center;
+    padding: .3em 1em;
+    position: relative;
+    overflow: hidden;
+    padding-right: 1.5em;
+
+
+    .mark {
+        display: inline-flex;
+        background-color: var(--color-surface-light);
+        width: 1em;
+        position: absolute;
+        z-index: 10;
+        right: 0;
+        width: .3em;
+        height: 100%;
+        border-top-left-radius: .2em;
+        border-bottom-left-radius: .2em;
+    }
+
+    .sort {
+        display: inline-block;
+        @include text-ellipsis();
+        width: 2em;
+        text-align: left;
+        color: var(--color-text-secondary);
+    }
+
+    .info {
+        display: flex;
+        justify-content: center;
+        flex-flow: column nowrap;
+        font-size: .8em;
+        gap: .4em;
+        flex: 1;
+        overflow: hidden;
+
+        .name {
+            font-weight: 600;
+            letter-spacing: .02em;
+            @include text-ellipsis();
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: .4em;
+        font-size: .7em;
+        align-items: center;
+
+        .action {
+            transition: transform var(--transition);
+
+            &:hover {
+                transform: scale(1.04);
+            }
+        }
+    }
+
+    &:hover {
+        background-color: var(--color-surface-elevated);
+        @include cursor(pointer);
+    }
+}

@@ -9,8 +9,13 @@ export const sectionsList = (companyId: string): PlatformHeadSection[] => {
             exact: true
         },
         {
-            label: 'Статусы сделок',
+            label: 'Статусы',
             href: `/platform/${companyId}/dm/statuses`,
+            strongParams: true,
+        },
+        {
+            label: 'Типы',
+            href: `/platform/${companyId}/dm/types`,
             strongParams: true,
         },
         {

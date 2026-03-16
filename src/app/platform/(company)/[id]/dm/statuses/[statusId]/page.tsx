@@ -1,0 +1,231 @@
+'use client';
+
+import { PlatformHead } from "@/app/platform/components/lib/head/head";
+import { useDm } from "@/apps/company/modules";
+import { DealStatus } from "@/apps/company/modules/dm/types";
+import Edit from "@/assets/ui-kit/icons/edit";
+import Spinner from "@/assets/ui-kit/spinner/spinner";
+import { formatDate } from "@/assets/utils/date";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { PlatformModal } from "@/app/platform/components/lib/modal/modal";
+import { PlatformModalConfirmation } from "@/app/platform/components/lib/modal/confirmation/confirmation";
+import { useMessage } from "@/app/platform/components/lib/message/provider";
+import { motion } from 'framer-motion';
+import styles from './page.module.scss';
+import Exit from "@/assets/ui-kit/icons/exit";
+
+export default function Page() {
+    const params = useParams();
+    const companyId = params.id as string;
+    const statusId = params.statusId as string;
+    const dmModule = useDm();
+    const router = useRouter();
+    const { showMessage } = useMessage();
+
+    const [status, setStatus] = useState<DealStatus | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true;
+        
+        const fetchData = async () => {
+            if (!statusId) return;
+            
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await dmModule.getDealStatus(statusId);
+                
+                if (!isMounted) return;
+                
+                if (response.status) {
+                    setStatus(response.data);
+                } else {
+                    setError("Не удалось загрузить данные статуса");
+                }
+            } catch (err) {
+                if (!isMounted) return;
+                
+                setError(err instanceof Error ? err.message : "Ошибка загрузки");
+                console.error(`Error loading status ${statusId}:`, err);
+            } finally {
+                if (isMounted) {
+                    setLoading(false);
+                }
+            }
+        };
+        
+        fetchData();
+        
+        return () => {
+            isMounted = false;
+        };
+    }, [statusId]);
+
+    const handleDelete = async () => {
+        try {
+            await dmModule.deleteDealStatus(status!.id);
+            showMessage({
+                label: 'Статус удален.',
+                variant: 'success'
+            });
+            setIsModalDeleteOpen(false);
+            router.push(`/platform/${companyId}/dm/statuses`);
+        } catch (error: any) {
+            const errorMessage = error.message || 'Внутренняя ошибка системы.';
+            showMessage({
+                label: 'Не удалось удалить статус.',
+                variant: 'error',
+                about: errorMessage
+            });
+        }
+    };
+
+    if (loading) return (
+        <motion.div 
+            style={{
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center", 
+                fontSize: ".7em", 
+                color: "var(--color-text-description)", 
+                minHeight: "10rem"
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+        >
+            <Spinner />
+        </motion.div>
+    );
+    
+    if (error) return (
+        <motion.div 
+            style={{
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center", 
+                fontSize: ".7em", 
+                color: "var(--color-text-description)", 
+                minHeight: "10rem"
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+        >
+            {error}
+        </motion.div>
+    );
+
+    if (!status) return (
+        <motion.div 
+            style={{
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center", 
+                fontSize: ".7em", 
+                color: "var(--color-text-description)", 
+                minHeight: "10rem"
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+        >
+            Не удалось загрузить статус
+        </motion.div>
+    );
+
+    const actions = [
+        {
+            children: 'Редактировать',
+            icon: <Edit />,
+            variant: 'accent' as const,
+            as: 'link' as const,
+            href: `/platform/${companyId}/dm/statuses/${statusId}/edit`
+        },
+        {
+            children: 'Удалить',
+            icon: <Exit />,
+            variant: 'light' as const,
+            onClick: () => setIsModalDeleteOpen(true)
+        }
+    ];
+
+    return (
+        <>
+            <PlatformHead
+                title={status.name}
+                description={`Статус сделки. Создан ${formatDate(status.created_at)} Порядок: ${status.sort_order}.`}
+                actions={actions}
+            />
+
+            <div className={styles.body}>
+                <section className={styles.section}>
+                    <div className={styles.capture}>Название</div>
+                    <div className={styles.value}>{status.name}</div>
+                </section>
+
+                <section className={styles.section}>
+                    <div className={styles.capture}>Цвет</div>
+                    <div className={styles.value}>
+                        <span style={{ 
+                            display: 'inline-block', 
+                            width: '20px', 
+                            height: '20px', 
+                            backgroundColor: status.color || '#000000',
+                            borderRadius: '4px',
+                            marginRight: '8px',
+                            verticalAlign: 'middle'
+                        }} />
+                        {status.color || 'Не указан'}
+                    </div>
+                </section>
+
+                <section className={styles.section}>
+                    <div className={styles.capture}>Порядок</div>
+                    <div className={styles.value}>{status.sort_order}</div>
+                </section>
+
+                {status.comment && (
+                    <section className={styles.section}>
+                        <div className={styles.capture}>Комментарий</div>
+                        <div className={styles.value}>{status.comment}</div>
+                    </section>
+                )}
+
+                <section className={styles.section}>
+                    <div className={styles.capture}>Создан</div>
+                    <div className={styles.value}>{formatDate(status.created_at)}</div>
+                </section>
+
+                <section className={styles.section}>
+                    <div className={styles.capture}>Обновлен</div>
+                    <div className={styles.value}>{formatDate(status.updated_at)}</div>
+                </section>
+            </div>
+
+            {/* modal delete */}
+            <PlatformModal
+                isOpen={isModalDeleteOpen}
+                onClose={() => setIsModalDeleteOpen(false)}
+            >
+                <PlatformModalConfirmation
+                    title='Удалить статус?'
+                    description='Статус будет удален. Убедитесь, что он не используется в сделках.'
+                    actions={[
+                        {
+                            children: 'Отмена', 
+                            variant: 'light', 
+                            onClick: () => setIsModalDeleteOpen(false)
+                        },
+                        {
+                            variant: "accent", 
+                            onClick: handleDelete,
+                            children: 'Удалить'
+                        }
+                    ]}
+                />
+            </PlatformModal>
+        </>
+    );
+}
