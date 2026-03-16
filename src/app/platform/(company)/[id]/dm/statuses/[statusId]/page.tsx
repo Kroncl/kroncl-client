@@ -27,6 +27,7 @@ export default function Page() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false); // для блокировки двойного нажатия
 
     useEffect(() => {
         let isMounted = true;
@@ -66,21 +67,37 @@ export default function Page() {
     }, [statusId]);
 
     const handleDelete = async () => {
+        // Блокируем повторные нажатия
+        if (isDeleting) return;
+        
+        setIsDeleting(true);
+        
         try {
             await dmModule.deleteDealStatus(status!.id);
+            
+            // Сначала закрываем модалку (до показа сообщения)
+            setIsModalDeleteOpen(false);
+            
             showMessage({
                 label: 'Статус удален.',
                 variant: 'success'
             });
-            setIsModalDeleteOpen(false);
+            
             router.push(`/platform/${companyId}/dm/statuses`);
         } catch (error: any) {
             const errorMessage = error.message || 'Внутренняя ошибка системы.';
+            
+            // Закрываем модалку ПРИ ЛЮБОМ ИСХОДЕ
+            setIsModalDeleteOpen(false);
+            
+            // Показываем ошибку
             showMessage({
                 label: 'Не удалось удалить статус.',
                 variant: 'error',
                 about: errorMessage
             });
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -181,6 +198,16 @@ export default function Page() {
                     </div>
                 </section>
 
+                {/* Новая секция с дефолтным флагом */}
+                <section className={styles.section}>
+                    <div className={styles.capture}>По умолчанию</div>
+                    <div className={styles.value}>
+                        {status.is_default ? (
+                            <span style={{ color: 'var(--color-success)' }}>Да</span>
+                        ) : 'Нет'}
+                    </div>
+                </section>
+
                 <section className={styles.section}>
                     <div className={styles.capture}>Порядок</div>
                     <div className={styles.value}>{status.sort_order}</div>
@@ -221,7 +248,8 @@ export default function Page() {
                         {
                             variant: "accent", 
                             onClick: handleDelete,
-                            children: 'Удалить'
+                            children: 'Удалить',
+                            disabled: isDeleting // дизейблим кнопку во время удаления
                         }
                     ]}
                 />

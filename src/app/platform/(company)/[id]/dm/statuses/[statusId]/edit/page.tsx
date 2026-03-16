@@ -2,7 +2,7 @@
 
 import styles from './page.module.scss';
 import { PlatformHead } from '@/app/platform/components/lib/head/head';
-import { PlatformFormBody, PlatformFormInput, PlatformFormSection, PlatformFormStatus } from '@/app/platform/components/lib/form';
+import { PlatformFormBody, PlatformFormInput, PlatformFormSection, PlatformFormStatus, PlatformFormVariants } from '@/app/platform/components/lib/form';
 import Button from '@/assets/ui-kit/button/button';
 import ErrorStatus from '@/assets/ui-kit/icons/error-status';
 import SuccessStatus from '@/assets/ui-kit/icons/success-status';
@@ -14,6 +14,20 @@ import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { motion } from 'framer-motion';
 
 type NameStatus = 'idle' | 'valid' | 'invalid';
+
+// Опции для выбора дефолтного статуса с описаниями
+const DEFAULT_OPTIONS = [
+    { 
+        value: 'false', 
+        label: 'Обычный статус',
+        description: 'Обычный статус для сделок. Не влияет на новые сделки.'
+    },
+    { 
+        value: 'true', 
+        label: 'По умолчанию',
+        description: 'Новые сделки будут автоматически получать этот статус.'
+    }
+];
 
 export default function Page() {
     const params = useParams();
@@ -28,7 +42,8 @@ export default function Page() {
     const [formData, setFormData] = useState({
         name: '',
         color: '#2563eb',
-        comment: ''
+        comment: '',
+        is_default: 'false' // string для PlatformFormVariants
     });
     const [nameStatus, setNameStatus] = useState<NameStatus>('idle');
     const [nameMessage, setNameMessage] = useState('');
@@ -63,7 +78,8 @@ export default function Page() {
                     setFormData({
                         name: data.name,
                         color: data.color || '#2563eb',
-                        comment: data.comment || ''
+                        comment: data.comment || '',
+                        is_default: data.is_default ? 'true' : 'false'
                     });
                     
                     const validation = validateName(data.name);
@@ -113,6 +129,10 @@ export default function Page() {
         setFormData(prev => ({ ...prev, comment: value }));
     };
 
+    const handleDefaultChange = (value: string) => {
+        setFormData(prev => ({ ...prev, is_default: value }));
+    };
+
     const handleSubmit = async () => {
         const nameValidation = validateName(formData.name);
 
@@ -129,10 +149,14 @@ export default function Page() {
 
         setIsLoading(true);
         try {
+            // Конвертируем is_default из string в boolean
+            const isDefault = formData.is_default === 'true';
+            
             const response = await dmModule.updateDealStatus(statusId, {
                 name: formData.name.trim(),
                 color: formData.color,
-                comment: formData.comment.trim() || ''
+                comment: formData.comment.trim() || '',
+                is_default: isDefault
             });
 
             if (response.status) {
@@ -230,6 +254,16 @@ export default function Page() {
                         onChange={handleColorChange}
                         disabled={isLoading}
                         className={styles.colorInput}
+                    />
+                </PlatformFormSection>
+
+                {/* Выбор дефолтного статуса через Variants */}
+                <PlatformFormSection title='Тип статуса'>
+                    <PlatformFormVariants
+                        options={DEFAULT_OPTIONS}
+                        value={formData.is_default}
+                        onChange={handleDefaultChange}
+                        disabled={isLoading}
                     />
                 </PlatformFormSection>
 

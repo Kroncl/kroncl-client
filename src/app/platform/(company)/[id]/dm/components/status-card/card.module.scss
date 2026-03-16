@@ -36,10 +36,11 @@
 
     .info {
         display: flex;
-        justify-content: center;
-        flex-flow: column nowrap;
+        align-items: center;
+        flex-flow: row nowrap;
         font-size: .8em;
-        gap: .4em;
+        justify-content: start;
+        gap: .6em;
         flex: 1;
         overflow: hidden;
 
@@ -47,6 +48,16 @@
             font-weight: 600;
             letter-spacing: .02em;
             @include text-ellipsis();
+            width: fit-content;
+        }
+        .tag {
+            display: inline-block;
+            padding: .4em .5em;
+            border-radius: 1em;
+            white-space: nowrap;
+            font-family: .8em;
+            color: var(--color-text-secondary);
+            border: 2px dashed var(--color-stroke-primary);
         }
     }
 

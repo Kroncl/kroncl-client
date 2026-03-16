@@ -45,6 +45,7 @@ export interface DealStatus {
     name: string;
     comment: string | null;
     sort_order: number;
+    is_default: boolean;
     color: string | null;
     created_at: string;
     updated_at: string;
@@ -55,6 +56,7 @@ export interface CreateDealStatusRequest {
     comment?: string | null;
     sort_order: number;
     color?: string | null;
+    is_default?: boolean;
 }
 
 export interface UpdateDealStatusRequest {
@@ -62,6 +64,7 @@ export interface UpdateDealStatusRequest {
     comment?: string | null;
     sort_order?: number;
     color?: string | null;
+    is_default?: boolean;
 }
 
 export interface GetDealStatusesParams {

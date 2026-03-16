@@ -100,7 +100,7 @@ export default function Page() {
                             </span>
                             <span className={styles.mark} style={{backgroundColor: `${group.status_color}`}} />
                         </div>
-                        {group.deals.map((deal) => (
+                        {group.deals?.map((deal) => (
                             <DealCard 
                                 key={deal.id} 
                                 deal={deal} 

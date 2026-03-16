@@ -6,6 +6,7 @@ import Button from '@/assets/ui-kit/button/button';
 import Edit from '@/assets/ui-kit/icons/edit';
 import { useParams } from 'next/navigation';
 import { DealStatus } from '@/apps/company/modules/dm/types';
+import { ModalTooltip } from '@/app/components/tooltip/tooltip';
 
 export interface StatusCardProps {
     status: DealStatus;
@@ -38,9 +39,11 @@ export function StatusCard({
             <div className={styles.sort}>{status.sort_order}</div>
             <div className={styles.info}>
                 <div className={styles.name}>{status.name}</div>
-                {/* {status.comment && (
-                    <div className={styles.comment}>{status.comment}</div>
-                )} */}
+                {status.is_default && (
+                    <ModalTooltip content='Сначала все сделки попадают сюда.'>
+                        <span className={styles.tag}>Начальный статус</span>
+                    </ModalTooltip>
+                )}
             </div>
             <div className={styles.actions}>
                 <Button 
