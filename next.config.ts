@@ -27,6 +27,18 @@ const nextConfig: NextConfig = {
   },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   
+  // Добавляем поддержку MDX в Turbopack
+  experimental: {
+    turbo: {
+      rules: {
+        '*.mdx': {
+          loaders: ['@next/mdx/loader'],
+          as: '*.js',
+        },
+      },
+    },
+  },
+  
   webpack: (config, { dev }) => {
     if (dev) {
       config.cache = false;
