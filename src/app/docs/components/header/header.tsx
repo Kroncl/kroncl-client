@@ -1,0 +1,36 @@
+'use client';
+
+import { LogoFull } from '@/assets/ui-kit/logo/full/full';
+import styles from './header.module.scss';
+import Link from 'next/link';
+import Button from '@/assets/ui-kit/button/button';
+import Menu from '@/assets/ui-kit/icons/menu';
+import Close from '@/assets/ui-kit/icons/close';
+import { useDocsSidebar } from '../panel/context/context';
+
+export interface DocsHeaderProps {
+    className?: string;
+}
+
+export function DocsHeader({
+    className
+}: DocsHeaderProps) {
+    const { isOpen, toggle } = useDocsSidebar();
+
+    return (
+        <header className={styles.header}>
+            <Link href='/docs' className={styles.logo}>
+                <LogoFull color='#fff' className={styles.icon} />
+                <span className={styles.tag}>Клиентам</span>
+            </Link>
+            <div className={styles.actions}>
+                <Button as='link' href='/sso/sign_in' className={styles.action}>Начать бесплатно</Button>
+                <div className={styles.burger}>
+                    <button className={styles.button} onClick={toggle}>
+                        {isOpen ? <Close /> : <Menu />}
+                    </button>
+                </div>
+            </div>
+        </header>
+    )
+}

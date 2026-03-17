@@ -1,0 +1,29 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.section {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0;
+    overflow: hidden;
+
+    .label {
+        @include text-ellipsis();
+        padding: .4em 0;
+        transition: color var(--transition);
+
+        &:hover {
+            color: var(--color-text-hint) !important;
+        }
+    }
+    .childrens {
+        font-size: .9em;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: .2em;
+        padding-left: .5em;
+
+        .section .label {
+            color: var(--color-text-secondary);
+        }
+    }
+}
