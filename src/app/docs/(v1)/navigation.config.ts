@@ -1,93 +1,95 @@
 import { DocsNavSectionProps } from "../components/panel/components/nav-section/section";
+import { crmSections } from "./configs/crm.config";
+import { dmSections } from "./configs/dm.config";
+import { fmSections } from "./configs/fm.config";
+import { hrmSections } from "./configs/hrm.config";
+import { wmSections } from "./configs/wm.config";
 
 export const navigationSections: DocsNavSectionProps[] = [
     {
-        label: "Начало работы",
-        href: "/docs/getting-started",
+        label: 'Введение',
+        href: '/docs'
+    },
+    {
+        label: "Быстрый старт",
+        href: "/docs/quick-start"
+    },
+    {
+        label: 'Аккаунт',
+        href: '/docs/account',
         childrens: [
             {
-                label: "Введение",
-                href: "/docs/getting-started/introduction"
+                label: 'Основные возможности',
+                href: '/docs/account/opps'
             },
             {
-                label: "Быстрый старт",
-                href: "/docs/getting-started/quickstart"
+                label: 'Безопасность',
+                href: '/docs/account/security'
             },
             {
-                label: "Создание компании",
-                href: "/docs/getting-started/create-company",
-                childrens: [
-                    {
-                        label: "Введение",
-                        href: "/docs/getting-started/introduction"
-                    },
-                    {
-                        label: "Быстрый старт",
-                        href: "/docs/getting-started/quickstart"
-                    },
-                    {
-                        label: "Создание компании",
-                        href: "/docs/getting-started/create-company"
-                    }
-                ]
+                label: 'Вход по ключу',
+                href: '/docs/opps'
             }
         ]
     },
     {
-        label: "Модули",
-        href: "/docs/modules",
+        label: 'Организации',
+        href: '/docs/companies',
         childrens: [
             {
-                label: "Сделки (DM)",
-                href: "/docs/modules/dm"
+                label: 'Создание компании',
+                href: '/docs/companies/init'
             },
             {
-                label: "Клиенты (CRM)",
-                href: "/docs/modules/crm"
+                label: 'Доступы',
+                href: '/docs/companies/permissions'
             },
             {
-                label: "Финансы (FM)",
-                href: "/docs/modules/fm"
+                label: 'Тарификация',
+                href: '/docs/companies/tariffs'
             },
             {
-                label: "Каталог (WM)",
-                href: "/docs/modules/wm"
+                label: 'Мониторинг действий',
+                href: '/docs/companies/logs'
             },
             {
-                label: "Сотрудники (HRM)",
-                href: "/docs/modules/hrm"
+                label: 'Хранилище',
+                href: '/docs/companies/storage'
+            },
+            {
+                label: 'Резервные копии',
+                href: '/docs/companies/backups'
             }
         ]
     },
     {
-        label: "API",
-        href: "/docs/api",
+        label: 'Модули',
+        href: '/docs/modules',
         childrens: [
             {
-                label: "Аутентификация",
-                href: "/docs/api/auth"
+                label: 'Управление персоналом',
+                href: '/docs/modules/hrm',
+                childrens: hrmSections
             },
             {
-                label: "Эндпоинты",
-                href: "/docs/api/endpoints"
+                label: 'Финансы',
+                href: '/docs/modules/fm',
+                childrens: fmSections
             },
             {
-                label: "Webhooks",
-                href: "/docs/api/webhooks"
-            }
-        ]
-    },
-    {
-        label: "Поддержка",
-        href: "/docs/support",
-        childrens: [
-            {
-                label: "FAQ",
-                href: "/docs/support/faq"
+                label: 'Каталог & Склад',
+                href: '/docs/modules/wm',
+                childrens: wmSections
             },
             {
-                label: "Контакты",
-                href: "/docs/support/contacts"
+                label: 'Клиентская база',
+                href: '/docs/modules/crm',
+                childrens: crmSections
+            },
+            {
+                label: 'Сделки',
+                href: '/docs/modules/dm',
+                childrens: dmSections
             }
         ]
     }

@@ -1,0 +1,27 @@
+.image {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+    margin: 1.5em 0;
+
+    img {
+        width: 100%;
+    }
+    .plug {
+        min-height: 14em;
+        background-color: var(--color-surface-glass-secondary);
+    }
+    
+    img, .plug {
+        border-radius: 1em;
+        border: 1px solid var(--color-stroke-secondary);
+    }
+
+    .label {
+        text-align: center;
+        padding: 0 2em;
+        font-size: .9em;
+        color: var(--color-text-secondary);
+        line-height: 1.3;
+    }
+}

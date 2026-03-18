@@ -9,9 +9,9 @@ import { getBreadcrumbName, getBreadcrumbPath } from './dictionary';
 export function DocsBreadcrumbs() {
     const pathname = usePathname();
     
-    const pathWithoutPlatform = pathname.replace(/^\/docs\/?/, '');
+    const pathWithoutdocs = pathname.replace(/^\/docs\/?/, '');
 
-    const segments = pathWithoutPlatform.split('/').filter(segment => segment.length > 0);
+    const segments = pathWithoutdocs.split('/').filter(segment => segment.length > 0);
     
     if (segments.length === 0) {
         return (
@@ -26,11 +26,11 @@ export function DocsBreadcrumbs() {
     // Собираем массив элементов
     const elements: JSX.Element[] = [];
     
-    // Всегда добавляем "Платформа"
+    // Всегда добавляем "Документация"
     elements.push(
-        <Link key="platform" href='/platform' className={styles.point}>Платформа</Link>
+        <Link key="docs" href='/docs' className={styles.point}>Документация</Link>
     );
-    elements.push(<span key="sep-platform" className={styles.inter}>/</span>);
+    elements.push(<span key="sep-docs" className={styles.inter}>/</span>);
     
     segments.forEach((segment, index) => {
         const isLast = index === segments.length - 1;
