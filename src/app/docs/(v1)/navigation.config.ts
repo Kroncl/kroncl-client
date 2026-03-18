@@ -22,13 +22,13 @@ export const navigationSections: DocsNavSectionProps[] = [
                 label: 'Основные возможности',
                 href: '/docs/account/overview'
             },
+            // {
+            //     label: 'Безопасность',
+            //     href: '/docs/account/security'
+            // },
             {
-                label: 'Безопасность',
-                href: '/docs/account/security'
-            },
-            {
-                label: 'Вход по ключу',
-                href: '/docs/opps'
+                label: 'Ключи доступа',
+                href: '/docs/account/fingerprints'
             }
         ]
     },

@@ -11,6 +11,12 @@
     z-index: 1001;
     overflow: hidden;
     max-width: 100vw;
+    /*
+* Created with https://www.css-gradient.com
+* Gradient link: https://www.css-gradient.com/?c1=0b2a96&c2=152153&gt=l&gd=dcr
+*/
+background: #0B2A96;
+background: linear-gradient(90deg, #0028ba, #050e33);
 
     .logo {
         display: inline-flex;
