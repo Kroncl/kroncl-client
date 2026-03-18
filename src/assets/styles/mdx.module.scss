@@ -1,0 +1,23 @@
+.link {
+    text-decoration: dashed;
+    transition: color var(--transition);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: .3em;
+    text-decoration-color: var(--color-text-hint);
+    text-decoration-thickness: 2px;
+
+    &:hover {
+        color: var(--color-text-hint);
+    }
+}
+
+.underline {
+    text-decoration: dashed;
+    transition: color var(--transition);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: .3em;
+    text-decoration-color: var(--color-text-hint);
+    text-decoration-thickness: 2px;
+}

@@ -1,0 +1,7 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.area {
+    display: flex;
+    flex: 1;
+    flex-flow: row nowrap;
+}

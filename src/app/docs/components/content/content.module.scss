@@ -1,0 +1,77 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.content {
+    display: block;
+    flex: 1;
+    height: calc(100vh - var(--header-height));
+    overflow: hidden;
+    font-size: .5em;
+    position: relative;
+
+    .canvas {
+        display: block;
+        flex: 1;
+        height: 100%;
+        overflow-y: scroll;
+        padding: 3rem 1rem;
+        padding-right: 13rem;
+        line-height: 1.5;
+        font-size: .8em;
+        color: var(--color-text-primary);
+
+        h1 {
+            font-size: 1.8em;
+            line-height: 1.2;
+        }
+        h2 {
+            font-size: 1.5em;
+            line-height: 1.2;
+        }
+        h3 {
+            font-size: 1.2em;
+            line-height: 1.2;
+        }
+        ul {
+            margin-left: 0em;
+            list-style: none;
+            padding-left: 0;
+
+            li {
+                position: relative;
+                padding-left: 1.2em;
+                margin-top: .4em;
+                
+                &::before {
+                    content: "-";
+                    position: absolute;
+                    left: 0;
+                    color: var(--color-text-secondary);
+                    font-size: 1.2em;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+
+    .navigation {
+        position: absolute;
+        z-index: 10;
+        right: 1rem;
+        top: 2rem;
+        height: calc(100vh - var(--header-height));
+        width: 10rem;
+        font-size: .84em;
+        padding: 1rem 1rem;
+        pointer-events: none;
+        @include no-scrollbar();
+    }
+
+    @media (max-width: 720px) {
+        .canvas {
+            padding-right: 1rem;
+        }
+        .navigation {
+            display: none;
+        }
+    }
+}

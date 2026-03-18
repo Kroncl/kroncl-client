@@ -1,0 +1,89 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.panel {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 10rem;
+    border-right: 1px solid var(--color-stroke-primary);
+    font-size: .42em;
+    overflow: hidden;
+    height: calc(100vh - var(--header-height));
+
+    .search {
+        display: flex;
+        padding: 1em .8em;
+        font-size: .8em;
+        border-bottom: 1px solid var(--color-stroke-secondary);
+        position: relative;
+        box-shadow: 0 0 2em var(--color-leader);
+
+        .loader {
+            @keyframes animate-loader {
+                0% {
+                    width: 20%;
+                    opacity: 0;
+                }
+                100% {
+                    width: 100%;
+                    opacity: 1;
+                }
+            }
+
+            position: absolute;
+            z-index: 10;
+            bottom: -1px;
+            left: 0;
+            height: 2px;
+            animation: animate-loader .2s forwards;
+            background-color: var(--color-accent);
+            
+            // Добавить плавное исчезновение
+            transition: opacity 0.2s;
+            
+            &.hidden {
+                opacity: 0;
+            }
+        }
+    }
+
+    .navigation {
+        display: block;
+        overflow-y: scroll;
+        padding: .7em .8em;
+
+        .grid {
+            display: flex;
+            flex-flow: column nowrap;
+            gap: .04em;
+            justify-content: start;
+
+            .empty {
+                display: flex;
+                font-size: .8em;
+                color: var(--color-text-secondary);
+                line-height: 1.3;
+                padding: .5em 0;
+            }
+        }
+    }
+
+    @media (max-width: 720px) {
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: var(--header-height);
+        background-color: var(--color-leader);
+        pointer-events: none;
+        left: -50vw;
+        width: 100vw;
+        opacity: 0;
+        transition: opacity var(--transition), left var(--transition);
+        
+
+        &.open {
+            left: 0;
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+}

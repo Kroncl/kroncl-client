@@ -25,8 +25,8 @@ export const navigationConfig: NavigationItem[] = [
         out: false,
     },
     {
-        name: 'Помощь',
-        href: '/support',
+        name: 'Документация',
+        href: '/docs',
         out: false,
     },
     {
