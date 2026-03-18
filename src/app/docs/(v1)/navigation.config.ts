@@ -20,7 +20,7 @@ export const navigationSections: DocsNavSectionProps[] = [
         childrens: [
             {
                 label: 'Основные возможности',
-                href: '/docs/account/opps'
+                href: '/docs/account/overview'
             },
             {
                 label: 'Безопасность',
