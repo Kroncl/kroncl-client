@@ -20,15 +20,15 @@ export const navigationSections: DocsNavSectionProps[] = [
         childrens: [
             {
                 label: 'Основные возможности',
-                href: '/docs/account/opps'
+                href: '/docs/account/overview'
             },
+            // {
+            //     label: 'Безопасность',
+            //     href: '/docs/account/security'
+            // },
             {
-                label: 'Безопасность',
-                href: '/docs/account/security'
-            },
-            {
-                label: 'Вход по ключу',
-                href: '/docs/opps'
+                label: 'Ключи доступа',
+                href: '/docs/account/fingerprints'
             }
         ]
     },
@@ -37,16 +37,18 @@ export const navigationSections: DocsNavSectionProps[] = [
         href: '/docs/companies',
         childrens: [
             {
-                label: 'Создание компании',
-                href: '/docs/companies/init'
-            },
-            {
                 label: 'Доступы',
-                href: '/docs/companies/permissions'
+                href: '/docs/companies/accesses',
+                childrens: [
+                    {
+                        label: 'Разрешения',
+                        href: '/docs/companies/accesses/permissions'
+                    },
+                ]
             },
             {
                 label: 'Тарификация',
-                href: '/docs/companies/tariffs'
+                href: '/docs/companies/pricing'
             },
             {
                 label: 'Мониторинг действий',
@@ -64,31 +66,31 @@ export const navigationSections: DocsNavSectionProps[] = [
     },
     {
         label: 'Модули',
-        href: '/docs/modules',
+        href: '/docs/companies/modules',
         childrens: [
             {
                 label: 'Управление персоналом',
-                href: '/docs/modules/hrm',
+                href: '/docs/companies/modules/hrm',
                 childrens: hrmSections
             },
             {
                 label: 'Финансы',
-                href: '/docs/modules/fm',
+                href: '/docs/companies/modules/fm',
                 childrens: fmSections
             },
             {
                 label: 'Каталог & Склад',
-                href: '/docs/modules/wm',
+                href: '/docs/companies/modules/wm',
                 childrens: wmSections
             },
             {
                 label: 'Клиентская база',
-                href: '/docs/modules/crm',
+                href: '/docs/companies/modules/crm',
                 childrens: crmSections
             },
             {
                 label: 'Сделки',
-                href: '/docs/modules/dm',
+                href: '/docs/companies/modules/dm',
                 childrens: dmSections
             }
         ]
