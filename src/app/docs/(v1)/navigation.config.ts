@@ -47,16 +47,16 @@ export const navigationSections: DocsNavSectionProps[] = [
                 ]
             },
             {
-                label: 'Тарификация',
-                href: '/docs/companies/pricing'
-            },
-            {
                 label: 'Мониторинг действий',
                 href: '/docs/companies/logs'
             },
             {
                 label: 'Хранилище',
                 href: '/docs/companies/storage'
+            },
+            {
+                label: 'Тарификация',
+                href: '/docs/companies/pricing'
             },
             {
                 label: 'Резервные копии',
