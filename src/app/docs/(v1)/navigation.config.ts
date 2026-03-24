@@ -58,10 +58,10 @@ export const navigationSections: DocsNavSectionProps[] = [
                 label: 'Тарификация',
                 href: '/docs/companies/pricing'
             },
-            {
-                label: 'Резервные копии',
-                href: '/docs/companies/backups'
-            }
+            // {
+            //     label: 'Резервные копии',
+            //     href: '/docs/companies/backups'
+            // }
         ]
     },
     {
