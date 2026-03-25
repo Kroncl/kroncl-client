@@ -18,6 +18,12 @@ export const breadcrumbDictionary: Record<string, string> = {
     'positions': 'Должности',
     'shedule': 'Рабочий график',
     'fm': 'Финансы',
+    'operations': 'Операции',
+    'categories': 'Категории',
+    'balance': 'Баланс',
+    'debt-obligations': 'Долговые обязательства',
+    'credits-debts': 'Кредиты & Дебиты',
+    'counterparties': 'Контрагенты',
     'wm': 'Каталог & Склад',
     'crm': "Клиентская база",
     'dm': 'Управление сделками'
