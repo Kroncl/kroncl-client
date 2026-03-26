@@ -2,20 +2,24 @@ import { DocsNavSectionProps } from "../../components/panel/components/nav-secti
 
 export const fmSections: DocsNavSectionProps[] = [
     {
-        label: 'Операции',
-        href: '/docs/companies/modules/fm/operations',
+        label: 'Движение средств',
+        href: '/docs/companies/modules/fm/movement-of-funds',
         childrens: [
             {
                 label: 'Категории',
-                href: '/docs/companies/modules/fm/operations/categories'
+                href: '/docs/companies/modules/fm/movement-of-funds/categories'
+            },
+            {
+                label: 'Операции',
+                href: '/docs/companies/modules/fm/movement-of-funds/operations'
             },
             {
                 label: 'Баланс предприятия',
-                href: '/docs/companies/modules/fm/operations/balance'
+                href: '/docs/companies/modules/fm/movement-of-funds/balance'
             },
             {
                 label: 'Анализ',
-                href: '/docs/companies/modules/fm/operations/analysis'
+                href: '/docs/companies/modules/fm/movement-of-funds/analysis'
             }
         ]
     },

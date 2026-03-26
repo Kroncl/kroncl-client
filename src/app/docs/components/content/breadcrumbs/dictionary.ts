@@ -18,6 +18,7 @@ export const breadcrumbDictionary: Record<string, string> = {
     'positions': 'Должности',
     'shedule': 'Рабочий график',
     'fm': 'Финансы',
+    'movement-of-funds': 'Движение средств',
     'operations': 'Операции',
     'categories': 'Категории',
     'balance': 'Баланс',
