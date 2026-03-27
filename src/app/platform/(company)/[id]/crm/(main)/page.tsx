@@ -12,6 +12,8 @@ import { useEffect, useState } from 'react';
 import { ClientsResponse, ClientDetail } from '@/apps/company/modules/crm/types';
 import { useCrm } from "@/apps/company/modules";
 import { sectionsList } from "../_sections";
+import { PlatformEmptyCanvas } from "@/app/platform/components/lib/empty-canvas/canvas";
+import Clients from "@/assets/ui-kit/icons/clients";
 
 export default function Page() {
     const params = useParams();
@@ -137,16 +139,10 @@ export default function Page() {
                 showSearch
             />
             {clients.length === 0 ? (
-                <div style={{
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "center", 
-                    fontSize: ".7em", 
-                    color: "var(--color-text-description)", 
-                    minHeight: "10rem"
-                }}>
-                    Клиенты не найдены
-                </div>
+                <PlatformEmptyCanvas 
+                    title='Клиентская база пуста.'
+                    icon={<Clients />}
+                />
             ) : (
                 <>
                 <div className={styles.grid}>

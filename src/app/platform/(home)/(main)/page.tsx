@@ -34,23 +34,6 @@ export default function Page() {
             icon: Book,
             href: "/docs"
         },
-        {
-            title: "Разработчикам",
-            description: "Смотреть организации, в которых вы состоите.",
-            icon: Dev,
-            href: "/platform/companies"
-        },
-        {
-            title: "Аккаунт",
-            description: "Смотреть организации, в которых вы состоите.",
-            icon: Account,
-            href: "/platform/companies"
-        },
-        {
-            title: "Пригласите сотрудников",
-            description: "Смотреть организации, в которых вы состоите.",
-            href: "/platform/companies"
-        },
     ];
     
     return (

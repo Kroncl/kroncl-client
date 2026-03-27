@@ -11,6 +11,8 @@ import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { useEffect, useState } from 'react';
 import { SourcesResponse, ClientSource } from '@/apps/company/modules/crm/types';
 import { useCrm } from "@/apps/company/modules";
+import { PlatformEmptyCanvas } from "@/app/platform/components/lib/empty-canvas/canvas";
+import Megaphone from "@/assets/ui-kit/icons/megaphone";
 
 export default function Page() {
     const params = useParams();
@@ -166,16 +168,10 @@ export default function Page() {
                 showSearch
             />
             {sources.length === 0 ? (
-                <div style={{
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "center", 
-                    fontSize: ".7em", 
-                    color: "var(--color-text-description)", 
-                    minHeight: "10rem"
-                }}>
-                    Источники не найдены
-                </div>
+                <PlatformEmptyCanvas
+                    title='Источники не найдены.'
+                    icon={<Megaphone />}
+                />
             ) : (
                 <>
                 <div className={styles.grid}>

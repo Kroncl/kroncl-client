@@ -10,6 +10,9 @@ import styles from './page.module.scss';
 import { DailyChart } from '../components/daily-chart/chart';
 import { IndicatorWidget } from '../../../fm/(main)/components/indicator-widget/widget';
 import { toRFC3339 } from '@/assets/utils/date-formatter';
+import { PlatformEmptyCanvas } from "@/app/platform/components/lib/empty-canvas/canvas";
+import Clients from "@/assets/ui-kit/icons/clients";
+import Chart from '@/assets/ui-kit/icons/chart';
 
 export default function AnalysisPage() {
     const crmModule = useCrm();
@@ -18,6 +21,7 @@ export default function AnalysisPage() {
     const [summary, setSummary] = useState<ClientsSummary | null>(null);
     const [dailyData, setDailyData] = useState<GroupedClientsStats[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         loadData();
@@ -25,6 +29,7 @@ export default function AnalysisPage() {
 
     const loadData = async () => {
         setLoading(true);
+        setError(null);
         try {
             const params: { start_date?: string; end_date?: string } = {};
             const urlStartDate = searchParams.get('start_date');
@@ -45,18 +50,65 @@ export default function AnalysisPage() {
                 setSummary(summaryRes.data);
             }
             if (dailyRes.status) {
-                // Сортируем по дате (от старых к новым)
-                const sorted = [...dailyRes.data].sort((a, b) => 
-                    a.group_key.localeCompare(b.group_key)
-                );
-                setDailyData(sorted);
+                // Проверяем, есть ли данные и не пустые ли они
+                if (dailyRes.data && dailyRes.data.length > 0) {
+                    // Сортируем по дате (от старых к новым)
+                    const sorted = [...dailyRes.data].sort((a, b) => 
+                        a.group_key.localeCompare(b.group_key)
+                    );
+                    setDailyData(sorted);
+                } else {
+                    setDailyData([]);
+                }
             }
         } catch (error) {
+            setError(error instanceof Error ? error.message : "Ошибка загрузки");
             console.error('Error loading analysis:', error);
         } finally {
             setLoading(false);
         }
     };
+
+    if (loading) return (
+        <div style={{
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center", 
+            fontSize: ".7em", 
+            color: "var(--color-text-description)", 
+            minHeight: "10rem"
+        }}>
+            <Spinner />
+        </div>
+    );
+    
+    if (error) return (
+        <div style={{
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center", 
+            fontSize: ".7em", 
+            color: "var(--color-text-description)", 
+            minHeight: "10rem"
+        }}>
+            {error}
+        </div>
+    );
+
+    // Проверяем, есть ли данные для отображения
+    const hasData = summary && (summary.total_clients > 0 || 
+                                 summary.new_clients > 0 || 
+                                 summary.active_clients > 0 ||
+                                 dailyData.length > 0);
+
+    if (!hasData) {
+        return (
+            <PlatformEmptyCanvas 
+                title='Нет данных за выбранный период'
+                icon={<Chart />}
+            />
+        );
+    }
 
     return (
         <div className={styles.grid}>    
