@@ -106,7 +106,7 @@ export default async function CompanyLayout({
 
   const actions: PanelAction[] = [
     {
-      children: "Новая сделка",
+      children: "Сделка",
       href: `/platform/${companyId}/dm/new`,
       variant: 'accent',
       as: 'link'

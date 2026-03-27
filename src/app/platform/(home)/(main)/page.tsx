@@ -29,10 +29,10 @@ export default function Page() {
             href: "/platform/companies"
         },
         {
-            title: "Документация",
-            description: "Смотреть организации, в которых вы состоите.",
+            title: "База знаний",
+            description: "Полное руководство использования платформы от авторов.",
             icon: Book,
-            href: "/platform/companies"
+            href: "/docs"
         },
         {
             title: "Разработчикам",
@@ -55,6 +55,7 @@ export default function Page() {
     
     return (
         <PlatformDivorce
+            subtitle='Панель управления аккаунтом.'
             title={`Добро пожаловать, ${user?.name}!`}
             description="С чего начнём?"
             sections={sections}

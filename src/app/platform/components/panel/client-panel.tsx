@@ -30,6 +30,9 @@ import Link from 'next/link';
 import Support from '@/assets/ui-kit/icons/support';
 import Business from '@/assets/ui-kit/icons/business';
 import Folder from '@/assets/ui-kit/icons/folder';
+import Invitations from '@/assets/ui-kit/icons/invitations';
+import Book from '@/assets/ui-kit/icons/book';
+import Home from '@/assets/ui-kit/icons/home';
 
 interface PlatformPanelProps {
   className?: string;
@@ -62,7 +65,10 @@ const iconComponents: Record<string, ComponentType<{ className?: string }>> = {
   'activity': History,
   'files': Folder,
   'branding': Business,
-  'support': Support
+  'support': Support,
+  'invitations': Invitations,
+  'book': Book,
+  'home': Home
 };
 
 export default function ClientPanel({
@@ -120,6 +126,11 @@ export default function ClientPanel({
 
   const staticFootSections: PanelSection[] = [
     {
+      name: 'База знаний',
+      href: '/docs',
+      icon: 'book'
+    },
+    {
       name: 'Настройки',
       href: '/platform/settings',
       icon: 'settings'
@@ -142,6 +153,19 @@ export default function ClientPanel({
       <div className={styles.head}>
         {head}
       </div>
+      {actions.length > 0 && (
+        <div className={styles.actions}>
+          {actions.map((action, index) => {
+            return (
+                <Button
+                  key={index}
+                  className={clsx(styles.action, action.className)}
+                  {...action}
+                />
+            );
+          })}
+        </div>
+      )}
       <div className={styles.scroll}>
         {sections.length > 0 && (
           <div className={styles.sections}>
@@ -230,20 +254,6 @@ export default function ClientPanel({
         <div className={styles.children}>
           {children}
         </div>
-
-        {actions.length > 0 && (
-          <div className={styles.actions}>
-            {actions.map((action, index) => {
-              return (
-                  <Button
-                    key={index}
-                    className={clsx(styles.action, action.className)}
-                    {...action}
-                  />
-              );
-            })}
-          </div>
-        )}
       </div>
       
       <div className={styles.foot}>

@@ -8,12 +8,14 @@ import { DivorceSection } from './_types';
 import { itemVariants, titleVariants } from './_animations';
 
 interface PlatformDivorceProps {
+  subtitle?: string;
   title?: string;
   description?: string;
   sections?: DivorceSection[];
 }
 
 export function PlatformDivorce({
+  subtitle,
   title = 'Добро пожаловать',
   description,
   sections = [],
@@ -35,6 +37,9 @@ export function PlatformDivorce({
       animate="visible"
       variants={containerVariants}
     >
+      {subtitle && (
+        <div className={styles.subtitle}>{subtitle}</div>
+      )}
       {title && (
         <motion.div 
           className={styles.title} 

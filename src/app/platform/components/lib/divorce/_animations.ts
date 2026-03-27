@@ -1,4 +1,6 @@
-export const itemVariants = {
+import { Variants } from "framer-motion";
+
+export const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
         y: 0,
@@ -10,7 +12,7 @@ export const itemVariants = {
     }
 };
 
-export const titleVariants = {
+export const titleVariants: Variants = {
     hidden: { y: 10, opacity: 0 },
     visible: {
         y: 0,
@@ -22,7 +24,7 @@ export const titleVariants = {
     }
 };
 
-export const sectionHoverVariants = {
+export const sectionHoverVariants: Variants = {
     hover: {
         y: -4,
         transition: {
