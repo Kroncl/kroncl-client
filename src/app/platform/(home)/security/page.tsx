@@ -14,6 +14,9 @@ import { usePagination } from '@/apps/shared/pagination/hooks/usePagination';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
 import { PlatformModalConfirmation } from '@/app/platform/components/lib/modal/confirmation/confirmation';
+import { PlatformEmptyCanvas } from '../../components/lib/empty-canvas/canvas';
+import Keyhole from '@/assets/ui-kit/icons/keyhole';
+import { DOCS_LINK_ACCOUNT_SECURITY } from '@/app/docs/(v1)/internal.config';
 
 export default function Page() {
     const router = useRouter();
@@ -167,38 +170,34 @@ export default function Page() {
                     onSearch: handleSearch,
                     debounceMs: 500
                 }}
+                docsEscort={{
+                    href: DOCS_LINK_ACCOUNT_SECURITY,
+                    title: 'Подробнее о ключах доступа.'
+                }}
             />
             
-            <div className={styles.grid}>
-                {fingerprints.length === 0 ? (
-                    <div style={{
-                        gridColumn: "1 / -1",
-                        display: "flex", 
-                        alignItems: "center", 
-                        justifyContent: "center", 
-                        fontSize: ".7em", 
-                        color: "var(--color-text-description)", 
-                        minHeight: "10rem",
-                        width: "100%"
-                    }}>
-                        {searchParams.get('search') 
-                            ? 'Ничего не найдено' 
-                            : 'Нет ключей доступа'}
-                    </div>
-                ) : (
-                    fingerprints.map((fingerprint) => (
-                        <TokenCard 
-                            key={fingerprint.id}
-                            fingerprint={fingerprint}
-                            className={styles.item}
-                            onRevoke={(id) => setRevokeModal({ 
-                                isOpen: true, 
-                                fingerprintId: id 
-                            })}
+            {fingerprints.length === 0 ? (
+                <PlatformEmptyCanvas
+                    title={searchParams.get('search') 
+                        ? 'Ничего не найдено' 
+                        : 'Нет ключей доступа'}
+                    icon={<Keyhole />}
                         />
-                    ))
-                )}
+            ) : (
+            <div className={styles.grid}>
+                {fingerprints.map((fingerprint) => (
+                    <TokenCard 
+                        key={fingerprint.id}
+                        fingerprint={fingerprint}
+                        className={styles.item}
+                        onRevoke={(id) => setRevokeModal({ 
+                            isOpen: true, 
+                            fingerprintId: id 
+                        })}
+                    />
+                ))}
             </div>
+            )}
 
             {pagination && pagination.pages > 1 && (
                 <div className={styles.pagination}>

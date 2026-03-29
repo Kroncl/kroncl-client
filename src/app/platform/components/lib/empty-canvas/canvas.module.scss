@@ -32,6 +32,7 @@
         color: var(--color-text-ghost);
         width: 60%;
         font-size: .9em;
+        word-break: break-all;
     }
 
     .description {
@@ -40,6 +41,7 @@
         color: var(--color-text-description);
         width: 40%;
         font-size: .7em;
+        word-break: break-all;
     }
 
     @media (max-width: 720px) {

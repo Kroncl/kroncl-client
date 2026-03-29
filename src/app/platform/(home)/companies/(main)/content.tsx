@@ -6,6 +6,7 @@ import { PlatformPagination } from '@/app/platform/components/lib/pagination/pag
 import { usePagination } from '@/apps/shared/pagination/hooks/usePagination';
 import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { cardVariants, containerVariants, emptyStateVariants } from './_animations';
+import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';
 
 export function CompaniesContent({
   role,
@@ -60,29 +61,17 @@ export function CompaniesContent({
   return (
     <>
       {noResults ? (
-        <motion.div 
-          style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-          }}
-          variants={emptyStateVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {hasSearch ? (
-            `По запросу "${searchParam}" ничего не найдено`
-          ) : (
-            role === 'owner' 
-              ? 'Вы не владеете ни одной компанией'
-              : role === 'guest'
-              ? 'У вас нет приглашений в компании'
-              : 'У вас пока нет компаний'
-          )}
-        </motion.div>
+        <PlatformEmptyCanvas
+          title={hasSearch ? (
+              `По запросу "${searchParam}" ничего не найдено`
+            ) : (
+              role === 'owner' 
+                ? 'Вы не владеете ни одной компанией'
+                : role === 'guest'
+                ? 'У вас нет приглашений в компании'
+                : 'У вас пока нет компаний'
+            )}
+            />
       ) : (
         <motion.div
           variants={containerVariants}
@@ -130,11 +119,11 @@ export function CompaniesContent({
             baseUrl="/platform/companies"
             queryParams={{
               role: role !== 'all' ? role : '',
-              search: searchParam || undefined
+              search: searchParam || ''
             }}
             onPageChange={(page) => handlePageChange(page, {
               role: role !== 'all' ? role : '',
-              search: searchParam || undefined
+              search: searchParam || ''
             })}
           />
         </motion.div>

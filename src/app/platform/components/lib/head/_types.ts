@@ -18,6 +18,12 @@ export interface PlatformHeadNote {
   description: string;
 }
 
+export interface PlatformHeadDocsEscort {
+    href: string;
+    title?: string;
+    description?: string;
+}
+
 export interface PlatformHeadProps {
   title: string;
   description?: string;
@@ -34,5 +40,6 @@ export interface PlatformHeadProps {
     searchButton?: boolean;
   };
   notes?: PlatformHeadNote[];
+  docsEscort?: PlatformHeadDocsEscort;
   children?: React.ReactNode;
 }

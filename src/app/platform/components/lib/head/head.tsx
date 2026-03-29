@@ -10,6 +10,8 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { PlatformHeadProps } from './_types';
 import { isSectionActive } from '@/assets/utils/sections';
+import Question from '@/assets/ui-kit/icons/question';
+import { ModalTooltip } from '@/app/components/tooltip/tooltip';
 
 function useDebouncedCallback<T extends (...args: any[]) => any>(
   callback: T,
@@ -37,7 +39,8 @@ export function PlatformHead({
   showSearch = false,
   searchProps = {},
   children,
-  notes = []
+  notes = [],
+  docsEscort,
 }: PlatformHeadProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -124,7 +127,7 @@ export function PlatformHead({
           )}
         </div>
         
-        {actions.length > 0 && (
+        {(actions.length > 0 || docsEscort) && (
           <div className={styles.actions}>
             {actions.map((action, index) => (
               <Button
@@ -133,6 +136,13 @@ export function PlatformHead({
                 {...action}
               />
             ))}
+            {docsEscort && (
+              <ModalTooltip side='bottom' content={docsEscort.title || 'Подробнее о разделе.'}>
+                <Link target='_blank' href={docsEscort.href} className={styles.escortButton}>
+                  <Question className={styles.svg} />
+                </Link>
+              </ModalTooltip>
+            )}
           </div>
         )}
       </div>

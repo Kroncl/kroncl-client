@@ -33,6 +33,13 @@
                 color: var(--color-text-ghost);
                 max-width: 30rem;
             }
+            // .escort {
+            //     display: flex;
+            //     flex-flow: column nowrap;
+            //     gap: 1em;
+            //     font-size: .8em;
+            //     margin-top: .8em;
+            // }
         }
         .actions {
             display: flex;
@@ -50,6 +57,34 @@
                     transform: scale(1.02);
                 }
             }
+            .escortButton {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                height: 3.2em;
+                min-width: 3.2em;
+                color: var(--color-surface-tertiary);
+                border-radius: .76em;
+                border: 1px solid var(--color-stroke-secondary);
+                transition: color var(--transition), background-color var(--transition);
+                background-color: var(--color-surface-glass);
+                @include cursor(pointer);
+
+                svg {
+                    width: 1.6em;
+                    height: 1.6em;
+                    transition: transform var(--transition);
+                }
+
+                &:hover {
+                    background-color: var(--color-surface-elevated);
+                    color: var(--color-text-hint);
+
+                    svg {
+                        transform: scale(1.02);
+                    }
+                }
+            }
         }
     
         @media (max-width: 720px) {
@@ -60,6 +95,10 @@
                 align-items: auto;
 
                 .action {
+                    width: 100%;
+                }
+                .escortButton {
+                    display: flex;
                     width: 100%;
                 }
             }
@@ -143,7 +182,7 @@
     .search {
         display: flex;
         font-size: .77em;
-        padding: 1em 0;
+        padding: 0 0 1em 0;
         // background-color: var(--color-surface-elevated);
         flex-flow: row nowrap;
 
