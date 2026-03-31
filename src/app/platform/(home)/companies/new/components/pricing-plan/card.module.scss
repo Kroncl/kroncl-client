@@ -13,6 +13,19 @@
     gap: .1em;
     padding: 1.3em;
     color: var(--color-text-primary);
+    position: relative;
+    overflow: hidden;
+
+    .trial {
+        position: absolute;
+        z-index: 10;
+        right: 0;
+        top: 0;
+        padding: .4em;
+        background-color: var(--color-accent);
+        color: var(--color-accent-text-primary);
+        border-bottom-left-radius: .4em;
+    }
 
     .title {
         line-height: 1.2;

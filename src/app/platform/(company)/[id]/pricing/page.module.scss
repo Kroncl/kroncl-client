@@ -1,5 +1,13 @@
 @use '@/assets/styles/_mixins.scss' as *;
 
+.remained {
+    margin-bottom: 1em;
+
+    .accent {
+        color: var(--color-text-hint);
+    }
+}
+
 .grid {
     display: flex;
     flex-flow: row wrap;
@@ -10,5 +18,18 @@
         &.selected {
             border: 2px solid var(--color-accent);
         }
+    }
+}
+
+.loading, .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 10em;
+
+    .text {
+        text-align: center;
+        color: var(--color-text-ghost);
+        line-height: 1.3;
     }
 }

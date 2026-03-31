@@ -8,6 +8,7 @@ import { Remained } from '@/assets/ui-kit/remained/remained';
 import { usePricing } from '@/apps/company/modules';
 import { useEffect, useState } from 'react';
 import { CompanyPricingPlan } from '@/apps/company/modules/pricing/types';
+import { pluralizeDays } from '@/assets/utils/date';
 
 export interface PricingWidgetProps {
     className?: string;
@@ -48,6 +49,9 @@ export function PricingWidget({
         }
     };
 
+    const daysLeft = companyPlan?.days_left || 0;
+    const daysWord = pluralizeDays(daysLeft);
+
     return (
         <Link href={`/platform/${companyId}/pricing`} className={clsx(styles.widget, className)}>
             {error ? (
@@ -56,7 +60,7 @@ export function PricingWidget({
                 </div>
             ) : (
                 <>
-                <div className={styles.title}>Тестовый период</div>
+                <div className={styles.title}>{companyPlan?.is_trial ? 'Тестовый период' : `«${companyPlan?.current_plan.name}»`}</div>
                 <div className={styles.description}>Тарификация организации</div>
                 <Remained 
                     loading={loading}
@@ -66,7 +70,7 @@ export function PricingWidget({
                 >
                     {companyPlan && (
                         <>
-                        <span className={styles.primary}>{companyPlan.days_left} дней</span> осталось
+                        <span className={styles.primary}>{daysLeft} {daysWord}</span> осталось
                         </>
                     )}
                 </Remained>
