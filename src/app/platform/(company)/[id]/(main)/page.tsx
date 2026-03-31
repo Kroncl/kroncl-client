@@ -9,6 +9,7 @@ import styles from './page.module.scss';
 import { PricingWidget } from "../pricing/widgets/pricing-widget/widget";
 import { StorageWidget } from "../storage/widgets/storage-widget/widget";
 import { FMSummaryWidget } from "../fm/widgets/fm-summary-widget/widget";
+import { HRMSummaryWidget } from "../hrm/widgets/hrm-summary-widget/widget";
 
 export default function Page() {
     const params = useParams();
@@ -32,6 +33,7 @@ export default function Page() {
         </PlatformHead>
         <div className={styles.widgets}>
             <FMSummaryWidget variant='default' className={styles.item} />
+            <HRMSummaryWidget variant='default' className={styles.item} />
             <PricingWidget className={styles.item} />
             <StorageWidget variant='default' className={styles.item} />
         </div>
