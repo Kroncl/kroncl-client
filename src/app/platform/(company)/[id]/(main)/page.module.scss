@@ -29,6 +29,7 @@
     .item {
         display: inline-flex;
         position: relative;
+        overflow: hidden;
         background-color: var(--color-surface-glass);
         padding: 1em;
         color: var(--color-text-primary);

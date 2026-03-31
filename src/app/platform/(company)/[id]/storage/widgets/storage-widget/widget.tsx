@@ -27,6 +27,8 @@ export function StorageWidget({
                 </div>
                 <Remained value={2} limit={5}>Данные</Remained>
                 <Remained value={40} limit={50}>Медиа/документы</Remained>
+                
+                <span className={styles.mark} />
                 </>
             )}
             {variant === 'compact' && (
@@ -37,7 +39,6 @@ export function StorageWidget({
                 </div>
                 </>
             )}
-            <span className={styles.mark} />
         </Link>
     )
 }
