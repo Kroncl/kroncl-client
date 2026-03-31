@@ -51,7 +51,7 @@ export function HRMSummaryWidget({
                     <div className={styles.item}>
                         {loading ? (<div className={clsx(styles.value, styles.loading)} />) : (
                             <div className={styles.value}>
-                                {summary?.net_balance.toLocaleString('ru-RU') || 0} &#8381;
+                                {summary?.net_balance || 0} &#8381;
                             </div>
                         )}
                         <div className={styles.label}>Активных сотрудников</div>
