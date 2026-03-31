@@ -10,6 +10,11 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Settings from '@/assets/ui-kit/icons/settings';
+import Keyhole from '@/assets/ui-kit/icons/keyhole';
+import History from '@/assets/ui-kit/icons/history';
+import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
+import { PlatformModalConfirmation } from '@/app/platform/components/lib/modal/confirmation/confirmation';
+import { useMessage } from '@/app/platform/components/lib/message/provider';
 
 export interface AccountWidgetProps {
     className?: string;
@@ -20,12 +25,12 @@ export function AccountWidget({
 }: AccountWidgetProps) {
     const { user, logout } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
     const widgetRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+    const { showMessage } = useMessage();
 
     const handleOverlayClick = (e: React.MouseEvent) => {
-        // левая кнопка мыши = 0 или 1 в зависимости от браузера
-        // используем e.button для точности
         if (e.button === 0) {
             setIsOpen(prev => !prev);
         }
@@ -35,10 +40,33 @@ export function AccountWidget({
         setIsOpen(false);
     };
 
-    const handleLogout = async (e: React.MouseEvent) => {
+    const handleLogoutClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        await logout();
-        router.push('/');
+        setIsOpen(false);
+        setIsLogoutModalOpen(true);
+    };
+
+    const handleLogoutConfirm = async () => {
+        try {
+            await logout();
+            showMessage({
+                label: 'Вы успешно вышли из системы',
+                variant: 'success'
+            });
+            router.push('/');
+        } catch (error) {
+            showMessage({
+                label: 'Не удалось выйти из системы',
+                variant: 'error',
+                about: error instanceof Error ? error.message : 'Внутренняя ошибка'
+            });
+        } finally {
+            setIsLogoutModalOpen(false);
+        }
+    };
+
+    const handleLogoutCancel = () => {
+        setIsLogoutModalOpen(false);
     };
 
     useEffect(() => {
@@ -59,48 +87,90 @@ export function AccountWidget({
     if (!user) {
         return null;
     }
+    
     const userGradient = getGradientFromString(user.name);
     const userInitials = user.name.charAt(0).toUpperCase();
 
     return (
-        <div 
-            ref={widgetRef}
-            className={clsx(styles.widget, className)}
-        >
+        <>
             <div 
-                className={styles.overlay}
-                onMouseDown={handleOverlayClick}
+                ref={widgetRef}
+                className={clsx(styles.widget, className)}
             >
-                <div className={styles.avatar} style={{background: userGradient}}>{userInitials}</div>
-            </div>
-            {isOpen && (
-                <div className={styles.control}>
-                    <Link 
-                        href='/platform/account' 
-                        className={styles.section}
-                        onClick={handleSectionClick}
-                    >
-                        <span className={styles.icon}><Account /></span>
-                        <span className={styles.capture}>Управление</span>
-                    </Link>
-                    <Link 
-                        href='/platform/settings' 
-                        className={styles.section}
-                        onClick={handleSectionClick}
-                    >
-                        <span className={styles.icon}><Settings /></span>
-                        <span className={styles.capture}>Настройки</span>
-                    </Link>
-                    <a 
-                        href='/'
-                        className={styles.section}
-                        onClick={handleLogout}
-                    >
-                        <span className={styles.icon}><Exit /></span>
-                        <span className={styles.capture}>Выйти</span>
-                    </a>
+                <div 
+                    className={styles.overlay}
+                    onMouseDown={handleOverlayClick}
+                >
+                    <div className={styles.avatar} style={{background: userGradient}}>{userInitials}</div>
                 </div>
-            )}
-        </div>
+                {isOpen && (
+                    <div className={styles.control}>
+                        <Link 
+                            href='/platform/account' 
+                            className={styles.section}
+                            onClick={handleSectionClick}
+                        >
+                            <span className={styles.icon}><Account /></span>
+                            <span className={styles.capture}>Управление</span>
+                        </Link>
+                        <Link 
+                            href='/platform/settings' 
+                            className={styles.section}
+                            onClick={handleSectionClick}
+                        >
+                            <span className={styles.icon}><Settings /></span>
+                            <span className={styles.capture}>Настройки</span>
+                        </Link>
+                        <Link 
+                            href='/platform/security' 
+                            className={styles.section}
+                            onClick={handleSectionClick}
+                        >
+                            <span className={styles.icon}><Keyhole /></span>
+                            <span className={styles.capture}>Безопасность</span>
+                        </Link>
+                        <Link 
+                            href='/platform/activity' 
+                            className={styles.section}
+                            onClick={handleSectionClick}
+                        >
+                            <span className={styles.icon}><History /></span>
+                            <span className={styles.capture}>Активность</span>
+                        </Link>
+                        <a 
+                            href='#'
+                            className={styles.section}
+                            onClick={handleLogoutClick}
+                        >
+                            <span className={styles.icon}><Exit /></span>
+                            <span className={styles.capture}>Выйти</span>
+                        </a>
+                    </div>
+                )}
+            </div>
+
+            {/* Modal confirmation for logout */}
+            <PlatformModal
+                isOpen={isLogoutModalOpen}
+                onClose={handleLogoutCancel}
+            >
+                <PlatformModalConfirmation
+                    title='Выйти из системы?'
+                    description='Вы уверены, что хотите завершить сеанс работы?'
+                    actions={[
+                        {
+                            children: 'Отмена',
+                            variant: 'light',
+                            onClick: handleLogoutCancel
+                        },
+                        {
+                            variant: 'accent',
+                            onClick: handleLogoutConfirm,
+                            children: 'Выйти'
+                        }
+                    ]}
+                />
+            </PlatformModal>
+        </>
     );
 }

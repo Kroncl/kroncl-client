@@ -37,12 +37,12 @@ export default function Page() {
         </PlatformHead>
         <div className={styles.widgets}>
             <PricingWidget className={styles.item} />
-            <StorageWidget className={styles.item} />
             <FMSummaryWidget className={styles.item} />
             <FMDynamicsWidget className={clsx(styles.item, styles.large)} />
             <CRMSummaryWidget className={styles.item} />
             <CRMDynamicsWidget className={clsx(styles.item, styles.large)} />
             <HRMSummaryWidget className={styles.item} />
+            <StorageWidget className={styles.item} />
         </div>
         </>
     )
