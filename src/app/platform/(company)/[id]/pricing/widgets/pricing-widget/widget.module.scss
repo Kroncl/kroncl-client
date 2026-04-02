@@ -21,6 +21,10 @@
         font-weight: 600;
         letter-spacing: .02em;
         line-height: 1.3;
+
+        .shimmer {
+            @include shimmer();
+        }
     }
     .description {
         font-size: .8em;
@@ -32,6 +36,22 @@
 
         .primary {
             color: var(--color-text-primary);
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 1em;
+        font-size: .8em;
+
+        .action {
+            border-radius: .8em;
+            transition: transform var(--transition);
+
+            &:hover {
+                transform: scale(1.02);
+            }
         }
     }
 

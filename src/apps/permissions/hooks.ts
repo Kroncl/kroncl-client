@@ -47,12 +47,12 @@ export function usePermission(
     const requiredLvl = permission.lvl;
     
     const allowed = requiredLvl >= currentLvl;
-    if (!allowed) {
-        return { allowed: allowed, isLoading: isPermissionsLoading }
-    }
     if (isExpired) {
         return { allowed: allowExpired, isLoading: isPermissionsLoading };
     } 
+    if (!allowed) {
+        return { allowed: allowed, isLoading: isPermissionsLoading }
+    }
     
     return { allowed, isLoading: isPermissionsLoading };
 }

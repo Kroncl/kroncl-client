@@ -11,11 +11,20 @@ import { useHrm } from '@/apps/company/modules';
 import { useParams, useRouter } from 'next/navigation';
 import { Employee } from "@/apps/company/modules/hrm/types";
 import Spinner from "@/assets/ui-kit/spinner/spinner";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function Page() {
     const params = useParams();
     const companyId = params.id as string;
     const employeeId = params.employeeId as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.HRM_EMPLOYEES_UPDATE);
+
     const hrmModule = useHrm();
     const router = useRouter();
 
@@ -197,43 +206,20 @@ export default function Page() {
     const isFormValid = validation.first_name.isValid && validation.last_name.isValid && 
                         validation.email.isValid && validation.phone.isValid;
 
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.HRM_EMPLOYEES_UPDATE} />
+    )
+
     if (loading) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+        <PlatformLoading />
     );
     
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error} />
     );
 
     if (!employee) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            Не удалось загрузить карту сотрудника
-        </div>
+        <PlatformError error='Не удалось загрузить карту сотрудника' />
     );
 
     return (

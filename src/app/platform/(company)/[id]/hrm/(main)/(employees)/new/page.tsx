@@ -9,6 +9,9 @@ import { useState } from 'react';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { useHrm } from '@/apps/company/modules';
 import { useRouter } from 'next/navigation';
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function Page() {
     const hrmModule = useHrm();
@@ -16,6 +19,9 @@ export default function Page() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.HRM_EMPLOYEES_CREATE);
+        
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
@@ -127,6 +133,10 @@ export default function Page() {
 
     const isFormValid = validation.first_name.isValid && validation.last_name.isValid && 
                         validation.email.isValid && validation.phone.isValid;
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.HRM_EMPLOYEES_CREATE} />
+    )
 
     return (
         <>

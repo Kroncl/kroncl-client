@@ -58,18 +58,18 @@ function allSections(companyId: string): Section[] {
         icon: 'team',
         lvl: PLAN_MAX_LVL
     },
-    {
-        name: 'Файлы',
-        href: `/platform/${companyId}/files`,
-        icon: 'files',
-        lvl: PLAN_MAX_LVL
-    },
-    {
-        name: 'Ресурсы бренда',
-        href: `/platform/${companyId}/branding`,
-        icon: 'branding',
-        lvl: PLAN_MAX_LVL
-    },
+    // {
+    //     name: 'Файлы',
+    //     href: `/platform/${companyId}/files`,
+    //     icon: 'files',
+    //     lvl: PLAN_MAX_LVL
+    // },
+    // {
+    //     name: 'Ресурсы бренда',
+    //     href: `/platform/${companyId}/branding`,
+    //     icon: 'branding',
+    //     lvl: PLAN_MAX_LVL
+    // },
     {
         name: 'Активность',
         href: `/platform/${companyId}/activity`,

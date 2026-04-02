@@ -9,6 +9,7 @@ import { usePricing } from '@/apps/company/modules';
 import { useEffect, useState } from 'react';
 import { CompanyPricingPlan } from '@/apps/company/modules/pricing/types';
 import { pluralizeDays } from '@/assets/utils/date';
+import Button from '@/assets/ui-kit/button/button';
 
 export interface PricingWidgetProps {
     className?: string;
@@ -60,7 +61,11 @@ export function PricingWidget({
                 </div>
             ) : (
                 <>
-                <div className={styles.title}>{companyPlan?.is_trial ? 'Тестовый период' : `«${companyPlan?.current_plan.name}»`}</div>
+                {companyPlan ? (
+                    <div className={styles.title}>{companyPlan?.is_trial ? 'Тестовый период' : `«${companyPlan?.current_plan.name}»`}</div>
+                ) : (
+                    <div className={styles.title}><span className={styles.shimmer} /></div>
+                )}
                 <div className={styles.description}>Тарификация организации</div>
                 <Remained 
                     loading={loading}
@@ -74,6 +79,13 @@ export function PricingWidget({
                         </>
                     )}
                 </Remained>
+                {daysLeft === 0 && (
+                    <div className={styles.actions}>
+                        <Button variant='accent' className={styles.action}>
+                            Продлить
+                        </Button>
+                    </div>
+                )}
                 <span className={styles.mark} />
                 </>
             )}

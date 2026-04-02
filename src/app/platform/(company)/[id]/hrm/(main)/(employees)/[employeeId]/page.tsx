@@ -24,11 +24,21 @@ import { CompanyAccount } from "@/apps/company/modules/accounts/types";
 import { ModalSelectAccount } from "./components/modal-select-account/modal";
 import { motion, AnimatePresence } from 'framer-motion';
 import { sectionVariants, widgetVariants, accountCardVariants } from "./_animations";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function Page() {
     const params = useParams();
     const companyId = params.id as string;
     const employeeId = params.employeeId as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.HRM_EMPLOYEES, { allowExpired: true });
+    const ALLOW_UPDATE = usePermission(PERMISSIONS.HRM_EMPLOYEES_UPDATE);
+
     const hrmModule = useHrm();
     const accountsModule = useAccounts();
     const router = useRouter();
@@ -174,56 +184,21 @@ export default function Page() {
             });
         }
     };
+    
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.HRM_EMPLOYEES} />
+    );
 
     if (loading) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            <Spinner />
-        </motion.div>
+        <PlatformLoading />
     );
     
     if (error) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            {error}
-        </motion.div>
+        <PlatformError error={error} />
     );
 
     if (!employee) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            Не удалось загрузить карту сотрудника
-        </motion.div>
+        <PlatformError error='Не удалось загрузить карту сотрудника' />
     );
 
     const fullName = `${employee.first_name} ${employee.last_name ? employee.last_name : ''}`;
@@ -237,7 +212,7 @@ export default function Page() {
         ...(employee.email ? [{ value: employee.email, legend: "Корпоративная почта", variant: "default" as const }] : [])
     ];
 
-    const actions = [
+    const actions = (ALLOW_UPDATE.allowed && !ALLOW_UPDATE.isLoading) ? [
         {
             children: 'Редактировать',
             icon: <Edit />,
@@ -245,22 +220,24 @@ export default function Page() {
             as: 'link' as const,
             href: `/platform/${companyId}/hrm/${employeeId}/edit`
         }
-    ];
+    ] : [];
 
-    if (isActive) {
-        actions.push({
-            children: 'Деактивировать',
-            icon: <Exit />,
-            variant: 'accent',
-            onClick: () => setIsModalDropOpen(true)
-        });
-    } else {
-        actions.push({
-            children: 'Активировать',
-            icon: <Exit />,
-            variant: 'accent',
-            onClick: () => setIsModalActivateOpen(true)
-        });
+    if (!ALLOW_UPDATE.isLoading && ALLOW_UPDATE.allowed) {
+        if (isActive) {
+            actions.push({
+                children: 'Деактивировать',
+                icon: <Exit />,
+                variant: 'accent',
+                onClick: () => setIsModalDropOpen(true)
+            })
+        } else {
+            actions.push({
+                children: 'Активировать',
+                icon: <Exit />,
+                variant: 'accent',
+                onClick: () => setIsModalActivateOpen(true)
+            });
+        }
     }
 
     return (
@@ -307,14 +284,16 @@ export default function Page() {
                 >
                     <div className={styles.unify}>
                         <div className={styles.capture}>Аккаунт</div>
-                        <Button 
-                            onClick={() => setIsModalSelectAccountOpen(true)} 
-                            icon={<PaperClip />} 
-                            className={styles.action} 
-                            variant="light"
-                        >
-                            {employee.is_account_linked ? 'Изменить' : 'Выбрать'}
-                        </Button>
+                        {(!ALLOW_UPDATE.isLoading && ALLOW_UPDATE.allowed) && (
+                            <Button 
+                                onClick={() => setIsModalSelectAccountOpen(true)} 
+                                icon={<PaperClip />} 
+                                className={styles.action} 
+                                variant="light"
+                            >
+                                {employee.is_account_linked ? 'Изменить' : 'Выбрать'}
+                            </Button>)
+                        }
                     </div>
                     
                     <AnimatePresence mode="wait">

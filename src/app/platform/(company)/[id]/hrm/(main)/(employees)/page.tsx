@@ -2,7 +2,6 @@
 
 import { PlatformHead } from "@/app/platform/components/lib/head/head";
 import Plus from "@/assets/ui-kit/icons/plus";
-import { CompanyParams } from "../../../layout";
 import styles from './page.module.scss';
 import { EmployeeCard } from "../../components/employee-card/card";
 import { useHrm } from '@/apps/company/modules';
@@ -16,10 +15,22 @@ import { Employee } from '@/apps/company/modules/hrm/types';
 import { sections } from "../_sections";
 import { PlatformEmptyCanvas } from "@/app/platform/components/lib/empty-canvas/canvas";
 import Team from "@/assets/ui-kit/icons/team";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
 
 export default function Page() {
+    // meta
     const params = useParams();
     const companyId = params.id as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.HRM, {allowExpired: true});
+    const ALLOW_CREATE_EMPLOYEE = usePermission(PERMISSIONS.HRM_EMPLOYEES_CREATE);
+    
+    // hrm logic
     const hrmModule = useHrm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -75,30 +86,16 @@ export default function Page() {
         }
     };
 
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.HRM} />
+    )
+    
     if (loading) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+        <PlatformLoading />
     );
     
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error} />
     );
 
     const employees = data?.employees || [];
@@ -115,15 +112,13 @@ export default function Page() {
             <PlatformHead
                 title="Сотрудники"
                 description="Бизнес начинается с команды."
-                actions={[
-                    {
-                        children: 'Создать',
-                        variant: 'accent',
-                        icon: <Plus />,
-                        as: 'link',
-                        href: `/platform/${companyId}/hrm/new`
-                    }
-                ]}
+                actions={(ALLOW_CREATE_EMPLOYEE.allowed && !ALLOW_CREATE_EMPLOYEE.isLoading) ? [{
+                    children: 'Создать',
+                    variant: 'accent',
+                    icon: <Plus />,
+                    as: 'link',
+                    href: `/platform/${companyId}/hrm/new`
+                }] : undefined}
                 sections={sections(companyId)}
                 searchProps={{
                     placeholder: 'Поиск по сотрудникам',
