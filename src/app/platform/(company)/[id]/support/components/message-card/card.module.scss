@@ -1,0 +1,73 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.card {
+    display: flex;
+    min-height: 4em;
+    padding: 1.3em 0;
+    flex-flow: column nowrap;
+    gap: 1em;
+    position: relative;
+
+    .date {
+        color: var(--color-text-description);
+        @include text-ellipsis();
+    }
+    .text {
+        line-height: 1.4;
+        color: var(--color-text-secondary);
+    }
+    .links {
+        display: flex;
+        // padding: 1.3em 0;
+        flex-flow: column nowrap;
+        gap: 1em;
+        margin-top: 1.3em;
+
+        .link {
+            color: var(--color-text-hint);
+            display: flex;
+            flex-flow: row nowrap;
+            gap: .9em;
+            overflow: hidden;
+            align-items: center;
+
+            .icon {
+                display: inline-flex;
+                
+                svg {
+                    width: 1em;
+                    height: 1em;
+                }
+            }
+            .name {
+                @include text-ellipsis();
+                width: fit-content;
+            }
+        }
+    }
+    .media {
+        display: flex;
+        flex-flow: row wrap;
+        gap: 1em;
+
+        .item {
+            display: flex;
+            width: 10em;
+            height: 10em;
+            border-radius: .5em;
+            background-position: center;
+            background-size: cover;
+            border: 1px solid var(--color-stroke-secondary);
+            box-shadow: 0 0 .3em var(--color-surface-light);
+
+            @media (max-width: 720px) {
+                width: 8em;
+                height: 8em;
+            }
+        }
+    }
+
+    &.fresh {
+        border-bottom: 2px solid var(--color-accent) !important;
+    }
+}
