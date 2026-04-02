@@ -11,6 +11,10 @@ import { useFm } from '@/apps/company/modules';
 import { useParams, useRouter } from 'next/navigation';
 import { TransactionCategoryDirection } from "@/apps/company/modules/fm/types";
 import { categoryDirections } from "./_directions";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function Page() {
     const params = useParams();
@@ -18,6 +22,9 @@ export default function Page() {
     const fmModule = useFm();
     const router = useRouter();
     const { showMessage } = useMessage();
+    
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CATEGORIES_CREATE);
 
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -96,6 +103,14 @@ export default function Page() {
     };
 
     const isFormValid = validation.name.isValid;
+
+    if (ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    )
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.FM_TRANSACTIONS_CATEGORIES_CREATE} />
+    )
 
     return (
         <>

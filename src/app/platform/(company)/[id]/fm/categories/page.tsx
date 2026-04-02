@@ -13,10 +13,20 @@ import { CategoriesResponse, TransactionCategory } from '@/apps/company/modules/
 import { useFm } from "@/apps/company/modules";
 import { GroupChart } from "./components/group-chart/chart";
 import { PlatformEmptyCanvas } from "@/app/platform/components/lib/empty-canvas/canvas";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function Page() {
     const params = useParams();
     const companyId = params.id as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CATEGORIES, {allowExpired: true});
+    const ALLOW_CATEGORY_CREATE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CATEGORIES_CREATE);
+
     const fmModule = useFm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -74,30 +84,16 @@ export default function Page() {
         }
     };
 
-    if (loading) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.FM_TRANSACTIONS_CATEGORIES} />
+    )
+
+    if (loading || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
     );
     
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error} />
     );
 
     const categories = data?.categories || [];
@@ -116,7 +112,7 @@ export default function Page() {
             <PlatformHead
                 title='Категории трат и доходов'
                 description="Управление категориями."
-                actions={[
+                actions={(!ALLOW_CATEGORY_CREATE.isLoading && ALLOW_CATEGORY_CREATE.allowed) ? [
                     {
                         icon: <Plus />,
                         variant: 'accent',
@@ -124,7 +120,7 @@ export default function Page() {
                         href: `/platform/${companyId}/fm/categories/new`,
                         as: 'link'
                     }
-                ]}
+                ] : undefined}
                 sections={[
                     {
                         label: 'Все',

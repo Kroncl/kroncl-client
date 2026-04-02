@@ -90,7 +90,7 @@ export default function Page() {
         <PlatformNotAllowed permission={PERMISSIONS.HRM} />
     )
     
-    if (loading) return (
+    if (loading || ALLOW_PAGE.isLoading) return (
         <PlatformLoading />
     );
     

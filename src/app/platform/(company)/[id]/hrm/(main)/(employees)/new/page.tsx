@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { usePermission } from "@/apps/permissions/hooks";
 import { PERMISSIONS } from "@/apps/permissions/codes.config";
 import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
 
 export default function Page() {
     const hrmModule = useHrm();
@@ -137,6 +138,10 @@ export default function Page() {
     if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
         <PlatformNotAllowed permission={PERMISSIONS.HRM_EMPLOYEES_CREATE} />
     )
+    
+    if (ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    );
 
     return (
         <>

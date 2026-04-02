@@ -12,6 +12,11 @@ import { useParams, useRouter } from 'next/navigation';
 import { TransactionCategory, TransactionCategoryDirection } from "@/apps/company/modules/fm/types";
 import Spinner from "@/assets/ui-kit/spinner/spinner";
 import { categoryDirections } from "../../new/_directions";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function Page() {
     const params = useParams();
@@ -19,6 +24,9 @@ export default function Page() {
     const categoryId = params.categoryId as string;
     const fmModule = useFm();
     const router = useRouter();
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CATEGORIES_UPDATE);
 
     const [category, setCategory] = useState<TransactionCategory | null>(null);
     const [loading, setLoading] = useState(true);
@@ -160,66 +168,26 @@ export default function Page() {
 
     const isFormValid = validation.name.isValid;
 
-    if (loading) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+    if (loading || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
     );
-    
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.FM_TRANSACTIONS_CATEGORIES_UPDATE} />
+    )
+
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error} />
     );
 
     if (!category) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            Категория не найдена
-        </div>
+        <PlatformError error='Категория не найдена' />
     );
 
     // запрещаем редактирование системных категорий
     if (category.system) {
         return (
-            <div style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem",
-                flexDirection: "column",
-                gap: "1rem"
-            }}>
-                <div>Системные категории нельзя редактировать</div>
-                <Button
-                    variant="light"
-                    onClick={() => router.push(`/platform/${companyId}/fm/categories/${categoryId}`)}
-                >
-                    Вернуться к категории
-                </Button>
-            </div>
+            <PlatformError error='Системные категории нельзя редактировать' />
         );
     }
 

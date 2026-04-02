@@ -19,6 +19,7 @@ export interface TransactionCardProps {
     transaction: TransactionListItem;
     className?: string;
     onReverse?: () => void;
+    showReverse?: boolean;
 }
 
 const currencySymbols: Record<string, string> = {
@@ -31,7 +32,8 @@ const currencySymbols: Record<string, string> = {
 export function TransactionCard({
     transaction,
     className,
-    onReverse
+    onReverse,
+    showReverse = true
 }: TransactionCardProps) {
     const params = useParams();
     const companyId = params.id as string;
@@ -115,17 +117,19 @@ export function TransactionCard({
             </div>
 
             {/* actions */}
-            <div className={styles.actions}>
-                <ModalTooltip side='left' content='Реверс-операция - корректировка ошибочной операции.'>
-                    <Button 
-                        onClick={onReverse}
-                        className={styles.action} 
-                        variant='accent'
-                    >
-                        Отменить
-                    </Button>
-                </ModalTooltip>
-            </div>
+            {showReverse && (
+                <div className={styles.actions}>
+                    <ModalTooltip side='left' content='Реверс-операция - корректировка ошибочной операции.'>
+                        <Button 
+                            onClick={onReverse}
+                            className={styles.action} 
+                            variant='accent'
+                        >
+                            Отменить
+                        </Button>
+                    </ModalTooltip>
+                </div>
+            )}
         </div>
         </>
     );

@@ -16,6 +16,10 @@ import { Employee } from '@/apps/company/modules/hrm/types';
 import { EmployeeCard } from '../../../hrm/components/employee-card/card';
 import { useFm } from '@/apps/company/modules';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
+import { usePermission } from '@/apps/permissions/hooks';
+import { PERMISSIONS } from '@/apps/permissions/codes.config';
+import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
 
 type Direction = 'income' | 'expense';
 type AmountStatus = 'idle' | 'valid' | 'invalid';
@@ -25,6 +29,10 @@ export default function Page() {
     const params = useParams();
     const companyId = params.id as string;
     const searchParams = useSearchParams();
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CREATE);
+    
     const fmModule = useFm();
     const router = useRouter();
     const { showMessage } = useMessage();
@@ -195,6 +203,14 @@ export default function Page() {
     const isFormValid = amountStatus === 'valid' && employeeStatus === 'valid';
     const amountStatusInfo = getAmountStatusInfo();
     const employeeStatusInfo = getEmployeeStatusInfo();
+
+    if (ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    )
+
+    if (!ALLOW_PAGE.isLoading && ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.FM_TRANSACTIONS_CREATE} />
+    )
 
     return (
         <>

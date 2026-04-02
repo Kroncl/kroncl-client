@@ -184,12 +184,12 @@ export default function Page() {
             });
         }
     };
-    
+
     if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
         <PlatformNotAllowed permission={PERMISSIONS.HRM_EMPLOYEES} />
     );
 
-    if (loading) return (
+    if (loading || ALLOW_PAGE.isLoading) return (
         <PlatformLoading />
     );
     

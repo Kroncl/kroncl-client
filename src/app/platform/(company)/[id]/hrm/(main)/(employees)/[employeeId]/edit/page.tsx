@@ -210,7 +210,7 @@ export default function Page() {
         <PlatformNotAllowed permission={PERMISSIONS.HRM_EMPLOYEES_UPDATE} />
     )
 
-    if (loading) return (
+    if (loading || ALLOW_PAGE.isLoading) return (
         <PlatformLoading />
     );
     

@@ -25,10 +25,20 @@ import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/
 import { usePermission } from '@/apps/permissions/hooks';
 import { PERMISSIONS } from '@/apps/permissions/codes.config';
 import { useCompany } from '@/apps/company/provider';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
+import { PlatformError } from '@/app/platform/components/lib/error/block';
+import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
 
 export default function Page() {
+    // meta
     const params = useParams();
     const companyId = params.id as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.FM, {allowExpired: true});
+    const ALLOW_TRANSACTION_REVERSE = usePermission(PERMISSIONS.FM_TRANSACTIONS_REVERSE);
+    const ALLOW_TRANSACTION_CREATE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CREATE);
+
     const fmModule = useFm();
     const pathname = usePathname();
     const { showMessage } = useMessage();
@@ -195,30 +205,16 @@ export default function Page() {
     const searchParam = searchParams.get('search');
     if (searchParam) queryParams.search = searchParam;
 
-    if (loading || (summaryLoading && !summary)) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.FM} />
+    )
+
+    if (loading || ALLOW_PAGE.isLoading || (summaryLoading && !summary)) return (
+        <PlatformLoading />
     );
     
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error} />
     );
 
     return (
@@ -265,6 +261,7 @@ export default function Page() {
                         />
                     </div>
                 </div>
+                {(ALLOW_TRANSACTION_CREATE.allowed && !ALLOW_TRANSACTION_CREATE.isLoading) && (
                 <div className={styles.actions}>
                     <Button 
                         className={styles.action} 
@@ -282,6 +279,7 @@ export default function Page() {
                         href={`/platform/${companyId}/fm/new-operation?direction=income`}
                     />
                 </div>
+                )}
             </div>
             
             <div className={styles.cards}>
@@ -331,6 +329,7 @@ export default function Page() {
                                             [styles.beforeSplit]: splitIndex !== -1 && index < splitIndex,
                                             [styles.afterSplit]: splitIndex !== -1 && index >= splitIndex
                                         })}
+                                        showReverse={(!ALLOW_TRANSACTION_REVERSE.isLoading && ALLOW_TRANSACTION_REVERSE.allowed) ? true : false}
                                         onReverse={() => setReverseModal({ 
                                             isOpen: true, 
                                             transactionId: transaction.id 

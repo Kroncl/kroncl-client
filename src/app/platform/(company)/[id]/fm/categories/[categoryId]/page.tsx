@@ -13,6 +13,12 @@ import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
 import { PlatformModalConfirmation } from '@/app/platform/components/lib/modal/confirmation/confirmation';
 import { motion } from 'framer-motion';
+import { usePermission } from '@/apps/permissions/hooks';
+import { PERMISSIONS } from '@/apps/permissions/codes.config';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
+import { PlatformError } from '@/app/platform/components/lib/error/block';
+import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
+import { PlatformHeadAction } from '@/app/platform/components/lib/head/_types';
 
 export default function Page() {
     const params = useParams();
@@ -21,6 +27,11 @@ export default function Page() {
     const fmModule = useFm();
     const router = useRouter();
     const { showMessage } = useMessage();
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CATEGORIES, {allowExpired: true});
+    const ALLOW_CATEGORY_UPDATE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CATEGORIES_UPDATE);
+    const ALLOW_CATEGORY_DELETE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CATEGORIES_DELETE);
 
     const [category, setCategory] = useState<TransactionCategory | null>(null);
     const [loading, setLoading] = useState(true);
@@ -88,77 +99,44 @@ export default function Page() {
     const directionLabel = category?.direction === 'income' ? 'доходов' : 'расходов';
     const isSystem = category?.system;
 
-    if (loading) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            <Spinner />
-        </motion.div>
+    if (loading || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
     );
     
     if (error) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            {error}
-        </motion.div>
+        <PlatformError error={error} />
     );
 
     if (!category) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            Категория не найдена
-        </motion.div>
+        <PlatformError error='Категория не найдена' />
     );
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.FM_TRANSACTIONS_CATEGORIES} />
+    )
+
+    const actions: PlatformHeadAction[] = [
+        !ALLOW_CATEGORY_UPDATE.isLoading && ALLOW_CATEGORY_UPDATE.allowed && {
+            variant: 'accent',
+            icon: <Edit />,
+            children: 'Редактировать',
+            as: 'link',
+            href: `/platform/${companyId}/fm/categories/${categoryId}/edit`
+        },
+        !ALLOW_CATEGORY_DELETE.isLoading && ALLOW_CATEGORY_DELETE.allowed && {
+            variant: 'empty',
+            icon: <Exit />,
+            children: 'Удалить',
+            onClick: () => setIsModalDropOpen(true)
+        }
+    ].filter(Boolean) as PlatformHeadAction[];
 
     return (
         <>
             <PlatformHead
                 title={category.name}
                 description={`Категория ${directionLabel} организации.${isSystem ? ' Системная категория.' : ''} ${category.description && category.description}`}
-                actions={!isSystem ? [
-                    {
-                        variant: 'accent',
-                        icon: <Edit />,
-                        children: 'Редактировать',
-                        as: 'link',
-                        href: `/platform/${companyId}/fm/categories/${categoryId}/edit`
-                    },
-                    {
-                        variant: 'empty',
-                        icon: <Exit />,
-                        children: 'Удалить',
-                        onClick: () => setIsModalDropOpen(true)
-                    }
-                ] : []}
+                actions={!isSystem ? actions: []}
             />
 
             {/* modal delete category */}
