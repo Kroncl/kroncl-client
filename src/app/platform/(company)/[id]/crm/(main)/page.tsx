@@ -14,10 +14,20 @@ import { useCrm } from "@/apps/company/modules";
 import { sectionsList } from "../_sections";
 import { PlatformEmptyCanvas } from "@/app/platform/components/lib/empty-canvas/canvas";
 import Clients from "@/assets/ui-kit/icons/clients";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function Page() {
     const params = useParams();
     const companyId = params.id as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.CRM_CLIENTS, {allowExpired: true})
+    const ALLOW_CLIENT_CREATE = usePermission(PERMISSIONS.CRM_CLIENTS_CREATE)
+
     const crmModule = useCrm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -77,31 +87,17 @@ export default function Page() {
         }
     };
 
-    if (loading) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+    if (loading || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
     );
     
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error} />
     );
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.CRM_CLIENTS} />
+    )
 
     const clients = data?.clients || [];
     const pagination = data?.pagination;
@@ -121,7 +117,7 @@ export default function Page() {
             <PlatformHead
                 title='CRM'
                 description="Управление клиентской базой."
-                actions={[
+                actions={(!ALLOW_CLIENT_CREATE.isLoading && ALLOW_CLIENT_CREATE.allowed) ? [
                     {
                         icon: <Plus />,
                         variant: 'accent',
@@ -129,7 +125,7 @@ export default function Page() {
                         href: `/platform/${companyId}/crm/new`,
                         as: 'link'
                     }
-                ]}
+                ] : undefined}
                 sections={sectionsList(companyId)}
                 searchProps={{
                     placeholder: 'Поиск по клиентам',

@@ -15,6 +15,10 @@ import { ChooseSourceBlock } from '../../new/choose-source/block';
 import { ClientSource } from '@/apps/company/modules/crm/types';
 import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { SourceCard } from '../../../sources/components/source-card/card';
+import { usePermission } from '@/apps/permissions/hooks';
+import { PERMISSIONS } from '@/apps/permissions/codes.config';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
+import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
 
 type NameStatus = 'idle' | 'valid' | 'invalid';
 type SourceStatus = 'idle' | 'valid' | 'invalid';
@@ -23,6 +27,10 @@ export default function Page() {
     const params = useParams();
     const companyId = params.id as string;
     const clientId = params.clientId as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.CRM_CLIENTS_UPDATE)
+
     const crmModule = useCrm();
     const router = useRouter();
     const { showMessage } = useMessage();
@@ -285,20 +293,13 @@ export default function Page() {
         }
     };
 
-    if (initialLoading) {
-        return (
-            <div style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}>
-                <Spinner />
-            </div>
-        );
-    }
+    if (initialLoading || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    )
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.CRM_CLIENTS_UPDATE} />
+    )
 
     const isFormValid = firstNameStatus === 'valid' && sourceStatus === 'valid';
     const hasChanges = formData.firstName.trim() !== (client?.first_name || '') ||

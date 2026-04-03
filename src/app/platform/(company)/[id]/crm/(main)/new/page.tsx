@@ -13,6 +13,10 @@ import { useCrm } from '@/apps/company/modules';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { ChooseSourceBlock } from './choose-source/block';
 import { ClientSource } from '@/apps/company/modules/crm/types';
+import { usePermission } from '@/apps/permissions/hooks';
+import { PERMISSIONS } from '@/apps/permissions/codes.config';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
+import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
 
 type NameStatus = 'idle' | 'valid' | 'invalid';
 type SourceStatus = 'idle' | 'valid' | 'invalid';
@@ -20,6 +24,10 @@ type SourceStatus = 'idle' | 'valid' | 'invalid';
 export default function Page() {
     const params = useParams();
     const companyId = params.id as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.CRM_CLIENTS_CREATE)
+
     const crmModule = useCrm();
     const router = useRouter();
     const { showMessage } = useMessage();
@@ -197,6 +205,14 @@ export default function Page() {
     const isFormValid = firstNameStatus === 'valid' && sourceStatus === 'valid';
     const firstNameStatusInfo = getFirstNameStatusInfo();
     const sourceStatusInfo = getSourceStatusInfo();
+
+    if (ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    )
+
+    if (!ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.CRM_CLIENTS_CREATE} />
+    )
 
     return (
         <>
