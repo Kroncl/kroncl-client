@@ -8,9 +8,15 @@
     gap: 1em;
     position: relative;
 
-    .date {
-        color: var(--color-text-description);
+    .meta {
         @include text-ellipsis();
+
+        .accent {
+            color: var(--color-text-hint);
+        }
+        .date {
+            color: var(--color-text-description);
+        }
     }
     .text {
         line-height: 1.4;

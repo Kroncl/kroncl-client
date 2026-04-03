@@ -68,10 +68,16 @@ export default function Page() {
             const response = await supportModule.getMessages(ticketId, { page: pageNum, limit: 20 });
             if (response.status && response.data) {
                 const newMessages = response.data.messages;
+                // Сервер возвращает от новых к старым, реверсируем
+                const reversedMessages = [...newMessages].reverse();
+                
                 if (isLoadMore) {
-                    setMessages(prev => [...newMessages, ...prev]);
+                    // При загрузке старых сообщений (скролл вверх)
+                    // newMessages уже реверсированы, но они должны быть сверху
+                    setMessages(prev => [...reversedMessages, ...prev]);
                 } else {
-                    setMessages(newMessages);
+                    // Первая загрузка — просто реверсируем
+                    setMessages(reversedMessages);
                 }
                 setHasMore(newMessages.length === 20);
                 setPage(pageNum);
@@ -237,6 +243,11 @@ export default function Page() {
                         className={styles.message}
                     />
                 ))}
+                {ticket?.status === 'pending' && messages.length > 0 && !messages[messages.length - 1].is_tech && (
+                    <div className={styles.inWork}>
+                        <span className={styles.text}>Уже обрабатываем ваше сообщение</span>
+                    </div>
+                )}
             </div>
         </Scrollable>
         <div className={styles.textable}>

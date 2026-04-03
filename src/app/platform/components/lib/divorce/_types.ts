@@ -6,4 +6,5 @@ export interface DivorceSection {
   icon?: ComponentType<{ className?: string }>;
   accent?: boolean;
   href?: string;
+  img?: string;
 }

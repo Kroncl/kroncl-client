@@ -10,17 +10,19 @@ import Plus from '@/assets/ui-kit/icons/plus';
 import Package from '@/assets/ui-kit/icons/package';
 import Book from '@/assets/ui-kit/icons/book';
 import Dev from '@/assets/ui-kit/icons/dev';
+import { DivorceSection } from '../../components/lib/divorce/_types';
 
 export default function Page() {
     const { user } = useAuth();
     
-    const sections = [
+    const sections: DivorceSection[] = [
         {
             title: "Создать компанию",
             description: "Создание пространства для новой компании.",
             icon: Package,
             accent: true,
-            href: "/platform/companies/new"
+            href: "/platform/companies/new",
+            img: '/images/docs/company-logs.png'
         },
         {
             title: "Ваши организации",
