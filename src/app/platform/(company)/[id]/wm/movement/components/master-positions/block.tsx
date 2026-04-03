@@ -188,9 +188,9 @@ export function MasterPositionsBlock({
             </div>
             
             <div className={styles.list}>
-                {positions.map((position) => (
+                {positions.map((position, index) => (
                     <PositionCard
-                        key={position.unit_id}
+                        key={index}
                         className={clsx(
                             styles.item, 
                             duplicateUnitId === position.unit_id && styles.contrast
