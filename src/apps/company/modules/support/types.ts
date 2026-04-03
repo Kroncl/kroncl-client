@@ -9,6 +9,14 @@ export type TicketTheme =
     | "access_rights" 
     | "feature_request" 
     | "consultation";
+    
+export const TicketThemeTitle: Record<TicketTheme, string> = {
+    technical_issue: 'Техническая проблема',
+    billing_payment: 'Биллинг и оплата',
+    access_rights: 'Доступ и права',
+    feature_request: 'Предложение по функционалу',
+    consultation: 'Консультация'
+};
 
 export interface Link {
     id: string;
@@ -40,7 +48,7 @@ export interface Ticket {
     created_at: string;
     updated_at: string;
     initiator: AccountPublic;
-    last_message?: Message;
+    last_message: Message;
 }
 
 export interface TicketsResponse {

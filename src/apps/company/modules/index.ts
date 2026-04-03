@@ -7,6 +7,7 @@ import { hrmModule } from "./hrm/api";
 import { logsModule } from "./logs/api";
 import { pricingModule } from "./pricing/api";
 import { storageModule } from "./storage/api";
+import { supportModule } from "./support/api";
 import { wmModule } from "./wm/api";
 
 export const useStorage = () => useCompanyModule(storageModule);
@@ -18,3 +19,4 @@ export const useCrm = () => useCompanyModule(crmModule);
 export const useWm = () => useCompanyModule(wmModule);
 export const useDm = () => useCompanyModule(dmModule);
 export const usePricing = () => useCompanyModule(pricingModule);
+export const useSupport = () => useCompanyModule(supportModule);

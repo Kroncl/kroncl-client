@@ -3,39 +3,41 @@
 import Link from 'next/link';
 import styles from './card.module.scss';
 import clsx from 'clsx';
-import { DOCS_LINK_ACCOUNT } from '@/app/docs/(v1)/internal.config';
 import OutLink from '@/assets/ui-kit/icons/out-link';
+import { Message } from '@/apps/company/modules/support/types';
+import { formatDate } from '@/assets/utils/date';
 
 export interface MessageCardProps {
     className?: string;
+    message: Message;
 }
 
 export function MessageCard({
-    className
+    className,
+    message
 }: MessageCardProps) {
+    const formattedDate = formatDate(message.created_at);
+    const authorName = message.account.name || message.account.email;
+
     return (
         <div className={clsx(styles.card, className)}>
-            <div className={styles.date}>2 апреля, 2026</div>
-            <div className={styles.text}>
-                Переводчик — это специалист, который переносит смысл текстов или высказываний с одного языка на другой, сохраняя при этом содержание, стиль и цель текста, а также делает его понятным и близким для носителей языка. 
-                <br />
-                Переводчики требуются в сфере бизнеса, ИТ, финансов, медицины, юриспруденции, маркетинга, промышленности, массовой культуры. 
-            </div>
-            <div className={styles.media}>
-                <Link href='/images/docs/company-logs.png' target='_blank' className={styles.item} style={{backgroundImage: 'url(/images/docs/company-logs.png)'}}/>
-                <Link href='/images/docs/company-logs.png' target='_blank' className={styles.item} style={{backgroundImage: 'url(/images/docs/company-logs.png)'}}/>
-                <Link href='/images/docs/company-logs.png' target='_blank' className={styles.item} style={{backgroundImage: 'url(/images/docs/company-logs.png)'}}/>
-            </div>
-            <div className={styles.links}>
-                <Link href={DOCS_LINK_ACCOUNT} target='_blank' className={styles.link}>
-                    <span className={styles.icon}><OutLink /> </span>
-                    <span className={styles.name}>База знаний: аккаунт</span>
-                </Link>
-                <Link href={DOCS_LINK_ACCOUNT} target='_blank' className={styles.link}>
-                    <span className={styles.icon}><OutLink /> </span>
-                    <span className={styles.name}>База знаний: аккаунт</span>
-                </Link>
-            </div>
+            <div className={styles.date}>{formattedDate}</div>
+            <div className={styles.text}>{message.text}</div>
+            {message.links && message.links.length > 0 && (
+                <div className={styles.links}>
+                    {message.links.map((link) => (
+                        <Link 
+                            key={link.id}
+                            href={link.link} 
+                            target='_blank' 
+                            className={styles.link}
+                        >
+                            <span className={styles.icon}><OutLink /></span>
+                            <span className={styles.name}>{link.capture}</span>
+                        </Link>
+                    ))}
+                </div>
+            )}
         </div>
-    )
+    );
 }

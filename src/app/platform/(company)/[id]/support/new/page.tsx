@@ -1,11 +1,36 @@
+'use client';
+
 import { PlatformFormBody, PlatformFormSection, PlatformFormVariants } from "@/app/platform/components/lib/form";
 import { PlatformFormVariantOption } from "@/app/platform/components/lib/form/_types";
 import { PlatformHead } from "@/app/platform/components/lib/head/head";
 import Button from "@/assets/ui-kit/button/button";
 import Textarea from "@/assets/ui-kit/textarea/textarea";
 import { Scrollable } from "../components/scrollable/content";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { useState } from "react";
+import { useSupport } from "@/apps/company/modules";
+import { useParams, useRouter } from "next/navigation";
+import { useMessage } from "@/app/platform/components/lib/message/provider";
+import { supportEvents } from "@/apps/company/modules/support/events";
 
 export default function Page() {
+    const params = useParams();
+    const router = useRouter();
+    const companyId = params.id as string;
+    const supportModule = useSupport();
+    const { showMessage } = useMessage();
+    
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.SUPPORT_TICKETS_CREATE, {allowExpired: true});
+    
+    // form state
+    const [selectedTheme, setSelectedTheme] = useState('technical_issue');
+    const [message, setMessage] = useState('');
+    const [submitting, setSubmitting] = useState(false);
+    
     const themes: PlatformFormVariantOption[] = [
         {
             value: 'technical_issue',
@@ -33,36 +58,80 @@ export default function Page() {
             description: 'Помощь в работе с системой, обучение сотрудников, рекомендации по настройке',
         },
     ];
+    
+    const isValid = selectedTheme && message.trim().length >= 10 && message.trim().length <= 3000;
+    
+    const handleSubmit = async () => {
+        if (!isValid || submitting) return;
+        
+        setSubmitting(true);
+        try {
+            const response = await supportModule.createTicket({
+                theme: selectedTheme,
+                text: message.trim()
+            });
+            
+            if (response.status && response.data) {
+                // Уведомляем Panel об обновлении
+                supportEvents.emit();
+                
+                showMessage({
+                    label: 'Тикет успешно создан',
+                    variant: 'success'
+                });
+                router.push(`/platform/${companyId}/support/${response.data.id}`);
+            } else {
+                throw new Error(response.message || 'Не удалось создать тикет');
+            }
+        } catch (error: any) {
+            showMessage({
+                label: error.message || 'Ошибка при создании тикета',
+                variant: 'error'
+            });
+        } finally {
+            setSubmitting(false);
+        }
+    };
+    
+    if (ALLOW_PAGE.isLoading) return <PlatformLoading />;
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return <PlatformNotAllowed permission={PERMISSIONS.SUPPORT_TICKETS_CREATE} />;
+    
     return (
         <Scrollable>
-        <div style={{padding: '.8rem'}}>
-            <PlatformHead
-                title="Создание тикета"
-                description="Тикет - сообщение в службу поддержки Kroncl."
-            />
-            <PlatformFormBody>
-                <PlatformFormSection title='Тема обращения'>
-                    <PlatformFormVariants
-                        value='technical_issue'
-                        options={themes}
-                    />
-                </PlatformFormSection>
-                <PlatformFormSection title='Сообщение тикета'>
-                    <Textarea
-                        placeholder="Подробно объясните суть проблемы"
-                        style={{minHeight: '10em'}}
-                    />
-                </PlatformFormSection>
+            <div style={{padding: '.8rem'}}>
+                <PlatformHead
+                    title="Создание тикета"
+                    description="Тикет - сообщение в службу поддержки Kroncl."
+                />
+                <PlatformFormBody>
+                    <PlatformFormSection title='Тема обращения'>
+                        <PlatformFormVariants
+                            value={selectedTheme}
+                            options={themes}
+                            onChange={setSelectedTheme}
+                        />
+                    </PlatformFormSection>
+                    <PlatformFormSection title='Сообщение тикета'>
+                        <Textarea
+                            placeholder="Подробно объясните суть проблемы (от 10 до 3000 символов)"
+                            style={{minHeight: '10em'}}
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                        />
+                    </PlatformFormSection>
 
-                <section>
-                    <Button
-                        variant='accent'
-                    >
-                        Открыть тикет
-                    </Button>
-                </section>
-            </PlatformFormBody>
-        </div>
+                    <section>
+                        <Button
+                            variant='accent'
+                            onClick={handleSubmit}
+                            disabled={!isValid || submitting}
+                            loading={submitting}
+                        >
+                            Открыть тикет
+                        </Button>
+                    </section>
+                </PlatformFormBody>
+            </div>
         </Scrollable>
-    )
+    );
 }
