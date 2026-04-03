@@ -28,7 +28,7 @@ export const supportModule = (companyApi: CompanyApi) => ({
     },
     
     async updateTicketStatus(ticketId: string, data: UpdateTicketRequest) {
-        return companyApi.patch(`/modules/support/tickets/${ticketId}`, data);
+        return companyApi.patch<Ticket>(`/modules/support/tickets/${ticketId}`, data);
     },
     
     // Messages
@@ -43,6 +43,6 @@ export const supportModule = (companyApi: CompanyApi) => ({
     },
     
     async updateMessageReadStatus(ticketId: string, messageId: string, data: UpdateMessageReadRequest) {
-        return companyApi.patch(`/modules/support/tickets/${ticketId}/messages/${messageId}`, data);
+        return companyApi.patch<Message>(`/modules/support/tickets/${ticketId}/messages/${messageId}`, data);
     },
 });

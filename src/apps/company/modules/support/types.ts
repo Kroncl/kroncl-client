@@ -33,6 +33,7 @@ export interface Message {
     ticket_id: string;
     text: string;
     read: boolean;
+    is_tech: boolean;
     created_at: string;
     updated_at: string;
     account: AccountPublic;

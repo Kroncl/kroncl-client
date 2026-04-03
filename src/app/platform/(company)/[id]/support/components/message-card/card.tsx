@@ -21,7 +21,9 @@ export function MessageCard({
 
     return (
         <div className={clsx(styles.card, className)}>
-            <div className={styles.date}>{formattedDate}</div>
+            <div className={styles.meta}>
+                {message.is_tech && (<span className={styles.accent}>Специалист поддержки</span>)} {message.account.name}, <span className={styles.date}>{formattedDate}</span>
+            </div>
             <div className={styles.text}>{message.text}</div>
             {message.links && message.links.length > 0 && (
                 <div className={styles.links}>

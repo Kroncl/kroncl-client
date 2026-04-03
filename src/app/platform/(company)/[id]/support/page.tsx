@@ -22,9 +22,9 @@ export default function Page() {
             <div className={styles.description}>
                 Напишите нам по любому вопросу и получите ответ в течение <span className={styles.accent}>24 часов</span>
             </div>
-            <div className={styles.actions}>
+            {/* <div className={styles.actions}>
                 <Button className={styles.action} variant='contrast' as='link' href={`/platform/${companyId}/support/new`}>Открыть тикет</Button>
-            </div>
+            </div> */}
         </div>
     )
 }
