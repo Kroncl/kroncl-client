@@ -86,11 +86,11 @@ export function Panel({
                     </div>
                 </div>
                 <div className={styles.tickets}>
-                    {tickets.length === 0 ? (
+                    {!tickets ? (
                         <PlatformEmptyCanvas
                             title='Тикетов пока нет.'
-                            description='Создайте первый тикет, чтобы обратиться в поддержку.'
-                            icon={<Support />}
+                            className={styles.empty}
+                            showDescription={false}
                         />
                     ) : (
                         tickets.map((ticket) => (

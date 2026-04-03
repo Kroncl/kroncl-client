@@ -74,7 +74,7 @@ export default function Page() {
             if (response.status && response.data) {
                 // Уведомляем Panel об обновлении
                 supportEvents.emit();
-                
+
                 showMessage({
                     label: 'Тикет успешно создан',
                     variant: 'success'
@@ -101,7 +101,7 @@ export default function Page() {
             <div style={{padding: '.8rem'}}>
                 <PlatformHead
                     title="Создание тикета"
-                    description="Тикет - сообщение в службу поддержки Kroncl."
+                    description="Тикет - новый диалог с техническими специалистами Kroncl."
                 />
                 <PlatformFormBody>
                     <PlatformFormSection title='Тема обращения'>

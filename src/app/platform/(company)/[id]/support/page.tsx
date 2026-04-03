@@ -13,7 +13,7 @@ export default function Page() {
     return (
         <div className={styles.plug}>
             <div className={styles.top}>
-                <Support className={styles.svg} />
+                {/* <Support className={styles.svg} /> */}
                 <LogoIco className={styles.icon} /> 
             </div>
             <div className={styles.capture}>
