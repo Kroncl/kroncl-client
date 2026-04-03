@@ -15,8 +15,16 @@ import { ChooseCategoryModal } from "../../../../components/choose-category-moda
 import { CatalogCategory } from '@/apps/company/modules/wm/types';
 import styles from './page.module.scss';
 import { CategoryCard } from "../../../../components/category-card/card";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function EditCategoryPage() {
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG_CATEGORIES_UPDATE)
+
     const wmModule = useWm();
     const { showMessage } = useMessage();
     const router = useRouter();
@@ -138,35 +146,17 @@ export default function EditCategoryPage() {
         }
     };
 
-    if (isFetching) {
-        return (
-            <div style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}>
-                <Spinner />
-            </div>
-        );
+    if (isFetching || ALLOW_PAGE.isLoading) {
+        <PlatformLoading />
     }
 
     if (error) {
-        return (
-            <div style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}>
-                {error}
-            </div>
-        );
+        <PlatformError error={error} />
     }
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG_CATEGORIES_UPDATE} />
+    )
 
     const isFormValid = formData.name.trim().length > 0;
 

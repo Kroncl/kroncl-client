@@ -17,11 +17,21 @@ import { getStatusLabel } from "../../../components/category-card/_utils";
 import styles from './page.module.scss';
 import Link from "next/link";
 import clsx from "clsx";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function CategoryPage() {
     const params = useParams();
     const companyId = params.id as string;
     const categoryId = params.categoryId as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG_CATEGORIES, {allowExpired: true})
+    const ALLOW_CATEGORY_UPDATE = usePermission(PERMISSIONS.WM_CATALOG_CATEGORIES_UPDATE);   
+
     const wmModule = useWm();
     const router = useRouter();
     const { showMessage } = useMessage();
@@ -116,61 +126,26 @@ export default function CategoryPage() {
         }
     };
 
-    if (loading) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            <Spinner />
-        </motion.div>
+    if (loading || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
     );
     
     if (error) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            {error}
-        </motion.div>
+        <PlatformError error={error} />
     );
 
     if (!category) return (
-        <motion.div 
-            style={{
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                fontSize: ".7em", 
-                color: "var(--color-text-description)", 
-                minHeight: "10rem"
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-        >
-            Не удалось загрузить категорию
-        </motion.div>
+        <PlatformError error='Не удалось загрузить категорию' />
     );
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG_CATEGORIES} />
+    )
 
     const isActive = category.status === 'active';
     const statusLabel = getStatusLabel(category.status);
 
-    const actions = [
+    const actions = (!ALLOW_CATEGORY_UPDATE.isLoading && ALLOW_CATEGORY_UPDATE.allowed) ? [
         {
             children: 'Редактировать',
             icon: <Edit />,
@@ -178,22 +153,24 @@ export default function CategoryPage() {
             as: 'link' as const,
             href: `/platform/${companyId}/wm/${categoryId}/edit`
         }
-    ];
+    ] : [];
 
-    if (isActive) {
-        actions.push({
-            children: 'Деактивировать',
-            icon: <Exit />,
-            variant: 'light',
-            onClick: () => setIsModalDeactivateOpen(true)
-        });
-    } else {
-        actions.push({
-            children: 'Активировать',
-            icon: <Exit />,
-            variant: 'accent',
-            onClick: () => setIsModalActivateOpen(true)
-        });
+    if (!ALLOW_CATEGORY_UPDATE.isLoading && ALLOW_CATEGORY_UPDATE.allowed) {
+        if (isActive) {
+            actions.push({
+                children: 'Деактивировать',
+                icon: <Exit />,
+                variant: 'light',
+                onClick: () => setIsModalDeactivateOpen(true)
+            });
+        } else {
+            actions.push({
+                children: 'Активировать',
+                icon: <Exit />,
+                variant: 'accent',
+                onClick: () => setIsModalActivateOpen(true)
+            });
+        }
     }
 
     return (

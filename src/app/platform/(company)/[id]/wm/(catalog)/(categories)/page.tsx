@@ -16,10 +16,20 @@ import { useWm } from "@/apps/company/modules";
 import clsx from "clsx";
 import { PlatformEmptyCanvas } from "@/app/platform/components/lib/empty-canvas/canvas";
 import TwoCards from "@/assets/ui-kit/icons/two-cards";
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function CatalogPage() {
     const params = useParams();
     const companyId = params.id as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG_CATEGORIES, {allowExpired: true})
+    const ALLOW_CATEGORY_CREATE = usePermission(PERMISSIONS.WM_CATALOG_CATEGORIES_CREATE);   
+    
     const wmModule = useWm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -88,31 +98,17 @@ export default function CatalogPage() {
         }
     };
 
-    if (loading) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+    if (loading || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
     );
     
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error} />
     );
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG_CATEGORIES} />
+    )
 
     const categories = data?.categories || [];
     const pagination = data?.pagination;
@@ -131,7 +127,7 @@ export default function CatalogPage() {
             <PlatformHead
                 title='Каталог & Склад'
                 description="Управление ассортиментом услуг и товаров. Контроль остатков."
-                actions={[
+                actions={(!ALLOW_CATEGORY_CREATE.isLoading && ALLOW_CATEGORY_CREATE.allowed) ? [
                     {
                         children: 'Категория',
                         variant: 'accent',
@@ -141,7 +137,7 @@ export default function CatalogPage() {
                             : `/platform/${companyId}/wm/new`,
                         icon: <Plus />
                     }
-                ]}
+                ] : undefined}
                 sections={sectionsList(companyId)}
                 searchProps={{
                     placeholder: 'Поиск по категориям',

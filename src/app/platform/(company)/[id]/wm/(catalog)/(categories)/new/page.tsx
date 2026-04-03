@@ -13,8 +13,15 @@ import { CatalogCategory } from '@/apps/company/modules/wm/types';
 import styles from './page.module.scss';
 import { CategoryCard } from "../../../components/category-card/card";
 import Spinner from '@/assets/ui-kit/spinner/spinner';
+import { usePermission } from "@/apps/permissions/hooks";
+import { PERMISSIONS } from "@/apps/permissions/codes.config";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 
 export default function NewCategoryPage() {
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG_CATEGORIES_CREATE)
+
     const wmModule = useWm();
     const { showMessage } = useMessage();
     const router = useRouter();
@@ -106,6 +113,14 @@ export default function NewCategoryPage() {
     };
 
     const isFormValid = formData.name.trim().length > 0;
+
+    if (ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    )
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG_CATEGORIES_CREATE} />
+    )
 
     return (
         <>
