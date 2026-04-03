@@ -1,4 +1,9 @@
 export const PERMISSIONS = {
+    // Support
+	SUPPORT_TICKETS: 'support.tickets',
+	SUPPORT_TICKETS_CREATE: 'support.tickets.create',
+	SUPPORT_TICKETS_UPDATE: 'support.tickets.update',
+
     // Pricing
     PRICING_MIGRATE: 'pricing.migrate',
     PRICING_TRANSACTIONS: 'pricing.transactions',

@@ -8,19 +8,21 @@ export interface PlatformEmptyCanvasProps {
     title?: string;
     description?: string;
     icon?: React.ReactNode;
+    showDescription?: boolean;
 }
 
 export function PlatformEmptyCanvas({
     className,
     title = 'Здесь пока пусто.',
     description = 'Пора это исправить.',
-    icon = <Collection className={styles.svg} />
+    icon = <Collection className={styles.svg} />,
+    showDescription = true
 }: PlatformEmptyCanvasProps) {
     return (
         <div className={clsx(styles.canvas, className)}>
             <div className={styles.icon}>{icon}</div>
             <div className={styles.title}>{title}</div>
-            <div className={styles.description}>{description}</div>
+            {showDescription && (<div className={styles.description}>{description}</div>)}
         </div>
     )
 }
