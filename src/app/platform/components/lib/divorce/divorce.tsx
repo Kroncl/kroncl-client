@@ -64,15 +64,20 @@ export function PlatformDivorce({
           const Icon = section.icon;
           const SectionContent = (
             <>
-              <div className={styles.title}>
-                {Icon && <Icon className={styles.svg} />}
-                <span>{section.title}</span>
-              </div>
-              {section.description && (
-                <div className={styles.description}>
-                  {section.description}
+            {section.img && (
+              <div className={styles.cover} style={{backgroundImage: `url(${section.img})`}} />
+            )}
+            <div className={styles.base}>
+                <div className={styles.title}>
+                  {Icon && <Icon className={styles.svg} />}
+                  <span>{section.title}</span>
                 </div>
-              )}
+                {section.description && (
+                  <div className={styles.description}>
+                    {section.description}
+                  </div>
+                )}
+            </div>
             </>
           );
 

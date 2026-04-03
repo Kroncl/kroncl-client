@@ -243,6 +243,11 @@ export default function Page() {
                         className={styles.message}
                     />
                 ))}
+                {ticket?.status === 'pending' && messages.length > 0 && !messages[messages.length - 1].is_tech && (
+                    <div className={styles.inWork}>
+                        <span className={styles.text}>Уже обрабатываем ваше сообщение</span>
+                    </div>
+                )}
             </div>
         </Scrollable>
         <div className={styles.textable}>
