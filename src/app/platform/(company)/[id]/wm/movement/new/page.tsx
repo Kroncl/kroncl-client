@@ -11,12 +11,20 @@ import { StockBatchPosition } from '@/apps/company/modules/wm/types';
 import Button from '@/assets/ui-kit/button/button';
 import { useWm } from '@/apps/company/modules';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
+import { usePermission } from '@/apps/permissions/hooks';
+import { PERMISSIONS } from '@/apps/permissions/codes.config';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
+import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
 
 export default function Page() {
     const params = useParams();
     const router = useRouter();
     const companyId = params.id as string;
     const searchParams = useSearchParams();
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_STOCKS_BATCHES_CREATE)
+    
     const wmModule = useWm();
     const { showMessage } = useMessage();
     
@@ -76,6 +84,14 @@ export default function Page() {
             setIsLoading(false);
         }
     };
+
+    if (ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    )
+
+    if (!ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.WM_STOCKS_BATCHES_CREATE} />
+    )
 
     return (
         <>

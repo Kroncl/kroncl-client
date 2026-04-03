@@ -15,10 +15,20 @@ import { PlatformPagination } from '@/app/platform/components/lib/pagination/pag
 import { usePagination } from '@/apps/shared/pagination/hooks/usePagination';
 import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';
 import TwoCards from '@/assets/ui-kit/icons/two-cards';
+import { usePermission } from '@/apps/permissions/hooks';
+import { PERMISSIONS } from '@/apps/permissions/codes.config';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
+import { PlatformError } from '@/app/platform/components/lib/error/block';
+import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
 
 export default function MovementsPage() {
     const params = useParams();
     const companyId = params.id as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_STOCKS_BATCHES, {allowExpired: true})
+    const ALLOW_BATCH_CREATE = usePermission(PERMISSIONS.WM_STOCKS_BATCHES_CREATE);   
+    
     const wmModule = useWm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -26,7 +36,7 @@ export default function MovementsPage() {
     const { handlePageChange } = usePagination({
         baseUrl: pathname,
         defaultLimit: 20
-    });
+    })
 
     const [data, setData] = useState<StockBatchesResponse | null>(null);
     const [loading, setLoading] = useState(true);
@@ -76,31 +86,17 @@ export default function MovementsPage() {
         }
     };
 
-    if (loading) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+    if (loading || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
     );
     
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error}/>
     );
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.WM_STOCKS_BATCHES} />
+    )
 
     const batches = data?.batches || [];
     const pagination = data?.pagination;
@@ -118,7 +114,7 @@ export default function MovementsPage() {
             <PlatformHead
                 title='Движение товаров'
                 description="Управление поставками & отгрузками товаров."
-                actions={[
+                actions={(!ALLOW_BATCH_CREATE.isLoading && ALLOW_BATCH_CREATE.allowed) ? [
                     {
                         children: 'Отгрузка',
                         variant: 'light',
@@ -133,7 +129,7 @@ export default function MovementsPage() {
                         href: `/platform/${companyId}/wm/movement/new?direction=income`,
                         icon: <Plus />
                     }
-                ]}
+                ] : undefined}
                 sections={sectionsList(companyId)}
                 searchProps={{
                     placeholder: 'Поиск по поставкам/отгрузкам',
