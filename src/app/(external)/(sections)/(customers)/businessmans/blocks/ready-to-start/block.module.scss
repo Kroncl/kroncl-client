@@ -5,7 +5,11 @@
     flex-flow: row nowrap;
     position: relative;
     background-color: var(--color-surface-glass) !important;
-    
+    gap: .5em;
+    background: linear-gradient(90deg, #0028ba, #050e33);
+    color: var(--color-accent-text-primary);
+    @include shimmer(3s);
+
     .col {
         display: flex;
         
@@ -45,11 +49,16 @@
                 border-radius: 2em;
                 border: none;
                 transition: transform var(--transition), box-shadow var(--transition);
+                z-index: 40;
 
                 &:hover {
                     transform: scale(1.02);
                     box-shadow: 0 0 1em var(--color-accent);
                 }
+            }
+
+            @media (max-width: 720px) {
+                border: none;
             }
         }
     }

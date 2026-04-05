@@ -4,7 +4,7 @@
     display: flex;
     min-width: 8em;
     flex: 1;
-    min-height: 14em;
+    min-height: 19em;
     border: 1px solid var(--color-stroke-secondary);
     transition: background-color var(--transition);
     flex-flow: column nowrap;
@@ -12,6 +12,10 @@
     gap: 1em;
     color: var(--color-text-primary);
     position: relative;
+
+    &.shimmer {
+        @include shimmer();
+    }
 
     .marks {
         position: absolute;

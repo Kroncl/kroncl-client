@@ -13,6 +13,10 @@ import { SwitchableBlock } from './slides/switchable/block';
 import { StatisticsBlock } from './slides/statistics/block';
 import { MultitenantBlock } from './slides/multitenant/block';
 import { TariffsBlock } from '../(customers)/pricing/slides/tariffs/block';
+import { QuickLinksBlock } from '../../components/quick-links/quick-links';
+import { linksList } from './_links';
+import { ReadyToStartBlock } from '../(customers)/businessmans/blocks/ready-to-start/block';
+import { OverviewBlock } from './slides/overview/block';
 
 export default function Page() {
     return (
@@ -20,10 +24,13 @@ export default function Page() {
         <div className={styles.container}>
             <div className={styles.grid}>
                 <StartBlock className={styles.block} />
-
-                <PartnersBlock partners={partnersList} className={styles.block} />
+                {/* <PartnersBlock partners={partnersList} className={styles.block} /> */}
                 <SwitchableBlock />
                 
+                <div className={styles.interval} />
+                <OverviewBlock className={styles.block} />
+
+
                 <div className={styles.interval} />
                 <HeadBlock className={clsx(styles.block, styles.head)} 
                     title='Эффективность в ваших руках'
@@ -81,6 +88,14 @@ export default function Page() {
                 </div>
                 <EcosystemBlock className={styles.block} />
                 <TariffsBlock className={clsx(styles.block, styles.tariffsBlock)} />
+                    
+                <QuickLinksBlock 
+                    links={linksList} 
+                    className={styles.block}
+                />
+
+                <div className={styles.interval} />
+                <ReadyToStartBlock className={styles.block} />
             </div>
         </div>
         </>

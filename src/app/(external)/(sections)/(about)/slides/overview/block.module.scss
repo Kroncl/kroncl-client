@@ -1,0 +1,24 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    min-height: 28rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, #0028ba, #050e33);
+
+    .mockUp {
+        position: absolute;
+        z-index: 50;
+        height: 95%;
+        bottom: 0;
+        right: 0;
+    }
+
+    @media (max-width: 720px) {
+        .mockUp {
+            height: auto;
+            width: 100%;
+            right: -10%;
+        }
+    }
+}

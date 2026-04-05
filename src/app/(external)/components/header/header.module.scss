@@ -107,12 +107,12 @@
 
             .avatar {
                 display: inline-flex;
-                width: 1.8rem;
-                height: 1.8rem;
-                background-color: var(--color-accent);
+                width: 1.75rem;
+                height: 1.75rem;
+                background-color: var(--color-stroke-primary);
                 align-items: center;
                 justify-content: center;
-                padding: 2px;
+                padding: 1px;
                 border-radius: 50%;
                 transition: background-color var(--transition);
 

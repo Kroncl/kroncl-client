@@ -1,0 +1,12 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .capture {
+        font-weight: 600;
+        letter-spacing: .02em;
+        line-height: 1.3;
+    }
+}

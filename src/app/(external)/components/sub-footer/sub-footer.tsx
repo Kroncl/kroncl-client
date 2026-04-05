@@ -6,7 +6,7 @@ export function SubFooter() {
     return (
         <div className={styles.container}>
             <span className={styles.logo}><LogoIco className={styles.ico} /></span>
-            <span>This is <span className={styles.brand}>Kroncl.</span></span>
+            <span>Made by <span className={styles.brand}>Kroncl Volunteers.</span></span>
         </div>
     )
 }

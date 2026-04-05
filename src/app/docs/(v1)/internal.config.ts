@@ -7,6 +7,7 @@ export const DOCS_LINK_COMPANIES_ACCESSES = '/docs/companies/accesses';
 export const DOCS_LINK_COMPANIES_STORAGE = '/docs/companies/storage';
 
 
+export const DOCS_LINK_MODULES = '/docs/companies/modules';
 export const DOCS_LINK_FM = '/docs/companies/modules/fm';
 export const DOCS_LINK_HRM = '/docs/companies/modules/hrm';
 export const DOCS_LINK_CRM = '/docs/companies/modules/crm';

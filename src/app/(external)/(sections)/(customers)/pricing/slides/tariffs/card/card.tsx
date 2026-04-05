@@ -29,9 +29,10 @@ export interface Tariff {
 }
 
 export interface TariffCardProps {
-    tariff: Tariff;
+    tariff?: Tariff;
     billing_period?: BillingPeriod;
     variant?: 'default' | 'accent';
+    shimmer?: boolean;
     className?: string;
 }
 
@@ -39,9 +40,14 @@ export function TariffCard({
     billing_period = 'monthly',
     tariff,
     variant = 'default',
-    className
+    className,
+    shimmer = false
 }: TariffCardProps) {
     const { status } = useAuth();
+
+    if (!tariff) return (
+        <div className={clsx(styles.card, styles.shimmer, className)} />
+    )
 
     const currentBilling = tariff.billing.find(b => b.period === billing_period)
 
@@ -50,7 +56,7 @@ export function TariffCard({
     const formattedAmount = currentBilling.amount_rub.toLocaleString('ru-RU');
 
     return (
-        <div className={clsx(styles.card, styles[variant], className)}>
+        <div className={clsx(styles.card, shimmer && styles.shimmer, styles[variant], className)}>
             <span className={styles.marks}>
                 {(tariff.trial && tariff.trial_days) && (
                     <span className={styles.mark}>{tariff.trial_days} дней бесплатно</span>
