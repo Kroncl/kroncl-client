@@ -23,6 +23,19 @@
         background-color: var(--color-leader);
         height: 5rem;
     }
+    
+    .intervalFlex {
+        display: flex;
+        flex-flow: row nowrap;
+        height: 5rem;
+        gap: 1px;
+
+        span {
+            display: flex;
+            flex: 1;
+            background-color: var(--color-leader);
+        }
+    }
 
     @media (max-width: 720px) {
         padding: 0;

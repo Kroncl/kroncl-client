@@ -32,77 +32,56 @@ export default function Page() {
                         variant='default'
                         location='center'
                         actions={[
-                            {children: 'Создать сейчас', href: authLinks.registration, variant: 'contrast'}
+                            {as: 'link', children: 'Создать сейчас', href: authLinks.registration, variant: 'contrast'}
                         ]}
                     />
                     <OverviewBlock className={styles.block} />
                 </div>
                 <SwitchableBlock />
 
-                <div className={styles.interval} />
-                <HeadBlock className={clsx(styles.block, styles.head)} 
-                    title='Эффективность в ваших руках'
-                    description='Позвольте себе отдохнуть от тонн бухглалтерской отчётности.'
-                    variant='accent'
-                    location='left'
-                    actions={[
-                        {children: 'Начать сейчас', href: authLinks.registration, variant: 'contrast'}
-                    ]}
-                />
-                <DynamicsBlock className={styles.block} />
-                <div className={styles.dynamicsGrid}>
-                    <TimeSavingBlock className={styles.block} />
-                    <SimpleUiBlock className={styles.block} />
+                <div className={styles.intervalFlex}>
+                    <span />
+                    <span />
+                    <span />
+                    <span />
                 </div>
-            
-                <div className={styles.interval} />
-                <HeadBlock className={clsx(styles.block, styles.head)} 
-                    title='Работайте в нескольких организациях'
-                    description='Мгновенно переключаясь между учётными системами.'
-                    variant='orange'
-                    location='left'
-                    actions={[
-                        {children: 'Начать сейчас', href: authLinks.registration, variant: 'contrast'}
-                    ]}
-                />
-                <MultitenantBlock className={styles.block} />
-                    
-                <div className={styles.interval} />
-                <HeadBlock className={clsx(styles.block, styles.head)} 
-                    title='Больше чем бизнес'
-                    description='Для тех, кто живёт делом.'
-                    variant='default'
-                    location='center'
-                    actions={[
-                        {children: 'Начать сейчас', href: authLinks.registration, variant: 'contrast'}
-                    ]}
-                />
-                <div className={styles.statisticsGrid}>
-                    <StatisticsBlock 
-                        value='до 10000'
-                        legend='запросов/день к 1 организации'
-                        className={styles.block} 
-                        />
-                    <StatisticsBlock 
-                        value='7+'
-                        legend='модулей учёта & аналитики'
-                        className={styles.block} 
-                        />
-                    <StatisticsBlock 
-                        value='∞'
-                        legend='приглашений сотрудников'
-                        className={styles.block} 
-                        />
+
+                <div className={styles.ecosystemGrid}>
+                    <HeadBlock className={clsx(styles.block, styles.head)} 
+                        title='Больше чем бизнес'
+                        description='Для тех, кто живёт делом.'
+                        variant='default'
+                        location='center'
+                        actions={[
+                            {as: 'link', children: 'Начать сейчас', href: authLinks.registration, variant: 'contrast'}
+                        ]}
+                    />
+                    <div className={styles.statisticsGrid}>
+                        <StatisticsBlock 
+                            value='до 10000'
+                            legend='запросов/день к 1 организации'
+                            className={styles.block} 
+                            />
+                        <StatisticsBlock 
+                            value='7+'
+                            legend='модулей учёта & аналитики'
+                            className={styles.block} 
+                            />
+                        <StatisticsBlock 
+                            value='∞'
+                            legend='приглашений сотрудников'
+                            className={styles.block} 
+                            />
+                    </div>
+                    <EcosystemBlock className={styles.block} />
                 </div>
-                <EcosystemBlock className={styles.block} />
+
                 <TariffsBlock className={clsx(styles.block, styles.tariffsBlock)} />
                     
                 <QuickLinksBlock 
                     links={linksList} 
                     className={styles.block}
                 />
-
-                <div className={styles.interval} />
                 <ReadyToStartBlock className={styles.block} />
             </div>
         </div>

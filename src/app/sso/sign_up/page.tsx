@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from '../layout.module.scss';
 import { LogoIco } from '@/assets/ui-kit/logo/ico/ico';
 import Input from '@/assets/ui-kit/input/input';
@@ -25,6 +25,7 @@ import { Warning } from '../components/warning/warning';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { register, confirmEmail, resendConfirmation, user, status } = useAuth();
   const [step, setStep] = useState<'form' | 'code'>('form'); // Шаги: форма или код
   const [formData, setFormData] = useState({
@@ -39,13 +40,16 @@ export default function RegisterPage() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [canResend, setCanResend] = useState(true);
   const [resendTimer, setResendTimer] = useState(0);
+  
+  // Получаем URL для редиректа после регистрации
+  const redirectTo = searchParams.get('to') || '/platform';
 
   // Редирект если уже авторизован
   useEffect(() => {
     if (status === 'authenticated') {
-      router.push('/platform');
+      router.push(redirectTo);
     }
-  }, [status, router]);
+  }, [status, router, redirectTo]);
   
   // Таймер для повторной отправки кода
   useEffect(() => {
@@ -166,7 +170,7 @@ export default function RegisterPage() {
       if (success) {
         setSuccessMessage('Аккаунт успешно подтвержден!');
         setTimeout(() => {
-          router.push('/platform');
+          router.push(redirectTo);
         }, 2000);
       } else {
         setError('Неверный код подтверждения');
@@ -399,7 +403,7 @@ export default function RegisterPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                 >
-                    <Link href={authLinks.login}>
+                    <Link href={`${authLinks.login}${redirectTo !== '/platform' ? `?to=${encodeURIComponent(redirectTo)}` : ''}`}>
                     <Button 
                         className={styles.action} 
                         variant='glass'

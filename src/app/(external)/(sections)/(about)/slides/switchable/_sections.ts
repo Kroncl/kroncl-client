@@ -1,5 +1,6 @@
 import { StructureBlock } from './sections/structure/block';
 import { SecurityBlock } from './sections/security/block';
+import { DocsBlock } from './sections/docs/block';
 
 export type TabId = 'modules' | 'security' | 'docs';
 
@@ -23,6 +24,6 @@ export const tabs: TabConfig[] = [
     {
         id: 'docs',
         label: 'Руководство',
-        component: SecurityBlock
+        component: DocsBlock
     }
 ];

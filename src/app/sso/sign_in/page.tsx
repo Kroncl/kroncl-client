@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from '../layout.module.scss';
 import { LogoIco } from '@/assets/ui-kit/logo/ico/ico';
 import Input from '@/assets/ui-kit/input/input';
@@ -19,18 +19,22 @@ import { Warning } from '../components/warning/warning';
 
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { login, user, status } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoadingForm, setIsLoadingForm] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    
+    // Получаем URL для редиректа после входа
+    const redirectTo = searchParams.get('to') || '/platform';
 
     // Редирект если авторизован
     useEffect(() => {
         if (status === 'authenticated') {
-            router.push('/platform');
+            router.push(redirectTo);
         }
-    }, [status, router]);
+    }, [status, router, redirectTo]);
 
     useEffect(() => {
         if (error) {
@@ -73,6 +77,10 @@ export default function LoginPage() {
             
             if (!success) {
                 setError('Неверный email или пароль');
+            } else {
+                // После успешного входа произойдет редирект через useEffect
+                // Но можно добавить явный редирект здесь
+                router.push(redirectTo);
             }
         } catch (error: any) {
             let errorMessage = 'Произошла ошибка при входе';
@@ -97,6 +105,21 @@ export default function LoginPage() {
         if (e.key === 'Enter') {
             handleLogin();
         }
+    };
+
+    // Функция для безопасного редиректа (проверка на внешние URL)
+    const getSafeRedirectUrl = (url: string): string => {
+        // Проверяем, не является ли URL внешним или опасным
+        try {
+            const parsedUrl = new URL(url, window.location.origin);
+            // Разрешаем только относительные пути и пути того же домена
+            if (parsedUrl.origin === window.location.origin) {
+                return parsedUrl.pathname + parsedUrl.search;
+            }
+        } catch {
+            // Если URL некорректный, возвращаем /platform
+        }
+        return '/platform';
     };
 
     if (status === 'loading') {

@@ -64,7 +64,7 @@ export function TariffsBlock({
                 </Button>
             </div>
             <div className={styles.wrap}>
-                {loading ? (
+                {loading || !plans ? (
                     <div className={styles.grid}>
                         {[1, 2, 3].map(i => (
                             <TariffCard key={i} className={clsx(styles.card, styles.skeleton)} />
@@ -75,6 +75,11 @@ export function TariffsBlock({
                     {plans.map((plan) => {
                         const isMinLvl = plan.lvl === minLvl;
                         const theses = getThesesByLvl(plan.lvl, true);
+                        theses.push(
+                            {about: `${plan.limit_db_mb / 1024}ГБ хранилища данных`},
+                            {about: `${plan.limit_objects_mb / 1024}ГБ хранилища файлов`},
+                            {about: `До ${plan.limit_objects_count.toLocaleString('ru-RU')} файлов`}
+                        );
                         return (
                             <TariffCard 
                                 key={plan.code}
@@ -83,6 +88,7 @@ export function TariffsBlock({
                                 variant={isMinLvl ? 'accent' : 'default'}
                                 shimmer={isMinLvl}
                                 tariff={{
+                                    code: plan.code,
                                     name: plan.name,
                                     trial: true,
                                     trial_days: 30,

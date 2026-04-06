@@ -20,6 +20,7 @@ export interface TariffTesis {
 }
 
 export interface Tariff {
+    code: string;
     name: string;
     billing: TariffBilling[];
     description?: string;
@@ -88,12 +89,12 @@ export function TariffCard({
             </div>
             <div className={styles.actions}>
                 {status === 'authenticated' ? (
-                    <Button as='link' href={`${accountActionsLinks.createCompany}`} className={styles.action} variant='accent' fullWidth>
+                    <Button as='link' href={`${accountActionsLinks.createCompany}?plan=${tariff.code}`} className={styles.action} variant='accent' fullWidth>
                         Создать организацию
                     </Button>
                 ) : (
-                    <Button as='link' href={`${authLinks.login}?to=${accountActionsLinks.createCompany}`} className={styles.action} variant='accent' fullWidth>
-                        Создать организацию
+                    <Button as='link' href={`${authLinks.login}?to=${accountActionsLinks.createCompany}?plan=${tariff.code}`} className={styles.action} variant='accent' fullWidth>
+                        Войти в аккаунт
                     </Button>
                 ) }
             </div>

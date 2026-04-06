@@ -28,6 +28,18 @@
         background-color: var(--color-leader);
         height: 5rem;
     }
+    .intervalFlex {
+        display: flex;
+        flex-flow: row nowrap;
+        height: 5rem;
+        gap: 1px;
+
+        span {
+            display: flex;
+            flex: 1;
+            background-color: var(--color-leader);
+        }
+    }
 
     @media (max-width: 720px) {
         padding: 0;
@@ -70,6 +82,18 @@
 
     @media (max-width: 720px) {
         flex-direction: column;
+    }
+}
+
+// ecosystem grid (head + statistics + ecosystem)
+.ecosystemGrid {
+    display: flex;
+    flex-flow: column nowrap;
+    background: conic-gradient(from 315deg, var(--color-purple), var(--color-green), var(--color-red), var(--color-orange), var(--color-yellow));
+    color: var(--color-accent-text-primary);
+
+    .block {
+        background-color: transparent !important;
     }
 }
 
