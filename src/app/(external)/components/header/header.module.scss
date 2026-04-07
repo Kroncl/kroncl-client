@@ -90,7 +90,7 @@
                 width: 18rem;
                 min-height: 7rem;
                 background-color: var(--color-leader);
-                border-radius: .4em;
+                border-radius: .5rem;
                 box-shadow: 0 0 .4rem var(--color-surface-light);
                 overflow: hidden;
                 display: flex;
@@ -147,6 +147,7 @@
                         .description {
                             color: var(--color-text-description);
                             font-size: .95em;
+                            transition: color var(--transition);
                         }
 
                         .capture, .description {
@@ -158,6 +159,9 @@
                         .miniIcon {
                             background-color: var(--color-contrast);
                             color: var(--color-leader);
+                        }
+                        .info .description {
+                            color: var(--color-text-primary);
                         }
                     }
                 }

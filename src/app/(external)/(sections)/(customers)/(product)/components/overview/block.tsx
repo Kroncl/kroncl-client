@@ -7,17 +7,27 @@ import Button from '@/assets/ui-kit/button/button';
 import Question from '@/assets/ui-kit/icons/question';
 import Wallet from '@/assets/ui-kit/icons/wallet';
 import { authLinks } from '@/config/links.config';
+import React from 'react';
 
-export function OverviewBlock({className}: PageBlockProps) {
+export interface OverviewBlockProps extends PageBlockProps {
+    title: string;
+    description: React.ReactNode;
+    img: string;
+}
+
+export function OverviewBlock({
+    className,
+    title,
+    description,
+    img
+}: OverviewBlockProps) {
     return (
         <div className={clsx(styles.container)}>
             <div className={clsx(styles.focus)}>
                 <div className={clsx(styles.area, className)}>
-                    <div className={styles.capture}>Управление сделками</div>
+                    <div className={styles.capture}>{title}</div>
                     <div className={styles.description}>
-                        Создание сделок с автоматическим созданием/привязкой клиентов, загрузкой ассортимента услуг и товаров в состав сделки.
-                        <br />
-                        Гибкое планирование будущих продаж, интеграция с модулем финансов.
+                        {description}
                     </div>
                     <div className={styles.actions}>
                         <Button as='link' href={authLinks.registration} className={styles.action} variant='empty'>Начать сейчас</Button>
@@ -25,7 +35,7 @@ export function OverviewBlock({className}: PageBlockProps) {
                     </div>
                 </div>
             </div>
-            <img src='/images/promo/dark-company-deals-cut.png' className={styles.mockUp} />
+            <img src={img} className={styles.mockUp} />
         </div>
     )
 }

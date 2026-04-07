@@ -1,3 +1,8 @@
+// meta
+import { Metadata } from 'next';
+import { getMetaConfig } from '@/config/meta.config';
+export const metadata: Metadata = getMetaConfig('platform')
+
 import styles from './layout.module.scss';
 import clsx from "clsx";
 import Collection from "@/assets/ui-kit/icons/collection";

@@ -1,3 +1,8 @@
+// meta
+import { Metadata } from 'next';
+import { getMetaConfig } from '@/config/meta.config';
+export const metadata: Metadata = getMetaConfig('businessmans')
+
 import { AnalyticsBlock } from './blocks/analytics/block';
 import { GradientBlock } from './blocks/gradient/block';
 import { ReadyToStartBlock } from './blocks/ready-to-start/block';

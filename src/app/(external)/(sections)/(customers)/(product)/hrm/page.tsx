@@ -1,7 +1,7 @@
 // meta
 import { Metadata } from 'next';
 import { getMetaConfig } from '@/config/meta.config';
-export const metadata: Metadata = getMetaConfig('dm')
+export const metadata: Metadata = getMetaConfig('hrm')
 
 import { QuickLinksBlock } from '@/app/(external)/components/quick-links/quick-links';
 import styles from './../page.module.scss';
@@ -12,13 +12,13 @@ export default function Page() {
     return (
         <>
         <OverviewBlock 
-            title='Управление сделками'
+            title='Сотрудники'
             description={<>
-                Создание сделок с автоматическим созданием/привязкой клиентов, загрузкой ассортимента услуг и товаров в состав сделки.
+                Сотрудник не обязан иметь аккаунт, чтобы участвовать в отчетности компании. 
                 <br />
-                Гибкое планирование будущих продаж, интеграция с модулем финансов.
+                Стройте графики рабочих часов, отслеживайте активность сотрудников, планируйте зарплатные выплаты и поощрения за выполненную работу.
             </>}
-            img='/images/promo/dark-company-deals-cut.png'
+            img='/images/promo/dark-company-employees-cut.png'
             className={styles.overview} />
         <div className={styles.container}>
             <div className={styles.grid}>

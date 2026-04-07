@@ -1,3 +1,8 @@
+// meta
+import { Metadata } from 'next';
+import { getMetaConfig } from '@/config/meta.config';
+export const metadata: Metadata = getMetaConfig('pricing')
+
 import { QuickLinksBlock } from '@/app/(external)/components/quick-links/quick-links';
 import styles from './page.module.scss';
 import { ForPartnersBlock } from './slides/for-partners/block';

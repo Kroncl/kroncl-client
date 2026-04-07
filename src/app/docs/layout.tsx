@@ -1,3 +1,8 @@
+// meta
+import { Metadata } from 'next';
+import { getMetaConfig } from '@/config/meta.config';
+export const metadata: Metadata = getMetaConfig('docs')
+
 import { navigationSections } from "./(v1)/navigation.config";
 import { DocsContent } from "./components/content/content";
 import { DocsHeader } from "./components/header/header";

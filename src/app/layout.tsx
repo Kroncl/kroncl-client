@@ -1,18 +1,21 @@
+// meta
 import type { Metadata, Viewport } from "next";
-import '@/assets/styles/main.scss';
-import styles from './layout.module.scss';
-import Providers from "./providers";
-import ScrollToTop from "./ScrollToTop";
-import ThemeScript from "@/assets/utils/theme";
+import { defaultMeta } from "@/config/meta.config";
 
 export const metadata: Metadata = {
-  title: "Kroncl",
-  description: "",
+  title: defaultMeta.title,
+  description: defaultMeta.description,
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
   },
 };
+
+import '@/assets/styles/main.scss';
+import styles from './layout.module.scss';
+import Providers from "./providers";
+import ScrollToTop from "./ScrollToTop";
+import ThemeScript from "@/assets/utils/theme";
 
 export const viewport: Viewport = {
   themeColor: '#101010',

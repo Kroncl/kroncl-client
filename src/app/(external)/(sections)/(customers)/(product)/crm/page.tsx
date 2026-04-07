@@ -1,3 +1,8 @@
+// meta
+import { Metadata } from 'next';
+import { getMetaConfig } from '@/config/meta.config';
+export const metadata: Metadata = getMetaConfig('crm')
+
 import { QuickLinksBlock } from '@/app/(external)/components/quick-links/quick-links';
 import styles from './../page.module.scss';
 import { linksList } from './_links';
@@ -6,14 +11,14 @@ import { OverviewBlock } from '../components/overview/block';
 export default function Page() {
     return (
         <>
-        <OverviewBlock
-            title='Финансы'
+        <OverviewBlock 
+            title='CRM'
             description={<>
-                Получайте еженедельные отчёты о движении финансов вашего предприятия.
+                Перенесите клиентскую базу в защищённое хранилище Kroncl. 
                 <br />
-                Планируйте выплату кредитных обязательств, сокращайте кассовые разрывы и контролируйте выплаты сотрудникам.
+                Ведите индивидуальную историю клиентов, используйте инструменты повторого привлечения для повышения показателей удержания клиента.
             </>}
-            img='/images/promo/dark-company-transactions-cut.png'
+            img='/images/promo/dark-company-clients-stat-cut.png'
             className={styles.overview} />
         <div className={styles.container}>
             <div className={styles.grid}>

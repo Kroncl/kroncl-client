@@ -1,7 +1,7 @@
 // meta
 import { Metadata } from 'next';
 import { getMetaConfig } from '@/config/meta.config';
-export const metadata: Metadata = getMetaConfig('dm')
+export const metadata: Metadata = getMetaConfig('wm')
 
 import { QuickLinksBlock } from '@/app/(external)/components/quick-links/quick-links';
 import styles from './../page.module.scss';
@@ -12,13 +12,13 @@ export default function Page() {
     return (
         <>
         <OverviewBlock 
-            title='Управление сделками'
+            title='Каталог & Склад'
             description={<>
-                Создание сделок с автоматическим созданием/привязкой клиентов, загрузкой ассортимента услуг и товаров в состав сделки.
+                Структуризуйте ассортимент услуг/товаров вашего предприятия с возможностью регулярной выгрузки с помощью нашего открытого API.
                 <br />
-                Гибкое планирование будущих продаж, интеграция с модулем финансов.
+                Настраивайте сезонные скидки, акции и рассылки о предложениях.
             </>}
-            img='/images/promo/dark-company-deals-cut.png'
+            img='/images/promo/dark-company-create-unit-cut.png'
             className={styles.overview} />
         <div className={styles.container}>
             <div className={styles.grid}>
