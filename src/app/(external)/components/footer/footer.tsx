@@ -21,11 +21,11 @@ export function Footer() {
                 </div>
                 <div className={styles.sections}>
                     {linksList.map((group, index) => (
-                        <div className={styles.group}>
+                        <div key={index} className={styles.group}>
                             {group.capture && (<div className={styles.name}>{group.capture}</div>)}
                             
                             {group.links.map((link, index) => (
-                                <Link href={link.href} className={styles.section}>{link.capture}</Link>
+                                <Link key={index} href={link.href} className={styles.section}>{link.capture}</Link>
                             ))}
                         </div>
                     ))}

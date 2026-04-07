@@ -16,7 +16,7 @@ export function StartBlock({
                 Вопреки ФНС и тяжёлым реалиям жизни.
             </div>
             <div className={styles.actions}>
-                <Button as='link' href={authLinks.registration} className={styles.action} variant='accent'>Начать вести учёт</Button>
+                <Button as='link' href={authLinks.registration} className={styles.action} variant='accent'>Начать сейчас</Button>
             </div>
         </div>
     )

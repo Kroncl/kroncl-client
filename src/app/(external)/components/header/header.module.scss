@@ -76,10 +76,6 @@
             }
             &:hover, &.active {
                 color: var(--color-text-hint);
-
-                .icon .svg {
-                    fill: var(--color-hint);
-                }
             }
         }
 

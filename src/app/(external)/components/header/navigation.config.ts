@@ -1,6 +1,4 @@
-// navigation.config.ts
 import { NavigationSection } from "@/assets/utils/sections";
-import { linksConfig } from "@/config/links.config";
 
 export interface NavigationItem extends NavigationSection {
     name: string;
@@ -27,11 +25,11 @@ export const navigationConfig: NavigationItem[] = [
     {
         name: 'Документация',
         href: '/docs',
-        out: false,
+        out: true,
     },
     {
         name: 'Разработчикам',
-        href: linksConfig.developerPortal,
-        out: true,
+        href: 'dev',
+        out: false,
     }
 ];
