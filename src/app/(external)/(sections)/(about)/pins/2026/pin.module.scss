@@ -1,9 +1,11 @@
 @use '@/assets/styles/_mixins.scss' as *;
 
 .container {
-    background: linear-gradient(90deg, var(--color-surface-glass), var(--color-surface-light));
+    // background: linear-gradient(90deg, var(--color-surface-glass), var(--color-surface-light));
     @include slide();
     @include cursor(pointer);
+    background: #072cb3;
+    color: var(--color-accent-text-primary);
 
     .grid {
         display: flex;

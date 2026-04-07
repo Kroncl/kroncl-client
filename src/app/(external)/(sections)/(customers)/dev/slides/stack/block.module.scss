@@ -62,4 +62,16 @@
             }
         }
     }
+
+    @media (max-width: 720px) {
+        flex-direction: column;
+
+        .col {
+            width: 100%;
+
+            .stack {
+                font-size: .6em;
+            }
+        }
+    }
 }

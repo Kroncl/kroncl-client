@@ -21,6 +21,7 @@ import { useAuth } from '@/apps/account/auth/context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { slideDown } from './_animations';
 import { getRandomGradient } from '@/assets/utils/avatars';
+import Arrow from '@/assets/ui-kit/icons/arrow';
 
 export function Header() {
     const pathname = usePathname();
@@ -64,7 +65,7 @@ export function Header() {
         setIsMenuOpen(false);
     };
 
-    const renderNavigationItem = (item: typeof navigationConfig[0]) => {
+    const renderNavigationItem = (item: typeof navigationConfig[0], itemIndex: number) => {
         const isActive = isSectionActive(pathname, item);
         
         if (item.out) {
@@ -72,7 +73,7 @@ export function Header() {
                 <a 
                     href={item.href}
                     target="_blank"
-                    key={item.href}
+                    key={itemIndex}
                     rel="noopener noreferrer"
                     className={clsx(styles.section, isActive && styles.active)}
                 >
@@ -82,10 +83,39 @@ export function Header() {
             );
         }
 
+        if (item.subItems) {
+            return (
+                <div 
+                    className={clsx(styles.section)}
+                    key={itemIndex}
+                >
+                    <span className={styles.name}>{item.name}</span>
+                    <span className={styles.icon}><Arrow className={clsx(styles.svg, styles.rotate)} /></span>
+                    
+                    <div className={styles.divorce}>
+                        {item.subItems.map((subItem, index) => (
+                            <Link href={subItem.href} key={index} className={styles.subItem}>
+                                {subItem.icon && (<span className={styles.miniIcon}>{subItem.icon}</span>)}
+                                <span className={styles.info}>
+                                    <div className={styles.capture}>{subItem.name}</div>
+                                    <div className={styles.description}>{subItem.description || 'Открыть страницу'}</div>
+                                </span>
+                            </Link>
+                        ))}
+                        <div className={styles.subAction}>
+                            <Button href={authLinks.registration} as='link' variant='contrast' className={styles.act}>
+                                Начать сейчас
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <Link 
                 href={item.href}
-                key={item.href}
+                key={itemIndex}
                 className={clsx(styles.section, isActive && styles.active)}
             >
                 <span className={styles.name}>{item.name}</span>
@@ -143,8 +173,8 @@ export function Header() {
 
                 <div className={styles.navigation}>
                     <div className={styles.frame}>
-                        {navigationConfig.map((item) => (
-                            renderNavigationItem(item)
+                        {navigationConfig.map((item, index) => (
+                            renderNavigationItem(item, index)
                         ))}
                     </div>
                 </div>
@@ -258,11 +288,11 @@ export function Header() {
             {isMenuOpen && (
                 <div className={styles.menu}>
                     <div className={styles.sections}>
-                        {navigationConfig.map((item) => {
+                        {navigationConfig.map((item, itemIndex) => {
                             if (item.out) {
                                 return (
                                     <a 
-                                        key={item.name}
+                                        key={itemIndex}
                                         href={item.href}
                                         target="_blank"
                                         rel="noopener noreferrer"
@@ -274,10 +304,39 @@ export function Header() {
                                     </a>
                                 );
                             }
+                            if (item.subItems) {
+                                return (
+                                    <div 
+                                        key={itemIndex}
+                                        className={clsx(clsx(styles.section, styles.divorceSection))}
+                                    >
+                                        <div className={styles.wrap}>
+                                            <span className={styles.name}>{item.name}</span>
+                                            <span className={styles.icon}><Arrow className={clsx(styles.svg, styles.rotate)} /></span>
+                                        </div>
+                                        <div className={styles.divorce}>
+                                            {item.subItems.map((subItem, index) => (
+                                                <Link href={subItem.href} key={index} className={styles.subItem}>
+                                                    {subItem.icon && (<span className={styles.miniIcon}>{subItem.icon}</span>)}
+                                                    <span className={styles.info}>
+                                                        <div className={styles.capture}>{subItem.name}</div>
+                                                        <div className={styles.description}>{subItem.description || 'Открыть страницу'}</div>
+                                                    </span>
+                                                </Link>
+                                            ))}
+                                            <div className={styles.subAction}>
+                                                <Button href={authLinks.registration} as='link' variant='contrast' className={styles.act}>
+                                                    Начать сейчас
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
 
                             return (
                                 <Link 
-                                    key={item.name}
+                                    key={itemIndex}
                                     href={item.href}
                                     className={clsx(styles.section, isSectionActive(pathname, item) && styles.active)}
                                     onClick={closeMenu}

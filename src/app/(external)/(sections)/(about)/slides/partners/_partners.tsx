@@ -5,11 +5,11 @@ import { EasyServiceLogo } from "./components/easy-service";
 
 export const partnersList: Partner[] = [
     {
-        name: 'Altcor',
-        logo: <AltcorLogo className={styles.logo} />
-    },
-    {
         name: 'Easy Service',
         logo: <EasyServiceLogo className={styles.logo} />
+    },
+    {
+        name: 'Altcor',
+        logo: <AltcorLogo className={styles.logo} />
     }
 ];
