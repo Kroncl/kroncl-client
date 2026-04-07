@@ -9,7 +9,7 @@ export default function ThemeScript() {
       try {
         const savedTheme = localStorage.getItem('theme');
         const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        const theme = savedTheme || systemTheme || 'dark';
+        const theme = savedTheme || systemTheme || 'light';
         
         document.documentElement.setAttribute('data-theme', theme);
         document.body.setAttribute('data-theme', theme);
@@ -22,8 +22,8 @@ export default function ThemeScript() {
       } catch (e) {
         console.error('Theme application error:', e);
         // Резервная установка темы
-        document.documentElement.setAttribute('data-theme', 'dark');
-        document.body.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.body.setAttribute('data-theme', 'light');
       }
     };
 

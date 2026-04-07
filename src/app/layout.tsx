@@ -18,7 +18,7 @@ import ScrollToTop from "./ScrollToTop";
 import ThemeScript from "@/assets/utils/theme";
 
 export const viewport: Viewport = {
-  themeColor: '#101010',
+  themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
 };
@@ -32,10 +32,10 @@ export default function RootLayout({
     <html lang="ru" className={styles.layout} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/images/logo/base.png" />
-        <meta name="theme-color" content="#101010" />
+        <meta name="theme-color" content="#ffffff" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="msapplication-navbutton-color" content="#101010" />
+        <meta name="msapplication-navbutton-color" content="#ffffff" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
       <body className={styles.container} suppressHydrationWarning>
