@@ -1,0 +1,94 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    @include slide();
+    flex: 1;
+    padding: 0;
+}
+.grid {
+    @include focus();
+    padding: 0 1px;
+    background-color: var(--color-stroke-secondary);
+    flex: 1;
+    flex-flow: column nowrap;
+    gap: 1px;
+
+    .block {
+        background-color: var(--color-leader);
+        font-size: .6em;
+        padding: 2.5rem 2rem;
+    }
+
+    .interval {
+        background-color: var(--color-leader);
+        height: 5rem;
+    }
+
+    .intervalFlex {
+        display: flex;
+        flex-flow: row nowrap;
+        height: 5rem;
+        gap: 1px;
+
+        span {
+            display: flex;
+            flex: 1;
+            background-color: var(--color-leader);
+        }
+    }
+
+    @media (max-width: 720px) {
+        padding: 0;
+        
+        .block {
+            padding: 1.5rem 1rem;
+            font-size: .55em;
+        }
+    }
+}
+
+.form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
+    .focus {
+        display: flex;
+        flex: 1;
+        width: 25rem;
+        flex-flow: column nowrap;
+        gap: 1rem;
+
+        .warning {
+            font-size: .6em;
+            line-height: 1.3;
+            color: var(--color-text-ghost);
+            text-align: center;
+
+            .accent {
+                color: var(--color-text-hint);
+            }
+        }
+        .actions {
+            display: flex;
+            flex-flow: column nowrap;
+            font-size: .74em;
+
+            .action {
+                width: 100%;
+                border-radius: 2em;
+                transition: transform var(--transition);
+
+                &:hover {
+                    transform: scale(1.02);
+                }
+            }
+        }
+    }
+
+    @media (max-width: 720px) {
+        .focus {
+            width: 100%;
+        }
+    }
+}

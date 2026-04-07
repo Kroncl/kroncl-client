@@ -1,5 +1,6 @@
 import { ButtonProps } from "@/assets/ui-kit/button/button";
 import { InputVariant } from "@/assets/ui-kit/input/input";
+import { TextareaProps, TextareaVariants } from "@/assets/ui-kit/textarea/textarea";
 import { ReactNode } from "react";
 
 export interface PlatformFormBodyProps {
@@ -26,6 +27,11 @@ export interface PlatformFormInputProps {
   disabled?: boolean;
   readOnly?: boolean;
   variant?: InputVariant;
+  className?: string;
+}
+
+export interface PlatformFormTextareaProps extends Omit<TextareaProps, 'onChange'> {
+  onChange?: (value: string) => void;
   className?: string;
 }
 

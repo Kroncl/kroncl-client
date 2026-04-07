@@ -4,8 +4,10 @@ import clsx from 'clsx';
 import styles from './textarea.module.scss';
 import { TextareaHTMLAttributes, forwardRef } from 'react';
 
-interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  variant?: 'default' | 'leader' | 'contrast' | 'elevated' | 'empty' | 'glass' | 'brand' | 'accent';
+export type TextareaVariants = 'default' | 'leader' | 'contrast' | 'elevated' | 'empty' | 'glass' | 'brand' | 'accent';
+
+export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  variant?: TextareaVariants;
   size?: 'sm' | 'md' | 'lg';
   error?: boolean;
   fullWidth?: boolean;

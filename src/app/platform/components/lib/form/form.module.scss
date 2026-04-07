@@ -38,6 +38,19 @@
         }
     }
 }
+
+.textareaWrapper {
+    position: relative;
+
+    .counter {
+        position: absolute;
+        z-index: 2;
+        bottom: 1em;
+        right: 1em;
+        font-size: .8em;
+    }
+}
+
 .link {
     color: var(--color-text-hint);
     line-height: 1.3;

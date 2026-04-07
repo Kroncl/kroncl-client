@@ -9,10 +9,12 @@ import {
   PlatformFormVariantsProps,
   PlatformFormStatusProps,
   PlatformFormUnifyProps,
-  PlatformFormBodyProps
+  PlatformFormBodyProps,
+  PlatformFormTextareaProps
 } from './_types';
 import Button from '@/assets/ui-kit/button/button';
 import Link from 'next/link';
+import Textarea from '@/assets/ui-kit/textarea/textarea';
 
 
 export function PlatformFormBody({
@@ -110,6 +112,53 @@ export function PlatformFormVariants({
           )}
         </div>
       ))}
+    </div>
+  );
+}
+
+export function PlatformFormTextarea({
+  variant = 'elevated',
+  size = 'md',
+  error = false,
+  fullWidth = true,
+  resize = 'vertical',
+  placeholder,
+  value,
+  onChange,
+  maxLength,
+  disabled,
+  readOnly,
+  rows,
+  showCounter = false,
+  className,
+  ...props
+}: Readonly<PlatformFormTextareaProps> & { showCounter?: boolean }) {
+  const currentLength = typeof value === 'string' ? value.length : 0;
+  const isOverLimit = maxLength ? currentLength > maxLength : false;
+
+  return (
+    <div className={clsx(styles.textareaWrapper, className)}>
+      <Textarea
+        variant={variant}
+        size={size}
+        error={error || isOverLimit}
+        fullWidth={fullWidth}
+        resize={resize}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChange?.(e.target.value)}
+        maxLength={maxLength}
+        disabled={disabled}
+        readOnly={readOnly}
+        rows={rows}
+        className={styles.textarea}
+        {...props}
+      />
+      {showCounter && maxLength && (
+        <div className={clsx(styles.counter, isOverLimit && styles.overLimit)}>
+          {currentLength} / {maxLength}
+        </div>
+      )}
     </div>
   );
 }
