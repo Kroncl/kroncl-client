@@ -1,5 +1,7 @@
 export const DOCS_LINK = '/docs';
+export const DOCS_LINK_QUICK_START = '/docs/quick-start';
 export const DOCS_LINK_ACCOUNT = '/docs/account';
+export const DOCS_LINK_ACCOUNT_OVERVIEW = '/docs/account/overview';
 export const DOCS_LINK_ACCOUNT_SECURITY = '/docs/account/fingerprints';
 export const DOCS_LINK_COMPANIES = '/docs/companies';
 export const DOCS_LINK_COMPANIES_PRICING = '/docs/companies/pricing';
