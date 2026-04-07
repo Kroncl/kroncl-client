@@ -100,6 +100,7 @@
         background-color: transparent !important;
         z-index: 10;
         min-height: 18rem !important;
+        pointer-events: none;
         // background: linear-gradient(180deg, transparent, var(--color-leader));
     }
     .chartBlock {
@@ -116,16 +117,16 @@
 .ecosystemGrid {
     display: flex;
     flex-flow: column nowrap;
-    background: conic-gradient(from 315deg, 
-        #b647ff, 
-        #ff6b4a,
-        #ff3b6f,
-        #ff2e2e,
-        #ff8c42,
-        #ffd93d,
-        #6bcf7f,
-        #4a9eff,
-        #b647ff
+    background: conic-gradient(from 270deg,
+        #0a0a0f 0deg,
+        #1a0a2e 45deg,
+        #2d1b4e 90deg,
+        #4a154b 135deg,
+        #3d0d33 180deg,
+        #1a0a2e 225deg,
+        #0d1b2a 270deg,
+        #0a0a0f 315deg,
+        #0a0a0f 360deg
     );
     color: var(--color-accent-text-primary);
 

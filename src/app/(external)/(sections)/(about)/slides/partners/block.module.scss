@@ -25,6 +25,10 @@
                 width: 100%;
                 fill: var(--color-text-ghost);
             }
+
+            @media (max-width: 720px) {
+                height: 5.8em;
+            }
         }
     }
 
@@ -42,7 +46,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 1rem;
+        padding: 2rem 1rem;
         font-size: .65em;
         flex-flow: row nowrap;
         gap: 1em;

@@ -17,5 +17,9 @@ export const linksList: QuickLink[] = [
     {
         capture: 'Модули',
         href: DOCS_LINK_MODULES
+    },
+    {
+        capture: 'Поддержка',
+        href: '/support'
     }
 ]
