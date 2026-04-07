@@ -1,0 +1,99 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.overview {
+    font-size: .6em;
+    padding: 2.5rem 2rem;
+
+    @media (max-width: 720px) {
+        padding: 1.5rem 1rem;
+        font-size: .55em;
+    }
+}
+.container {
+    @include slide();
+    flex: 1;
+    padding: 0;
+}
+.grid {
+    @include focus();
+    padding: 0 1px;
+    padding-top: 1px;
+    background-color: var(--color-stroke-secondary);
+    flex: 1;
+    flex-flow: column nowrap;
+    gap: 1px;
+
+    .block {
+        background-color: var(--color-leader);
+        font-size: .6em;
+        padding: 2.5rem 2rem;
+
+        // sections head
+        &.head {
+            background-color: var(--color-leader);
+        }
+    }
+
+    .interval {
+        background-color: var(--color-leader);
+        height: 5rem;
+    }
+    .intervalFlex {
+        display: flex;
+        flex-flow: row nowrap;
+        height: 5rem;
+        gap: 1px;
+
+        span {
+            display: flex;
+            flex: 1;
+            background-color: var(--color-leader);
+        }
+    }
+
+    @media (max-width: 720px) {
+        padding: 0;
+        
+        .block {
+            padding: 1.5rem 1rem;
+            font-size: .55em;
+        }
+    }
+}
+
+.aboutGrid {
+    display: flex;
+    // min-height: 10rem;
+    position: relative;
+    flex-flow: row nowrap;
+    gap: 1px;
+
+    .col {
+        display: flex;
+        flex: 1;
+
+        &:nth-child(1) {
+            flex-flow: column nowrap;
+            gap: 1px;
+            max-width: 13rem;
+
+            .block {
+                min-height: 18rem;
+            }
+        }
+        &:nth-child(2) {
+            background-color: var(--color-leader);
+            display: flex;
+            flex-flow: column nowrap;
+            position: relative;
+            height: 30rem;
+
+            .block {
+                position: sticky;
+                top: 0;
+                height: 10rem;
+                border: 1px dashed red;
+            }
+        }
+    }
+}
