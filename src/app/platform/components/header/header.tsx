@@ -23,7 +23,15 @@ import { LogoIco } from '@/assets/ui-kit/logo/ico/ico';
 import { PllatformSearch } from '../search/search';
 import { AccountWidget } from './account-widget/widget';
 
-export function Header() {
+export interface HeaderProps {
+    className?: string;
+    subTitle?: string;
+}
+
+export function Header({
+    className,
+    subTitle
+}: HeaderProps) {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -38,24 +46,6 @@ export function Header() {
         document.documentElement.setAttribute('data-theme', initialTheme);
     }, []);
 
-    // Установка светлой темы
-    const setLightTheme = () => {
-        if (theme !== 'light') {
-            setTheme('light');
-            document.documentElement.setAttribute('data-theme', 'light');
-            localStorage.setItem('theme', 'light');
-        }
-    };
-
-    // Установка темной темы
-    const setDarkTheme = () => {
-        if (theme !== 'dark') {
-            setTheme('dark');
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-        }
-    };
-
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
@@ -64,35 +54,6 @@ export function Header() {
         setIsMenuOpen(false);
     };
 
-    // const renderNavigationItem = (item: typeof navigationConfig[0]) => {
-    //     const isActive = isSectionActive(pathname, item);
-        
-    //     if (item.out) {
-    //         return (
-    //             <a 
-    //                 href={item.href}
-    //                 target="_blank"
-    //                 key={item.href}
-    //                 rel="noopener noreferrer"
-    //                 className={clsx(styles.section, isActive && styles.active)}
-    //             >
-    //                 <span className={styles.name}>{item.name}</span>
-    //                 <span className={styles.icon}><OutLink className={styles.svg} /></span>
-    //             </a>
-    //         );
-    //     }
-
-    //     return (
-    //         <Link 
-    //             href={item.href}
-    //             key={item.href}
-    //             className={clsx(styles.section, isActive && styles.active)}
-    //         >
-    //             <span className={styles.name}>{item.name}</span>
-    //         </Link>
-    //     );
-    // };
-
     return (
         <>
             <header className={clsx(styles.container, isMenuOpen && styles.active)}>
@@ -100,8 +61,15 @@ export function Header() {
                     <span className={styles.area}>
                         <LogoIco animate />
                     </span>
-                    {/* <span className={styles.text}>Бизнесу</span> */}
                 </Link>
+
+                {subTitle && (
+                    <div className={styles.subTitle}>
+                        <span className={styles.text}>
+                            {subTitle}
+                        </span>
+                    </div>
+                )}
 
                 <div className={styles.search}>
                     <div className={styles.frame}>

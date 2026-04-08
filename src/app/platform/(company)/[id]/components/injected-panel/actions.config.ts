@@ -15,7 +15,7 @@ function allActions(companyId: string): Action[] {
         {
             children: "Доход",
             href: `/platform/${companyId}/fm/new-operation`,
-            variant: 'accent',
+            variant: 'contrast',
             as: 'link',
             lvl: PLAN_MAX_LVL
         },

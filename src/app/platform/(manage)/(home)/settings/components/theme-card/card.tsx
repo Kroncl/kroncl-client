@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import styles from './card.module.scss';
-import { Theme } from '../../../../../../assets/styles/base/themes/_themes';
+import { Theme } from '@/assets/styles/base/themes/_themes';
 
 export interface ThemeCardProps {
     className?: string;

@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { optimizedAreaVariants, optimizedCanvasVariants } from './_animations';
-import { CompanyCard } from '../../(home)/companies/components/company-card/card';
+import { CompanyCard } from '../../(manage)/(home)/companies/components/company-card/card';
 import { useCompanies } from '@/apps/account/companies/hooks/useCompanies';
 import Upload from '@/assets/ui-kit/icons/upload';
 import Collection from '@/assets/ui-kit/icons/collection';

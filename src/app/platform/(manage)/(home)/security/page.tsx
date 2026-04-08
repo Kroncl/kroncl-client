@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Plus from '@/assets/ui-kit/icons/plus';
-import { PlatformHead } from '../../components/lib/head/head';
+import { PlatformHead } from '@/app/platform/components/lib/head/head';
 import { TokenCard } from './components/token-card/card';
 import styles from './page.module.scss';
 import { fingerprintsApi } from '@/apps/account/fingerprints/api';
@@ -14,7 +14,7 @@ import { usePagination } from '@/apps/shared/pagination/hooks/usePagination';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
 import { PlatformModalConfirmation } from '@/app/platform/components/lib/modal/confirmation/confirmation';
-import { PlatformEmptyCanvas } from '../../components/lib/empty-canvas/canvas';
+import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';
 import Keyhole from '@/assets/ui-kit/icons/keyhole';
 import { DOCS_LINK_ACCOUNT_SECURITY } from '@/app/docs/(v1)/internal.config';
 

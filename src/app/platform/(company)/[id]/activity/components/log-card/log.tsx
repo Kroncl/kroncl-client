@@ -9,6 +9,7 @@ import { ModalTooltip } from '@/app/components/tooltip/tooltip';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Log } from '@/apps/company/modules/logs/types';
+import History from '@/assets/ui-kit/icons/history';
 
 interface LogCardProps {
     className?: string;
@@ -26,7 +27,7 @@ export function LogCard({ log, className }: LogCardProps) {
                 <span>
                     {log.status === 'success' && <SuccessStatus />}
                     {log.status === 'error' && <ErrorStatus className={styles.error} />}
-                    {log.status === 'pending' && <span className={styles.pending}>⏳</span>}
+                    {log.status === 'pending' && <History />}
                 </span>
                 <span className={styles.scale}>
                     {Array.from({ length: 10 }).map((_, i) => (

@@ -9,6 +9,10 @@
     overflow: hidden;
     gap: 1em;
 
+    &.shimmer {
+        @include shimmer(3s);
+    }
+
     .box {
         min-width: 1em;
         width: 1em;
@@ -52,13 +56,15 @@
         .area {
             display: block;
             overflow-x: scroll;
+            overflow-y: hidden;
             flex: 1;
 
             .grid {
                 display: flex;
                 flex-flow: column wrap;
-                gap: .3em;
-                max-height: 10em;
+                gap: .25em;
+                max-height: calc(1em * 9 + .25em * 8);
+                font-size: .84em;
             }
         }
         

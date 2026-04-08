@@ -3,11 +3,11 @@ import { Metadata } from 'next';
 import { getMetaConfig } from '@/config/meta.config';
 export const metadata: Metadata = getMetaConfig('platform')
 
-import styles from './layout.module.scss';
+import styles from './../layout.module.scss';
 import clsx from "clsx";
 import Collection from "@/assets/ui-kit/icons/collection";
 import Wallet from "@/assets/ui-kit/icons/wallet";
-import { Header } from "./components/header/header";
+import { Header } from "../components/header/header";
 
 export default function PlatformLayout({
   children

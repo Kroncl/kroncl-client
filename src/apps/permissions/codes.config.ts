@@ -16,6 +16,9 @@ export const PERMISSIONS = {
     
     // Logs
     LOGS: 'logs',
+    LOGS_OPTIMIZE: 'logs.optimize',
+    LOGS_ACTIVITY: 'logs.activity',
+    LOGS_CLEAR: 'logs.clear',
     
     // Accounts
     ACCOUNTS: 'accounts',

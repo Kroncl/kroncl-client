@@ -35,6 +35,27 @@
         }
     }
 
+    // company simple branding
+    .subTitle {
+        display: inline-flex;
+        align-items: center;
+        padding: 0 .6em;
+        font-weight: 600;
+        letter-spacing: .02em;
+        color: var(--color-text-ghost);
+        overflow: hidden;
+        max-width: 10rem;
+        font-size: .85em;
+
+        .text {
+            @include text-ellipsis();
+        }
+
+        @media (max-width: 720px) {
+            // max-width: ;
+        }
+    }
+
     // navigation area
     .search {
         position: absolute;

@@ -18,6 +18,8 @@ import { PLAN_MAX_LVL, sections } from "./components/injected-panel/sections.con
 import ClientPanel from "../../components/panel/client-panel";
 import { PlatformInjectedPanel } from "./components/injected-panel/panel";
 import { PlatformDynamicContentWrapper } from "../../components/lib/wrapper/dynamic-wrapper";
+import styles from './../../layout.module.scss';
+import { Header } from "../../components/header/header";
 
 export interface CompanyLayoutProps extends CompanyParams {
   children: React.ReactNode;
@@ -52,22 +54,26 @@ export default async function CompanyLayout({
     <>
       <SideContentProvider>
         <CompanyProvider company={company}>
-          
-          <PlatformInjectedPanel />
+          <div className={styles.canvas}>
+              <Header subTitle={company.name || ''} />
+              <div className={styles.container}>
+              
+              <PlatformInjectedPanel />
 
-          <PlatformContent>
-            <PlatformDynamicContentWrapper>
-              <AuthGuard>
-                  <ModalPageProvider> {/** not used yet */}
-                      {children}
-                    <PlatformModalPage />
-                  </ModalPageProvider>
-              </AuthGuard>
-            </PlatformDynamicContentWrapper>
-          </PlatformContent>
+              <PlatformContent>
+                <PlatformDynamicContentWrapper>
+                  <AuthGuard>
+                      <ModalPageProvider> {/** not used yet */}
+                          {children}
+                        <PlatformModalPage />
+                      </ModalPageProvider>
+                  </AuthGuard>
+                </PlatformDynamicContentWrapper>
+              </PlatformContent>
 
-          <PlatformSideContent />
-
+              <PlatformSideContent />
+            </div>
+          </div>
         </CompanyProvider>
 
       </SideContentProvider>

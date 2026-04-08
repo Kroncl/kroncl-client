@@ -19,7 +19,7 @@ import { InvitationCard } from '../invitations/components/invitation-card';
 import { AccountInvitation } from '@/apps/account/invitations/types';
 import { invitationsApi } from '@/apps/account/invitations/api';
 import Empty from '@/assets/ui-kit/icons/empty';
-import { PlatformHead } from '../../components/lib/head/head';
+import { PlatformHead } from '@/app/platform/components/lib/head/head';
 import { DOCS_LINK_ACCOUNT } from '@/app/docs/(v1)/internal.config';
 
 export default function Page() {

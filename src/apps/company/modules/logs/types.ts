@@ -40,3 +40,13 @@ export interface LogsResponse {
     logs: LogListItem[];
     pagination: PaginationMeta;
 }
+
+export interface LogActivity {
+    date: string;
+    count: string;
+}
+
+export interface GetLogsActivityRequest {
+    start_date?: string;              // ISO date string
+    end_date?: string;                // ISO date string
+}

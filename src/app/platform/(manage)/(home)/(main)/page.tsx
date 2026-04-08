@@ -3,14 +3,14 @@
 import Wallet from '@/assets/ui-kit/icons/wallet';
 import Settings from '@/assets/ui-kit/icons/settings';
 import Account from '@/assets/ui-kit/icons/account';
-import { PlatformDivorce } from '../../components/lib/divorce/divorce';
+import { PlatformDivorce } from '@/app/platform/components/lib/divorce/divorce';
 import { useAuth } from '@/apps/account/auth/context/AuthContext';
 import Collection from '@/assets/ui-kit/icons/collection';
 import Plus from '@/assets/ui-kit/icons/plus';
 import Package from '@/assets/ui-kit/icons/package';
 import Book from '@/assets/ui-kit/icons/book';
 import Dev from '@/assets/ui-kit/icons/dev';
-import { DivorceSection } from '../../components/lib/divorce/_types';
+import { DivorceSection } from '@/app/platform/components/lib/divorce/_types';
 
 export default function Page() {
     const { user } = useAuth();
