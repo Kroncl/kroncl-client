@@ -22,6 +22,9 @@ import Bell from '@/assets/ui-kit/icons/bell';
 import { LogoIco } from '@/assets/ui-kit/logo/ico/ico';
 import { PllatformSearch } from '../search/search';
 import { AccountWidget } from './account-widget/widget';
+import Question from '@/assets/ui-kit/icons/question';
+import Info from '@/assets/ui-kit/icons/info';
+import { ModalTooltip } from '@/app/components/tooltip/tooltip';
 
 export interface HeaderProps {
     className?: string;
@@ -78,6 +81,11 @@ export function Header({
                 </div>
                 
                 <div className={styles.actions}>
+                    <ModalTooltip content='Kroncl - операционная система управления процессами малого бизнеса.'>
+                        <div className={styles.icon}>
+                            <Info className={styles.svg} />
+                        </div>
+                    </ModalTooltip>
                     <AccountWidget className={styles.account} />
                     
                     {/* <div className={styles.burger} onClick={toggleMenu}>

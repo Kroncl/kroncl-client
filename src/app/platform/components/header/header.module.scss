@@ -90,7 +90,30 @@
         flex-flow: row nowrap;
         flex: 1;
         justify-content: end;
+        align-items: center;
         gap: .3em;
+
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.8em;
+            height: 1.8em;
+            border-radius: 50%;
+            @include cursor(pointer);
+            background-color: var(--color-surface-glass);
+            color: var(--color-icon-primary);
+            transition: color var(--transition);
+
+            .svg {
+                width: 62%;
+                height: 62%;
+            }
+
+            &:hover {
+                color: var(--color-text-primary);
+            }
+        }
 
         // account avatar
         .account {
