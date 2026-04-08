@@ -52,15 +52,52 @@
         display: flex;
         flex-flow: row nowrap;
         gap: 1em;
+        position: relative;
+        padding-top: 1.5em;
+        
+        .sections {
+            position: absolute;
+            font-size: .84em;
+            z-index: 10;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            gap: .2em;
+            color: var(--color-text-description);
+            pointer-events: none;
+
+            .section {
+                flex: 1;
+                justify-content: center;
+                display: none;
+                white-space: nowrap;
+
+                &:nth-child(1) {
+                    justify-content: start;
+                    opacity: 1;
+                    display: flex;
+                }
+                &:last-child {
+                    opacity: 1;
+                    justify-content: end;
+                    display: flex;
+                    color: var(--color-text-primary);
+                }
+            }
+        }
 
         .area {
             display: block;
             overflow-x: scroll;
             overflow-y: hidden;
             flex: 1;
+            position: relative;
 
             .grid {
                 display: flex;
+                position: relative;
                 flex-flow: column wrap;
                 gap: .25em;
                 max-height: calc(1em * 9 + .25em * 8);

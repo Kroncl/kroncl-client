@@ -20,6 +20,12 @@ const normalizeDate = (date: Date): string => {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 };
 
+// Названия месяцев на русском
+const monthNames = [
+    'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+    'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+];
+
 export function Calendar({
     className
 }: CalendarProps) {
@@ -48,7 +54,7 @@ export function Calendar({
         fetchActivity();
     }, []);
 
-    const daysGrid = useMemo(() => {
+    const { daysGrid, monthSections } = useMemo(() => {
         const end = new Date();
         end.setHours(0, 0, 0, 0);
         const start = new Date(end);
@@ -65,17 +71,43 @@ export function Calendar({
         const grid: { date: Date; count: number }[] = [];
         const current = new Date(start);
         
+        // Для отслеживания месяцев
+        const monthsMap = new Map<number, { month: number; year: number; firstDayIndex: number; displayName: string }>();
+        let dayIndex = 0;
+        
         for (let i = 0; i <= DAYS_TO_DISPLAY; i++) {
             const dateKey = normalizeDate(current);
             const count = activityMap.get(dateKey) || 0;
+            const month = current.getMonth();
+            const year = current.getFullYear();
+            const monthKey = year * 12 + month;
+            
+            if (!monthsMap.has(monthKey)) {
+                // Формируем отображаемое имя: "Апрель, 2025" или "Май, 2026"
+                const displayName = `${monthNames[month]}, ${year}`;
+                monthsMap.set(monthKey, {
+                    month,
+                    year,
+                    firstDayIndex: dayIndex,
+                    displayName
+                });
+            }
+            
             grid.push({
                 date: new Date(current),
                 count
             });
             current.setDate(current.getDate() + 1);
+            dayIndex++;
         }
         
-        return grid;
+        // Формируем секции месяцев в порядке от старых к новым
+        const sections = Array.from(monthsMap.values()).map(item => ({
+            name: item.displayName,
+            firstDayIndex: item.firstDayIndex
+        }));
+        
+        return { daysGrid: grid, monthSections: sections };
     }, [activity]);
 
     const getIntensityClass = (count: number): string => {
@@ -106,6 +138,17 @@ export function Calendar({
     return (
         <div className={clsx(styles.container, className)}>
             <div className={styles.base}>
+                <div className={styles.sections}>
+                    {monthSections.map((section, idx) => (
+                        <span 
+                            key={idx} 
+                            className={styles.section}
+                            style={{ gridColumnStart: section.firstDayIndex + 1 }}
+                        >
+                            {section.name}
+                        </span>
+                    ))}
+                </div>
                 <div className={styles.area}>
                     <div className={styles.grid}>
                         {daysGrid.map((day, index) => (
