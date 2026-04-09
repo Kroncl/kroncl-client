@@ -6,9 +6,7 @@ export interface CompanyAccount {
   name: string;
   email: string;
   avatar_url: string | null;
-  role_id: string;
   role_code: string;
-  role_name: string;
   status: string;
   created_at: string;
   joined_at: string;

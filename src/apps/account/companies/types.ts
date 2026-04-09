@@ -10,9 +10,7 @@ export interface AccountCompany {
     created_at: string;
     updated_at: string;
     joined_at: string;
-    role_id: string;
     role_code: string;
-    role_name: string;
 }
 
 export interface GetAccountCompaniesParams extends PaginationParams {

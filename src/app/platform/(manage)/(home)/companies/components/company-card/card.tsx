@@ -22,14 +22,10 @@ export function CompanyCard({ company, className = ''}: CompanyCardProps) {
         ? "Публичная компания - видна всем пользователям."
         : "Приватная компания - доступ только по приглашению.";
 
-    const roleTooltips: Record<string, string> = {
-        owner: "Вы - владелец компании. Полный доступ ко всем возможностям.",
-        admin: "Вы - администратор. Расширенные права управления.",
-        member: "Вы - участник. Базовый доступ к функциям компании.",
-        guest: "Вы - гость. Ограниченный доступ только для просмотра."
+    const roleName: Record<string, string> = {
+        owner: "Владелец",
+        guest: "Гость"
     };
-
-    const roleTooltip = roleTooltips[company.role_code] || "Ваша роль в компании";
 
     const dateTooltip = `Вы присоединились к компании ${formatDate(company.joined_at)}`;
 
@@ -77,14 +73,9 @@ export function CompanyCard({ company, className = ''}: CompanyCardProps) {
                     </div>
                 )}
                 <div className={styles.tags}>
-                    <ModalTooltip
-                        content={roleTooltip}
-                        side="top"
-                    >
-                        <span className={styles.tag}>
-                            {company.role_name}
-                        </span>
-                    </ModalTooltip>
+                    <span className={styles.tag}>
+                        {roleName[company.role_code] || 'Роль не опознана'}
+                    </span>
                     <ModalTooltip
                         content={dateTooltip}
                         side="top"

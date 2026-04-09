@@ -316,7 +316,7 @@ export function Header() {
                                         </div>
                                         <div className={styles.divorce}>
                                             {item.subItems.map((subItem, index) => (
-                                                <Link href={subItem.href} key={index} className={styles.subItem}>
+                                                <Link href={subItem.href} key={index} className={styles.subItem} onClick={closeMenu}>
                                                     {subItem.icon && (<span className={styles.miniIcon}>{subItem.icon}</span>)}
                                                     <span className={styles.info}>
                                                         <div className={styles.capture}>{subItem.name}</div>

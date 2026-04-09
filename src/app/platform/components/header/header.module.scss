@@ -101,7 +101,7 @@
             height: 1.8em;
             border-radius: 50%;
             @include cursor(pointer);
-            background-color: var(--color-surface-glass);
+            // background-color: var(--color-surface-glass);
             color: var(--color-icon-primary);
             transition: color var(--transition);
 
