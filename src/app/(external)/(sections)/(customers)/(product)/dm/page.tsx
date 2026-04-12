@@ -7,10 +7,12 @@ import { QuickLinksBlock } from '@/app/(external)/components/quick-links/quick-l
 import styles from './../page.module.scss';
 import { linksList } from './_links';
 import { OverviewBlock } from '../components/overview/block';
+import { Pin } from '../../../(about)/pins/2026/pin';
 
 export default function Page() {
     return (
         <>
+        <Pin />
         <OverviewBlock 
             title='Управление сделками'
             description={<>

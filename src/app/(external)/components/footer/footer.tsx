@@ -10,8 +10,7 @@ import Sun from '@/assets/ui-kit/icons/sun';
 import Moon from '@/assets/ui-kit/icons/moon';
 import { ThemeSwitcher } from './switcher/switcher';
 import { linksList } from './_links';
-import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from '../../(papers)/navigation.config';
-import { MailingSubscribeWidget } from '../../mailing/widget/widget';
+import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from '../../(sections)/(customers)/(papers)/navigation.config';
 
 export function Footer() {
     return (

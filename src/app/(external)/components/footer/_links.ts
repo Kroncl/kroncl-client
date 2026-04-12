@@ -1,6 +1,6 @@
 import { DOCS_LINK_ACCOUNT, DOCS_LINK_ACCOUNT_OVERVIEW, DOCS_LINK_ACCOUNT_SECURITY, DOCS_LINK_COMPANIES, DOCS_LINK_COMPANIES_ACCESSES, DOCS_LINK_COMPANIES_LOGS, DOCS_LINK_COMPANIES_PRICING, DOCS_LINK_COMPANIES_STORAGE, DOCS_LINK_CRM, DOCS_LINK_DM, DOCS_LINK_FM, DOCS_LINK_HRM, DOCS_LINK_QUICK_START } from "@/app/docs/(v1)/internal.config";
 import { authLinks } from "@/config/links.config";
-import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from "../../(papers)/navigation.config";
+import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from "../../(sections)/(customers)/(papers)/navigation.config";
 
 export interface FooterLink {
     capture: string;
