@@ -10,6 +10,8 @@ import Sun from '@/assets/ui-kit/icons/sun';
 import Moon from '@/assets/ui-kit/icons/moon';
 import { ThemeSwitcher } from './switcher/switcher';
 import { linksList } from './_links';
+import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from '../../(papers)/navigation.config';
+import { MailingSubscribeWidget } from '../../mailing/widget/widget';
 
 export function Footer() {
     return (
@@ -17,6 +19,7 @@ export function Footer() {
             <div className={styles.focus}>
                 <div className={styles.brand}>
                     <div className={styles.logo}><LogoFull /></div>
+                    {/* <MailingSubscribeWidget className={styles.mailingWidget} /> */}
                     <ThemeSwitcher className={styles.switcher} />
                 </div>
                 <div className={styles.sections}>

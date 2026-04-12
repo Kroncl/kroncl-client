@@ -1,0 +1,18 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    position: sticky;
+    top: 0;
+    background-color: var(--color-surface-glass-secondary);
+    border-bottom: 1px solid var(--color-stroke-secondary);
+    @include slide();
+
+    .focus {
+        @include focus();
+        font-size: .45em;
+        height: 1.7rem;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+    }
+}

@@ -42,6 +42,18 @@ const metaConfigs: Record<string, MetaConfig> = {
     },
     'platform': {
         title: 'Kroncl | Платформа',
+    },
+    'product-papers' : {
+        title: 'Kroncl | Правовые документы',
+    },
+    'privacy-policy' : {
+        title: 'Kroncl | Политика конфиденциальности',
+    },
+    'platform-usage' : {
+        title: 'Kroncl | Правила использования платформы',
+    },
+    'mailing' : {
+        title: 'Kroncl | Рассылка',
     }
 };
 

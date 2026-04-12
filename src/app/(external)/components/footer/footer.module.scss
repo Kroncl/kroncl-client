@@ -26,7 +26,7 @@
         
         .logo {
             height: fit-content;
-            font-size: 1.6em;
+            font-size: 1.45em;
         }
         .slogan {
             font-size: .6em;
@@ -35,8 +35,14 @@
             // padding-left: .7em;
         }
 
-        .switcher {
+        .mailingWidget {
+            width: 100%;
             margin-top: 1rem;
+            font-size: .6em;
+        }
+
+        .switcher {
+            margin-top: .8rem;
             font-size: 1.5em;
         }
     }
@@ -69,6 +75,11 @@
                 &:hover {
                     color: var(--color-text-hint);
                 }
+            }
+
+            &.papers {
+                min-width: 18rem;
+                max-width: 18rem;
             }
         }
     }

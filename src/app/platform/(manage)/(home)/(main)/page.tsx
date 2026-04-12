@@ -18,15 +18,15 @@ export default function Page() {
     const sections: DivorceSection[] = [
         {
             title: "Создать компанию",
-            description: "Создание пространства для новой компании.",
+            description: "Создание пространства для новой компании. Новый настройки тарификации.",
             icon: Package,
             accent: true,
             href: "/platform/companies/new",
-            img: '/images/docs/company-logs.png'
+            // img: '/images/docs/company-logs.png'
         },
         {
             title: "Ваши организации",
-            description: "Смотреть организации, в которых вы состоите.",
+            description: "Смотреть организации, в которых вы является гостем или владельцем.",
             icon: Collection,
             href: "/platform/companies"
         },
