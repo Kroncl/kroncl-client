@@ -4,7 +4,7 @@ import PlatformPanel from "../../components/panel/server-panel";
 import PlatformContent from "../../components/content/content";
 import { AccountCompany } from "@/apps/account/companies/types";
 import { CompanyProvider, useCompany } from "@/apps/company/provider";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { companiesApiSSR } from "@/apps/account/companies/api-ssr";
 import { PlatformContentWrapper } from "../../components/lib/wrapper/wrapper";
 import { StorageWidget } from "./storage/widgets/storage-widget/widget";
@@ -38,7 +38,7 @@ export default async function CompanyLayout({
   children,
   params
 }: CompanyLayoutProps) {
-  const companyId = params.id;
+  const companyId = params.id as string;
   
   if (!companyId) {
     notFound();

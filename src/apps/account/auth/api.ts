@@ -43,6 +43,8 @@ export class AccountAuth {
     async tryRestoreAuth(): Promise<boolean> {
         if (typeof window === 'undefined') return false;
         
+        const isProduction = process.env.NODE_ENV === 'production';
+        
         const accessToken = AuthStorage.getAccessToken();
         
         if (accessToken && !AuthStorage.isTokenExpired()) {
@@ -50,6 +52,17 @@ export class AccountAuth {
             return true;
         }
         
+        // В dev-режиме не пытаемся рефрешить, если нет куки
+        if (!isProduction) {
+            console.log('🛠️ Dev mode: skipping refresh, using access token only');
+            if (accessToken) {
+                this.setToken(accessToken);
+                return true;
+            }
+            return false;
+        }
+        
+        // В проде пытаемся рефрешить
         if (accessToken && AuthStorage.isTokenExpired()) {
             const refreshResult = await this.refreshTokens();
             return refreshResult?.status === true;
@@ -163,6 +176,14 @@ export class AccountAuth {
     async refreshTokens(): Promise<ApiResponse<RefreshResponse> | null> {
         if (this.isRefreshing && this.refreshPromise) {
             return this.refreshPromise;
+        }
+
+        const isProduction = process.env.NODE_ENV === 'production';
+        
+        // В dev-режиме просто возвращаем null, не пытаемся рефрешить
+        if (!isProduction) {
+            console.log('🛠️ Dev mode: refresh skipped');
+            return null;
         }
 
         this.isRefreshing = true;

@@ -23,19 +23,40 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const ACCESS_TOKEN_COOKIE = 'auth_access_token';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
     const [user, setUser] = useState<Account | null>(null);
     const [status, setStatus] = useState<AuthStatus>('loading');
 
+    const setAccessTokenCookie = (token: string, expiresAt: string) => {
+        if (typeof window === 'undefined') return;
+        try {
+            const expires = new Date(expiresAt).getTime();
+            const now = Date.now();
+            const maxAge = Math.floor((expires - now) / 1000);
+            if (maxAge > 0) {
+                document.cookie = `${ACCESS_TOKEN_COOKIE}=${token}; path=/; max-age=${maxAge}; SameSite=Lax`;
+            }
+        } catch {}
+    };
+
+    const clearAccessTokenCookie = () => {
+        if (typeof window === 'undefined') return;
+        document.cookie = `${ACCESS_TOKEN_COOKIE}=; path=/; max-age=0`;
+    };
+
     const refreshAuth = useCallback(async (): Promise<boolean> => {
         const refreshResult = await accountAuth.refreshTokens();
-        if (refreshResult?.status) {
+        if (refreshResult?.status && refreshResult.data) {
             const userData = AuthStorage.getUser();
             if (userData) {
                 setUser(userData);
                 setStatus('authenticated');
+                if (refreshResult.data.access_token && refreshResult.data.expires_at) {
+                    setAccessTokenCookie(refreshResult.data.access_token, refreshResult.data.expires_at);
+                }
                 return true;
             }
         }
@@ -51,6 +72,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 
                 if (restored && userData) {
                     setUser(userData);
+                    
+                    const accessToken = AuthStorage.getAccessToken();
+                    const expiresAt = AuthStorage.getExpiresAt();
+                    if (accessToken && expiresAt) {
+                        setAccessTokenCookie(accessToken, expiresAt);
+                    }
                     
                     if (userData.status === 'waiting') {
                         setStatus('unauthenticated');
@@ -89,6 +116,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (response.status && response.data) {
                 setUser(response.data.user);
                 setStatus('authenticated');
+                setAccessTokenCookie(response.data.access_token, response.data.expires_at);
                 return true;
             }
             
@@ -107,6 +135,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (response.status && response.data) {
                 setUser(response.data.user);
                 setStatus('authenticated');
+                setAccessTokenCookie(response.data.access_token, response.data.expires_at);
                 return true;
             }
             
@@ -130,6 +159,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
             
             setStatus('unauthenticated');
+            
+            setAccessTokenCookie(response.data.access_token, response.data.expires_at);
             
             return {
                 success: true,
@@ -206,6 +237,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } finally {
             AuthStorage.clear();
             accountAuth.clearToken();
+            clearAccessTokenCookie();
             setUser(null);
             setStatus('unauthenticated');
             router.push(authLinks.login);

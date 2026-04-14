@@ -1,112 +1,100 @@
 import { ApiResponse, RequestOptions } from './types';
 
+const ACCESS_TOKEN_COOKIE = 'auth_access_token';
+
 class ApiBridge {
     private baseUrl: string;
     private refreshInProgress = false;
-    private refreshPromise: Promise<ApiResponse<any> | null> | null = null;
+    private refreshPromise: Promise<boolean> | null = null;
     
-    // Кэш для дебаунса запросов
     private requestCache = new Map<string, {
         promise: Promise<ApiResponse<any>>;
         timestamp: number;
-        data?: any;
     }>();
-    private cacheTTL = 1000; // 1 секунда TTL для одинаковых запросов
+    private cacheTTL = 1000;
     
-    // Дебаунс таймеры
     private debounceTimers = new Map<string, NodeJS.Timeout>();
-    private debounceDelay = 300; // 300ms дебаунс
 
     constructor() {
         this.baseUrl = process.env.NEXT_PUBLIC_API_URL || '';
-        if (!this.baseUrl) {
-            console.warn('NEXT_PUBLIC_API_URL is not defined');
-        }
     }
 
-    /**
-     * Установка токена
-     */
-    setToken(token: string | null): void {
-        // Это для прямого управления токеном
+    setToken(token: string | null): void {}
+
+    private setAccessTokenCookie(token: string, expiresAt: string): void {
+        if (typeof window === 'undefined') return;
+        try {
+            const expires = new Date(expiresAt).getTime();
+            const now = Date.now();
+            const maxAge = Math.floor((expires - now) / 1000);
+            if (maxAge > 0) {
+                document.cookie = `${ACCESS_TOKEN_COOKIE}=${token}; path=/; max-age=${maxAge}; SameSite=Lax`;
+            }
+        } catch {}
     }
 
-    /**
-     * Общая логика обработки refresh токена
-     */
+    private clearAccessTokenCookie(): void {
+        if (typeof window === 'undefined') return;
+        document.cookie = `${ACCESS_TOKEN_COOKIE}=; path=/; max-age=0`;
+    }
+
     private async handleTokenRefresh(): Promise<boolean> {
         if (this.refreshInProgress && this.refreshPromise) {
-            await this.refreshPromise;
-            return true;
+            return this.refreshPromise;
         }
 
         this.refreshInProgress = true;
         this.refreshPromise = (async () => {
             try {
-                console.log('🔄 Автопродление токена...');
-                
-                // Получаем refresh токен напрямую из localStorage
-                const refreshToken = typeof window !== 'undefined' 
-                    ? localStorage.getItem('auth_refresh_token')
-                    : null;
-                    
-                if (!refreshToken) {
-                    return null;
-                }
-                
-                // Делаем запрос refresh напрямую
-                const response = await this.post<any>('/account/refresh', { 
-                    refresh_token: refreshToken 
-                });
+                const response = await this.makeRequest<any>(
+                    '/account/refresh',
+                    { method: 'POST', credentials: 'include' },
+                    0,
+                    true
+                );
                 
                 if (response.status && response.data?.access_token) {
-                    // Сохраняем новый токен
                     if (typeof window !== 'undefined') {
+                        const expiresAt = response.data.expires_at;
+                        const user = JSON.parse(localStorage.getItem('auth_user_data') || 'null');
+                        
                         localStorage.setItem('auth_access_token', response.data.access_token);
-                        if (response.data.refresh_token) {
-                            localStorage.setItem('auth_refresh_token', response.data.refresh_token);
+                        if (expiresAt) {
+                            localStorage.setItem('auth_expires_at', expiresAt);
+                        }
+                        if (user) {
+                            localStorage.setItem('auth_user_data', JSON.stringify(user));
                         }
                         
-                        // Обновляем cookies
-                        document.cookie = `auth_access_token=${response.data.access_token}; path=/; max-age=86400; SameSite=Lax`;
-                        if (response.data.refresh_token) {
-                            document.cookie = `auth_refresh_token=${response.data.refresh_token}; path=/; max-age=2592000; SameSite=Lax`;
-                        }
+                        this.setAccessTokenCookie(response.data.access_token, expiresAt);
                     }
                     
-                    return response;
+                    return true;
                 } else {
-                    // Если refresh не удался, очищаем токены
                     if (typeof window !== 'undefined') {
                         localStorage.removeItem('auth_access_token');
-                        localStorage.removeItem('auth_refresh_token');
-                        // Редирект на логин если на клиенте
+                        localStorage.removeItem('auth_expires_at');
+                        localStorage.removeItem('auth_user_data');
+                        this.clearAccessTokenCookie();
+                        
                         if (window.location.pathname.includes('/platform')) {
                             window.location.href = '/sso/sign_in';
                         }
                     }
-                    return null;
+                    return false;
                 }
-            } catch (error) {
-                console.error('❌ Ошибка при обновлении токена:', error);
-                return null;
+            } catch {
+                return false;
             } finally {
                 this.refreshInProgress = false;
                 this.refreshPromise = null;
             }
         })();
 
-        const result = await this.refreshPromise;
-        return result?.status === true;
+        return this.refreshPromise;
     }
 
-    /**
-     * Генерация ключа для кэширования запросов
-     */
-    private generateRequestKey(
-        endpoint: string, 
-        options: RequestOptions
-    ): string {
+    private generateRequestKey(endpoint: string, options: RequestOptions): string {
         const { method = 'GET', params, body } = options;
         
         let key = `${method}:${endpoint}`;
@@ -119,23 +107,16 @@ class ApiBridge {
             key += `?${sortedParams}`;
         }
         
-        // Для POST/PUT/PATCH запросов учитываем тело
         if (body && ['POST', 'PUT', 'PATCH'].includes(method.toUpperCase())) {
             try {
                 const bodyStr = typeof body === 'string' ? body : JSON.stringify(body);
-                // Используем хэш или просто добавляем длину для простоты
                 key += `:body=${bodyStr.length}`;
-            } catch {
-                // Игнорируем ошибки сериализации
-            }
+            } catch {}
         }
         
         return key;
     }
 
-    /**
-     * Дебаунс запросов
-     */
     private async debouncedRequest<T>(
         endpoint: string,
         options: RequestOptions = {},
@@ -143,52 +124,42 @@ class ApiBridge {
     ): Promise<ApiResponse<T>> {
         const requestKey = this.generateRequestKey(endpoint, options);
         
-        // Проверяем есть ли такой же активный запрос
         const cached = this.requestCache.get(requestKey);
         const now = Date.now();
         
         if (cached && (now - cached.timestamp) < this.cacheTTL) {
-            console.log(`📦 Используем кэшированный запрос: ${requestKey}`);
             return cached.promise as Promise<ApiResponse<T>>;
         }
         
-        // Создаем новый промис для запроса
-        const requestPromise = this.makeRequest<T>(endpoint, options, retryCount);
+        const requestPromise = this.makeRequest<T>(endpoint, options, retryCount, false);
         
-        // Сохраняем в кэш
         this.requestCache.set(requestKey, {
             promise: requestPromise,
             timestamp: now
         });
         
-        // Очищаем старые записи из кэша
         this.cleanupCache();
         
         return requestPromise;
     }
 
-    /**
-     * Очистка старого кэша
-     */
     private cleanupCache(): void {
         const now = Date.now();
         for (const [key, value] of this.requestCache.entries()) {
-            if (now - value.timestamp > this.cacheTTL * 10) { // 10x TTL
+            if (now - value.timestamp > this.cacheTTL * 10) {
                 this.requestCache.delete(key);
             }
         }
     }
 
-    /**
-     * Основной метод выполнения запроса
-     */
     private async makeRequest<T>(
         endpoint: string,
         options: RequestOptions = {},
-        retryCount = 0
+        retryCount = 0,
+        skipAuth = false
     ): Promise<ApiResponse<T>> {
-        const { params, headers, ...fetchOptions } = options;
-        const maxRetries = 1; // Максимум одна попытка refresh
+        const { params, headers, credentials, ...fetchOptions } = options;
+        const maxRetries = 1;
 
         let url = `${this.baseUrl}${endpoint}`;
         
@@ -205,8 +176,7 @@ class ApiBridge {
             }
         }
 
-        // Добавляем токен если есть
-        const authToken = typeof window !== 'undefined' 
+        const authToken = !skipAuth && typeof window !== 'undefined' 
             ? localStorage.getItem('auth_access_token')
             : null;
             
@@ -220,47 +190,36 @@ class ApiBridge {
             const response = await fetch(url, {
                 ...fetchOptions,
                 headers: defaultHeaders,
+                credentials: credentials || 'same-origin',
             });
 
             const contentType = response.headers.get('content-type');
             const hasJson = contentType && contentType.includes('application/json');
 
-            // Пробуем получить JSON в любом случае
             let jsonResponse: ApiResponse<T> | null = null;
             if (hasJson) {
                 try {
                     jsonResponse = await response.json();
-                } catch {
-                    // Не удалось распарсить JSON
-                }
+                } catch {}
             }
 
-            // Проверяем на 401 ошибку
-            if (response.status === 401) {
-                // Проверяем, не является ли это эндпоинтом авторизации
+            if (response.status === 401 && !skipAuth) {
                 const isAuthEndpoint = endpoint.includes('/account/auth') || 
                                     endpoint.includes('/account/reg') ||
                                     endpoint.includes('/account/refresh');
                 
-                // Если это не auth endpoint и еще не превышено количество попыток
                 if (!isAuthEndpoint && retryCount < maxRetries) {
-                    console.log('🔐 Обнаружена 401 ошибка, пробуем refresh...');
-                    
                     const refreshSuccess = await this.handleTokenRefresh();
                     
                     if (refreshSuccess) {
-                        console.log('🔄 Повторяем запрос после успешного refresh');
-                        return this.makeRequest<T>(endpoint, options, retryCount + 1);
+                        return this.makeRequest<T>(endpoint, options, retryCount + 1, false);
                     } else {
-                        console.log('❌ Refresh не удался, очищаем данные');
-                        
-                        // Очищаем токены
                         if (typeof window !== 'undefined') {
                             localStorage.removeItem('auth_access_token');
-                            localStorage.removeItem('auth_refresh_token');
-                            localStorage.removeItem('auth_user');
+                            localStorage.removeItem('auth_expires_at');
+                            localStorage.removeItem('auth_user_data');
+                            this.clearAccessTokenCookie();
                             
-                            // Редирект на логин если на клиенте
                             if (window.location.pathname.includes('/platform')) {
                                 window.location.href = '/sso/sign_in';
                             }
@@ -268,7 +227,6 @@ class ApiBridge {
                     }
                 }
                 
-                // Возвращаем ошибку или бросаем исключение
                 if (jsonResponse) {
                     return jsonResponse;
                 } else {
@@ -276,17 +234,14 @@ class ApiBridge {
                 }
             }
 
-            // Если ответ не ок и есть JSON - возвращаем его
             if (!response.ok && jsonResponse) {
                 return jsonResponse;
             }
 
-            // Если ответ не ок и нет JSON - бросаем ошибку
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
 
-            // Успешный ответ с JSON
             if (jsonResponse) {
                 return jsonResponse;
             } else {
@@ -306,18 +261,15 @@ class ApiBridge {
         options: RequestOptions = {},
         retryCount = 0
     ): Promise<ApiResponse<T>> {
-        // Для GET запросов используем дебаунс и кэш
         const method = options.method?.toUpperCase() || 'GET';
         
         if (method === 'GET') {
             return this.debouncedRequest<T>(endpoint, options, retryCount);
         }
         
-        // Для остальных методов просто делаем запрос
-        return this.makeRequest<T>(endpoint, options, retryCount);
+        return this.makeRequest<T>(endpoint, options, retryCount, false);
     }
 
-    // crud методы
     get<T>(endpoint: string, options?: RequestOptions): Promise<ApiResponse<T>> {
         return this.request<T>(endpoint, { ...options, method: 'GET' });
     }
@@ -350,9 +302,6 @@ class ApiBridge {
         return this.request<T>(endpoint, { ...options, method: 'DELETE' });
     }
 
-    /**
-     * Очистка кэша (например, после logout)
-     */
     clearCache(): void {
         this.requestCache.clear();
         this.debounceTimers.forEach(timer => clearTimeout(timer));
@@ -360,5 +309,4 @@ class ApiBridge {
     }
 }
 
-// singleton instance
 export const api = new ApiBridge();
