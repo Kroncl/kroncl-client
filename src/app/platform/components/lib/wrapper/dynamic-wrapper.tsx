@@ -1,4 +1,3 @@
-// components/lib/wrapper/dynamic-wrapper.tsx
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -9,16 +8,11 @@ const routeConfig = {
 } as const;
 
 function matchesRoute(pathname: string, route: string): boolean {
-    // Проверяем, содержит ли путь сегмент /support
-    // Разбиваем путь на сегменты и ищем support
     const segments = pathname.split('/');
     return segments.includes(route.replace('/', ''));
 }
 
 function getRouteSettings(pathname: string) {
-  // Для отладки - посмотрим что приходит
-  console.log('Current pathname:', pathname);
-  
   for (const [route, settings] of Object.entries(routeConfig)) {
     if (matchesRoute(pathname, route)) {
       console.log('Matched route:', route);
@@ -35,8 +29,6 @@ export function PlatformDynamicContentWrapper({
 }>) {
   const pathname = usePathname();
   const settings = getRouteSettings(pathname || '');
-  
-  console.log('Settings padding:', settings.padding);
   
   return (
     <PlatformContentWrapper padding={settings.padding}>
