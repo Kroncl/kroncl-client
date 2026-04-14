@@ -20,6 +20,7 @@ import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
 import { PlatformError } from "@/app/platform/components/lib/error/block";
 import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 import Exit from "@/assets/ui-kit/icons/exit";
+import { PositionPermissionsWizard } from "./components/permissions-wizard/wizard";
 
 export default function Page() {
     const params = useParams();
@@ -98,7 +99,15 @@ export default function Page() {
         }
     };
 
-    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+    const handleSavePermissions = async (permissions: string[]) => {
+        const response = await hrmModule.updatePosition(positionId, { permissions });
+        if (!response.status) {
+            throw new Error(response.message || 'Ошибка сохранения разрешений');
+        }
+        setPosition(prev => prev ? { ...prev, permissions } : null);
+    };
+
+    if (!isAllowed(ALLOW_PAGE)) return (
         <PlatformNotAllowed permission={PERMISSIONS.HRM_POSITIONS} />
     );
 
@@ -142,6 +151,32 @@ export default function Page() {
                 description={`Должность создана ${formatDate(position.created_at)}. ${position.description ? position.description : ''}`}
                 actions={actions}
             />
+
+            <div className={styles.grid}>
+                {isAllowed(ALLOW_UPDATE) ? (
+                    <PositionPermissionsWizard 
+                        className={styles.wizard}
+                        positionId={positionId}
+                        initialPermissions={position.permissions || []}
+                        onSave={handleSavePermissions}
+                    />
+                ) : (
+                    <div className={styles.permissionsList}>
+                        <div className={styles.capture}>Разрешения</div>
+                        <div className={styles.list}>
+                            {position.permissions?.length ? (
+                                position.permissions.map(code => (
+                                    <div key={code} className={styles.permissionItem}>
+                                        <span className={styles.code}>{code}</span>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className={styles.empty}>Нет назначенных разрешений</div>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
             
             <PlatformModal
                 isOpen={isModalDeleteOpen}
