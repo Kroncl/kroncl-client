@@ -9,6 +9,10 @@ import {
     UpdateProfileRequest,
     RefreshResponse,
     FingerprintLoginResponse,
+    PasswordResetSendLinkRequest,
+    PasswordResetValidateTokenRequest,
+    PasswordResetValidateTokenResponse,
+    PasswordResetConfirmRequest,
 } from './types';
 import { ApiResponse, EmptyResponseData } from '@/apps/shared/bridge/types';
 import { Account } from '../types';
@@ -29,6 +33,9 @@ export class AccountAuth {
         resendConfirm: '/account/confirm/resend',
         updateProfile: '/account',
         fingerprintLogin: '/account/fingerprints/auth',
+        resetPasswordSendLink: '/account/reset-password/send-link',
+        resetPasswordValidateToken: '/account/reset-password/validate-token',
+        resetPassword: '/account/reset-password',
     };
 
     constructor() {
@@ -245,6 +252,18 @@ export class AccountAuth {
         }
         
         return response;
+    }
+
+    async sendPasswordResetLink(data: PasswordResetSendLinkRequest): Promise<ApiResponse<EmptyResponseData>> {
+        return api.post<EmptyResponseData>(this.endpoints.resetPasswordSendLink, data);
+    }
+
+    async validateResetToken(data: PasswordResetValidateTokenRequest): Promise<ApiResponse<PasswordResetValidateTokenResponse>> {
+        return api.post<PasswordResetValidateTokenResponse>(this.endpoints.resetPasswordValidateToken, data);
+    }
+
+    async resetPassword(data: PasswordResetConfirmRequest): Promise<ApiResponse<EmptyResponseData>> {
+        return api.post<EmptyResponseData>(this.endpoints.resetPassword, data);
     }
 
     logoutLocal(): void {

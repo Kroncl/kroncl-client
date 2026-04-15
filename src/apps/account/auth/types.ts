@@ -56,3 +56,25 @@ export interface FingerprintLoginResponse extends BaseAuthResponse {
 }
 
 export interface RefreshResponse extends BaseAuthResponse {}
+
+// --------------
+// RESET-PASSWORD
+// --------------
+
+export interface PasswordResetSendLinkRequest {
+    email: string;
+}
+
+export interface PasswordResetValidateTokenRequest {
+    token: string;
+}
+
+export interface PasswordResetValidateTokenResponse {
+    account_id: string;
+    valid: boolean;
+}
+
+export interface PasswordResetConfirmRequest {
+    token: string;
+    new_password: string;
+}
