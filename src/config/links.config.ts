@@ -4,7 +4,7 @@ export const linksConfig = {
   recovery: '/sso/recovery',
   createCompany: '/platform/companies/new',
   developerPortal: '/dev',
-  developerFrontGithub: 'https://github.com/mainbotan/kroncl-client',
+  developerGithub: 'https://github.com/Kroncl',
 
   get isProduction() {
     return process.env.NODE_ENV === 'production';

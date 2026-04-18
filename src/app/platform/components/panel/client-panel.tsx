@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import styles from './panel.module.scss';
 import React, { ComponentType, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { PanelAction, PanelSection } from './_types';
+import { PanelAction, PanelHeadSection, PanelSection } from './_types';
 import { isSectionActive } from '@/assets/utils/sections';
 import CollapseLeft from '@/assets/ui-kit/icons/collapse-left';
 
@@ -44,7 +44,7 @@ interface PlatformPanelProps {
   initialCollapsed?: boolean;
   actions?: PanelAction[];
   children?: React.ReactNode;
-  head?: React.ReactNode;
+  head?: PanelHeadSection[];
 }
 
 const iconComponents: Record<string, ComponentType<{ className?: string }>> = {
@@ -75,7 +75,7 @@ const iconComponents: Record<string, ComponentType<{ className?: string }>> = {
 
 export default function ClientPanel({
   className,
-  title = 'Ваш аккаунт',
+  title,
   sections = [],
   companies = [],
   initialCollapsed = false,
@@ -85,7 +85,6 @@ export default function ClientPanel({
 }: Readonly<PlatformPanelProps>) {
   const pathname = usePathname();
   
-  // ВАЖНО: используем ТОЛЬКО initialCollapsed с сервера для SSR
   const [isCollapsed, setIsCollapsed] = useState(initialCollapsed);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -152,23 +151,34 @@ export default function ClientPanel({
         className
       )}
     >
-      <div className={styles.head}>
-        {head}
-      </div>
-      {actions.length > 0 && (
-        <div className={styles.actions}>
-          {actions.map((action, index) => {
+      {head && (<div className={styles.head}>
+        {head.map((section, index) => {
+            const isActive = isSectionActive(pathname, {
+              href: section.href,
+              exact: section.exact
+            });
             return (
-                <Button
-                  key={index}
-                  className={clsx(styles.action, action.className)}
-                  {...action}
-                />
-            );
-          })}
-        </div>
-      )}
+            <Link key={index} href={section.href} className={clsx(styles.section, isActive && styles.active)}>
+                {renderIcon(section.icon)}
+                <div className={styles.name}>{section.name}</div>
+            </Link>
+            )
+        })}
+      </div>)}
       <div className={styles.scroll}>
+        {actions.length > 0 && (
+          <div className={styles.actions}>
+            {actions.map((action, index) => {
+              return (
+                  <Button
+                    key={index}
+                    className={clsx(styles.action, action.className)}
+                    {...action}
+                  />
+              );
+            })}
+          </div>
+        )}
         {sections.length > 0 && (
           <div className={styles.sections}>
             {shouldShowTitle && (

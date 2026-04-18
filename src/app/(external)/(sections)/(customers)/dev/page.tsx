@@ -16,7 +16,7 @@ export default function Page() {
                         variant='default'
                         location='center'
                         actions={[
-                            {as: 'link', children: 'Github', href: linksConfig.developerFrontGithub, variant: 'contrast'}
+                            {as: 'link', children: 'Github', href: linksConfig.developerGithub, variant: 'contrast'}
                         ]}
                     />
                 <div className={styles.intervalFlex}>
@@ -38,7 +38,7 @@ export default function Page() {
                         variant='default'
                         location='left'
                         actions={[
-                            {as: 'link', children: 'Напишите нам', href: linksConfig.developerFrontGithub, variant: 'accent'}
+                            {as: 'link', children: 'Напишите нам', href: linksConfig.developerGithub, variant: 'accent'}
                         ]}
                     />
                 <ReadyToStartBlock className={styles.block} />

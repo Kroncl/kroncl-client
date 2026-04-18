@@ -11,7 +11,49 @@
 
     .head {
         display: flex;
+        width: 100%;
+        gap: .4rem;
+        margin-bottom: .34rem;
+        flex-flow: row wrap;
         padding-right: .2rem;
+
+        .section {
+            display: flex;
+            flex: 1;
+            max-width: calc(50% - .2rem);
+            min-width: calc(50% - .2rem);
+            height: 2.4rem;
+            background-color: var(--color-surface-glass-secondary);
+            border-radius: .74rem;
+            transition: background-color var(--transition), color var(--transition);
+            @include cursor(pointer);
+            overflow: hidden;
+            padding: .2em .7em;
+            flex-flow: column nowrap;
+            justify-content: center;
+            gap: .5em;
+            align-items: center;
+            color: var(--color-text-secondary);
+
+            .svg {
+                width: 1.4em;
+                height: 1.3em;
+            }
+
+            .name {
+                text-align: center;
+                font-size: .75em;
+                @include text-ellipsis();
+            }
+
+            &.active {
+                background-color: var(--color-surface-active);
+                color: var(--color-text-primary);
+            }
+            &:hover {
+                background-color: var(--color-surface-area);
+            }
+        }
     }
 
     .scroll {

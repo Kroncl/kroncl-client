@@ -21,13 +21,13 @@ export function useSections(companyId: string, lvl: number): Section[] {
 
 function allSections(companyId: string): Section[] {
     return ([
-    {
-        name: 'Рабочее место',
-        href: `/platform/${companyId}`,
-        icon: 'home',
-        exact: true,
-        lvl: PLAN_MAX_LVL
-    },
+    // {
+    //     name: 'Рабочее место',
+    //     href: `/platform/${companyId}`,
+    //     icon: 'home',
+    //     exact: true,
+    //     lvl: PLAN_MAX_LVL
+    // },
     {
         name: 'Сделки',
         href: `/platform/${companyId}/dm`,
