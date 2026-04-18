@@ -47,7 +47,7 @@
             }
 
             &.active {
-                background-color: var(--color-surface-active);
+                background-color: var(--color-surface-active) !important;
                 color: var(--color-text-primary);
             }
             &:hover {
