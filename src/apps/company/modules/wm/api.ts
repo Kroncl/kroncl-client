@@ -161,6 +161,7 @@ export const wmModule = (companyApi: CompanyApi) => ({
             if (params.unit_id !== undefined) queryParams.unit_id = params.unit_id;
             if (params.batch_id !== undefined) queryParams.batch_id = params.batch_id;
             if (params.in_stock !== undefined) queryParams.in_stock = params.in_stock;
+            if (params.search !== undefined) queryParams.search = params.search;
         }
         
         return companyApi.get<StockPositionsResponse>("/modules/wm/stocks/positions", {

@@ -1,0 +1,92 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    max-width: 25rem;
+    position: relative;
+
+    .searchRow {
+        display: flex;
+        flex: 1;
+        min-width: 25rem;
+        flex-flow: row nowrap;
+        gap: .4rem;
+    }
+
+    .modal {
+        display: block;
+        position: absolute;
+        overflow-y: scroll;
+        height: 10rem;
+        bottom: -10.5rem;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-surface-elevated);
+        border-radius: .8em;
+        border: 1px solid var(--color-stroke-secondary);
+        transition: opacity var(--transition);
+        opacity: 0;
+        pointer-events: none;
+
+        .grid {
+            display: flex;
+            flex-flow: column nowrap;
+            gap: .4em;
+            padding: .5rem;
+
+            .item {
+                display: flex;
+                flex-flow: row nowrap;
+                background-color: var(--color-surface-glass-secondary);
+                border-radius: .7em;
+                height: 2.8em;
+                padding: 0 1em;
+                overflow: hidden;
+                gap: 1em;
+                align-items: center;
+                transition: background-color var(--transition);
+                @include cursor(pointer);
+
+                .name {
+                    color: var(--color-text-primary);
+                    @include text-ellipsis();
+                }
+                .categoryName {
+                    color: var(--color-text-ghost);
+                    @include text-ellipsis();
+                    width: fit-content;
+                    min-width: 7rem;
+                    text-align: right;
+                }
+                .price {
+                    text-align: right;
+                    color: var(--color-text-ghost);
+                    white-space: nowrap;
+                }
+                .stockInfo {
+                    text-align: right;
+                    color: var(--color-text-ghost);
+                    white-space: nowrap;
+                }
+
+                &:hover {
+                    background-color: var(--color-surface-active);
+                }
+            }
+        }
+
+        .plug {
+            display: flex;
+            height: 10rem;
+            align-items: center;
+            padding: 1rem;
+            justify-content: center;
+            color: var(--color-text-description);
+        }
+
+        &.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+}

@@ -22,6 +22,7 @@ import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
 import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
 import SuccessStatus from '@/assets/ui-kit/icons/success-status';
 import { StructureBlock } from './components/structure-block/block';
+import { DealPosition } from '@/apps/company/modules/dm/types';
 
 export default function Page() {
     const params = useParams();
@@ -52,6 +53,9 @@ export default function Page() {
     const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
     const [client, setClient] = useState<ClientDetail | null>(null);
 
+    // Для позиций
+    const [positions, setPositions] = useState<DealPosition[]>([]);
+
     // Загружаем сделку
     useEffect(() => {
         const loadDeal = async () => {
@@ -79,6 +83,11 @@ export default function Page() {
                     } else {
                         setSelectedClientId(null);
                         setClient(null);
+                    }
+
+                    // Позиции
+                    if (response.data.positions) {
+                        setPositions(response.data.positions);
                     }
                 }
             } catch (error) {
@@ -152,9 +161,20 @@ export default function Page() {
     const handleSave = async () => {
         setSaving(true);
         try {
+            const positionUpdates = positions.map(p => ({
+                id: p.id.startsWith('temp-') ? undefined : p.id,
+                name: p.name,
+                price: p.price,
+                quantity: p.quantity,
+                unit: p.unit,
+                unit_id: p.unit_id,
+                position_id: p.position_id
+            }));
+
             const response = await dmModule.updateDeal(dealId, {
                 employees: selectedEmployeeIds,
-                client_id: selectedClientId
+                client_id: selectedClientId,
+                positions: positionUpdates
             });
 
             if (response.status) {
@@ -273,6 +293,9 @@ export default function Page() {
                 {showStructure && (
                     <StructureBlock
                         className={styles.block}
+                        positions={positions}
+                        onChange={setPositions}
+                        disabled={saving}
                     />
                 )}
             </div>

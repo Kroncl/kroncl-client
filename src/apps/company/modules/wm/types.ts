@@ -205,6 +205,7 @@ export interface GetStockPositionsParams {
     unit_id?: string;
     batch_id?: string;
     in_stock?: boolean;
+    search?: string;
 }
 
 export interface StockBatchesResponse {
