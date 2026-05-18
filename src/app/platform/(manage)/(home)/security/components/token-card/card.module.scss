@@ -4,9 +4,14 @@
     display: flex;
     flex-flow: column nowrap;
     transition: background-color var(--transition);
+    padding: .6em !important;
+    border-radius: .5em;
 
     &.open {
-        background-color: var(--color-surface-tertiary);
+        background-color: var(--color-surface-elevated);
+    }
+    &:hover {
+        background-color: var(--color-surface-elevated);
     }
 }
 
@@ -19,7 +24,6 @@
     gap: 1em;
     overflow: hidden;
     align-items: center;
-    transition: background-color var(--transition);
 
     .indicator {
         display: inline-flex;
@@ -43,10 +47,6 @@
         &.secondary {
             color: var(--color-text-description);
         }
-    }
-
-    &:hover {
-        background-color: var(--color-surface-tertiary);
     }
 }
 

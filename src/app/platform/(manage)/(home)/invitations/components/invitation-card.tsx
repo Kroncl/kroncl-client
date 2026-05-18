@@ -15,9 +15,10 @@ interface InvitationCardProps {
     invitation: AccountInvitation;
     onAccept?: () => void;
     onReject?: () => void;
+    className?: string;
 }
 
-export function InvitationCard({ invitation, onAccept, onReject }: InvitationCardProps) {
+export function InvitationCard({ invitation, onAccept, onReject, className }: InvitationCardProps) {
     const { user } = useAuth();
 
     const formatDate = (dateString: string) => {
@@ -35,9 +36,10 @@ export function InvitationCard({ invitation, onAccept, onReject }: InvitationCar
     const userInitials = user?.name?.charAt(0).toUpperCase() || 'П';
 
     const isWaiting = invitation.status === 'waiting';
+    const isAccepted = invitation.status === 'accepted';
 
     return (
-        <div className={styles.card}>
+        <div className={clsx(styles.card, className)}>
             <div className={styles.thumbnail}>
                 <div className={styles.tags}>
                     <span className={styles.tag}>{STATUS_LABELS[invitation.status] || invitation.status}</span>
@@ -50,12 +52,20 @@ export function InvitationCard({ invitation, onAccept, onReject }: InvitationCar
                 <div className={styles.name}>
                     <span className={styles.secondary}>Приглашение в</span> <span className={styles.accent}>{invitation.company_name}</span>
                 </div>
-                {isWaiting && (
+                {isWaiting ? (
                     <div className={styles.about}>
-                        Принимая приглашение в организацию, вы получаете гостевые разрешения, исключающие редактирование, создание и удаление объектов в организации. 
-                        После вступления владельцы смогут расширить выданные вам разрешения.
+                        Примите приглашение для получения доступа к организации
                     </div>
-                )}
+                ) : isAccepted ? (
+                    <div className={styles.about}>
+                        Приглашение в организацию было принято
+                    </div>
+                ) : (
+                    <div className={styles.about}>
+                        Вы отклонили приглашение в организацию
+                    </div>
+                )
+                }
             </div>
             {isWaiting && (
                 <div className={styles.actions}>
