@@ -9,28 +9,21 @@ import Plus from "@/assets/ui-kit/icons/plus";
 import Package from "@/assets/ui-kit/icons/package";
 import Edit from "@/assets/ui-kit/icons/edit";
 import Collection from "@/assets/ui-kit/icons/collection";
-import { sectionsList } from "./sections.config";
-import { actionsList } from "./actions.config";
 import { useCompanies } from "@/apps/account/companies/hooks/useCompanies";
 import { ScreenProvider } from "../../components/screen-control/provider/provider";
 import { ScreenControlWarning } from "../../components/screen-control/warning";
+import { PlatformInjectedPanel } from "./components/injected-panel/panel";
 
 export default function Layout({
   children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const title = "Рабочая область";
-  
   return (
     <>
       <ScreenProvider>
           <ScreenControlWarning />
-          <PlatformPanel 
-            actions={actionsList()}
-            sections={sectionsList()} 
-            title={title}
-          />
+          <PlatformInjectedPanel />
           <PlatformContent>
             <PlatformContentWrapper>
               <AuthGuard>
