@@ -5,7 +5,7 @@ import { PlatformFormBody, PlatformFormSection, PlatformFormMultiVariants, Platf
 import Button from '@/assets/ui-kit/button/button';
 import ErrorStatus from '@/assets/ui-kit/icons/error-status';
 import { useParams, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { usePermission } from '@/apps/permissions/hooks';
 import { PERMISSIONS } from '@/apps/permissions/codes.config';
@@ -61,7 +61,7 @@ export default function Page() {
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTypes, setSelectedTypes] = useState<string[]>(['catalog_categories']);
     const [comment, setComment] = useState('');
-    const [typesStatus, setTypesStatus] = useState<TypesStatus>('idle');
+    const [typesStatus, setTypesStatus] = useState<TypesStatus>('valid');
 
     const validateTypes = (types: string[]): { status: TypesStatus; message: string } => {
         if (types.length === 0) {
@@ -70,10 +70,13 @@ export default function Page() {
         return { status: 'valid', message: '✓' };
     };
 
+    useEffect(() => {
+        const validation = validateTypes(selectedTypes);
+        setTypesStatus(validation.status);
+    }, [selectedTypes]);
+
     const handleTypesChange = (values: string[]) => {
         setSelectedTypes(values);
-        const validation = validateTypes(values);
-        setTypesStatus(validation.status);
     };
 
     const handleSubmit = async () => {
@@ -149,6 +152,13 @@ export default function Page() {
                         min={1}
                         max={5}
                     />
+                    {typesStatus === 'invalid' && (
+                        <PlatformFormStatus
+                            type="error"
+                            message="Выберите хотя бы один тип отчёта"
+                            icon={<ErrorStatus />}
+                        />
+                    )}
                 </PlatformFormSection>
 
                 <PlatformFormSection title='Комментарий (опционально)' description='По комментариям доступен поиск - постарайтесь описать цель создания отчёта'>
