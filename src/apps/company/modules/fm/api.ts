@@ -30,7 +30,9 @@ import {
     GetCreditsParams,
     PayCreditRequest,
     CreditPaymentsResponse,
-    CreditPaymentsParams
+    CreditPaymentsParams,
+    GenerateReportRequest,
+    GenerateReportResponse
 } from "./types";
 
 export const fmModule = (companyApi: CompanyApi) => ({
@@ -193,5 +195,17 @@ export const fmModule = (companyApi: CompanyApi) => ({
         return companyApi.get<CreditPaymentsResponse>(`/modules/fm/credits/${id}/transactions`, {
             params: params as Record<string, string | number | boolean | undefined>
         });
+    },
+
+    // -----------
+    // REPORTS
+    // -----------
+    
+    // --------
+    // REPORTS
+    // --------
+    
+    async generateReport(data: GenerateReportRequest) {
+        return companyApi.post<GenerateReportResponse>("/modules/fm/report", data);
     }
 });

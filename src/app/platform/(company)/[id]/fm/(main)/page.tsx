@@ -39,6 +39,7 @@ export default function Page() {
     const ALLOW_TRANSACTION_REVERSE = usePermission(PERMISSIONS.FM_TRANSACTIONS_REVERSE);
     const ALLOW_TRANSACTION_CREATE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CREATE);
     const ALLOW_ANALYSIS = usePermission(PERMISSIONS.FM_ANALYSIS);
+    const ALLOW_REPORTS = usePermission(PERMISSIONS.DOCS)
 
     const fmModule = useFm();
     const pathname = usePathname();
@@ -285,16 +286,22 @@ export default function Page() {
             )}
             
             <div className={styles.cards}>
-                <Link href={`/platform/${companyId}/fm/categories`} className={clsx(styles.card, styles.accent)}>
+                {isAllowed(ALLOW_ANALYSIS) && (
+                    <Link href={`/platform/${companyId}/fm/e2e`} className={clsx(styles.card, styles.accent)}>
+                    <div className={styles.name}>Анализ</div>
+                    <div className={styles.description}>Диаграммы распределения финансовых операций</div>
+                </Link>
+                )}
+                {isAllowed(ALLOW_REPORTS) && (
+                    <Link href={`/platform/${companyId}/fm/reports`} className={styles.card}>
+                    <div className={styles.name}>Отчёты</div>
+                    <div className={styles.description}>Просмотр и создание финансовых отчётов</div>
+                </Link>
+                )}
+                <Link href={`/platform/${companyId}/fm/categories`} className={clsx(styles.card)}>
                     <div className={styles.name}>Категории</div>
                     <div className={styles.description}>Категории расходов/доходов</div>
                 </Link>
-                {isAllowed(ALLOW_ANALYSIS) && (
-                    <Link href={`/platform/${companyId}/fm/e2e`} className={styles.card}>
-                    <div className={styles.name}>Сквозная аналитика</div>
-                    <div className={styles.description}>E2E анализ финансов</div>
-                </Link>
-                )}
                 <Link href={`/platform/${companyId}/fm/credits`} className={styles.card}>
                     <div className={styles.name}>Долги</div>
                     <div className={styles.description}>Управление долговыми обязательствами</div>

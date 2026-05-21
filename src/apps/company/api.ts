@@ -80,7 +80,8 @@ export class CompanyApi {
         throw error;
     }
     
-    async getBlob(url: string, options?: RequestInit): Promise<Blob> {
+    async getBlob(endpoint: string, options?: RequestInit): Promise<Blob> {
+        const url = `${process.env.NEXT_PUBLIC_API_URL}${this.basePath}${endpoint}`
         const response = await fetch(url, {
             ...options,
             headers: {
@@ -88,7 +89,7 @@ export class CompanyApi {
                 'Authorization': `Bearer ${getAuthToken()}`,
             },
         });
-        
+        console.log(url);
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
