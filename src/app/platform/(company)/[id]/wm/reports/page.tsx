@@ -17,6 +17,7 @@ import { docsModule } from '@/apps/company/modules/docs/api';
 import { Doc, DocsResponse } from '@/apps/company/modules/docs/types';
 import { PlatformError } from '@/app/platform/components/lib/error/block';
 import Folder from '@/assets/ui-kit/icons/folder';
+import { sectionsList } from '../_sections';
 
 export default function Page() {
     const params = useParams();
@@ -116,6 +117,7 @@ export default function Page() {
                     defaultValue: searchParams.get('search') || '',
                     onSearch: handleSearch
                 }}
+                sections={sectionsList(companyId)}
                 showSearch={true}
                 actions={isAllowed(ALLOW_REPORT) ? [
                     {
