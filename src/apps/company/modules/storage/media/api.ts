@@ -1,5 +1,11 @@
 import { CompanyApi } from "../../../api";
 import { MediaFile, MediaBucketStats, PresignedURLResponse } from "./types";
+import { useQuery } from '@tanstack/react-query';
+
+export const storageMediaKeys = {
+    all: (companyId: string) => ['storage-media', companyId] as const,
+    stats: (companyId: string) => [...storageMediaKeys.all(companyId), 'stats'] as const,
+};
 
 export const storageMediaModule = (companyApi: CompanyApi) => ({
     async getBucketStats() {
@@ -28,5 +34,13 @@ export const storageMediaModule = (companyApi: CompanyApi) => ({
         } else {
             return `${process.env.NEXT_PUBLIC_API_URL}/companies/${companyApi.companyId}/storage/media/file?path=${encodeURIComponent(path)}`;
         }
+    },
+    useBucketStats: (companyId: string) => {
+        return useQuery({
+            queryKey: storageMediaKeys.stats(companyId),
+            queryFn: () => companyApi.get<MediaBucketStats>('/storage/media'),
+            staleTime: 5 * 60 * 1000,
+            gcTime: 10 * 60 * 1000,
+        });
     },
 });

@@ -1,4 +1,3 @@
-// apps/permissions/codes.config.ts
 export const PERMISSIONS = {
     // Support
     SUPPORT_TICKETS: 'support.tickets',
