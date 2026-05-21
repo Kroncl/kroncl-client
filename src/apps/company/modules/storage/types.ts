@@ -1,56 +1,38 @@
-export interface StorageSources {
-    active_connections: number;
-    created_at: string | null;
-    dead_rows: number;
-    index_count: number;
-    index_size_mb: number;
-    last_analyze: string | null;
-    last_autovacuum: string | null;
-    last_vacuum: string | null;
-    materialized_view_count: number;
-    schema_exists: boolean;
+export interface StorageSummary {
+    database: DatabaseStorageStatus;
+    media: MediaBucketStatus;
+}
+
+export interface DatabaseStorageStatus {
+    storage: DatabaseStorage | null;
+    status: string;
+    message: string;
+    is_ready: boolean;
     schema_name: string;
-    sequence_count: number;
-    table_count: number;
-    table_size_mb: number;
-    toast_size_mb: number;
-    total_rows: number;
-    total_size_mb: number;
-    total_size_pretty: string;
-    updated_at: string | null;
-    view_count: number;
+    schema_exists: boolean;
 }
 
-// ----------------
-// MODULES ANALYSIS
-// ----------------
+export interface DatabaseStorage {
+    id: string;
+    company_id: string;
+    schema_name: string;
+    status: string;
+    storage_type: string;
+    metadata: Record<string, any>;
+    created_at: string;
+    updated_at: string;
+}
 
-export interface ModuleTable {
+export interface MediaBucketStatus {
+    is_ready: boolean;
+    message: string;
+    storage: MediaBucketInfo | null;
     exists: boolean;
-    row_count: number;
-    table_name: string;
-    total_bytes: number;
-    total_size_mb: number;
 }
 
-export interface ModuleStats {
-    module: string;
-    row_count: number;
-    table_count: number;
-    tables: ModuleTable[];
-    total_bytes: number;
-    total_size_mb: number;
-}
-
-export interface TotalStats {
-    module: 'total';
-    row_count: number;
-    table_count: number;
-    total_bytes: number;
-    total_size_mb: number;
-}
-
-export interface StorageModulesData {
-    modules: Record<string, ModuleStats>;
-    total: TotalStats;
+export interface MediaBucketInfo {
+    name: string;
+    creation_date: string;
+    size_mb: number;
+    object_count: number;
 }

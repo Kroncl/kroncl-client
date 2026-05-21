@@ -129,6 +129,7 @@
 
             .button {
                 transition: transform var(--transition);
+                border-radius: .5em;
 
                 .svg {
                     width: 1.2em;

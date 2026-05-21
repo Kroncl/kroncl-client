@@ -1,13 +1,13 @@
 export const getAuthToken = (): string | null => {
   if (typeof window !== 'undefined') {
-    return localStorage.getItem('auth_token');
+    return localStorage.getItem('auth_access_token');
   }
   return null;
 };
 
 export const getCurrentUser = (): any => {
   if (typeof window !== 'undefined') {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('auth_user_data');
     return user ? JSON.parse(user) : null;
   }
   return null;
@@ -17,16 +17,10 @@ export const isAuthenticated = (): boolean => {
   return !!getAuthToken();
 };
 
-export const setAuthData = (token: string, user: any): void => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('auth_token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-};
-
 export const clearAuthData = (): void => {
   if (typeof window !== 'undefined') {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('auth_access_token');
+    localStorage.removeItem('auth_user_data');
+    localStorage.removeItem('auth_expires_at');
   }
 };

@@ -21,18 +21,26 @@ export function PlatformResult({
   status?: 'success' | 'error';
   showIcon?: boolean;
 }) {
-  const [timeLeft, setTimeLeft] = useState<number>(redirect?.delay || 3000);
+  const [timeLeft, setTimeLeft] = useState<number>(redirect?.delay ?? 3000);
   const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
     if (!redirect) return;
+
+    // Если delay === 0, редиректим сразу
+    if (redirect.delay === 0) {
+      setIsRedirecting(true);
+      if (typeof window !== 'undefined') {
+        window.location.href = redirect.href;
+      }
+      return;
+    }
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1000) {
           clearInterval(timer);
           setIsRedirecting(true);
-          // Выполняем редирект
           if (typeof window !== 'undefined') {
             window.location.href = redirect.href;
           }
@@ -50,7 +58,6 @@ export function PlatformResult({
     return seconds.toString();
   };
 
-  // Выбор иконки в зависимости от статуса
   const IconComponent = status === 'success' ? HappyPeople : SadPeople;
 
   return (
@@ -58,15 +65,6 @@ export function PlatformResult({
       className={clsx(styles.container, className)}
       {...fadeInUp}
     >
-      {/* {showIcon && (
-        <motion.div 
-          className={clsx(styles.icon, styles[status])}
-          {...fadeInScale}
-        >
-          <IconComponent className={styles.svg} />
-        </motion.div>
-      )}
-       */}
       <motion.div 
         className={styles.capture}
         {...fadeInUp}
@@ -83,7 +81,7 @@ export function PlatformResult({
         {description}
       </motion.div>
       
-      {redirect && timeLeft > 0 && (
+      {redirect && timeLeft > 0 && redirect.delay !== 0 && (
         <motion.div 
           className={styles.redirect}
           initial={{ opacity: 0 }}

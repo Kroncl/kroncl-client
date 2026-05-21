@@ -17,6 +17,8 @@ import { PlatformModalConfirmation } from '@/app/platform/components/lib/modal/c
 import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';
 import Keyhole from '@/assets/ui-kit/icons/keyhole';
 import { DOCS_LINK_ACCOUNT_SECURITY } from '@/app/docs/(v1)/internal.config';
+import { PlatformError } from '@/app/platform/components/lib/error/block';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
 
 export default function Page() {
     const router = useRouter();
@@ -124,29 +126,11 @@ export default function Page() {
     const pagination = data?.pagination;
 
     if (loading) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            <Spinner />
-        </div>
+        <PlatformLoading />
     );
     
     if (error) return (
-        <div style={{
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            fontSize: ".7em", 
-            color: "var(--color-text-description)", 
-            minHeight: "10rem"
-        }}>
-            {error}
-        </div>
+        <PlatformError error={error} />
     );
 
     return (

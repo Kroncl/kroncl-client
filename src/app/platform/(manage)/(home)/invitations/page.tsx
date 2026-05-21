@@ -175,6 +175,7 @@ export default function Page() {
                     <div className={styles.grid}>
                         {invitations.map(invitation => (
                             <InvitationCard 
+                                className={styles.item}
                                 key={invitation.id} 
                                 invitation={invitation}
                                 onAccept={() => setAcceptModal({ isOpen: true, invitation })}

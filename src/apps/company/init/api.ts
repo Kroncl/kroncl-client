@@ -5,9 +5,10 @@ import {
   Company,
   CheckSlugUniqueRequest,
   SlugUniqueData,
-  Storage,
   StorageStatus
 } from './types';
+import { CompanyApi } from '../api';
+import { storageModule } from '../modules/storage/api';
 
 class CompanyInitApi {
   private endpoints = {
@@ -26,8 +27,9 @@ class CompanyInitApi {
   /**
    * Получение информации о хранилище компании
    */
-  async getCompanyStorage(companyId: string): Promise<ApiResponse<Storage>> {
-    return api.get<Storage>(this.endpoints.storage(companyId));
+  async getCompanyStorage(companyId: string) {
+      const companyApi = new CompanyApi(companyId);
+      return storageModule(companyApi).getSummary();
   }
 
   /**

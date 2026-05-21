@@ -1,5 +1,6 @@
 import { api } from '@/apps/shared/bridge/api';
 import { ApiResponse, RequestOptions } from '@/apps/shared/bridge/types';
+import { getAuthToken } from '@/assets/utils/auth';
 
 export class CompanyApi {
     readonly companyId: string;
@@ -79,6 +80,22 @@ export class CompanyApi {
         throw error;
     }
     
+    async getBlob(endpoint: string, options?: RequestInit): Promise<Blob> {
+        const url = `${process.env.NEXT_PUBLIC_API_URL}${this.basePath}${endpoint}`
+        const response = await fetch(url, {
+            ...options,
+            headers: {
+                ...options?.headers,
+                'Authorization': `Bearer ${getAuthToken()}`,
+            },
+        });
+        console.log(url);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        return response.blob();
+    }
     
     get<T>(endpoint: string = '', options?: RequestOptions): Promise<ApiResponse<T>> {
         return this.request<T>('GET', endpoint, options);

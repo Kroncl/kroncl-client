@@ -17,6 +17,8 @@ import { PlatformFormBody, PlatformFormInput, PlatformFormSection, PlatformFormS
 import { PlatformHead } from '@/app/platform/components/lib/head/head';
 import { DOCS_LINK_COMPANIES, DOCS_LINK_COMPANIES_PRICING } from '@/app/docs/(v1)/internal.config';
 import { SelectPlanBlock } from './components/select-plan-block/block';
+import { ProvisioningBlock } from './components/provisioning-block/block';
+import { useStorageStatus } from '@/apps/company/init/hooks';
 
 type FormData = {
   companyName: string;
@@ -65,6 +67,7 @@ const REGION_OPTIONS = [
   }
 ];
 
+
 export default function Page() {
   const router = useRouter();
   
@@ -86,13 +89,21 @@ export default function Page() {
     name: string;
     slug: string;
   } | null>(null);
+
+  const [currentCompanyId, setCurrentCompanyId] = useState<string | null>(null);
   
-  const [provisioningMessage, setProvisioningMessage] = useState('');
+  // Важно: Хук вызывается всегда, но запросы идут только когда companyId не null
+  const storageStatus = useStorageStatus(currentCompanyId, {
+    onReady: () => {
+      setPageState('success');
+    },
+    onError: (error) => {
+      setPageState('error');
+    }
+  });
 
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
-  const provisioningIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const currentCompanyIdRef = useRef<string | null>(null);
   
   // Мемоизируем проверку slug
   const checkSlugUnique = useCallback(async (slug: string) => {
@@ -199,49 +210,6 @@ export default function Page() {
     }));
   }, []);
 
-  const checkStorageStatus = useCallback(async (companyId: string) => {
-    try {
-      const response = await companyInitApi.getCompanyStorage(companyId);
-      
-      if (response.status) {
-        const storageStatus = response.data.status;
-        
-        switch (storageStatus) {
-          case 'active':
-            clearProvisioningInterval();
-            setPageState('success');
-            break;
-            
-          case 'failed':
-          case 'deprecated':
-            clearProvisioningInterval();
-            setPageState('error');
-            setProvisioningMessage(`Статус хранилища: ${storageStatus}`);
-            break;
-            
-          case 'provisioning':
-            setProvisioningMessage(`Готовим экземпляр учётной системы. Процесс не займёт больше минуты.`);
-            break;
-            
-          default:
-            setProvisioningMessage(`Статус: ${storageStatus}`);
-        }
-      } else {
-        setProvisioningMessage(`Ошибка проверки статуса: ${response.message}`);
-      }
-    } catch (error) {
-      console.error('Ошибка при проверке статуса хранилища:', error);
-      setProvisioningMessage('Ошибка соединения');
-    }
-  }, []);
-
-  const clearProvisioningInterval = useCallback(() => {
-    if (provisioningIntervalRef.current) {
-      clearInterval(provisioningIntervalRef.current);
-      provisioningIntervalRef.current = null;
-    }
-  }, []);
-
   const validateForm = useCallback((): boolean => {
     if (!formData.companyName.trim()) {
       setSlugStatus('error');
@@ -275,6 +243,7 @@ export default function Page() {
     return true;
   }, [formData.companyName, formData.slug, formData.planCode, slugStatus]);
 
+  
   const handleCreateCompany = useCallback(async () => {
     if (!validateForm()) {
       return;
@@ -302,23 +271,8 @@ export default function Page() {
         };
         
         setCreatedCompany(companyData);
-        currentCompanyIdRef.current = response.data.id;
-        
-        if (response.data.storage.status === 'active') {
-          setPageState('success');
-        } else {
-          setPageState('provisioning');
-          setProvisioningMessage('Начинаем проверку статуса развертывания...');
-          
-          checkStorageStatus(response.data.id);
-          
-          provisioningIntervalRef.current = setInterval(() => {
-            const companyId = currentCompanyIdRef.current;
-            if (companyId) {
-              checkStorageStatus(companyId);
-            }
-          }, 5000);
-        }
+        setCurrentCompanyId(response.data.id);
+        setPageState('provisioning');
       } else {
         setPageState('error');
       }
@@ -326,7 +280,7 @@ export default function Page() {
       console.error('❌ Ошибка при создании компании:', error);
       setPageState('error');
     }
-  }, [formData, validateForm, checkStorageStatus]);
+  }, [formData, validateForm]);
 
   useEffect(() => {
     return () => {
@@ -336,9 +290,8 @@ export default function Page() {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
-      clearProvisioningInterval();
     };
-  }, [clearProvisioningInterval]);
+  }, []);
 
   const isFormDisabled = pageState !== 'form';
   const isSubmitDisabled = isFormDisabled || slugStatus !== 'available' || !formData.planCode;
@@ -361,13 +314,30 @@ export default function Page() {
   }
   
   if (pageState === 'provisioning') {
-    return <PlatformLoading capture={provisioningMessage} />;
+    return (
+      <PlatformLoading capture="Разворачиваем инфраструктуру компании...">
+        <ProvisioningBlock 
+          components={[
+            { 
+              name: 'База данных', 
+              is_ready: storageStatus.databaseReady, 
+              stage: storageStatus.databaseStatus === 'provisioning' ? 'Инициализация БД' : storageStatus.databaseStatus === 'active' ? 'БД готова' : 'Ожидание'
+            },
+            { 
+              name: 'Файловое хранилище', 
+              is_ready: storageStatus.mediaReady, 
+              stage: !storageStatus.mediaReady && storageStatus.databaseReady ? 'Создание бакета' : 'Ожидание'
+            }
+          ]} 
+        />
+      </PlatformLoading>
+    );
   }
   
   if (pageState === 'success') {
     return (
       <PlatformResult
-        title="Компания создана."
+        title="Компания создана"
         description={`Компания "${createdCompany?.name}" успешно создана и развернута. Теперь вы можете начать работу.`}
         redirect={{
           href: `/platform/${createdCompany?.id}`,

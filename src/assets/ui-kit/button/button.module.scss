@@ -78,6 +78,10 @@
   &.green {
     background-color: var(--color-green);
   }
+  &.orange {
+    background-color: rgb(255, 102, 0);
+    color: #fff;
+  }
   &.light {
     background-color: var(--color-surface-light);
   }

@@ -103,6 +103,25 @@
                 font-size: .95em;
                 overflow: hidden;
             }
+            .tags {
+                display: flex;
+                flex-flow: row nowrap;
+                gap: .2em;
+
+                .tag {
+                    padding: .3em .65em;
+                    border-radius: 2em;
+                    max-width: 4em;
+                    
+                    &.default {
+                        background-color: var(--color-surface-glass-secondary);
+                    }
+                    &.accent {
+                        background-color: var(--color-accent);
+                        color: var(--color-accent-text-primary);
+                    }
+                }
+            }
 
             &:hover {
                 color: var(--color-text-primary);
@@ -257,6 +276,10 @@
                         width: .8rem;
                         height: .8rem;
                     }
+                }
+
+                .tags {
+                    display: none;
                 }
             }
         }

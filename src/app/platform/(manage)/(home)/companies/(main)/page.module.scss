@@ -1,0 +1,16 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.grid {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .item {
+        transition: background-color var(--transition);
+        padding: .6em .6em !important;
+        border-radius: .5em;
+
+        &:hover {
+            background-color: var(--color-surface-elevated);
+        }
+    }
+}

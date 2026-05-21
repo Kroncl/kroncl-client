@@ -215,6 +215,13 @@ export default function ClientPanel({
                       {!displayCollapsed && (
                         <span className={styles.name}>{section.name}</span>
                       )}
+                      {section.tags && (
+                        <span className={styles.tags}>
+                          {section.tags.map((tag, index) => (
+                            <span key={index} className={clsx(styles.tag, styles[tag.variant])}>{tag.value}</span>
+                          ))}
+                        </span>
+                      )}
                     </a>
                   </ModalTooltip>
               ) : (
@@ -231,6 +238,13 @@ export default function ClientPanel({
                     </span>
                     {!displayCollapsed && (
                       <span className={styles.name}>{section.name}</span>
+                    )}
+                    {section.tags && (
+                      <span className={styles.tags}>
+                        {section.tags.map((tag, index) => (
+                          <span key={index} className={clsx(styles.tag, styles[tag.variant])}>{tag.value}</span>
+                        ))}
+                      </span>
                     )}
                   </a>
               );

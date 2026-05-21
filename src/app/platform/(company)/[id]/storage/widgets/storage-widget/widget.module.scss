@@ -27,6 +27,11 @@
             color: var(--color-text-ghost);
         }
 
+        .sectionTitle {
+            font-size: .8em;
+            margin: .5em 0;
+        }
+        
         .counters {
             display: flex;
             flex-flow: row wrap;

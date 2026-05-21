@@ -5,8 +5,11 @@ import { CompanyCard } from '../components/company-card/card';
 import { PlatformPagination } from '@/app/platform/components/lib/pagination/pagination';
 import { usePagination } from '@/apps/shared/pagination/hooks/usePagination';
 import Spinner from '@/assets/ui-kit/spinner/spinner';
+import styles from './page.module.scss';
 import { cardVariants, containerVariants, emptyStateVariants } from './_animations';
 import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
+import { PlatformError } from '@/app/platform/components/lib/error/block';
 
 export function CompaniesContent({
   role,
@@ -33,29 +36,11 @@ export function CompaniesContent({
   });
 
   if (loading) return (
-    <div style={{
-      display: "flex", 
-      alignItems: "center", 
-      justifyContent: "center", 
-      fontSize: ".7em", 
-      color: "var(--color-text-description)", 
-      minHeight: "10rem"
-    }}>
-      <Spinner />
-    </div>
+    <PlatformLoading />
   );
   
   if (error) return (
-    <div style={{
-      display: "flex", 
-      alignItems: "center", 
-      justifyContent: "center", 
-      fontSize: ".7em", 
-      color: "var(--color-text-description)", 
-      minHeight: "10rem"
-    }}>
-      {error}
-    </div>
+    <PlatformError error={error} />
   );
   
   return (
@@ -94,6 +79,7 @@ export function CompaniesContent({
           )}
           
           <AnimatePresence mode="popLayout">
+            <div className={styles.grid}>
             {companies.map((company) => (
               <motion.div
                 key={company.id}
@@ -101,9 +87,10 @@ export function CompaniesContent({
                 layout
                 layoutId={`company-${company.id}`}
               >
-                <CompanyCard company={company} />
+                <CompanyCard className={styles.item} company={company} />
               </motion.div>
             ))}
+            </div>
           </AnimatePresence>
         </motion.div>
       )}

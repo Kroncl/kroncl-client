@@ -1,3 +1,4 @@
+import { getAuthToken } from '@/assets/utils/auth';
 import { ApiResponse, RequestOptions } from './types';
 
 const ACCESS_TOKEN_COOKIE = 'auth_access_token';
@@ -300,6 +301,22 @@ class ApiBridge {
 
     delete<T>(endpoint: string, options?: RequestOptions): Promise<ApiResponse<T>> {
         return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+    }
+
+    async getBlob(url: string, options?: RequestInit): Promise<Blob> {
+        const response = await fetch(url, {
+            ...options,
+            headers: {
+                ...options?.headers,
+                'Authorization': `Bearer ${getAuthToken()}`,
+            },
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        return response.blob();
     }
 
     clearCache(): void {

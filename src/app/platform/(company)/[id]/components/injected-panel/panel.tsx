@@ -17,7 +17,7 @@ export function PlatformInjectedPanel() {
     const params = useParams();
     const companyId = params.id as string;
 
-    const ALLOW_SOURCES = usePermission(PERMISSIONS.STORAGE_SOURCES);
+    const ALLOW_STORAGE = usePermission(PERMISSIONS.STORAGE);
 
     const company = useCompany().company;
     const companyPlan = useCompany().companyPlan;
@@ -42,7 +42,7 @@ export function PlatformInjectedPanel() {
                 }
             ]}
             >
-            {isAllowed(ALLOW_SOURCES) && (
+            {isAllowed(ALLOW_STORAGE) && (
                 <StorageWidget className={styles.widget} variant="compact" />
             )}
         </ClientPanel>

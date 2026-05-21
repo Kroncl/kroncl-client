@@ -1,0 +1,66 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    padding: .4em 1em;
+    border: 1px solid var(--color-stroke-secondary);
+    flex-flow: row nowrap;
+    gap: 1em;
+    align-items: center;
+    border-radius: .7em;
+    @include cursor(pointer);
+    overflow: hidden;
+
+    .id {
+        white-space: nowrap;
+    }
+    .comment {
+        @include text-ellipsis();
+    }
+    .module, .type {
+        white-space: nowrap;
+        padding: .3em .6em;
+        background-color: var(--color-surface-glass);
+        border: 1px solid var(--color-stroke-secondary);
+        border-radius: 2em;
+    }
+    .date {
+        color: var(--color-text-secondary);
+        white-space: nowrap;
+    }
+
+    .actions {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: .5em;
+        
+        .action {
+            transition: transform var(--transition);
+
+            &:hover {
+                transform: scale(1.02)
+            }
+        }
+    }
+
+    &.loading {
+        @include shimmer();
+    }
+    &:hover {
+        background-color: var(--color-surface-elevated);
+    }
+    @media (max-width: 720px) {
+        flex-direction: column;
+        align-items: stretch;
+        padding: .7em !important;
+
+        .actions {
+            flex-direction: column;
+
+            .action {
+                display: flex;
+                width: 100%;
+            }
+        }
+    }
+}

@@ -1,5 +1,6 @@
 import { PaginationMeta } from "@/apps/shared/pagination/types";
 import { Employee } from "@/apps/company/modules/hrm/types";
+import { Doc } from "../docs/types";
 
 // --------
 // ANALYSIS
@@ -264,4 +265,23 @@ export interface CreditPaymentsParams {
 export interface CreditPaymentsResponse {
     transactions: TransactionDetail[];
     pagination: PaginationMeta;
+}
+
+// -----------
+// REPORTS
+// -----------
+
+// Тип для запроса генерации отчёта
+export interface GenerateReportRequest {
+    types: string[];
+    start_date?: string;
+    end_date?: string;
+    comment?: string;
+}
+
+// Тип для ответа генерации отчёта
+export interface GenerateReportResponse {
+    download_url: string;
+    doc: Doc;
+    total: number;
 }

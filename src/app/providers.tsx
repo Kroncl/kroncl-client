@@ -24,7 +24,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <PlatformMessageProvider maxMessages={3}>
+          <PlatformMessageProvider maxMessages={2}>
           {children}
           </PlatformMessageProvider>
         </AuthProvider>

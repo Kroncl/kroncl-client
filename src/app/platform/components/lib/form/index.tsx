@@ -10,7 +10,8 @@ import {
   PlatformFormStatusProps,
   PlatformFormUnifyProps,
   PlatformFormBodyProps,
-  PlatformFormTextareaProps
+  PlatformFormTextareaProps,
+  PlatformFormMultiVariantsProps
 } from './_types';
 import Button from '@/assets/ui-kit/button/button';
 import Link from 'next/link';
@@ -182,4 +183,63 @@ export function PlatformFormUnify({
   className
 }: Readonly<PlatformFormUnifyProps>) {
   return <div className={clsx(styles.unify, className)}>{children}</div>;
+}
+
+export function PlatformFormMultiVariants({
+  options,
+  values,
+  onChange,
+  disabled,
+  className,
+  max,
+  min
+}: Readonly<PlatformFormMultiVariantsProps>) {
+  const handleToggle = (optionValue: string) => {
+    if (disabled) return;
+    
+    let newValues: string[];
+    if (values.includes(optionValue)) {
+      newValues = values.filter(v => v !== optionValue);
+      // Проверяем минимальное количество
+      if (min !== undefined && newValues.length < min) {
+        return;
+      }
+      onChange(newValues);
+    } else {
+      // Проверяем максимальное количество
+      if (max !== undefined && values.length >= max) {
+        return;
+      }
+      newValues = [...values, optionValue];
+      onChange(newValues);
+    }
+  };
+
+  const isSelected = (optionValue: string) => values.includes(optionValue);
+
+  return (
+    <div className={clsx(styles.variants, styles.multi, className)}>
+      {options.map((option) => (
+        <div
+          key={option.value}
+          className={clsx(
+            styles.item,
+            isSelected(option.value) && styles.active,
+            disabled && styles.disabled,
+            option.disabled && styles.disabled
+          )}
+          data-value={option.value}
+          onClick={() => handleToggle(option.value)}
+        >
+          <div className={styles.name}>
+            {option.icon}
+            {option.label}
+          </div>
+          {option.description && (
+            <div className={styles.description}>{option.description}</div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
 }

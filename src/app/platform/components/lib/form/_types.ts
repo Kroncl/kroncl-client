@@ -51,6 +51,16 @@ export interface PlatformFormVariantsProps {
   className?: string;
 }
 
+export interface PlatformFormMultiVariantsProps {
+  options: PlatformFormVariantOption[];
+  values: string[];
+  onChange: (values: string[]) => void;
+  disabled?: boolean;
+  className?: string;
+  max?: number;
+  min?: number;
+}
+
 export interface PlatformFormStatusProps {
   type: 'error' | 'success' | 'info';
   message: string;

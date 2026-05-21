@@ -58,12 +58,49 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
     },
 
     // Storage
-    [PERMISSIONS.STORAGE_SOURCES]: {
-        code: PERMISSIONS.STORAGE_SOURCES,
-        title: 'Просмотр источников',
-        description: 'Доступ к информации об использовании хранилища организации',
+    [PERMISSIONS.STORAGE]: {
+        code: PERMISSIONS.STORAGE,
+        title: 'Доступ к хранилищу',
+        description: 'Базовый доступ к управлению хранилищем',
         module: 'storage',
-        category: 'files',
+        category: 'general',
+    },
+    [PERMISSIONS.STORAGE_DB]: {
+        code: PERMISSIONS.STORAGE_DB,
+        title: 'Доступ к БД',
+        description: 'Базовый доступ к управлению БД компании',
+        module: 'storage',
+        category: 'database',
+    },
+    [PERMISSIONS.STORAGE_DB_SOURCES]: {
+        code: PERMISSIONS.STORAGE_DB_SOURCES,
+        title: 'Использование БД',
+        description: 'Доступ к информации об использовании хранилища БД организации',
+        module: 'storage',
+        category: 'database',
+    },
+    [PERMISSIONS.STORAGE_MEDIA]: {
+        code: PERMISSIONS.STORAGE_MEDIA,
+        title: 'Доступ к медиа',
+        description: 'Базовый доступ к файловому хранилищу',
+        module: 'storage',
+        category: 'media',
+    },
+    [PERMISSIONS.STORAGE_MEDIA_UPLOAD]: {
+        code: PERMISSIONS.STORAGE_MEDIA_UPLOAD,
+        title: 'Загрузка файлов',
+        description: 'Возможность загружать файлы в хранилище',
+        module: 'storage',
+        category: 'media',
+    },
+
+    // Docs
+    [PERMISSIONS.DOCS]: {
+        code: PERMISSIONS.DOCS,
+        title: 'Просмотр документов',
+        description: 'Доступ к списку сгенерированных документов',
+        module: 'docs',
+        category: 'documents',
     },
 
     // Logs
@@ -219,6 +256,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         description: 'Базовый доступ к финансовому модулю',
         module: 'fm',
         category: 'finance',
+    },
+    [PERMISSIONS.FM_REPORT]: {
+        code: PERMISSIONS.FM_REPORT,
+        title: 'Генерация отчётов',
+        description: 'Возможность генерировать финансовые отчёты',
+        module: 'fm',
+        category: 'reports',
     },
     [PERMISSIONS.FM_TRANSACTIONS]: {
         code: PERMISSIONS.FM_TRANSACTIONS,
@@ -576,13 +620,6 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'dm',
         category: 'deals',
     },
-    [PERMISSIONS.DM_ANALYSIS]: {
-        code: PERMISSIONS.DM_ANALYSIS,
-        title: 'Аналитика сделок',
-        description: 'Доступ к отчётам по сделкам',
-        module: 'dm',
-        category: 'analysis',
-    },
     [PERMISSIONS.DM_DEALS_TRANSACTIONS]: {
         code: PERMISSIONS.DM_DEALS_TRANSACTIONS,
         title: 'Финансовые операции сделки',
@@ -603,6 +640,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         description: 'Получение сводки финансов по сделке',
         module: 'dm',
         category: 'deals',
+    },
+    [PERMISSIONS.DM_ANALYSIS]: {
+        code: PERMISSIONS.DM_ANALYSIS,
+        title: 'Аналитика сделок',
+        description: 'Доступ к отчётам по сделкам',
+        module: 'dm',
+        category: 'analysis',
     },
 };
 
