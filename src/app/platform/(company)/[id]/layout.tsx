@@ -23,6 +23,7 @@ import { Header } from "../../components/header/header";
 import { PlatformError } from "../../components/lib/error/block";
 import { ScreenProvider } from "../../components/screen-control/provider/provider";
 import { ScreenControlWarning } from "../../components/screen-control/warning";
+import Invitations from "@/assets/ui-kit/icons/invitations";
 
 export interface CompanyLayoutProps extends CompanyParams {
   children: React.ReactNode;
@@ -60,7 +61,18 @@ export default async function CompanyLayout({
           <SideContentProvider>
             <CompanyProvider company={company}>
               <div className={styles.canvas}>
-                  <Header subTitle={company.name || ''} />
+                  <Header 
+                    subTitle={company.name || ''} 
+                    actions={[
+                      {
+                        variant: 'orange',
+                        children: 'Пригласить',
+                        icon: <Invitations />,
+                        as: 'link',
+                        href: `/platform/${company.id}/accounts/invite`
+                      }
+                    ]}
+                    />
                   <div className={styles.container}>
                   
                   <PlatformInjectedPanel />

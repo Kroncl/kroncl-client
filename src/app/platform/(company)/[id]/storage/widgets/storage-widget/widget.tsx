@@ -5,7 +5,7 @@ import styles from './widget.module.scss';
 import { Remained } from '@/assets/ui-kit/remained/remained';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useStorage } from '@/apps/company/modules';
+import { useStorage, useStorageDb, useStorageMedia } from '@/apps/company/modules';
 import { formatSize } from '@/assets/utils/size';
 import { useCompany } from '@/apps/company/provider';
 
@@ -20,10 +20,10 @@ export function StorageWidget({
 }: StorageWidgetProps) {
     const params = useParams();
     const companyId = params.id as string;
-    const storage = useStorage();
+    const storageDb = useStorageDb();
     const companyContext = useCompany();
     
-    const { data: sourcesData, isLoading: loading } = storage.useSources(companyId);
+    const { data: sourcesData, isLoading: loading } = storageDb.useSources(companyId);
     const sources = sourcesData?.status ? sourcesData.data : null;
     
     const limitDbMb = companyContext.companyPlan?.current_plan.limit_db_mb || 0;

@@ -1,3 +1,4 @@
+// apps/permissions/codes.config.ts
 export const PERMISSIONS = {
     // Support
     SUPPORT_TICKETS: 'support.tickets',
@@ -13,7 +14,14 @@ export const PERMISSIONS = {
     COMPANY_DELETE: 'company.delete',
 
     // Storage
-    STORAGE_SOURCES: 'storage.sources',
+    STORAGE: 'storage',
+    STORAGE_DB: 'storage.db',
+    STORAGE_DB_SOURCES: 'storage.db.sources',
+    STORAGE_MEDIA: 'storage.media',
+    STORAGE_MEDIA_UPLOAD: 'storage.media.upload',
+
+    // Docs
+    DOCS: 'docs',
 
     // Logs
     LOGS: 'logs',
@@ -24,11 +32,11 @@ export const PERMISSIONS = {
     // Accounts
     ACCOUNTS: 'accounts',
     ACCOUNTS_DELETE: 'accounts.delete',
-    ACCOUNTS_SETTINGS: 'accounts.settings',
-    ACCOUNTS_SETTINGS_UPDATE: 'accounts.settings.update',
     ACCOUNTS_INVITATIONS: 'accounts.invitations',
     ACCOUNTS_INVITATIONS_CREATE: 'accounts.invitations.create',
     ACCOUNTS_INVITATIONS_REVOKE: 'accounts.invitations.revoke',
+    ACCOUNTS_SETTINGS: 'accounts.settings',
+    ACCOUNTS_SETTINGS_UPDATE: 'accounts.settings.update',
 
     // HRM
     HRM: 'hrm',
@@ -43,6 +51,7 @@ export const PERMISSIONS = {
 
     // FM
     FM: 'fm',
+    FM_REPORT: 'fm.report',
     FM_TRANSACTIONS: 'fm.transactions',
     FM_TRANSACTIONS_CREATE: 'fm.transactions.create',
     FM_TRANSACTIONS_REVERSE: 'fm.transactions.reverse',
@@ -99,10 +108,10 @@ export const PERMISSIONS = {
     DM_DEALS_CREATE: 'dm.deals.create',
     DM_DEALS_UPDATE: 'dm.deals.update',
     DM_DEALS_DELETE: 'dm.deals.delete',
-    DM_ANALYSIS: 'dm.analysis',
     DM_DEALS_TRANSACTIONS: 'dm.deals.transactions',
     DM_DEALS_TRANSACTIONS_CREATE: 'dm.deals.transactions.create',
     DM_DEALS_TRANSACTIONS_SUMMARY: 'dm.deals.transactions.summary',
+    DM_ANALYSIS: 'dm.analysis',
 } as const;
 
 export type PermissionCode = typeof PERMISSIONS[keyof typeof PERMISSIONS];
@@ -111,9 +120,6 @@ export type PermissionCode = typeof PERMISSIONS[keyof typeof PERMISSIONS];
 // UTILS
 // --------
 
-/**
- * Возвращает список всех существующих разрешений
- */
 export const getAllPermissions = (): PermissionCode[] => {
     return Object.values(PERMISSIONS);
 };

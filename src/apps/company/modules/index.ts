@@ -8,10 +8,14 @@ import { logsModule } from "./logs/api";
 import { manageModule } from "./manage/api";
 import { pricingModule } from "./pricing/api";
 import { storageModule } from "./storage/api";
+import { storageDbModule } from "./storage/db/api";
+import { storageMediaModule } from "./storage/media/api";
 import { supportModule } from "./support/api";
 import { wmModule } from "./wm/api";
 
 export const useStorage = () => useCompanyModule(storageModule);
+export const useStorageDb = () => useCompanyModule(storageDbModule);
+export const useStorageMedia = () => useCompanyModule(storageMediaModule);
 export const useAccounts = () => useCompanyModule(accountsModule);
 export const useHrm = () => useCompanyModule(hrmModule);
 export const useFm = () => useCompanyModule(fmModule);

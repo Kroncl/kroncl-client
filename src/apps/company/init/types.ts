@@ -16,17 +16,6 @@ export interface CreateCompanyRequest {
   promocode?: string;
 }
 
-export interface Storage {
-  company_id: string;
-  created_at: string;
-  id: string;
-  metadata: Record<string, any>;
-  schema_name: string;
-  status: StorageStatus;
-  storage_type: 'schema';
-  updated_at: string;
-}
-
 export interface Company {
   id: string;
   name: string;

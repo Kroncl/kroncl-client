@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import styles from './header.module.scss';
 import OutLink from '@/assets/ui-kit/icons/out-link';
-import Button from '@/assets/ui-kit/button/button';
+import Button, { ButtonProps } from '@/assets/ui-kit/button/button';
 import Menu from '@/assets/ui-kit/icons/menu';
 import Close from '@/assets/ui-kit/icons/close';
 import clsx from 'clsx';
@@ -29,11 +29,13 @@ import { ModalTooltip } from '@/app/components/tooltip/tooltip';
 export interface HeaderProps {
     className?: string;
     subTitle?: string;
+    actions?: ButtonProps[];
 }
 
 export function Header({
     className,
-    subTitle
+    subTitle,
+    actions
 }: HeaderProps) {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,8 +81,15 @@ export function Header({
                         <PllatformSearch />
                     </div>
                 </div>
-                
+
                 <div className={styles.actions}>
+                    {actions && (
+                        <div className={styles.buttons}>
+                            {actions.map((action, index) => (
+                                <Button className={styles.button} {...action} key={index} />
+                            ))}
+                        </div>
+                    )}
                     <ModalTooltip content='Kroncl - операционная система управления процессами малого бизнеса.'>
                         <div className={styles.icon}>
                             <Info className={styles.svg} />

@@ -6,7 +6,7 @@ import { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from 'react';
 import Spinner from '../spinner/spinner';
 import Link, { LinkProps } from 'next/link';
 
-export type ButtonVariant = 'default' | 'leader' | 'light' | 'contrast' | 'elevated' | 'empty' | 'glass' | 'brand' | 'accent' | 'red' | 'green';
+export type ButtonVariant = 'orange' | 'default' | 'leader' | 'light' | 'contrast' | 'elevated' | 'empty' | 'glass' | 'brand' | 'accent' | 'red' | 'green';
 
 interface CommonProps {
   children?: ReactNode;
@@ -53,6 +53,7 @@ export default function Button({
       [styles.accent]: variant === 'accent',
       [styles.red]: variant === 'red',
       [styles.green]: variant === 'green',
+      [styles.orange]: variant === 'orange',
       [styles.fullWidth]: fullWidth,
       [styles.sm]: size === 'sm',
       [styles.lg]: size === 'lg',
