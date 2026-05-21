@@ -140,7 +140,7 @@ export default function Page() {
                 description='Создание финансового отчёта по транзакциям, категориям, контрагентам или кредитам.'
             />
             <PlatformFormBody>
-                <PlatformFormSection title='Типы отчётов (обязательно)'>
+                <PlatformFormSection title='Типы отчётов (обязательно)' description='Отдельные листы в одном документе'>
                     <PlatformFormMultiVariants
                         options={REPORT_TYPES}
                         values={selectedTypes}
@@ -151,7 +151,7 @@ export default function Page() {
                     />
                 </PlatformFormSection>
 
-                <PlatformFormSection title='Период (опционально)' description='По умолчанию: конечная дата - сегодня.'>
+                <PlatformFormSection title='Период (опционально)' description='По умолчанию: конечная дата - сегодня'>
                     <div style={{ display: 'flex', gap: '16px' }}>
                         <Input
                             type="date"
@@ -171,7 +171,7 @@ export default function Page() {
                     </div>
                 </PlatformFormSection>
 
-                <PlatformFormSection title='Комментарий (опционально)'>
+                <PlatformFormSection title='Комментарий (опционально)' description='По комментариям доступен поиск - постарайтесь описать цель создания отчёта'>
                     <PlatformFormTextarea
                         placeholder='Дополнительная информация...'
                         value={comment}

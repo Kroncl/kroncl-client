@@ -314,24 +314,26 @@ export default function Page() {
   }
   
   if (pageState === 'provisioning') {
-    return (
-      <PlatformLoading capture="Разворачиваем инфраструктуру компании...">
-        <ProvisioningBlock 
-          components={[
-            { 
-              name: 'База данных', 
-              is_ready: storageStatus.databaseReady, 
-              stage: storageStatus.databaseStatus === 'provisioning' ? 'Инициализация БД' : storageStatus.databaseStatus === 'active' ? 'БД готова' : 'Ожидание'
-            },
-            { 
-              name: 'Файловое хранилище', 
-              is_ready: storageStatus.mediaReady, 
-              stage: !storageStatus.mediaReady && storageStatus.databaseReady ? 'Создание бакета' : 'Ожидание'
-            }
-          ]} 
-        />
-      </PlatformLoading>
-    );
+      return (
+          <PlatformLoading capture="Разворачиваем инфраструктуру компании...">
+              {storageStatus.databaseStatus !== 'checking' && (
+                  <ProvisioningBlock 
+                      components={[
+                          { 
+                              name: 'База данных', 
+                              is_ready: storageStatus.databaseReady, 
+                              stage: storageStatus.databaseStatus === 'provisioning' ? 'Инициализация БД' : storageStatus.databaseStatus === 'active' ? 'БД готова' : 'Ожидание'
+                          },
+                          { 
+                              name: 'Файловое хранилище', 
+                              is_ready: storageStatus.mediaReady, 
+                              stage: !storageStatus.mediaReady && storageStatus.databaseReady ? 'Создание бакета' : 'Ожидание'
+                          }
+                      ]} 
+                  />
+              )}
+          </PlatformLoading>
+      );
   }
   
   if (pageState === 'success') {
