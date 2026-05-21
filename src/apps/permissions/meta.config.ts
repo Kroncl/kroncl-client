@@ -443,6 +443,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'wm',
         category: 'warehouse',
     },
+    [PERMISSIONS.WM_REPORT]: {
+        code: PERMISSIONS.WM_REPORT,
+        title: 'Генерация отчётов',
+        description: 'Возможность генерировать отчёты по складу/каталогу',
+        module: 'wm',
+        category: 'reports',
+    },
     [PERMISSIONS.WM_CATALOG]: {
         code: PERMISSIONS.WM_CATALOG,
         title: 'Просмотр каталога',

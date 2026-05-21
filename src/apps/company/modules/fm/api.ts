@@ -201,10 +201,6 @@ export const fmModule = (companyApi: CompanyApi) => ({
     // REPORTS
     // -----------
     
-    // --------
-    // REPORTS
-    // --------
-    
     async generateReport(data: GenerateReportRequest) {
         return companyApi.post<GenerateReportResponse>("/modules/fm/report", data);
     }

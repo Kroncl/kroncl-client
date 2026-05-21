@@ -80,6 +80,7 @@ export const PERMISSIONS = {
 
     // WM
     WM: 'wm',
+    WM_REPORT: 'wm.report',
     WM_CATALOG: 'wm.catalog',
     WM_CATALOG_CATEGORIES: 'wm.catalog.categories',
     WM_CATALOG_CATEGORIES_CREATE: 'wm.catalog.categories.create',

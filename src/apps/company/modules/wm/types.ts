@@ -3,6 +3,7 @@
 // --------
 
 import { PaginationMeta } from "@/apps/shared/pagination/types";
+import { Doc } from "../docs/types";
 
 export type CategoryStatus = 'active' | 'inactive';
 
@@ -229,4 +230,19 @@ export interface StockBalanceItem {
     reserved: number;
     available: number;
     unit: CatalogUnit;
+}
+
+
+// -----------
+// REPORTS
+// -----------
+
+export interface GenerateWMReportRequest {
+    types: string[];
+    comment?: string;
+}
+
+export interface GenerateWMReportResponse {
+    download_url: string;
+    doc: Doc;
 }
