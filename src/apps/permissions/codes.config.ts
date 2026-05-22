@@ -21,6 +21,8 @@ export const PERMISSIONS = {
 
     // Docs
     DOCS: 'docs',
+    DOCS_SETTINGS: 'docs.settings',
+    DOCS_SETTINGS_UPDATE: 'docs.settings.update',
 
     // Logs
     LOGS: 'logs',
@@ -107,6 +109,7 @@ export const PERMISSIONS = {
     DM_STATUSES_UPDATE: 'dm.statuses.update',
     DM_STATUSES_DELETE: 'dm.statuses.delete',
     DM_DEALS: 'dm.deals',
+    DM_DEALS_INVOICE: 'dm.deals.invoice',
     DM_DEALS_CREATE: 'dm.deals.create',
     DM_DEALS_UPDATE: 'dm.deals.update',
     DM_DEALS_DELETE: 'dm.deals.delete',

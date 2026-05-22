@@ -1,11 +1,12 @@
 import { CompanyApi } from "../../api";
-import { Doc, DocsResponse, GetDocsParams } from "./types";
-import { useQuery } from '@tanstack/react-query';
+import { Doc, DocsResponse, GetDocsParams, DocsSettings, UpdateDocsSettingsRequest } from "./types";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const docsKeys = {
     all: (companyId: string) => ['docs', companyId] as const,
     list: (companyId: string, params?: GetDocsParams) => [...docsKeys.all(companyId), 'list', params] as const,
     detail: (companyId: string, docId: string) => [...docsKeys.all(companyId), 'detail', docId] as const,
+    settings: (companyId: string) => [...docsKeys.all(companyId), 'settings'] as const,
 };
 
 export const docsModule = (companyApi: CompanyApi) => ({
@@ -24,6 +25,14 @@ export const docsModule = (companyApi: CompanyApi) => ({
         return companyApi.get<Doc>(`/modules/docs/${docId}`);
     },
     
+    async getSettings() {
+        return companyApi.get<DocsSettings>('/modules/docs/settings');
+    },
+    
+    async updateSettings(data: UpdateDocsSettingsRequest) {
+        return companyApi.patch<DocsSettings>('/modules/docs/settings', data);
+    },
+    
     useDocs: (companyId: string, params?: GetDocsParams) => {
         return useQuery({
             queryKey: docsKeys.list(companyId, params),
@@ -40,6 +49,26 @@ export const docsModule = (companyApi: CompanyApi) => ({
             enabled: !!docId,
             staleTime: 5 * 60 * 1000,
             gcTime: 10 * 60 * 1000,
+        });
+    },
+    
+    useSettings: (companyId: string) => {
+        return useQuery({
+            queryKey: docsKeys.settings(companyId),
+            queryFn: () => companyApi.get<DocsSettings>('/modules/docs/settings'),
+            staleTime: 5 * 60 * 1000,
+            gcTime: 10 * 60 * 1000,
+        });
+    },
+    
+    useUpdateSettings: (companyId: string) => {
+        const queryClient = useQueryClient();
+        
+        return useMutation({
+            mutationFn: (data: UpdateDocsSettingsRequest) => companyApi.patch<DocsSettings>('/modules/docs/settings', data),
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: docsKeys.settings(companyId) });
+            },
         });
     },
 });

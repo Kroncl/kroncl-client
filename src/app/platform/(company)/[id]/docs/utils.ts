@@ -17,6 +17,7 @@ export const getTypeLabel = (type: string | null): string => {
         case 'counterparties': return 'Контрагенты';
         case 'credits': return 'Кредиты';
         case 'full': return 'Полный отчёт';
+        case 'invoice': return 'Накладная';
         default: return type || 'Отчёт';
     }
 };

@@ -102,6 +102,20 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'docs',
         category: 'documents',
     },
+    [PERMISSIONS.DOCS_SETTINGS]: {
+        code: PERMISSIONS.DOCS_SETTINGS,
+        title: 'Просмотр настроек документов',
+        description: 'Доступ к настройкам документов, брендирование',
+        module: 'docs',
+        category: 'documents',
+    },
+    [PERMISSIONS.DOCS_SETTINGS_UPDATE]: {
+        code: PERMISSIONS.DOCS_SETTINGS_UPDATE,
+        title: 'Обновление настроек документов',
+        description: 'Обновление настроек брендирования документов',
+        module: 'docs',
+        category: 'documents',
+    },
 
     // Logs
     [PERMISSIONS.LOGS]: {
@@ -617,6 +631,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         code: PERMISSIONS.DM_DEALS,
         title: 'Просмотр сделок',
         description: 'Доступ к списку сделок',
+        module: 'dm',
+        category: 'deals',
+    },
+    [PERMISSIONS.DM_DEALS_INVOICE]: {
+        code: PERMISSIONS.DM_DEALS_INVOICE,
+        title: 'Создание накладных к сделкам',
+        description: 'Доступ к генерации накладных',
         module: 'dm',
         category: 'deals',
     },

@@ -1,23 +1,23 @@
 'use client';
 
-import { PlatformHead } from "@/app/platform/components/lib/head/head";
+import { PlatformHead } from '@/app/platform/components/lib/head/head';
 import styles from './page.module.scss';
-import { DocCard } from "./components/doc-card/card";
-import { isAllowed, usePermission } from "@/apps/permissions/hooks";
-import { PERMISSIONS } from "@/apps/permissions/codes.config";
-import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
-import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { isAllowed, usePermission } from '@/apps/permissions/hooks';
+import { PERMISSIONS } from '@/apps/permissions/codes.config';
+import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
+import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
+import { DocCard } from '../../docs/components/doc-card/card';
 import { PlatformPagination } from '@/app/platform/components/lib/pagination/pagination';
 import { usePagination } from '@/apps/shared/pagination/hooks/usePagination';
-import { PlatformEmptyCanvas } from "@/app/platform/components/lib/empty-canvas/canvas";
+import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';
 import { useEffect, useState } from 'react';
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
-import { CompanyApi } from "@/apps/company/api";
-import { docsModule } from "@/apps/company/modules/docs/api";
-import { Doc, DocsResponse } from "@/apps/company/modules/docs/types";
-import { PlatformError } from "@/app/platform/components/lib/error/block";
-import Folder from "@/assets/ui-kit/icons/folder";
-import { sectionsList } from "./_sections";
+import { CompanyApi } from '@/apps/company/api';
+import { docsModule } from '@/apps/company/modules/docs/api';
+import { Doc, DocsResponse } from '@/apps/company/modules/docs/types';
+import { PlatformError } from '@/app/platform/components/lib/error/block';
+import Folder from '@/assets/ui-kit/icons/folder';
+import { sectionsList } from '../_sections';
 
 export default function Page() {
     const params = useParams();
@@ -33,8 +33,7 @@ export default function Page() {
         defaultLimit: 20
     });
 
-    // perms
-    const ALLOW_PAGE = usePermission(PERMISSIONS.DOCS)
+    const ALLOW_PAGE = usePermission(PERMISSIONS.DOCS);
     
     const [data, setData] = useState<DocsResponse | null>(null);
     const [loading, setLoading] = useState(true);
@@ -65,10 +64,12 @@ export default function Page() {
             const limit = parseInt(searchParams.get('limit') || '20');
             const search = searchParams.get('search') || undefined;
 
+            // Фильтр по модулю dm
             const response = await docs.getDocs({
                 page,
                 limit,
-                search
+                search,
+                module: 'dm'
             });
             
             if (response.status) {
@@ -107,25 +108,21 @@ export default function Page() {
 
     return (
         <>
-            <PlatformHead 
-                title='Документы'
-                description="Документы & Файлы модулей."
-                docsEscort={{
-                    href: '/',
-                    title: 'Подробнее о документах организации'
-                }}
+            <PlatformHead
+                title='Документы сделок'
+                description='Накладные, счета и другие документы по сделкам.'
                 searchProps={{
                     placeholder: 'Поиск по документам',
                     defaultValue: searchParams.get('search') || '',
                     onSearch: handleSearch
                 }}
-                showSearch={true}
                 sections={sectionsList(companyId)}
+                showSearch={true}
             />
             {docsList.length === 0 ? (
                 <PlatformEmptyCanvas 
                     title='Документов пока нет'
-                    description='Здесь будут появляться сгенерированные документы и отчёты.'
+                    description='Здесь будут появляться сгенерированные документы по сделкам.'
                     icon={<Folder />}
                 />
             ) : (
