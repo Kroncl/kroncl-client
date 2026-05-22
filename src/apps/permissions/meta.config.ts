@@ -192,6 +192,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'hrm',
         category: 'employees',
     },
+    [PERMISSIONS.HRM_REPORT]: {
+        code: PERMISSIONS.HRM_REPORT,
+        title: 'Генерация отчётов',
+        description: 'Возможность генерировать отчёты по штату сотрудников',
+        module: 'hrm',
+        category: 'reports',
+    },
     [PERMISSIONS.HRM_EMPLOYEES]: {
         code: PERMISSIONS.HRM_EMPLOYEES,
         title: 'Просмотр сотрудников',
@@ -384,6 +391,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         description: 'Базовый доступ к модулю работы с клиентами',
         module: 'crm',
         category: 'clients',
+    },
+    [PERMISSIONS.CRM_REPORT]: {
+        code: PERMISSIONS.CRM_REPORT,
+        title: 'Генерация отчётов',
+        description: 'Возможность генерировать отчёты по клиентской базе',
+        module: 'crm',
+        category: 'reports',
     },
     [PERMISSIONS.CRM_CLIENTS]: {
         code: PERMISSIONS.CRM_CLIENTS,

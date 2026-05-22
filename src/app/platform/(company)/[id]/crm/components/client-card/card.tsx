@@ -88,7 +88,7 @@ export function ClientCard({
                                     handleCopy(client.phone!, 'Телефон');
                                 }}
                             >
-                                {displayPhone}
+                                &nbsp;{displayPhone}
                             </span>
                         </ModalTooltip>
                     )}

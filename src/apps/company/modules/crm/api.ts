@@ -18,7 +18,9 @@ import {
     ClientsSummary,
     GroupedClientsStats,
     GetAnalysisParams,
-    GroupBy
+    GroupBy,
+    GenerateReportRequest,
+    GenerateReportResponse
 } from "./types";
 
 export const crmModule = (companyApi: CompanyApi) => ({
@@ -128,5 +130,13 @@ export const crmModule = (companyApi: CompanyApi) => ({
         return companyApi.get<GroupedClientsStats[]>("/modules/crm/analysis/grouped", {
             params: queryParams
         });
+    },
+    
+    // -----------
+    // REPORTS
+    // -----------
+    
+    async generateReport(data: GenerateReportRequest) {
+        return companyApi.post<GenerateReportResponse>("/modules/crm/report", data);
     }
 });

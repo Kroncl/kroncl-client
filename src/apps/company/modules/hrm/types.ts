@@ -1,4 +1,5 @@
 import { PaginationMeta } from "@/apps/shared/pagination/types";
+import { Doc } from "../docs/types";
 
 export interface Employee {
     account_id: string | null;
@@ -81,4 +82,21 @@ export interface AnalysisParams {
 
 export interface GroupedAnalysisParams extends AnalysisParams {
     group_by: GroupBy;
+}
+
+// -----------
+// REPORTS
+// -----------
+
+// Тип для запроса генерации отчёта
+export interface GenerateReportRequest {
+    types: string[];
+    comment?: string;
+}
+
+// Тип для ответа генерации отчёта
+export interface GenerateReportResponse {
+    download_url: string;
+    doc: Doc;
+    total: number;
 }

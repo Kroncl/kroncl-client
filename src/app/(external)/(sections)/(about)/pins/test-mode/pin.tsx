@@ -12,7 +12,7 @@ export function Pin({className}: PageBlockProps) {
         <div className={clsx(styles.container, className)}>
             <div className={styles.grid}>
                 <div className={styles.text}>
-                    Платформа работает в Beta-режиме. <span className={styles.underline}>30 дней</span> каждой новой организации.
+                    Платформа работает в бесплатном Beta-режиме.
                 </div>
             </div>
         </div>
