@@ -13,6 +13,12 @@ export const sections = (companyId: string): PlatformHeadSection[] => {
             value: 'positions',
             href: `/platform/${companyId}/hrm/positions`,
             exact: true
+        },
+        {
+            label: 'Отчёты',
+            value: 'reports',
+            href: `/platform/${companyId}/hrm/reports`,
+            exact: true
         }
     ]);
 }

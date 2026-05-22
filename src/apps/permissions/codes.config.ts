@@ -39,6 +39,7 @@ export const PERMISSIONS = {
 
     // HRM
     HRM: 'hrm',
+    HRM_REPORT: 'hrm.report',
     HRM_EMPLOYEES: 'hrm.employees',
     HRM_EMPLOYEES_CREATE: 'hrm.employees.create',
     HRM_EMPLOYEES_UPDATE: 'hrm.employees.update',
@@ -70,6 +71,7 @@ export const PERMISSIONS = {
 
     // CRM
     CRM: 'crm',
+    CRM_REPORT: 'crm.report',
     CRM_CLIENTS: 'crm.clients',
     CRM_CLIENTS_CREATE: 'crm.clients.create',
     CRM_CLIENTS_UPDATE: 'crm.clients.update',
@@ -80,6 +82,7 @@ export const PERMISSIONS = {
 
     // WM
     WM: 'wm',
+    WM_REPORT: 'wm.report',
     WM_CATALOG: 'wm.catalog',
     WM_CATALOG_CATEGORIES: 'wm.catalog.categories',
     WM_CATALOG_CATEGORIES_CREATE: 'wm.catalog.categories.create',

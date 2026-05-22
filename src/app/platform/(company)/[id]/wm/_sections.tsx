@@ -23,6 +23,11 @@ export const sectionsList = (companyId: string): PlatformHeadSection[] => {
             label: 'Остатки',
             href: `/platform/${companyId}/wm/movement/balance`,
             strongParams: true,
-        }
+        },
+        {
+            label: 'Отчёты',
+            href: `/platform/${companyId}/wm/reports`,
+            strongParams: true,
+        },
     ]);
 }

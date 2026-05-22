@@ -192,6 +192,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'hrm',
         category: 'employees',
     },
+    [PERMISSIONS.HRM_REPORT]: {
+        code: PERMISSIONS.HRM_REPORT,
+        title: 'Генерация отчётов',
+        description: 'Возможность генерировать отчёты по штату сотрудников',
+        module: 'hrm',
+        category: 'reports',
+    },
     [PERMISSIONS.HRM_EMPLOYEES]: {
         code: PERMISSIONS.HRM_EMPLOYEES,
         title: 'Просмотр сотрудников',
@@ -385,6 +392,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'crm',
         category: 'clients',
     },
+    [PERMISSIONS.CRM_REPORT]: {
+        code: PERMISSIONS.CRM_REPORT,
+        title: 'Генерация отчётов',
+        description: 'Возможность генерировать отчёты по клиентской базе',
+        module: 'crm',
+        category: 'reports',
+    },
     [PERMISSIONS.CRM_CLIENTS]: {
         code: PERMISSIONS.CRM_CLIENTS,
         title: 'Просмотр клиентов',
@@ -442,6 +456,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         description: 'Базовый доступ к модулю складского учёта',
         module: 'wm',
         category: 'warehouse',
+    },
+    [PERMISSIONS.WM_REPORT]: {
+        code: PERMISSIONS.WM_REPORT,
+        title: 'Генерация отчётов',
+        description: 'Возможность генерировать отчёты по складу/каталогу',
+        module: 'wm',
+        category: 'reports',
     },
     [PERMISSIONS.WM_CATALOG]: {
         code: PERMISSIONS.WM_CATALOG,

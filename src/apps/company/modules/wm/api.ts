@@ -22,6 +22,8 @@ import {
     StockBatchesResponse,
     StockPositionsResponse,
     StockBalanceItem,
+    GenerateWMReportRequest,
+    GenerateWMReportResponse,
 } from "./types";
 
 export const wmModule = (companyApi: CompanyApi) => ({
@@ -186,4 +188,13 @@ export const wmModule = (companyApi: CompanyApi) => ({
             params: queryParams
         });
     },
+
+    
+    // -----------
+    // REPORTS
+    // -----------
+    
+    async generateReport(data: GenerateWMReportRequest) {
+        return companyApi.post<GenerateWMReportResponse>("/modules/wm/report", data);
+    }
 });

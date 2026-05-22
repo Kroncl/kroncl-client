@@ -27,6 +27,7 @@ export const useStorageStatus = (companyId: string | null, options: UseStorageSt
     });
     
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const onReadyCalledRef = useRef(false);
     const { onReady, onError, interval = 5000 } = options;
 
     const stopPolling = useCallback(() => {
@@ -48,16 +49,18 @@ export const useStorageStatus = (companyId: string | null, options: UseStorageSt
                 const mediaReady = data.media.is_ready;
                 const allReady = databaseReady && mediaReady;
                 
-                setStatus({
+                setStatus(prev => ({
+                    ...prev,
                     isReady: allReady,
                     databaseReady,
                     mediaReady,
                     databaseStatus: data.database.status,
                     mediaStatus: data.media.is_ready ? 'ready' : (data.media.exists ? 'exists' : 'creating'),
                     message: getStatusMessage(data.database.status, data.media.is_ready)
-                });
+                }));
                 
-                if (allReady) {
+                if (allReady && !onReadyCalledRef.current) {
+                    onReadyCalledRef.current = true;
                     stopPolling();
                     onReady?.();
                 }
@@ -96,9 +99,11 @@ export const useStorageStatus = (companyId: string | null, options: UseStorageSt
     useEffect(() => {
         if (!companyId) {
             stopPolling();
+            onReadyCalledRef.current = false;
             return;
         }
         
+        onReadyCalledRef.current = false;
         checkStatus();
         
         intervalRef.current = setInterval(checkStatus, interval);

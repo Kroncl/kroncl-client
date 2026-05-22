@@ -8,6 +8,8 @@ import {
     EmployeeDetail,
     EmployeesResponse,
     EmployeesSummary,
+    GenerateReportRequest,
+    GenerateReportResponse,
     GroupedAnalysisParams,
     GroupedStats,
     Position,
@@ -107,4 +109,13 @@ export const hrmModule = (companyApi: CompanyApi) => ({
             params: queryParams as Record<string, string | number | boolean | undefined>,
         });
     },
+
+    
+    // -----------
+    // REPORTS
+    // -----------
+    
+    async generateReport(data: GenerateReportRequest) {
+        return companyApi.post<GenerateReportResponse>("/modules/hrm/report", data);
+    }
 });

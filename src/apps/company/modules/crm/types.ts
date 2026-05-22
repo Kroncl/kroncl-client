@@ -1,4 +1,5 @@
 import { PaginationMeta } from "@/apps/shared/pagination/types";
+import { Doc } from "../docs/types";
 
 // --------
 // CLIENTS
@@ -155,4 +156,21 @@ export interface GetAnalysisParams {
     start_date?: string;
     end_date?: string;
     group_by?: GroupBy;
+}
+
+// -----------
+// REPORTS
+// -----------
+
+// Тип для запроса генерации отчёта
+export interface GenerateReportRequest {
+    types: string[];
+    comment?: string;
+}
+
+// Тип для ответа генерации отчёта
+export interface GenerateReportResponse {
+    download_url: string;
+    doc: Doc;
+    total: number;
 }
