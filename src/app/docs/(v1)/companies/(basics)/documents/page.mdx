@@ -1,0 +1,46 @@
+import Link from 'next/link';
+import styles from '@/assets/styles/mdx.module.scss';
+import { MDXImageBlock } from '@/assets/mdx/image-block';
+
+# 1. Документы
+
+<Link href='/docs/companies/modules' className={styles.link}>Модули Kroncl</Link> предоставляют возможность генерации разного вида отчётов, накладных и других файлов, называемых
+<span className={styles.underline}>документами</span>. Для хранения всех сгенерированных файлов используется <Link href='/docs/companies/storage/media' className={styles.link}>объектное хранилище</Link> организации.
+При каждой генерации используются ресурсы именно этого типа хранилища.
+
+Каждый модуль способен самостоятельно отображать только свои документы, однако
+помимо этого все созданные файлы доступны в отдельном разделе <span className={styles.underline}>«Документы»</span> (боковая панель пространства организации).
+
+<MDXImageBlock src='/images/docs/company-docs.png' label='Просмотр документов.' />
+
+# 2. Документ
+
+В карте каждого документа доступны свойства файла:
+
+- идентификатор (уникален среди документов всех типов)
+- модуль
+- тип
+- комментарий, указанный при создании
+- дата и время генерации
+<br />
+Для скачивания файла нажмите на соответствующую кнопку в карте документа.
+
+<MDXImageBlock src='/images/docs/company-doc.png' label='Документ.' />
+
+# 3. Настройки документов
+
+Для некоторых документов, например накладных модуля <Link href='/docs/companies/modules/dm' className={styles.link}>«Управление сделками»</Link>,
+используются специфичные данные компании, например:
+
+- юридическое наименование
+- юридический адрес
+- ИНН
+- ОГРН / ОГРНИП
+- наименование банка
+- БИК
+- расчётный счёт
+- директор / руководитель
+<br />
+Изменение этих данных доступно на вкладке <span className={styles.underline}>«Настройки документов»</span> раздела <span className={styles.underline}>«Документы»</span>.
+
+<MDXImageBlock src='/images/docs/company-docs-settings.png' label='Настройки документов.' />
