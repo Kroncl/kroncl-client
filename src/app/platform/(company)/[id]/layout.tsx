@@ -65,7 +65,7 @@ export default async function CompanyLayout({
                     subTitle={company.name || ''} 
                     actions={[
                       {
-                        variant: 'orange',
+                        variant: 'accent',
                         children: 'Пригласить',
                         icon: <Invitations />,
                         as: 'link',
