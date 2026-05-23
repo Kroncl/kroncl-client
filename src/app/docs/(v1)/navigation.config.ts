@@ -4,6 +4,7 @@ import { dmSections } from "./configs/dm.config";
 import { fmSections } from "./configs/fm.config";
 import { hrmSections } from "./configs/hrm.config";
 import { wmSections } from "./configs/wm.config";
+import { DOCS_LINK_COMPANIES_DOCS } from "./internal.config";
 
 export const navigationSections: DocsNavSectionProps[] = [
     {
@@ -22,10 +23,6 @@ export const navigationSections: DocsNavSectionProps[] = [
                 label: 'Основные возможности',
                 href: '/docs/account/overview'
             },
-            // {
-            //     label: 'Безопасность',
-            //     href: '/docs/account/security'
-            // },
             {
                 label: 'Ключи доступа',
                 href: '/docs/account/fingerprints'
@@ -56,7 +53,17 @@ export const navigationSections: DocsNavSectionProps[] = [
             },
             {
                 label: 'Хранилище',
-                href: '/docs/companies/storage'
+                href: '/docs/companies/storage',
+                childrens: [
+                    {
+                        label: 'База данных',
+                        href: '/docs/companies/storage/db'
+                    },
+                    {
+                        label: 'Файлы',
+                        href: '/docs/companies/storage/media'
+                    }
+                ]
             },
             {
                 label: 'Тарификация',
@@ -65,6 +72,10 @@ export const navigationSections: DocsNavSectionProps[] = [
             {
                 label: 'Сводка',
                 href: '/docs/companies/summary'
+            },
+            {
+                label: 'Документы',
+                href: DOCS_LINK_COMPANIES_DOCS
             },
         ]
     },
