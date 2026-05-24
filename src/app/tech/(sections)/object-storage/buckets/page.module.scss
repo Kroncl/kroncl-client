@@ -1,7 +1,13 @@
 @use '@/assets/styles/_mixins.scss' as *;
 
-.grid {
+.container {
     display: flex;
     flex-flow: column nowrap;
+    gap: .3rem;
     flex: 1;
+    font-size: .85em;
+
+    .item {
+
+    }
 }

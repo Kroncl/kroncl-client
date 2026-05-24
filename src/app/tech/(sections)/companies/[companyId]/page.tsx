@@ -153,7 +153,7 @@ export default function CompanyPage() {
                             action: {
                                 children: 'Открыть',
                                 as: 'link',
-                                href: `/tech/object-storage/backets/tenant-${company.id}`
+                                href: `/tech/object-storage/buckets/tenant-${company.id}`
                             }
                         }
                     ]}

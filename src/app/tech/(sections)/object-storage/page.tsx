@@ -7,6 +7,8 @@ import styles from './page.module.scss';
 import Package from '@/assets/ui-kit/icons/package';
 import { isAdminAllowed, useAdminLevel } from '@/apps/admin/auth/hook';
 import { ADMIN_LEVEL_1 } from '@/apps/admin/auth/types';
+import { MediaHistoryChart } from './components/history-chart/chart';
+import { MediaStatsBlock } from './components/summary-stats/block';
 
 export default function Page() {
     const ALLOW_PAGE = useAdminLevel(ADMIN_LEVEL_1);
@@ -26,12 +28,13 @@ export default function Page() {
                         variant: 'light',
                         icon: <Package />,
                         as: 'link',
-                        href: '/tech/object-storage/backets'
+                        href: '/tech/object-storage/buckets'
                     }
                 ]}
             />
             <div className={styles.grid}>
-
+                <MediaStatsBlock className={styles.summaryBlock} />
+                <MediaHistoryChart className={styles.historyBlock} />
             </div>
         </>
     );
