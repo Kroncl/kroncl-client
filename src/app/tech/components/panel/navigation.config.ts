@@ -8,7 +8,7 @@ export interface TechSectionsGroup {
 
 export const sectionsList: TechSectionsGroup[] = [
     {
-        capture: 'Главное',
+        capture: 'Инфраструктура',
         requiredLevel: 1,
         sections: [
             {
@@ -22,6 +22,17 @@ export const sectionsList: TechSectionsGroup[] = [
                 href: '/tech/db',
                 requiredLevel: 1
             },
+            {
+                title: 'Объектное хранилище',
+                href: '/tech/object-storage',
+                requiredLevel: 1
+            }
+        ]
+    },
+    {
+        capture: 'Бизнес',
+        requiredLevel: 2,
+        sections: [
             {
                 title: 'Аккаунты',
                 href: '/tech/accounts',
@@ -38,6 +49,21 @@ export const sectionsList: TechSectionsGroup[] = [
                 label: 'Метрики',
                 requiredLevel: 4
             },
+            {
+                title: 'Партнёры',
+                href: '/tech/partners',
+                requiredLevel: 4
+            },
+            {
+                title: 'Тарифы',
+                href: '/tech/tariffs',
+                requiredLevel: 5
+            },
+            {
+                title: 'Промокоды',
+                href: '/tech/promocodes',
+                requiredLevel: 4
+            }
         ]
     },
     {
@@ -47,16 +73,6 @@ export const sectionsList: TechSectionsGroup[] = [
             {
                 title: 'Поддержка',
                 href: '/tech/support',
-                requiredLevel: 4
-            },
-            {
-                title: 'Партнёры',
-                href: '/tech/partners',
-                requiredLevel: 4
-            },
-            {
-                title: 'Промокоды',
-                href: '/tech/promocodes',
                 requiredLevel: 4
             }
         ]
