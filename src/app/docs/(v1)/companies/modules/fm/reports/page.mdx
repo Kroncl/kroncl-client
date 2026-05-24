@@ -1,0 +1,49 @@
+import Link from 'next/link';
+import styles from '@/assets/styles/mdx.module.scss';
+import { MDXImageBlock } from '@/assets/mdx/image-block';
+import { MDXInfoBlock } from '@/assets/mdx/info-block';
+
+
+# 1. Отчёты
+
+
+Модуль «Финансы» предоставляет функции генерации отчётов. 
+Для просмотра уже созданных файлов перейдите на вкладку <span className={styles.underline}>«Отчёты»</span> модуля финансов.
+
+
+<MDXImageBlock src='/images/docs/company-fm-docs.png' label='Просмотр отчётов.' />
+
+
+<MDXInfoBlock type='info' title='Формат отчётов'>
+    Для генерации отчётов используется формат <span className={styles.tag}>.xlsx</span> — Microsoft Excel. Для каждого типа данных используется отдельный лист.
+    Некоторые ячейки могут содержать комментарии.
+</MDXInfoBlock>
+<MDXInfoBlock type='warning' title='Лимит строк'>
+    Каждый отчёт имеет ограничение в <span className={styles.tag}>10000</span> строк на одном листе. При необходимости увеличения лимита обратитесь в техническую поддержку.
+</MDXInfoBlock>
+
+
+# 2. Создание отчёта
+
+
+Для создания нового отчёта нажмите соответствующую кнопку на странице просмотра отчётов.
+
+
+При создании отчёта необходимо выбрать как минимум один тип данных, используемый в отчёте. Выберите несколько типов для <span className={styles.underline}>композитного отчёта</span>.
+
+
+Таким образом, доступны:
+
+
+- транзакции (операции): в отчёт попадёт информация о всех финансовых операциях за промежуток времени (доступен ручной выбор периода);
+- категории: в отчёт попадёт информация о категориях трат/доходов;
+- долговые контрагенты: список контрагентов с их контактными данными;
+- кредиты и займы: информация о кредитах, займах и графиках платежей.
+<br />
+После завершения генерации (обычно до 10 секунд) вам станет доступен файл созданного отчёта.
+
+
+<MDXImageBlock src='/images/docs/company-fm-docs-transactions-excel.png' label='Операции. Лист отчёта.' />
+<MDXImageBlock src='/images/docs/company-fm-docs-categories-excel.png' label='Категории. Лист отчёта.' />
+<MDXImageBlock src='/images/docs/company-fm-docs-counterparties-excel.png' label='Контрагенты. Лист отчёта.' />
+<MDXImageBlock src='/images/docs/company-fm-docs-credits-excel.png' label='Кредиты и займы. Лист отчёта.' />

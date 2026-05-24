@@ -14,6 +14,7 @@ import { docsModule } from '@/apps/company/modules/docs/api';
 import { DocsSettings } from '@/apps/company/modules/docs/types';
 import { isEqual } from 'lodash';
 import { sectionsList } from '../_sections';
+import { DOCS_LINK_COMPANIES_DOCS } from '@/app/docs/(v1)/internal.config';
 
 export default function Page() {
     const params = useParams();
@@ -115,6 +116,10 @@ export default function Page() {
                     }
                 ] : undefined}
                 sections={sectionsList(companyId)}
+                docsEscort={{
+                    href: DOCS_LINK_COMPANIES_DOCS,
+                    title: 'Подробнее о документах организации'
+                }}
             />
             <br />
             <PlatformFormBody>

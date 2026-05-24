@@ -1,0 +1,53 @@
+import Link from 'next/link';
+import styles from '@/assets/styles/mdx.module.scss';
+import { MDXImageBlock } from '@/assets/mdx/image-block';
+import { MDXInfoBlock } from '@/assets/mdx/info-block';
+
+
+# 1. Отчёты
+
+
+Модуль «Каталог & Склад» предоставляет функции генерации отчётов. 
+Для просмотра уже созданных файлов перейдите на вкладку <span className={styles.underline}>«Отчёты»</span> модуля.
+
+
+<MDXImageBlock src='/images/docs/company-wm-docs.png' label='Просмотр отчётов.' />
+
+
+<MDXInfoBlock type='info' title='Формат отчётов'>
+Для генерации отчётов используется формат <span className={styles.tag}>.xlsx</span> — Microsoft Excel. Для каждого типа данных используется отдельный лист.
+Некоторые ячейки могут содержать комментарии.
+</MDXInfoBlock>
+<MDXInfoBlock type='warning' title='Лимит строк'>
+Каждый отчёт имеет ограничение в <span className={styles.tag}>10000</span> строк на одном листе. При необходимости увеличения лимита обратитесь в техническую поддержку.
+</MDXInfoBlock>
+
+
+# 2. Создание отчёта
+
+
+Для создания нового отчёта нажмите соответствующую кнопку на странице просмотра отчётов.
+
+
+При создании отчёта необходимо выбрать как минимум один тип данных, используемый в отчёте. Выберите несколько типов для <span className={styles.underline}>композитного отчёта</span>.
+
+
+Таким образом, доступны:
+
+
+- категории каталога: справочная информация о категориях товаров;
+- товары и услуги: список товарных позиций каталога с ценами и характеристиками;
+- остатки на складе: текущие остатки товаров на складе;
+- партии (поставки): история приходов и расходов на складе;
+- складские позиции: товары, участвовавшие в поставках, детальный учёт складских позиций;
+
+
+<br />
+После завершения генерации (обычно до 10 секунд) вам станет доступен файл созданного отчёта.
+
+
+<MDXImageBlock src='/images/docs/company-wm-docs-catalog-categories-excel.png' label='Категории каталога. Лист отчёта.' />
+<MDXImageBlock src='/images/docs/company-wm-docs-catalog-units-excel.png' label='Товары и услуги. Лист отчёта.' />
+<MDXImageBlock src='/images/docs/company-wm-docs-stocks-balance-excel.png' label='Остатки. Лист отчёта.' />
+<MDXImageBlock src='/images/docs/company-wm-docs-batches-excel.png' label='Поставки и отгрузки. Лист отчёта.' />
+<MDXImageBlock src='/images/docs/company-wm-docs-batches-positions-excel.png' label='Складские позиции. Лист отчёта.' />

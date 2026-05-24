@@ -17,6 +17,7 @@ import { docsModule } from '@/apps/company/modules/docs/api';
 import { Doc, DocsResponse } from '@/apps/company/modules/docs/types';
 import { PlatformError } from '@/app/platform/components/lib/error/block';
 import Folder from '@/assets/ui-kit/icons/folder';
+import { DOCS_LINK_FM_REPORTS } from '@/app/docs/(v1)/internal.config';
 
 export default function Page() {
     const params = useParams();
@@ -125,6 +126,10 @@ export default function Page() {
                         href: `/platform/${companyId}/fm/reports/new`
                     }
                 ] : undefined}
+                docsEscort={{
+                    href: DOCS_LINK_FM_REPORTS,
+                    title: 'Подробнее об отчётах'
+                }}
             />
             {docsList.length === 0 ? (
                 <PlatformEmptyCanvas 

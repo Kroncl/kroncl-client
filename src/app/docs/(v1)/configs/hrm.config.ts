@@ -1,5 +1,5 @@
 import { DocsNavSectionProps } from "../../components/panel/components/nav-section/section";
-import { DOCS_LINK_HRM_DOCS } from "../internal.config";
+import { DOCS_LINK_HRM_REPORTS } from "../internal.config";
 
 export const hrmSections: DocsNavSectionProps[] = [
     {
@@ -12,6 +12,6 @@ export const hrmSections: DocsNavSectionProps[] = [
     },
     {
         label: 'Отчёты',
-        href: DOCS_LINK_HRM_DOCS
+        href: DOCS_LINK_HRM_REPORTS
     },
 ]
