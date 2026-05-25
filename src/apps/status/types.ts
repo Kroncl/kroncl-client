@@ -1,6 +1,6 @@
 export type SystemStatus = 'operational' | 'degraded' | 'partial_outage' | 'major_outage';
 export type IncidentSeverity = 'minor' | 'major';
-export type ComponentType = 'all' | 'server' | 'storage';
+export type ComponentType = 'all' | 'server' | 'db' | 'media';
 
 export interface Incident {
     id: string;
@@ -9,7 +9,7 @@ export interface Incident {
     severity: IncidentSeverity;
     title: string;
     description: string;
-    metrics_type: 'server' | 'db';
+    metrics_type: 'server' | 'db' | 'media';
 }
 
 export interface DailyStatus {
@@ -25,6 +25,7 @@ export interface SystemStatusResponse {
     components: {
         all: DailyStatus[];
         server: DailyStatus[];
-        storage: DailyStatus[];
+        db: DailyStatus[];
+        media: DailyStatus[];
     };
 }

@@ -1,5 +1,3 @@
-// app/status/page.tsx
-
 import { Metadata } from 'next';
 import { getMetaConfig } from '@/config/meta.config';
 export const metadata: Metadata = getMetaConfig('status');
