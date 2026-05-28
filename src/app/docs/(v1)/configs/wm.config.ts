@@ -1,5 +1,5 @@
 import { DocsNavSectionProps } from "../../components/panel/components/nav-section/section";
-import { DOCS_LINK_WM_CATALOG, DOCS_LINK_WM_CATALOG_CATEGORIES, DOCS_LINK_WM_CATALOG_UNITS, DOCS_LINK_WM_MOVEMENT, DOCS_LINK_WM_MOVEMENT_BALANCE } from "../internal.config";
+import { DOCS_LINK_WM_CATALOG, DOCS_LINK_WM_CATALOG_CATEGORIES, DOCS_LINK_WM_CATALOG_UNITS, DOCS_LINK_WM_MOVEMENT, DOCS_LINK_WM_MOVEMENT_BALANCE, DOCS_LINK_WM_REPORTS } from "../internal.config";
 
 export const wmSections: DocsNavSectionProps[] = [
     {
@@ -23,19 +23,9 @@ export const wmSections: DocsNavSectionProps[] = [
     {
         label: 'Остатки',
         href: DOCS_LINK_WM_MOVEMENT_BALANCE
+    },
+    {
+        label: 'Отчёты',
+        href: DOCS_LINK_WM_REPORTS
     }
-    // {
-    //     label: 'Анализ',
-    //     href: '/',
-    //     childrens: [
-    //         {
-    //             label: 'Анализ остатков',
-    //             href: '/'
-    //         },
-    //         {
-    //             label: 'Анализ каталога',
-    //             href: '/'
-    //         }
-    //     ]
-    // }
 ]

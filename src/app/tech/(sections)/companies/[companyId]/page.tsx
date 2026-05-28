@@ -139,12 +139,21 @@ export default function CompanyPage() {
                     className={styles.actions}
                     actions={[
                         {
-                            title: 'Открыть хранилище',
-                            about: 'Просмотр схемы организации',
+                            title: 'База данных',
+                            about: 'Просмотр схемы БД организации',
                             action: {
                                 children: 'Открыть',
                                 as: 'link',
                                 href: `/tech/db/schemas/${company.schema_name}`
+                            }
+                        },
+                        {
+                            title: 'Объектное хранилище',
+                            about: 'Просмотр бакета организации',
+                            action: {
+                                children: 'Открыть',
+                                as: 'link',
+                                href: `/tech/object-storage/buckets/tenant-${company.id}`
                             }
                         }
                     ]}

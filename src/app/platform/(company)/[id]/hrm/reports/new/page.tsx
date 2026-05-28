@@ -16,6 +16,7 @@ import { hrmModule } from '@/apps/company/modules/hrm/api';
 import { storageMediaModule } from '@/apps/company/modules/storage/media/api';
 import { saveAs } from 'file-saver';
 import { IS_PRODUCTION } from '@/config/env.config';
+import { DOCS_LINK_HRM_REPORTS } from '@/app/docs/(v1)/internal.config';
 
 type TypesStatus = 'idle' | 'valid' | 'invalid';
 
@@ -126,6 +127,10 @@ export default function Page() {
             <PlatformHead
                 title='Новый отчёт'
                 description='Создание HRM отчёта по сотрудникам и должностям.'
+                docsEscort={{
+                    href: DOCS_LINK_HRM_REPORTS,
+                    title: 'Подробнее об отчётах'
+                }}
             />
             <PlatformFormBody>
                 <PlatformFormSection title='Типы отчётов (обязательно)' description='Отдельные листы в одном документе'>

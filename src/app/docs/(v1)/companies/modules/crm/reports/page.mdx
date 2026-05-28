@@ -1,0 +1,47 @@
+import Link from 'next/link';
+import styles from '@/assets/styles/mdx.module.scss';
+import { MDXImageBlock } from '@/assets/mdx/image-block';
+import { MDXInfoBlock } from '@/assets/mdx/info-block';
+
+
+# 1. Отчёты
+
+
+Модуль «Клиентская база» предоставляет функции генерации отчётов. 
+Для просмотра уже созданных файлов перейдите на вкладку <span className={styles.underline}>«Отчёты»</span> модуля.
+
+
+<MDXImageBlock src='/images/docs/company-crm-docs.png' label='Просмотр отчётов.' />
+
+
+<MDXInfoBlock type='info' title='Формат отчётов'>
+Для генерации отчётов используется формат <span className={styles.tag}>.xlsx</span> — Microsoft Excel. Для каждого типа данных используется отдельный лист.
+Некоторые ячейки могут содержать комментарии.
+</MDXInfoBlock>
+<MDXInfoBlock type='warning' title='Лимит строк'>
+Каждый отчёт имеет ограничение в <span className={styles.tag}>10000</span> строк на одном листе. При необходимости увеличения лимита обратитесь в техническую поддержку.
+</MDXInfoBlock>
+
+
+# 2. Создание отчёта
+
+
+Для создания нового отчёта нажмите соответствующую кнопку на странице просмотра отчётов.
+
+
+При создании отчёта необходимо выбрать как минимум один тип данных, используемый в отчёте. Выберите несколько типов для <span className={styles.underline}>композитного отчёта</span>.
+
+
+Таким образом доступны:
+
+
+- клиенты: список всех клиентов с контактной информацией;
+- источники привлечения: справочная информация об источниках клиентов;
+
+
+<br />
+После завершения генерации (обычно до 10 секунд) вам станет доступен файл созданного отчёта.
+
+
+<MDXImageBlock src='/images/docs/company-crm-docs-clients-excel.png' label='Клиенты. Лист отчёта.' />
+<MDXImageBlock src='/images/docs/company-crm-docs-sources-excel.png' label='Источники. Лист отчёта.' />

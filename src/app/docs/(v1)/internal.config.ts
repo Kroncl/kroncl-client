@@ -11,7 +11,10 @@ export const DOCS_LINK_COMPANIES = '/docs/companies';
 export const DOCS_LINK_COMPANIES_PRICING = DOCS_LINK_COMPANIES + '/pricing';
 export const DOCS_LINK_COMPANIES_ACCESSES = DOCS_LINK_COMPANIES + '/accesses';
 export const DOCS_LINK_COMPANIES_STORAGE = DOCS_LINK_COMPANIES + '/storage';
+export const DOCS_LINK_COMPANIES_STORAGE_DB = DOCS_LINK_COMPANIES_STORAGE + '/dn';
+export const DOCS_LINK_COMPANIES_STORAGE_MEDIA = DOCS_LINK_COMPANIES_STORAGE + '/media';
 export const DOCS_LINK_COMPANIES_LOGS = DOCS_LINK_COMPANIES + '/logs';
+export const DOCS_LINK_COMPANIES_DOCS = DOCS_LINK_COMPANIES + '/documents';
 
 // Modules
 export const DOCS_LINK_MODULES = '/docs/companies/modules';
@@ -24,6 +27,7 @@ export const DOCS_LINK_DM =  DOCS_LINK_MODULES + '/dm';
 // HRM
 export const DOCS_LINK_HRM_EMPLOYEES = DOCS_LINK_HRM + '/employees';
 export const DOCS_LINK_HRM_POSITIONS = DOCS_LINK_HRM + '/positions';
+export const DOCS_LINK_HRM_REPORTS = DOCS_LINK_HRM + '/reports';
 
 // FM
 export const DOCS_LINK_FM_MOVEMENT = DOCS_LINK_FM + '/movement-of-funds';
@@ -31,6 +35,7 @@ export const DOCS_LINK_FM_OPERATIONS = DOCS_LINK_FM_MOVEMENT + '/operations';
 export const DOCS_LINK_FM_CATEGORIES = DOCS_LINK_FM_MOVEMENT + '/categories';
 export const DOCS_LINK_FM_BALANCE = DOCS_LINK_FM_MOVEMENT + '/balance';
 export const DOCS_LINK_FM_ANALYSIS = DOCS_LINK_FM_MOVEMENT + '/analysis';
+export const DOCS_LINK_FM_REPORTS = DOCS_LINK_FM + '/reports';
 
 export const DOCS_LINK_FM_DEBT_OBLIGATIONS = DOCS_LINK_FM + '/debt-obligations';
 export const DOCS_LINK_FM_DEBT_OBLIGATIONS_COUNTERPARTIES = DOCS_LINK_FM_DEBT_OBLIGATIONS + '/counterparties';
@@ -40,6 +45,7 @@ export const DOCS_LINK_FM_DEBT_OBLIGATIONS_CREDITS_DEBTS = DOCS_LINK_FM_DEBT_OBL
 export const DOCS_LINK_CRM_CLIENTS = DOCS_LINK_CRM + '/clients';
 export const DOCS_LINK_CRM_SOURCES = DOCS_LINK_CRM + '/sources';
 export const DOCS_LINK_CRM_ANALYSIS = DOCS_LINK_CRM + '/analysis';
+export const DOCS_LINK_CRM_REPORTS = DOCS_LINK_CRM + '/reports';
 
 // WM
 export const DOCS_LINK_WM_CATALOG = DOCS_LINK_WM + '/catalog';
@@ -48,6 +54,7 @@ export const DOCS_LINK_WM_CATALOG_CATEGORIES = DOCS_LINK_WM_CATALOG + '/categori
 export const DOCS_LINK_WM_MOVEMENT = DOCS_LINK_WM + '/movement-products';
 export const DOCS_LINK_WM_ANALYSIS = DOCS_LINK_WM + '/analysis';
 export const DOCS_LINK_WM_MOVEMENT_BALANCE = DOCS_LINK_WM_MOVEMENT + '/balance';
+export const DOCS_LINK_WM_REPORTS = DOCS_LINK_WM + '/reports';
 
 // DM
 export const DOCS_LINK_DM_STATUSES = DOCS_LINK_DM + '/statuses';
@@ -58,3 +65,4 @@ export const DOCS_LINK_DM_DEALS_CLIENT = DOCS_LINK_DM_DEALS + '/client';
 export const DOCS_LINK_DM_DEALS_EMPLOYEES = DOCS_LINK_DM_DEALS + '/employees';
 export const DOCS_LINK_DM_DEALS_STRUCTURE = DOCS_LINK_DM_DEALS + '/order-structure';
 export const DOCS_LINK_DM_ANALYSIS = DOCS_LINK_DM + '/analysis';
+export const DOCS_LINK_DM_INVOICES = DOCS_LINK_DM + '/invoices';

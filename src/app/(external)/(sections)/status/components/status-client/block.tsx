@@ -12,7 +12,8 @@ export function StatusClient() {
     const [data, setData] = useState<SystemStatusResponse | null>(null);
     const [selectedAllDay, setSelectedAllDay] = useState<DailyStatus | null>(null);
     const [selectedServerDay, setSelectedServerDay] = useState<DailyStatus | null>(null);
-    const [selectedStorageDay, setSelectedStorageDay] = useState<DailyStatus | null>(null);
+    const [selectedDbDay, setSelectedDbDay] = useState<DailyStatus | null>(null);
+    const [selectedMediaDay, setSelectedMediaDay] = useState<DailyStatus | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -31,8 +32,8 @@ export function StatusClient() {
                     if (response.data.components.server.length > 0) {
                         setSelectedServerDay(response.data.components.server[response.data.components.server.length - 1]);
                     }
-                    if (response.data.components.storage.length > 0) {
-                        setSelectedStorageDay(response.data.components.storage[response.data.components.storage.length - 1]);
+                    if (response.data.components.db.length > 0) {
+                        setSelectedDbDay(response.data.components.db[response.data.components.db.length - 1]);
                     }
                 }
             } catch (error) {
@@ -76,9 +77,16 @@ export function StatusClient() {
             <GridBlock
                 title='Хранилище данных (30 дней)'
                 className={clsx(styles.block, styles.stat)}
-                days={data.components.storage}
-                selectedDay={selectedStorageDay}
-                onDayClick={setSelectedStorageDay}
+                days={data.components.db}
+                selectedDay={selectedDbDay}
+                onDayClick={setSelectedDbDay}
+            />
+            <GridBlock
+                title='Объектное хранилище (30 дней)'
+                className={clsx(styles.block, styles.stat)}
+                days={data.components.media}
+                selectedDay={selectedMediaDay}
+                onDayClick={setSelectedMediaDay}
             />
         </>
     );

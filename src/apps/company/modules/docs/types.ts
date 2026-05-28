@@ -22,3 +22,34 @@ export interface GetDocsParams {
     type?: string;
     search?: string;
 }
+
+// Настройки документов
+export interface DocsSettings {
+    legal_name: string | null;
+    legal_address: string | null;
+    inn: string | null;
+    ogrn: string | null;
+    bank_name: string | null;
+    bank_bic: string | null;
+    bank_account: string | null;
+    director_name: string | null;
+    accountant_name: string | null;
+    warranty_terms: string | null;
+    additional_terms: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface UpdateDocsSettingsRequest {
+    legal_name?: string | null;
+    legal_address?: string | null;
+    inn?: string | null;
+    ogrn?: string | null;
+    bank_name?: string | null;
+    bank_bic?: string | null;
+    bank_account?: string | null;
+    director_name?: string | null;
+    accountant_name?: string | null;
+    warranty_terms?: string | null;
+    additional_terms?: string | null;
+}

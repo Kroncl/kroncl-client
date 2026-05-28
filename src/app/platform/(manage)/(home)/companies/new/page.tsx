@@ -58,12 +58,12 @@ const REGION_OPTIONS = [
   {
     value: 'ru-RU',
     label: <>РФ</>,
-    description: 'Расчёты системы в российских рублях.'
+    // description: 'Расчёты системы в российских рублях.'
   },
   {
     value: 'kz-KZ',
     label: <>Казахстан</>,
-    description: 'Расчёты системы в тенге.'
+    // description: 'Расчёты системы в тенге.'
   }
 ];
 
@@ -418,7 +418,7 @@ export default function Page() {
 
         <PlatformFormSection
           title="Регион"
-          description="Выбор рабочей валюты компании и другие региональные настройки."
+          description="Региональные настройки (влияют на доступность сервиса)."
         >
           <PlatformFormVariants
             options={REGION_OPTIONS}

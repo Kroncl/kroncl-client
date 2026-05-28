@@ -28,6 +28,7 @@ export const useStorageStatus = (companyId: string | null, options: UseStorageSt
     
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
     const onReadyCalledRef = useRef(false);
+    const isMountedRef = useRef(true);
     const { onReady, onError, interval = 5000 } = options;
 
     const stopPolling = useCallback(() => {
@@ -37,11 +38,29 @@ export const useStorageStatus = (companyId: string | null, options: UseStorageSt
         }
     }, []);
 
+    const getStatusMessage = useCallback((dbStatus: string, mediaReady: boolean): string => {
+        if (dbStatus === 'provisioning') {
+            return 'Инициализация базы данных...';
+        }
+        if (!mediaReady) {
+            return 'Подготовка файлового хранилища...';
+        }
+        if (dbStatus === 'active' && mediaReady) {
+            return 'Все компоненты готовы!';
+        }
+        if (dbStatus === 'failed') {
+            return 'Ошибка инициализации базы данных';
+        }
+        return 'Настройка окружения...';
+    }, []);
+
     const checkStatus = useCallback(async () => {
-        if (!companyId) return;
+        if (!companyId || !isMountedRef.current) return;
 
         try {
             const response = await companyInitApi.getCompanyStorage(companyId);
+            
+            if (!isMountedRef.current) return;
             
             if (response.status && response.data) {
                 const data = response.data;
@@ -72,29 +91,24 @@ export const useStorageStatus = (companyId: string | null, options: UseStorageSt
             }
         } catch (error) {
             console.error('Ошибка проверки статуса хранилища:', error);
-            setStatus(prev => ({
-                ...prev,
-                message: 'Ошибка соединения с сервером'
-            }));
-            onError?.('Ошибка соединения с сервером');
+            if (isMountedRef.current) {
+                setStatus(prev => ({
+                    ...prev,
+                    message: 'Ошибка соединения с сервером'
+                }));
+                onError?.('Ошибка соединения с сервером');
+            }
         }
-    }, [companyId, onReady, onError, stopPolling]);
+    }, [companyId, onReady, onError, stopPolling, getStatusMessage]);
 
-    const getStatusMessage = (dbStatus: string, mediaReady: boolean): string => {
-        if (dbStatus === 'provisioning') {
-            return 'Инициализация базы данных...';
-        }
-        if (!mediaReady) {
-            return 'Подготовка файлового хранилища...';
-        }
-        if (dbStatus === 'active' && mediaReady) {
-            return 'Все компоненты готовы!';
-        }
-        if (dbStatus === 'failed') {
-            return 'Ошибка инициализации базы данных';
-        }
-        return 'Настройка окружения...';
-    };
+    useEffect(() => {
+        isMountedRef.current = true;
+        
+        return () => {
+            isMountedRef.current = false;
+            stopPolling();
+        };
+    }, [stopPolling]);
 
     useEffect(() => {
         if (!companyId) {
@@ -104,9 +118,16 @@ export const useStorageStatus = (companyId: string | null, options: UseStorageSt
         }
         
         onReadyCalledRef.current = false;
+        
+        // Запускаем проверку один раз
         checkStatus();
         
-        intervalRef.current = setInterval(checkStatus, interval);
+        // Устанавливаем интервал только если компания существует
+        intervalRef.current = setInterval(() => {
+            if (isMountedRef.current && companyId) {
+                checkStatus();
+            }
+        }, interval);
         
         return () => {
             stopPolling();

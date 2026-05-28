@@ -171,8 +171,8 @@
                     border-color: var(--color-surface-tertiary);
                 }
                 &.active {
-                    border-color: var(--color-blue);
-                    background-color: var(--color-blue);
+                    border-color: var(--color-accent);
+                    background-color: var(--color-accent);
                     color: var(--color-accent-text-primary);
                 }
             }

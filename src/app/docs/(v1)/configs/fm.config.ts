@@ -1,4 +1,5 @@
 import { DocsNavSectionProps } from "../../components/panel/components/nav-section/section";
+import { DOCS_LINK_FM_REPORTS } from "../internal.config";
 
 export const fmSections: DocsNavSectionProps[] = [
     {
@@ -36,5 +37,9 @@ export const fmSections: DocsNavSectionProps[] = [
                 href: '/docs/companies/modules/fm/debt-obligations/credits-debts'
             },
         ]
-    }
+    },
+    {
+        label: 'Отчёты',
+        href: DOCS_LINK_FM_REPORTS
+    },
 ]

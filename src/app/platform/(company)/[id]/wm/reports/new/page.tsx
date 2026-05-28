@@ -16,6 +16,7 @@ import { wmModule } from '@/apps/company/modules/wm/api';
 import { storageMediaModule } from '@/apps/company/modules/storage/media/api';
 import { saveAs } from 'file-saver';
 import { IS_PRODUCTION } from '@/config/env.config';
+import { DOCS_LINK_WM_REPORTS } from '@/app/docs/(v1)/internal.config';
 
 type TypesStatus = 'idle' | 'valid' | 'invalid';
 
@@ -141,6 +142,10 @@ export default function Page() {
             <PlatformHead
                 title='Новый отчёт'
                 description='Создание складского отчёта по каталогу, остаткам, партиям или позициям.'
+                docsEscort={{
+                    href: DOCS_LINK_WM_REPORTS,
+                    title: 'Подробнее об отчётах'
+                }}
             />
             <PlatformFormBody>
                 <PlatformFormSection title='Типы отчётов (обязательно)' description='Отдельные листы в одном документе'>

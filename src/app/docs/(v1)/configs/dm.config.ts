@@ -1,5 +1,5 @@
 import { DocsNavSectionProps } from "../../components/panel/components/nav-section/section";
-import { DOCS_LINK_DM_ANALYSIS, DOCS_LINK_DM_DEALS, DOCS_LINK_DM_DEALS_CLIENT, DOCS_LINK_DM_DEALS_EMPLOYEES, DOCS_LINK_DM_DEALS_OPERATIONS, DOCS_LINK_DM_DEALS_STRUCTURE, DOCS_LINK_DM_STATUSES, DOCS_LINK_DM_TYPES } from "../internal.config";
+import { DOCS_LINK_DM_ANALYSIS, DOCS_LINK_DM_DEALS, DOCS_LINK_DM_DEALS_CLIENT, DOCS_LINK_DM_DEALS_EMPLOYEES, DOCS_LINK_DM_DEALS_OPERATIONS, DOCS_LINK_DM_DEALS_STRUCTURE, DOCS_LINK_DM_INVOICES, DOCS_LINK_DM_STATUSES, DOCS_LINK_DM_TYPES } from "../internal.config";
 
 export const dmSections: DocsNavSectionProps[] = [
     {
@@ -35,5 +35,9 @@ export const dmSections: DocsNavSectionProps[] = [
     {
         label: 'Анализ',
         href: DOCS_LINK_DM_ANALYSIS
-    }
+    },
+    {
+        label: 'Накладные',
+        href: DOCS_LINK_DM_INVOICES
+    },
 ]

@@ -1,0 +1,15 @@
+@use './classic.scss' as base;
+
+@mixin theme {
+    @include base.theme();
+    
+    // ======================== REDEFINE ============================
+    --color-accent: rgb(255, 111, 0);
+    --color-surface-active: #ffbc7d68;
+    
+    // ==================== PLATFORM SPECIFIC =======================
+    --platform-active-area-border: transparent;
+    --platform-background: linear-gradient(135deg, #f5e2dc, rgb(237, 237, 237));
+    --platform-active-area: var(--color-leader);
+    --platform-active-area-blur: 10px;
+}

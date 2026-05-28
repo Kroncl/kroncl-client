@@ -17,6 +17,8 @@ import { docsModule } from "@/apps/company/modules/docs/api";
 import { Doc, DocsResponse } from "@/apps/company/modules/docs/types";
 import { PlatformError } from "@/app/platform/components/lib/error/block";
 import Folder from "@/assets/ui-kit/icons/folder";
+import { sectionsList } from "./_sections";
+import { DOCS_LINK_COMPANIES_DOCS } from "@/app/docs/(v1)/internal.config";
 
 export default function Page() {
     const params = useParams();
@@ -110,7 +112,7 @@ export default function Page() {
                 title='Документы'
                 description="Документы & Файлы модулей."
                 docsEscort={{
-                    href: '/',
+                    href: DOCS_LINK_COMPANIES_DOCS,
                     title: 'Подробнее о документах организации'
                 }}
                 searchProps={{
@@ -119,6 +121,7 @@ export default function Page() {
                     onSearch: handleSearch
                 }}
                 showSearch={true}
+                sections={sectionsList(companyId)}
             />
             {docsList.length === 0 ? (
                 <PlatformEmptyCanvas 
