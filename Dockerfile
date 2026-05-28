@@ -3,15 +3,12 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci --only=production --legacy-peer-deps
+RUN npm ci --legacy-peer-deps
 
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Добавьте переменные окружения для билда (если нужны)
-# ENV NEXT_PUBLIC_API_URL=https://your-api.com
 
 RUN npm run build
 
@@ -34,5 +31,4 @@ USER nextjs
 
 EXPOSE 3000
 
-# ->3000
-CMD ["sh", "-c", "next start -p 3000 -H 0.0.0.0"]
+CMD ["node", "node_modules/next/dist/bin/next", "start", "-p", "3000", "-H", "0.0.0.0"]
