@@ -29,3 +29,9 @@ export interface SystemStatusResponse {
         media: DailyStatus[];
     };
 }
+
+export type BillingMode = "on" | "off";
+
+export interface BillingStatus {
+    "mode": BillingMode;
+}
