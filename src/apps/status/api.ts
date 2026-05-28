@@ -1,6 +1,6 @@
 import { api } from '@/apps/shared/bridge/api';
 import { ApiResponse } from '@/apps/shared/bridge/types';
-import { SystemStatusResponse } from './types';
+import { BillingStatus, SystemStatusResponse } from './types';
 
 export class StatusApi {
     private basePath = '/status';
@@ -16,6 +16,10 @@ export class StatusApi {
             : this.basePath;
         
         return api.get<SystemStatusResponse>(url);
+    }
+
+    async getBillingStatus(): Promise<ApiResponse<BillingStatus>> {
+        return api.get<BillingStatus>(`${this.basePath}/billing`)
     }
 }
 
