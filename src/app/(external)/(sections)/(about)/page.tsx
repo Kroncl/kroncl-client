@@ -36,11 +36,7 @@ export default function Page() {
             <div className={styles.grid}>
                 <StartBlock className={styles.block} />
                 
-                {/**
-                 * 
-                 * <PartnersBlock className={styles.block} />
-                 * 
-                 */}
+                <PartnersBlock className={styles.block} />
                 
                 <div className={clsx(styles.overviewCanvas)}>
                     <HeadBlock className={clsx(styles.block, styles.head)} 
