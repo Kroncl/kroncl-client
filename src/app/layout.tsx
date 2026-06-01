@@ -1,6 +1,6 @@
 // meta
 import type { Metadata, Viewport } from "next";
-import { defaultMeta } from "@/config/meta.config";
+import { defaultMeta, organizationSchema, webSiteSchema } from "@/config/meta.config";
 
 export const metadata: Metadata = {
   title: defaultMeta.title,
@@ -16,6 +16,7 @@ import styles from './layout.module.scss';
 import Providers from "./providers";
 import ScrollToTop from "./ScrollToTop";
 import ThemeScript from "@/assets/utils/theme";
+import JsonLd from "./components/JsonLd/JsonLd";
 
 export const viewport: Viewport = {
   themeColor: '#ffffff',
@@ -37,6 +38,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="msapplication-navbutton-color" content="#ffffff" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        
+        <JsonLd data={webSiteSchema} />
+        <JsonLd data={organizationSchema} />
       </head>
       <body className={styles.container} suppressHydrationWarning>
         <ThemeScript />
