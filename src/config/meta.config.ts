@@ -99,3 +99,31 @@ export const metaConfigsAll = Object.entries(metaConfigs).map(([code, config]) =
     code,
     ...config
 }));
+
+
+export const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://kroncl.com/",
+    "name": "Kroncl",
+    "alternateName": "Операционный учёт малого бизнеса РФ",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://kroncl.com/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+    }
+}
+
+export const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Kroncl",
+    "url": "https://kroncl.com",
+    "logo": "https://kroncl.com/images/logo/base.png",
+    "sameAs": [
+        "https://github.com/Kroncl",
+    ]
+}
