@@ -53,6 +53,7 @@ export const linksList: FooterGroup[] = [
             { capture: 'Разработчикам', href: '/dev' },
             { capture: 'Тарифы', href: '/pricing' },
             { capture: 'Стать партнёром', href: '/become-partner' },
+            { capture: 'История обновлений', href: '/changelog' },
         ]
     },
     {

@@ -69,6 +69,9 @@ const metaConfigs: Record<string, MetaConfig> = {
     },
     'status': {
         title: 'Kroncl | Статус'
+    },
+    'changelog': {
+        title: 'Kroncl | История обновлений'
     }
 };
 
