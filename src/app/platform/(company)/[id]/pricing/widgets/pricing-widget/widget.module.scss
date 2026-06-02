@@ -39,11 +39,20 @@
         }
     }
 
+    .billingOff {
+        font-size: .75em;
+        margin: .3em 0 .6em 0;
+    }
+
     .actions {
         display: flex;
         flex-flow: column nowrap;
         gap: 1em;
         font-size: .8em;
+
+        .billingOff {
+            border: 1px dashed red;
+        }
 
         .action {
             border-radius: .8em;

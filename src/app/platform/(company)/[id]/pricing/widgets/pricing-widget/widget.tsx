@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import { CompanyPricingPlan } from '@/apps/company/modules/pricing/types';
 import { pluralizeDays } from '@/assets/utils/date';
 import Button from '@/assets/ui-kit/button/button';
+import { BillingOffBlock } from '../../components/billing-off/block';
+import { useBillingStatus } from '@/apps/status/hoos';
 
 export interface PricingWidgetProps {
     className?: string;
@@ -26,6 +28,9 @@ export function PricingWidget({
     const [companyPlan, setCompanyPlan] = useState<CompanyPricingPlan | null>(null)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    const { data: billingStatus, isLoading: billingLoading } = useBillingStatus();
+    const isBillingOn = billingStatus?.mode === 'on';
 
     useEffect(() => {
         loadData();
@@ -67,6 +72,10 @@ export function PricingWidget({
                     <div className={styles.title}><span className={styles.shimmer} /></div>
                 )}
                 <div className={styles.description}>Тарификация организации</div>
+                
+                {/* {!isBillingOn && (
+                    <BillingOffBlock className={styles.billingOff} />
+                )} */}
                 <Remained 
                     loading={loading}
                     value={companyPlan?.days_left}
@@ -79,7 +88,7 @@ export function PricingWidget({
                         </>
                     )}
                 </Remained>
-                {daysLeft === 0 && (
+                {daysLeft === 0 && isBillingOn && (
                     <div className={styles.actions}>
                         <Button variant='accent' className={styles.action}>
                             Продлить

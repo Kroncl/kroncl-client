@@ -21,6 +21,8 @@ import { usePermission } from '@/apps/permissions/hooks';
 import { PERMISSIONS } from '@/apps/permissions/codes.config';
 import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
 import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
+import { BillingOffBlock } from './components/billing-off/block';
+import { useBillingStatus } from '@/apps/status/hoos';
 
 const blockVariants: Variants = {
     hidden: { opacity: 0, y: -20, height: 0, marginBottom: 0 },
@@ -32,11 +34,10 @@ export default function Page() {
     const params = useParams();
     const companyId = params.id as string;
 
-    // perms
-    const ALLOW_PAGE = usePermission(PERMISSIONS.PRICING_MIGRATE);
-    // похуй, пока одно разрешение на все операции с тарификацией
-    // по хорошему разделение на получение операций и отдельно миграция
+    const { data: billingStatus, isLoading: billingLoading } = useBillingStatus();
+    const isBillingOn = billingStatus?.mode === 'on';
 
+    const ALLOW_PAGE = usePermission(PERMISSIONS.PRICING_MIGRATE);
     const pricingModule = usePricing();
 
     const [plans, setPlans] = useState<PricingPlan[]>([]);
@@ -97,7 +98,6 @@ export default function Page() {
         fetchData();
     }, [fetchData]);
 
-    // Устанавливаем goalPlan по умолчанию, если daysLeft === 0
     useEffect(() => {
         if (companyPlan && !goalPlan && !loadingCompany && !loadingPlans && plans.length > 0) {
             const daysLeft = companyPlan.days_left;
@@ -133,13 +133,14 @@ export default function Page() {
         setGoalPlan(null);
     };
 
-    const isLoading = loadingPlans || loadingCompany || loadingTransactions;
+    const isLoading = loadingPlans || loadingCompany || loadingTransactions || billingLoading;
     const currentPlanCode = companyPlan?.current_plan.code;
     const daysLeft = companyPlan?.days_left || 0;
     const daysWord = pluralizeDays(daysLeft);
     const nextPlan = companyPlan?.next_plan;
 
     const handleSelectPlan = (plan: PricingPlan) => {
+        if (!isBillingOn) return;
         if (goalPlan?.code === plan.code) {
             setGoalPlan(null);
         } else {
@@ -182,12 +183,14 @@ export default function Page() {
     const showPayBlock = () => {
         if (!companyPlan || !goalPlan) return false;
         if (pendingTransaction) return false;
+        if (!isBillingOn) return false;
         
         const daysLeft = companyPlan.days_left;
         return daysLeft === 0 || goalPlan.code !== currentPlanCode;
     };
 
     const showPaymentBlock = () => {
+        if (!isBillingOn) return false;
         return !!pendingTransaction;
     };
 
@@ -234,6 +237,12 @@ export default function Page() {
                         <>Тариф <span className={styles.accent}>«{companyPlan?.current_plan.name}»</span> завершён. Требуется оплата.</>
                     )}
                 </Remained>
+
+                
+                {!isBillingOn && (
+                    <BillingOffBlock className={styles.billingOff} />
+                )}
+
                 
                 <AnimatePresence mode="wait">
                     {showPayBlock() && companyPlan && goalPlan && (

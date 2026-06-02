@@ -26,6 +26,7 @@
         }
         &.comment, &.category {
             color: var(--color-text-ghost);
+            @include text-ellipsis();
             width: 15em;
             line-height: 1.3;
 

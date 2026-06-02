@@ -36,6 +36,7 @@
         border: 1px solid var(--color-stroke-secondary);
         border-radius: .45em;
         min-width: calc(100%/3 - 2rem);
+        max-width: calc(100%/3 - 2rem);
         min-height: 8em;
         @include cursor(pointer);
         transition: background-color var(--transition);
