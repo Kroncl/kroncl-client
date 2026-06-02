@@ -14,7 +14,7 @@ export function BillingOffBlock({
         <div className={clsx(styles.container, className)}>
             <div className={styles.info}>
                 <div className={styles.name}>Бесплатный Beta-режим</div>
-                <div className={styles.description}>Платформа временно работает в бесплатном режиме. Мы продлим тестовый период организации по истечению.</div>
+                <div className={styles.description}>Платформа временно работает в бесплатном режиме. Мы продлим тестовый период организации по истечении.</div>
             </div>
         </div>
     )
