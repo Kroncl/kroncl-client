@@ -1,0 +1,25 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    padding: .8em;
+    background-color: var(--color-surface-elevated);
+    flex-flow: row nowrap;
+    gap: 1em;
+    font-size: .9em;
+    border-radius: .3em;
+    color: var(--color-accent-text-primary);
+    background: linear-gradient(90deg, #790cd2, #ff4d4d);
+    color: #fff;
+
+    .info {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: .3em;
+
+        .description {
+            line-height: 1.3;
+            font-size: .9em;
+        }
+    }
+}
