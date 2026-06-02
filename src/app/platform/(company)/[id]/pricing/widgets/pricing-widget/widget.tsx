@@ -73,9 +73,9 @@ export function PricingWidget({
                 )}
                 <div className={styles.description}>Тарификация организации</div>
                 
-                {!isBillingOn && (
+                {/* {!isBillingOn && (
                     <BillingOffBlock className={styles.billingOff} />
-                )}
+                )} */}
                 <Remained 
                     loading={loading}
                     value={companyPlan?.days_left}

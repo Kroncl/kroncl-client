@@ -15,7 +15,6 @@ import { linksList } from './_links';
 import { ReadyToStartBlock } from '../(customers)/businessmans/blocks/ready-to-start/block';
 import { OverviewBlock } from './slides/overview/block';
 import { DOCS_LINK_COMPANIES, DOCS_LINK_FM } from '@/app/docs/(v1)/internal.config';
-import { Pin } from './pins/test-mode/pin';
 import { TrialPeriodBlock } from '../(customers)/pricing/slides/trial/block';
 import { MiniBlock } from './slides/mini/block';
 import Kanban from '@/assets/ui-kit/icons/kanban';
@@ -27,11 +26,12 @@ import { SecurityBlock } from './slides/switchable/sections/security/block';
 import { DemoBlock } from '../(customers)/(product)/components/demo/block';
 import Code from '@/assets/ui-kit/icons/code';
 import { ReviewsBlock } from './slides/reviews/block';
+import { PinsManager } from './pins/manager';
 
 export default function Page() {
     return (
         <>
-        <Pin className={styles.pin} />
+        <PinsManager className={styles.pin} />
         <div className={styles.container}>
             <div className={styles.grid}>
                 <StartBlock className={styles.block} />

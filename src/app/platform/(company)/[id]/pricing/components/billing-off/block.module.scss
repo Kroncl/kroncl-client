@@ -8,9 +8,8 @@
     gap: 1em;
     font-size: .9em;
     border-radius: .3em;
+    background: var(--color-accent);
     color: var(--color-accent-text-primary);
-    background: linear-gradient(90deg, #790cd2, #ff4d4d);
-    color: #fff;
 
     .info {
         display: flex;
