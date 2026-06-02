@@ -27,6 +27,8 @@ import { DemoBlock } from '../(customers)/(product)/components/demo/block';
 import Code from '@/assets/ui-kit/icons/code';
 import { ReviewsBlock } from './slides/reviews/block';
 import { PinsManager } from './pins/manager';
+import { ChangelogManager } from '../changelog/components/manager';
+import { changelogs } from '@/apps/changelog/logs';
 
 export default function Page() {
     return (
@@ -35,6 +37,7 @@ export default function Page() {
         <div className={styles.container}>
             <div className={styles.grid}>
                 <StartBlock className={styles.block} />
+                <ChangelogManager className={styles.block} log={changelogs[0]} />
                 
                 <PartnersBlock className={styles.block} />
                 
