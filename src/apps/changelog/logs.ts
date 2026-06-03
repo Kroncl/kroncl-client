@@ -2,13 +2,13 @@ import { ChangelogItem } from "./types";
 
 export const changelogs: ChangelogItem[] = [
     {
-        status: 'planned',
+        status: 'in-progress',
         version: '1.5.27',
         title: 'Накладные для сделок',
         description: 'Добавление возможности генерации накладных для сделок. Шаблоны, документы и настройки документов организации.'
     },
     {
-        status: 'planned',
+        status: 'in-progress',
         version: '1.5.27',
         title: 'Создание отгрузок из сделок',
         description: 'Автоматическое создание отгрузки товаров со склада, используемых в сделке.'
