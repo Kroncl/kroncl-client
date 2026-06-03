@@ -1,0 +1,49 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    min-height: 2.6em;
+    padding: .4em;
+    flex-flow: row nowrap;
+    gap: .5em;
+    align-items: center;
+
+    .input {
+        width: 100%;
+    }
+    .col {
+        display: inline-flex;
+
+        &:nth-child(1) {
+            display: flex;
+            flex: 1;
+        }
+        &:nth-child(2), &:nth-child(3) {
+            .input {
+                width: 7em;
+            }
+        }
+    }
+    .action {
+        display: inline-flex;
+        min-width: 2.5em;
+        width: 2.5em;
+        height: 2.5em;
+        border: 1px solid var(--color-stroke-primary);
+        align-items: center;
+        justify-content: center;
+        border-radius: .3em;
+        transition: background-color var(--transition);
+        @include cursor(pointer);
+
+        .svg {
+            fill: var(--color-icon-primary);
+            width: 37%;
+            height: 37%;
+        }
+
+        &:hover {
+            background-color: var(--color-surface-light);
+        }
+    }
+}
