@@ -9,7 +9,7 @@ import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
 import { TransactionDetail } from '@/apps/company/modules/fm/types';
 import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';
 import { TransactionCard } from '@/app/platform/(company)/[id]/fm/(main)/components/transaction-card/card';
-import { useDm, useFm } from '@/apps/company/modules';
+import { useDm, useFm, useHrm } from '@/apps/company/modules';
 import { useEffect, useState } from 'react';
 import { DealTransactionsSummary } from '@/apps/company/modules/dm/types';
 import { PlatformPagination } from '@/app/platform/components/lib/pagination/pagination';
@@ -23,6 +23,7 @@ import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { PlatformFormBody, PlatformFormInput, PlatformFormSection, PlatformFormTextarea, PlatformFormVariants } from '@/app/platform/components/lib/form';
 import Button from '@/assets/ui-kit/button/button';
 import clsx from 'clsx';
+import { Employee } from '@/apps/company/modules/hrm/types';
 
 type TransactionDirection = 'income' | 'expense';
 
@@ -34,6 +35,7 @@ export interface FinanceBlockProps {
 export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
     const dmModule = useDm();
     const fmModule = useFm();
+    const hrmModule = useHrm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const { showMessage } = useMessage();
@@ -43,6 +45,7 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
     const ALLOW_SUMMARY = usePermission(PERMISSIONS.DM_DEALS_TRANSACTIONS_SUMMARY);
     const ALLOW_REVERSE = usePermission(PERMISSIONS.FM_TRANSACTIONS_REVERSE);
     const ALLOW_CREATE = usePermission(PERMISSIONS.DM_DEALS_TRANSACTIONS_CREATE);
+    const ALLOW_HRM_EMPLOYEES = usePermission(PERMISSIONS.HRM_EMPLOYEES);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -52,10 +55,13 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
 
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
+    const [employees, setEmployees] = useState<Employee[]>([]);
+    const [employeesLoading, setEmployeesLoading] = useState(false);
     const [formData, setFormData] = useState({
         amount: '',
         direction: 'expense' as TransactionDirection,
-        comment: ''
+        comment: '',
+        employee_id: ''
     });
 
     const [reverseModal, setReverseModal] = useState<{
@@ -96,6 +102,22 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
     useEffect(() => {
         loadData();
     }, [dealId, searchParams]);
+
+    const loadEmployees = async () => {
+        if (!isAllowed(ALLOW_HRM_EMPLOYEES)) return;
+
+        setEmployeesLoading(true);
+        try {
+            const response = await hrmModule.getEmployees({ page: 1, limit: 100 });
+            if (response.status) {
+                setEmployees(response.data.employees || []);
+            }
+        } catch (err) {
+            console.error('Error loading employees:', err);
+        } finally {
+            setEmployeesLoading(false);
+        }
+    };
 
     const handleCreateReverse = async () => {
         if (!reverseModal.transactionId) return;
@@ -151,7 +173,8 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
                 base_amount: amount,
                 currency: 'RUB',
                 direction: formData.direction,
-                comment: formData.comment.trim() || undefined
+                comment: formData.comment.trim() || undefined,
+                employee_id: formData.employee_id || undefined
             });
 
             if (response.status) {
@@ -160,7 +183,7 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
                     variant: 'success'
                 });
                 setIsCreateModalOpen(false);
-                setFormData({ amount: '', direction: 'expense', comment: '' });
+                setFormData({ amount: '', direction: 'expense', comment: '', employee_id: '' });
                 loadData();
             } else {
                 throw new Error(response.message || 'Ошибка создания операции');
@@ -200,7 +223,10 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
                             children='Новая операция'
                             variant='accent'
                             className={styles.createTransactionAction}
-                            onClick={() => setIsCreateModalOpen(true)}
+                            onClick={() => {
+                                setIsCreateModalOpen(true);
+                                loadEmployees();
+                            }}
                         />
                     )}
                     {isAllowed(ALLOW_SUMMARY) && summary && (
@@ -294,6 +320,27 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
                                     ]}
                                 />
                             </PlatformFormSection>
+                            {isAllowed(ALLOW_HRM_EMPLOYEES) && (
+                                <PlatformFormSection title="Сотрудник">
+                                    {employeesLoading ? (
+                                        <Spinner />
+                                    ) : (
+                                        <PlatformFormVariants
+                                            value={formData.employee_id}
+                                            onChange={(v) => setFormData(prev => ({ ...prev, employee_id: v }))}
+                                            disabled={isCreating}
+                                            options={[
+                                                { value: '', label: 'Без сотрудника' },
+                                                ...employees.map(emp => ({
+                                                    value: emp.id,
+                                                    label: `${emp.first_name} ${emp.last_name || ''}`.trim(),
+                                                    description: `${emp.email || emp.phone || 'Без контактов'}`
+                                                }))
+                                            ]}
+                                        />
+                                    )}
+                                </PlatformFormSection>
+                            )}
                             <PlatformFormSection title='Комментарий'>
                                 <PlatformFormTextarea
                                     value={formData.comment}
