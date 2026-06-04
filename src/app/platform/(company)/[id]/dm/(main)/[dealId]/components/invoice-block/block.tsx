@@ -18,6 +18,7 @@ import { CompanyApi } from "@/apps/company/api";
 import { saveAs } from "file-saver";
 import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 import { docsModule } from "@/apps/company/modules/docs/api";
+import { IS_PRODUCTION } from "@/config/env.config";
 
 export interface InvoiceBlockProps {
     className?: string;
@@ -217,9 +218,6 @@ export function InvoiceBlock({
                     variant: 'success'
                 });
 
-                // Открываем/скачиваем файл
-                const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-                
                 if (IS_PRODUCTION) {
                     // В проде — открываем в новой вкладке
                     window.open(download_url, '_blank');
