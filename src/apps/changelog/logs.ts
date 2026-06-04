@@ -2,7 +2,7 @@ import { ChangelogItem } from "./types";
 
 export const changelogs: ChangelogItem[] = [
     {
-        status: 'in-progress',
+        status: 'completed',
         version: '1.5.27',
         title: 'Накладные для сделок',
         description: 'Добавление возможности генерации накладных для сделок. Шаблоны, документы и настройки документов организации.'

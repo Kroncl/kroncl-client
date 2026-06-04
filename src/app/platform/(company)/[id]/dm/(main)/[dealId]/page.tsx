@@ -492,6 +492,9 @@ export default function Page() {
                     <InvoiceBlock
                         className={styles.block}
                         dealId={dealId}
+                        positions={positions}
+                        totalAmount={positions.reduce((sum, p) => sum + (p.price * p.quantity), 0)}
+                        comment={currentComment}
                     />
                 )}
             </div>
