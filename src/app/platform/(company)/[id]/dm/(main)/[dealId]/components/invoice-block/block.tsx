@@ -198,7 +198,7 @@ export function InvoiceBlock({
             }));
 
             const response = await dmModule.generateInvoice(dealId, {
-                deal_id: dealId,
+                deal_id: displayId || dealId,
                 legal_name: legalName || null,
                 inn: inn || null,
                 ogrn: ogrn || null,
