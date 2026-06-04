@@ -2,6 +2,7 @@ import { PaginationMeta } from "@/apps/shared/pagination/types";
 import { Employee } from "../hrm/types";
 import { ClientDetail } from "@/apps/company/modules/crm/types";
 import { CatalogUnit, StockPosition } from "@/apps/company/modules/wm/types";
+import { Doc } from "../docs/types";
 
 // --------
 // DEAL TYPES
@@ -215,4 +216,32 @@ export interface GroupedStats {
     group_key: string;
     group_name: string;
     count: number;
+}
+
+// --------------
+// INVOICES
+// --------------
+
+export interface InvoicePosition {
+    name: string;
+    quantity: number;
+    price: number;
+}
+
+export interface GenerateInvoiceRequest {
+    deal_id: string;
+    legal_name?: string | null;
+    inn?: string | null;
+    ogrn?: string | null;
+    bank_name?: string | null;
+    warranty_terms?: string | null;
+    additional_terms?: string | null;
+    positions: InvoicePosition[];
+    total_amount: number;
+    comment?: string | null;
+}
+
+export interface GenerateInvoiceResponse {
+    download_url: string;
+    doc: Doc;
 }

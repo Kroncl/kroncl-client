@@ -26,6 +26,8 @@ import {
     DealAnalysisSummary,
     GroupedAnalysisParams,
     GroupedStats,
+    GenerateInvoiceRequest,
+    GenerateInvoiceResponse,
 } from "./types";
 
 export const dmModule = (companyApi: CompanyApi) => ({
@@ -218,5 +220,13 @@ export const dmModule = (companyApi: CompanyApi) => ({
         return companyApi.get<DealTransactionsSummary>("/modules/dm/analysis/financial-summary", {
             params: queryParams as Record<string, string | number | boolean | undefined>,
         });
+    },
+    
+    // ----------
+    // INVOICE
+    // ----------
+
+    async generateInvoice(dealId: string, data: GenerateInvoiceRequest) {
+        return companyApi.post<GenerateInvoiceResponse>(`/modules/dm/deals/${dealId}/invoice`, data);
     },
 });

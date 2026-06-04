@@ -19,6 +19,7 @@ import { Deal, DealPosition, DealStatus, DealType } from '@/apps/company/modules
 import { OverviewBlock } from './components/overview-block/block';
 import { FinanceBlock } from './components/finance-block/block';
 import { DOCS_LINK_DM_DEALS } from '@/app/docs/(v1)/internal.config';
+import { InvoiceBlock } from './components/invoice-block/block';
 
 export default function Page() {
     const params = useParams();
@@ -373,6 +374,7 @@ export default function Page() {
     const showClient = section === 'client';
     const showStructure = section === 'structure';
     const showFinance = section === 'finance';
+    const showInvoice = section === 'invoice';
     const showOverview = section === null;
 
     return (
@@ -405,6 +407,11 @@ export default function Page() {
                     {
                         label: 'Финансы',
                         href: `/platform/${companyId}/dm/${dealId}?section=finance`,
+                        strongParams: true
+                    },
+                    {
+                        label: 'Накладная',
+                        href: `/platform/${companyId}/dm/${dealId}?section=invoice`,
                         strongParams: true
                     }
                 ]}
@@ -479,6 +486,15 @@ export default function Page() {
                     <FinanceBlock
                         className={styles.block}
                         dealId={dealId}
+                    />
+                )}
+                {showInvoice && (
+                    <InvoiceBlock
+                        className={styles.block}
+                        dealId={dealId}
+                        positions={positions}
+                        totalAmount={positions.reduce((sum, p) => sum + (p.price * p.quantity), 0)}
+                        comment={currentComment}
                     />
                 )}
             </div>
