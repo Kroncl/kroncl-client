@@ -11,6 +11,7 @@ export const pricingTheses: Record<number, TariffTesis[]> = {
     ],
     1: [
         { marker: true, about: 'Сделки' },
+        { marker: true, about: 'Финансы: прогнозирование' },
     ]
 };
 

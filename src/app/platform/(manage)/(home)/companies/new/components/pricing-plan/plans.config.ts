@@ -24,7 +24,8 @@ export const modulesLVL2: PricingPlanModule[] = [
 
 export const modulesLVL1: PricingPlanModule[] = [
     ...modulesLVL2,
-    { name: 'Сделки', docsLink: DOCS_LINK_DM }
+    { name: 'Сделки', docsLink: DOCS_LINK_DM },
+    { name: 'Финансы: прогнозирование'},
 ];
 
 export const pricingPlansStructures: PricingPlanStructure[] = [

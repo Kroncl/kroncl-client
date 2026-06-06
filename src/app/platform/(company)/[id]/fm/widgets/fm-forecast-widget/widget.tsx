@@ -50,7 +50,7 @@ export function FMForecastWidget({
         <Link href={`/platform/${companyId}/fm/forecast`} className={clsx(styles.widget, styles[variant], className, loading && styles.loading)}>
             {error && (
                 <div className={styles.error}>
-                    Не хватает данных для <span className={styles.accent}>прогноза финансов</span>
+                    Не хватает данных для <span className={styles.accent}>прогноза финансов </span> - минимум <span className={styles.accent}>2 дня</span> учёта трат и доходов
                 </div>
             )}
             {variant === 'default' && !error && (

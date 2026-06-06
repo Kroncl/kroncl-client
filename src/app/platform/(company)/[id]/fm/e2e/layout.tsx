@@ -12,7 +12,7 @@ import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
 import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 import { DOCS_LINK_FM_ANALYSIS } from "@/app/docs/(v1)/internal.config";
 
-interface PlatformLayoutProps {
+export interface PlatformLayoutProps {
   children: React.ReactNode;
 }
 
