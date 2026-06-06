@@ -1,5 +1,5 @@
 import { DocsNavSectionProps } from "../../components/panel/components/nav-section/section";
-import { DOCS_LINK_FM_REPORTS } from "../internal.config";
+import { DOCS_LINK_FM_FORECAST, DOCS_LINK_FM_REPORTS } from "../internal.config";
 
 export const fmSections: DocsNavSectionProps[] = [
     {
@@ -42,4 +42,8 @@ export const fmSections: DocsNavSectionProps[] = [
         label: 'Отчёты',
         href: DOCS_LINK_FM_REPORTS
     },
+    {
+        label: 'Прогнозирование',
+        href: DOCS_LINK_FM_FORECAST
+    }
 ]

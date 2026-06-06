@@ -36,6 +36,7 @@ export const DOCS_LINK_FM_CATEGORIES = DOCS_LINK_FM_MOVEMENT + '/categories';
 export const DOCS_LINK_FM_BALANCE = DOCS_LINK_FM_MOVEMENT + '/balance';
 export const DOCS_LINK_FM_ANALYSIS = DOCS_LINK_FM_MOVEMENT + '/analysis';
 export const DOCS_LINK_FM_REPORTS = DOCS_LINK_FM + '/reports';
+export const DOCS_LINK_FM_FORECAST = DOCS_LINK_FM + '/forecast'
 
 export const DOCS_LINK_FM_DEBT_OBLIGATIONS = DOCS_LINK_FM + '/debt-obligations';
 export const DOCS_LINK_FM_DEBT_OBLIGATIONS_COUNTERPARTIES = DOCS_LINK_FM_DEBT_OBLIGATIONS + '/counterparties';
@@ -64,5 +65,6 @@ export const DOCS_LINK_DM_DEALS_OPERATIONS = DOCS_LINK_DM_DEALS + '/operations';
 export const DOCS_LINK_DM_DEALS_CLIENT = DOCS_LINK_DM_DEALS + '/client';
 export const DOCS_LINK_DM_DEALS_EMPLOYEES = DOCS_LINK_DM_DEALS + '/employees';
 export const DOCS_LINK_DM_DEALS_STRUCTURE = DOCS_LINK_DM_DEALS + '/order-structure';
+export const DOCS_LINK_DM_DEALS_INVOICE = DOCS_LINK_DM_DEALS + '/invoice';
 export const DOCS_LINK_DM_ANALYSIS = DOCS_LINK_DM + '/analysis';
 export const DOCS_LINK_DM_INVOICES = DOCS_LINK_DM + '/invoices';
