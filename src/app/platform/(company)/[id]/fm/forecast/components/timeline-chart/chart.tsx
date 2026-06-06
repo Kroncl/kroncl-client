@@ -122,7 +122,7 @@ export function TimelineChart({ data, loading, className }: TimelineChartProps) 
                             strokeWidth={1}
                             label={{
                                 value: 'Сейчас',
-                                position: 'top',
+                                position: 'center',
                                 fill: 'var(--color-text-description)',
                                 fontSize: 10,
                             }}

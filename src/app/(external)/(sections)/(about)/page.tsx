@@ -29,6 +29,7 @@ import { ReviewsBlock } from './slides/reviews/block';
 import { PinsManager } from './pins/manager';
 import { ChangelogManager } from '../changelog/components/manager';
 import { changelogs } from '@/apps/changelog/logs';
+import { ForecastBlock } from './slides/forecast/block';
 
 export default function Page() {
     return (
@@ -36,8 +37,12 @@ export default function Page() {
         <PinsManager className={styles.pin} />
         <div className={styles.container}>
             <div className={styles.grid}>
-                <StartBlock className={styles.block} />
-                <ChangelogManager className={styles.block} log={changelogs[0]} />
+                {/** v1.5.28 release plug */}
+                <ForecastBlock className={styles.block} />
+
+                {/** default plug  */}
+                {/* <StartBlock className={styles.block} /> */}
+                {/* <ChangelogManager className={styles.block} log={changelogs[0]} /> */}
                 
                 <PartnersBlock className={styles.block} />
                 
