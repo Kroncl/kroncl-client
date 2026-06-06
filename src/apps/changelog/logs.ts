@@ -2,7 +2,7 @@ import { ChangelogItem } from "./types";
 
 export const changelogs: ChangelogItem[] = [
     {
-        status: 'in-progress',
+        status: 'completed',
         version: '1.5.28',
         title: 'Прогнозирование финансов',
         description: 'Добавление возможности прогнозирования финансового модуля.'

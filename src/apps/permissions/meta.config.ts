@@ -397,6 +397,27 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'fm',
         category: 'credits',
     },
+    [PERMISSIONS.FM_FORECAST]: {
+        code: PERMISSIONS.FM_FORECAST,
+        title: 'Прогнозирование финансов',
+        description: 'Базовый доступ к прогнозированию финансового модуля',
+        module: 'fm',
+        category: 'finance',
+    },
+    [PERMISSIONS.FM_FORECAST_TIMELINE]: {
+        code: PERMISSIONS.FM_FORECAST_TIMELINE,
+        title: 'График прогноза',
+        description: 'Доступ к графику прогноза баланса по дням',
+        module: 'fm',
+        category: 'finance',
+    },
+    [PERMISSIONS.FM_FORECAST_SUMMARY]: {
+        code: PERMISSIONS.FM_FORECAST_SUMMARY,
+        title: 'Сводка прогноза',
+        description: 'Доступ к итоговым показателям прогноза: баланс, доходы, расходы',
+        module: 'fm',
+        category: 'finance',
+    },
 
     // CRM
     [PERMISSIONS.CRM]: {
