@@ -39,6 +39,7 @@ export default function Page() {
     const ALLOW_TRANSACTION_REVERSE = usePermission(PERMISSIONS.FM_TRANSACTIONS_REVERSE);
     const ALLOW_TRANSACTION_CREATE = usePermission(PERMISSIONS.FM_TRANSACTIONS_CREATE);
     const ALLOW_ANALYSIS = usePermission(PERMISSIONS.FM_ANALYSIS);
+    const ALLOW_FORECAST = usePermission(PERMISSIONS.FM_FORECAST);
     const ALLOW_REPORTS = usePermission(PERMISSIONS.DOCS)
 
     const fmModule = useFm();
@@ -290,6 +291,12 @@ export default function Page() {
                     <Link href={`/platform/${companyId}/fm/e2e`} className={clsx(styles.card, styles.accent)}>
                     <div className={styles.name}>Анализ</div>
                     <div className={styles.description}>Диаграммы распределения финансовых операций</div>
+                </Link>
+                )}
+                {isAllowed(ALLOW_FORECAST) && (
+                    <Link href={`/platform/${companyId}/fm/forecast`} className={styles.card}>
+                    <div className={styles.name}>Прогнозирование</div>
+                    <div className={styles.description}>Прогноз финансов компании</div>
                 </Link>
                 )}
                 {isAllowed(ALLOW_REPORTS) && (

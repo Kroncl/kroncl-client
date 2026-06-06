@@ -285,3 +285,53 @@ export interface GenerateReportResponse {
     doc: Doc;
     total: number;
 }
+
+// ------------
+// FORECAST
+// ------------
+
+export type ForecastMethod = 'theta';
+
+export interface ForecastRequest {
+    method?: ForecastMethod;
+    start_date?: string;
+    end_date?: string;
+    horizon?: number;
+}
+
+export interface ForecastDataPoint {
+    date: string;
+    balance: number;
+    is_actual: boolean;
+}
+
+export interface ForecastResponse {
+    method: ForecastMethod;
+    points: ForecastDataPoint[];
+    horizon: number;
+    data_points: number;
+    confidence: 'low' | 'medium' | 'high';
+}
+
+export interface ForecastSummaryRequest {
+    method?: ForecastMethod;
+    start_date?: string;
+    end_date?: string;
+    horizon?: number;
+}
+
+export interface ForecastSummaryResponse {
+    method: ForecastMethod;
+    horizon: number;
+    data_points: number;
+    confidence: 'low' | 'medium' | 'high';
+    predicted_balance: number;
+    predicted_income: number;
+    predicted_expense: number;
+    predicted_net_flow: number;
+    predicted_tx_count: number;
+    current_balance: number;
+    current_income: number;
+    current_expense: number;
+    current_tx_count: number;
+}

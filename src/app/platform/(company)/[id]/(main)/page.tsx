@@ -19,6 +19,7 @@ import { PERMISSIONS } from "@/apps/permissions/codes.config";
 import { DMSummaryWidget } from "../dm/widgets/dm-summary-widget/widget";
 import { DMDynamicsWidget } from "../dm/widgets/dm-dynamics-widget/widget";
 import { useAuth } from "@/apps/account/auth/context/AuthContext";
+import { FMForecastWidget } from "../fm/widgets/fm-forecast-widget/widget";
 
 export default function Page() {
     const params = useParams();
@@ -27,6 +28,7 @@ export default function Page() {
     const { user } = useAuth();
     
     const ALLOW_FM_ANALYSIS = usePermission(PERMISSIONS.FM_ANALYSIS)
+    const ALLOW_FM_FORECAST = usePermission(PERMISSIONS.FM_FORECAST)
     const ALLOW_CRM_ANALYSIS = usePermission(PERMISSIONS.CRM_ANALYSIS)
     const ALLOW_HRM_ANALYSIS = usePermission(PERMISSIONS.HRM_ANALYSIS)
     const ALLOW_DM_ANALYSIS = usePermission(PERMISSIONS.DM_ANALYSIS)
@@ -53,6 +55,11 @@ export default function Page() {
                 <>
                 <FMSummaryWidget className={styles.item} />
                 <FMDynamicsWidget className={clsx(styles.item, styles.large)} />
+                </>
+            )}
+            {isAllowed(ALLOW_FM_FORECAST) && (
+                <>
+                <FMForecastWidget className={styles.item} />
                 </>
             )}
             {isAllowed(ALLOW_DM_ANALYSIS) && (

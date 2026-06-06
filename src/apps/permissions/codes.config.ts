@@ -70,6 +70,9 @@ export const PERMISSIONS = {
     FM_CREDITS_UPDATE: 'fm.credits.update',
     FM_CREDITS_TRANSACTIONS: 'fm.credits.transactions',
     FM_CREDITS_PAY: 'fm.credits.pay',
+    FM_FORECAST: 'fm.forecast',
+    FM_FORECAST_TIMELINE: 'fm.forecast.timeline',
+    FM_FORECAST_SUMMARY: 'fm.forecast.summary',
 
     // CRM
     CRM: 'crm',

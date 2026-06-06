@@ -32,7 +32,11 @@ import {
     CreditPaymentsResponse,
     CreditPaymentsParams,
     GenerateReportRequest,
-    GenerateReportResponse
+    GenerateReportResponse,
+    ForecastRequest,
+    ForecastResponse,
+    ForecastSummaryRequest,
+    ForecastSummaryResponse
 } from "./types";
 
 export const fmModule = (companyApi: CompanyApi) => ({
@@ -203,5 +207,25 @@ export const fmModule = (companyApi: CompanyApi) => ({
     
     async generateReport(data: GenerateReportRequest) {
         return companyApi.post<GenerateReportResponse>("/modules/fm/report", data);
-    }
+    },
+
+    // -----------
+    // FORECAST
+    // -----------
+
+    async getForecastTimeline(
+        params?: ForecastRequest
+    ) {
+        return companyApi.get<ForecastResponse>("/modules/fm/forecast/timeline", {
+            params: params as Record<string, string | number | boolean | undefined>
+        });
+    },
+
+    async getForecastSummary(
+        params?: ForecastSummaryRequest
+    ) {
+        return companyApi.get<ForecastSummaryResponse>("/modules/fm/forecast/summary", {
+            params: params as Record<string, string | number | boolean | undefined>
+        });
+    },
 });
