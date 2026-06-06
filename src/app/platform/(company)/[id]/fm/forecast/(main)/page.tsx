@@ -52,7 +52,6 @@ export default function Page() {
     };
 
     if (loading) return <PlatformLoading />;
-    if (error) return <PlatformError error={error} />;
 
     if (!summary || !timeline || timeline.data_points < 2) {
         return (
@@ -63,6 +62,8 @@ export default function Page() {
             />
         );
     }
+
+    if (error) return <PlatformError error={error} />;
 
     return (
         <div className={styles.grid}>
