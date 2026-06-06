@@ -133,7 +133,7 @@ export function PlatformHead({
               />
             ))}
             {docsEscort && (
-              <ModalTooltip side='bottom' content={docsEscort.title || 'Подробнее о разделе.'}>
+              <ModalTooltip side='bottom' content={docsEscort.title || 'Подробнее о разделе'}>
                 <Link target='_blank' href={docsEscort.href} className={styles.escortButton}>
                   <Question className={styles.svg} />
                 </Link>

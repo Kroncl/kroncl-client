@@ -10,6 +10,7 @@ import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
 import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
 import Input from '@/assets/ui-kit/input/input';
 import Button from '@/assets/ui-kit/button/button';
+import { DOCS_LINK_FM_FORECAST } from '@/app/docs/(v1)/internal.config';
 
 export interface PlatformLayoutProps {
     children: React.ReactNode;
@@ -65,6 +66,10 @@ export default function PlatformLayout({ children }: PlatformLayoutProps) {
             <PlatformHead
                 title="Прогнозирование финансов"
                 description="Прогноз состояния финансов на основании истории операций компании."
+                docsEscort={{
+                    href: DOCS_LINK_FM_FORECAST,
+                    title: 'Подробнее о прогнозировании финансов'
+                }}
             >
                 <div className={styles.control}>
                     <Input

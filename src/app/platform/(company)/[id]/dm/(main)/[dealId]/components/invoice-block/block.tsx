@@ -395,7 +395,7 @@ export function InvoiceBlock({
                             />
                         </PlatformFormSection>
 
-                        <PlatformFormSection 
+                        {/* <PlatformFormSection 
                             className={styles.section}
                             title='Дополнительные условия' 
                             description='Любые дополнительные условия продажи'
@@ -406,7 +406,7 @@ export function InvoiceBlock({
                                 onChange={handleAdditionalTermsChange}
                                 rows={4}
                             />
-                        </PlatformFormSection>
+                        </PlatformFormSection> */}
                     </PlatformFormBody>
                 </div>
                 <div className={styles.preview}>
