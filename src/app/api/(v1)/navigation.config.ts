@@ -10,8 +10,12 @@ export const navigationSections: DevNavSectionProps[] = [
         href: '/api',
         childrens: [
             {
+                label: 'Стандарты',
+                href: '/api/standards'
+            },
+            {
                 label: 'Авторизация',
-                href: '/api/auth'
+                href: '/api/authorization'
             },
             {
                 label: 'Лимиты',
