@@ -91,7 +91,7 @@ export function DevContent({
                         
                         {nextPage && (
                             <Button 
-                                variant='accent' 
+                                variant='contrast' 
                                 as='link' 
                                 href={nextPage.href}
                             >

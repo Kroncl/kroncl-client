@@ -1,0 +1,45 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.area {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+
+    .form {
+        font-size: 1em !important;
+    }
+
+    .result {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: .2rem;
+        margin-top: 1rem;
+        padding: 1em;
+        background-color: var(--color-surface-glass);
+        border: 1px dashed var(--color-stroke-secondary);
+        border-radius: .6em;
+
+        .title {
+            font-size: 1.3em;
+            font-weight: 600;
+            letter-spacing: .02em;
+            line-height: 1;
+        }
+        .description {
+            line-height: 1.5;
+        }
+        .key {
+            margin-top: .7em;
+        }
+        .actions {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 1em;
+            margin-top: 1em;
+
+            .action {
+                border-radius: 2em;
+            }
+        }
+    }
+}

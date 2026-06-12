@@ -22,10 +22,19 @@
     text-decoration-thickness: 2px;
 }
 
+
 .tag {
     padding: 0 .4em;
     border-radius: .4em;
     border: 1px dashed var(--color-stroke-primary);
+}
+
+.codeTag {
+    padding: .2em .4em;
+    border-radius: .4em;
+    border: 1px dashed var(--color-stroke-primary);
+    font-family: 'Courier New', Courier, monospace;
+    // font-family: 'Segoe UI', 'Roboto', 'Consolas', monospace;
 }
 
 .secondary {

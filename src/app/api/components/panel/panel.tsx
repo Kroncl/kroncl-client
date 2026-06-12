@@ -137,7 +137,7 @@ export function DevPanel({
                     )}
                     <div className={styles.actions}>
                         <Button
-                            href='/api/apps'
+                            href='/api/apps/create'
                             as='link'
                             className={styles.action}
                             children='Создать приложение'
