@@ -35,6 +35,7 @@ import Book from '@/assets/ui-kit/icons/book';
 import Home from '@/assets/ui-kit/icons/home';
 import { AccountCompany } from '@/apps/account/companies/types';
 import { APP_VERSION } from '@/config/version.config';
+import Dev from '@/assets/ui-kit/icons/dev';
 
 interface PlatformPanelProps {
   className?: string;
@@ -70,7 +71,8 @@ const iconComponents: Record<string, ComponentType<{ className?: string }>> = {
   'support': Support,
   'invitations': Invitations,
   'book': Book,
-  'home': Home
+  'home': Home,
+  'dev': Dev
 };
 
 export default function ClientPanel({
@@ -135,6 +137,11 @@ export default function ClientPanel({
       name: 'Настройки',
       href: '/platform/settings',
       icon: 'settings'
+    },
+    {
+      name: 'Разработчикам',
+      href: '/dev',
+      icon: 'dev'
     }
   ];
 

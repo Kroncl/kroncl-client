@@ -23,7 +23,7 @@ export function CommunityHeader({
         <header className={styles.header}>
             <div className={styles.logo}>
                 <Link href='/'><LogoFull color='var(--color-text-primary)' className={styles.icon} /></Link>
-                <Link href={linksConfig.developerCommunity} className={styles.tag}>Разработчикам</Link>
+                <Link href={linksConfig.developerApi} className={styles.tag}>API</Link>
             </div>
             <div className={styles.actions}>
                 <ThemeSwitcher className={styles.switcher} />

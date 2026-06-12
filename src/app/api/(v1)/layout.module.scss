@@ -13,7 +13,7 @@
         position: relative;
     }
     .panel {
-        width: 12rem;
+        width: 14rem;
         background-color: var(--color-surface-glass);
         border-right: 1px solid var(--color-stroke-secondary);
         height: calc(100vh - var(--header-height));
@@ -28,6 +28,9 @@
     @media (max-width: 720px) {
         height: auto;
         
+        .panel {
+            // width: 0%;
+        }
         .content {
             overflow-y: auto;
             height: fit-content;
