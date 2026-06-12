@@ -1,0 +1,35 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    border: 1px solid var(--color-stroke-secondary);
+    border-radius: .6em;
+    overflow: hidden;
+    margin: 1em 0;
+}
+
+.title {
+    padding: 1em 1em;
+    font-size: 1em;
+    color: var(--color-text-ghost);
+    background: var(--color-surface-glass);
+}
+
+.pre {
+    margin: 0;
+    padding: 1em;
+    font-size: .9em;
+    overflow-x: auto;
+    background: var(--color-surface-glass-secondary) !important;
+
+    code {
+        background: transparent !important;
+        font-family: 'Fira Code', 'JetBrains Mono', monospace;
+        font-size: .9em;
+        line-height: 1.5;
+        color: var(--color-text-primary);
+    }
+
+    :global(.token) {
+        color: var(--color-text-primary);
+    }
+}

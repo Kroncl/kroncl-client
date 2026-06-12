@@ -1,7 +1,83 @@
-import Link from 'next/link';
-import styles from '@/assets/styles/mdx.module.scss';
-import { MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaBlock } from '@/assets/mdx';
+import { clientFields } from './_schema';
 
-# Введение
+## Создание клиента
 
-Это API использует OAuth 2 с механизмом authorization_code. Используйте его для доступа к данным других пользователей при разработке стороннего приложения.
+Создаёт нового клиента в базе организации.
+
+### Запрос
+
+
+<MDXMermaBlock
+    title="Архитектура API"
+    chart={`
+graph TD
+    A[Client] -->|API Key| B[Auth Middleware]
+    B -->|JWT| C[Account Context]
+    C --> D[Companies]
+    D --> E[Modules]
+    E --> F[FM]
+    E --> G[CRM]
+    E --> H[HRM]
+`}
+/>
+
+<MDXCodeBlock
+    language="bash"
+    code={`curl -X POST https://kroncl.com/api/companies/org123/modules/crm/clients \\
+  -H "Authorization: Bearer krn_abc123def456..." \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "first_name": "Иван",
+    "type": "individual",
+    "source_id": "src-456"
+  }'`}
+/>
+
+### Ответы
+
+<MDXStatusesBlock
+    codes={[
+        {
+            code: 201,
+            children: (
+                <>
+                <MDXJsonSchemaBlock
+                    fields={clientFields}
+                />
+                </>
+            )
+        },
+        {
+            code: 400,
+            children: (
+                <>
+                    <p>Неверный запрос. Обязательные поля не заполнены.</p>
+                    <MDXCodeBlock
+                        language="json"
+                        code={`{
+  "status": false,
+  "message": "Validation failed: first_name is required"
+}`}
+                    />
+                </>
+            )
+        },
+        {
+            code: 401,
+            children: (
+                <>
+                    <p>Не авторизован. Передайте API-ключ или JWT в заголовке <code>Authorization</code>.</p>
+                </>
+            )
+        },
+        {
+            code: 500,
+            children: (
+                <>
+                    <p>Внутренняя ошибка сервера. Попробуйте позже.</p>
+                </>
+            )
+        }
+    ]}
+/>
