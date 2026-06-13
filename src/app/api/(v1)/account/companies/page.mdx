@@ -1,0 +1,59 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { accountCompanyFields, slugUniqueQueryFields, createCompanyRequestFields, slugUniqueFields, companiesDataFields, companiesListResponseCodes, createCompanyResponseCodes, checkSlugResponseCodes } from './_schema';
+
+# Компании
+
+Методы для управления организациями аккаунта.
+
+<h1 id='list'># Получение компаний</h1>
+<MDXMethodBlock path='/companies/my' method='GET' />
+
+Возвращает список организаций, в которых состоит аккаунт.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={companiesDataFields} />
+
+## Компания
+
+<MDXJsonSchemaBlock title='ACCOUNT_COMPANY' fields={accountCompanyFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={companiesListResponseCodes} />
+
+<h1 id='create'># Создание компании</h1>
+<MDXMethodBlock path='/companies' method='POST' />
+
+Создаёт новую организацию. Slug генерируется автоматически из названия, но можно указать свой.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createCompanyRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COMPANY' fields={accountCompanyFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createCompanyResponseCodes} />
+
+<h1 id='check-slug-unique'># Проверка уникальности slug</h1>
+<MDXMethodBlock path='/companies/check-slug-unique' method='GET' />
+
+Проверяет, свободен ли slug для создания новой организации.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={slugUniqueQueryFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={slugUniqueFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={checkSlugResponseCodes} />

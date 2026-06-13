@@ -54,7 +54,7 @@ export const navigationSections: DevNavSectionProps[] = [
                 href: '/api/public/plans',
                 childrens: [
                     {
-                        label: 'Список тарифов',
+                        label: 'Список',
                         href: '/api/public/plans#list',
                         method: 'GET'
                     },
@@ -107,7 +107,7 @@ export const navigationSections: DevNavSectionProps[] = [
                 href: '/api/account/invitations',
                 childrens: [
                     {
-                        label: 'Список приглашений',
+                        label: 'Список',
                         href: '/api/account/invitations#list',
                         method: 'GET'
                     },
@@ -149,7 +149,7 @@ export const navigationSections: DevNavSectionProps[] = [
                 href: '/api/account/api-keys',
                 childrens: [
                     {
-                        label: 'Список ключей',
+                        label: 'Список',
                         href: '/api/account/api-keys#list',
                         method: 'GET'
                     },
