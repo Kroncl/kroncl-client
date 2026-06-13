@@ -1,0 +1,31 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { invalidKeyResponse, apiChart } from './_schema.tsx';
+
+# Авторизация
+
+API Kroncl использует <span className={mdx.codeTag}>Bearer &lt;API-KEY&gt;</span> в заголовке <span className={mdx.codeTag}>Authorization</span>. <span className={mdx.codeTag}>&lt;API-KEY&gt;</span> выдаётся разработчику при регистрации приложения на странице <Link href='/api/apps' className={mdx.link}>управления приложениями</Link>.
+
+Вы в любое время можете отозвать уже выпущенный ключ приложения, мгновенно прекратив его действие — все последующие запросы с использованием деактивированного ключа будут сопровождаться следующим ответом:
+
+<MDXStatusesBlock codes={[
+    {
+        code: 401,
+        children: <>
+            <MDXCodeBlock code={invalidKeyResponse} language='json' />
+        </>
+    }
+]} />
+
+# Область действия
+
+Выпущенные ключи получают доступ ко <span className={mdx.underline}>всем методам</span> аккаунта и организаций, в которых он состоит. Однако, в соответствии с <Link href='/docs/companies/accesses' className={mdx.link}>ролевой моделью</Link> организаций на платформе Kroncl, аккаунт имеет свой скоуп разрешений в рамках каждой конкретной организации.
+
+Таким образом, с помощью одного ключа приложения вы имеете возможность обращаться к нескольким организациям.
+
+## Архитектура доступа
+
+Визуализируем механизм авторизации API Kroncl:
+
+<MDXMermaBlock chart={apiChart} />
