@@ -15,9 +15,11 @@
         justify-content: start;
         border-bottom: 1px solid var(--color-stroke-secondary);
         gap: 1em;
+        overflow: hidden;
 
         .title {
             font-family: 'Courier New', Courier, monospace;
+            @include text-ellipsis();
         }
         .app {
             color: var(--color-text-ghost);

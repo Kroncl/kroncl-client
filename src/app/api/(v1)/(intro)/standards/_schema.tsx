@@ -54,6 +54,18 @@ const code401: string = `{
     }
 }`;
 
+const code429: string = `{
+    "status": false,
+    "message": "Too Many Requests",
+    "data": {},
+    "meta": {
+        "timestamp": "2026-06-13T15:38:12Z",
+        "request_id": "e08cf60221af/7tXcx4SYpF-005982",
+        "path": "/api/v1/status",
+        "method": "GET"
+    }
+}`;
+
 export const responseCodes: Code[] = [
     {
         code: 200,
@@ -76,6 +88,14 @@ export const responseCodes: Code[] = [
         children: <>
             <MDXCodeBlock
                 code={code401}
+            />
+        </>
+    },
+    {
+        code: 429,
+        children: <>
+            <MDXCodeBlock
+                code={code429}
             />
         </>
     }
