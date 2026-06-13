@@ -31,7 +31,7 @@ export function MDXCodeBlock({
     return (
         <div className={clsx(styles.container, className)}>
             {title && <div className={styles.title}>{title}</div>}
-            <pre className={clsx(styles.pre, `language-${language}`)}>
+            <pre className={clsx(styles.pre, `language-${language}`)} tabIndex={-1}>
                 <code ref={codeRef} className={`language-${language}`}>
                     {code}
                 </code>

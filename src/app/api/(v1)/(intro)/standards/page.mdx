@@ -7,6 +7,14 @@ import { apiResponseFields, responseCodes, paginationMetaFields, paginationRespo
 
 API Kroncl во всех своих методах соблюдает определённые стандарты, включая <span className={mdx.underline}>единый формат ответов</span>, <span className={mdx.underline}>пагинацию</span> и <span className={mdx.underline}>формат временных меток</span>. Соблюдение этих стандартов является главной причиной, по которой разработчик, вызывающий тот или иной метод, может быть уверен в том, что API вернёт данные в определённом формате. Это, в свою очередь, даёт возможность корректно обрабатывать все ответы, избегая неожиданных проблем с форматами.
 
+# Версионирование
+
+Текущая стабильная версия API Kroncl — <span className={mdx.codeTag}>v1</span>. Версия используется в <span className={mdx.codeTag}>BASE_URL</span> API. Мажорные версии, ломающие обратную совместимость, появляются крайне редко — мы уведомляем разработчиков о таких событиях релизами на <Link className={mdx.link} href='https://github.com/Kroncl'>официальном GitHub</Link> и по почте.
+
+Используйте текущий <span className={mdx.codeTag}>BASE_URL</span> как константу с версией <span className={mdx.codeTag}>v1</span>.
+
+<MDXUrlBlock url={process.env.NEXT_PUBLIC_API_URL || ''} />
+
 # Ответы методов
 
 Для ответов большинства методов (за исключением методов, возвращающих бинарные данные) используется кодировка <span className={mdx.codeTag}>application/json</span>. <span className={mdx.codeTag}>HTTP</span>-статусы соответствуют классической методологии <span className={mdx.codeTag}>REST</span>: <span className={mdx.codeTag}>2xx</span>, <span className={mdx.codeTag}>4xx</span>, <span className={mdx.codeTag}>5xx</span>.

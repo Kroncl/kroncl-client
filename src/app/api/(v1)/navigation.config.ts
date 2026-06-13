@@ -23,25 +23,58 @@ export const navigationSections: DevNavSectionProps[] = [
             }
         ]
     },
+    
     {
-        label: 'Health & Статус',
-        href: '/api/health',
+        label: 'Публичные методы',
+        href: '/',
         childrens: [
             {
-                label: 'Проверка здоровья',
+                label: 'Health & Статус',
                 href: '/api/health',
+                childrens: [
+                    {
+                        label: 'Health-check',
+                        href: '/api/health',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Статус системы',
+                        href: '/api/status',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Режим биллинга',
+                        href: '/api/status/billing',
+                        method: 'GET'
+                    }
+                ]
+            },
+            {
+                label: 'Тарифы',
+                href: '/api/plans',
+                childrens: [
+                    {
+                        label: 'Список тарифов',
+                        href: '/api/plans',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Тариф по коду',
+                        href: '/api/plans/{code}',
+                        method: 'GET'
+                    }
+                ]
+            },
+            {
+                label: 'Разрешения платформы',
+                href: '/api/permissions',
                 method: 'GET'
             },
             {
-                label: 'Статус системы',
-                href: '/api/status',
+                label: 'Публичные компании',
+                href: '/api/visit-cards/{slug}',
                 method: 'GET'
             },
-            {
-                label: 'Режим биллинга',
-                href: '/api/status/billing',
-                method: 'GET'
-            }
         ]
     },
     {
@@ -192,43 +225,6 @@ export const navigationSections: DevNavSectionProps[] = [
                     }
                 ]
             }
-        ]
-    },
-    {
-        label: 'Тарифы',
-        href: '/api/plans',
-        childrens: [
-            {
-                label: 'Список тарифов',
-                href: '/api/plans',
-                method: 'GET'
-            },
-            {
-                label: 'Тариф по коду',
-                href: '/api/plans/{code}',
-                method: 'GET'
-            }
-        ]
-    },
-    {
-        label: 'Глобальные методы',
-        href: '/',
-        childrens: [
-            {
-                label: 'Разрешения платформы',
-                href: '/api/permissions',
-                method: 'GET'
-            },
-            {
-                label: 'Визитки компаний',
-                href: '/api/visit-cards/{slug}',
-                method: 'GET'
-            },
-            {
-                label: 'Поиск аккаунтов',
-                href: '/api/accounts',
-                method: 'GET'
-            },
         ]
     },
     {
