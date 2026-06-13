@@ -26,53 +26,53 @@ export const navigationSections: DevNavSectionProps[] = [
     
     {
         label: 'Публичные методы',
-        href: '/',
+        href: '/api/public',
         childrens: [
             {
                 label: 'Health & Статус',
-                href: '/api/health',
+                href: '/api/public/health-status',
                 childrens: [
                     {
-                        label: 'Health-check',
-                        href: '/api/health',
+                        label: 'Health-Check',
+                        href: '/api/public/health-status#health-check',
                         method: 'GET'
                     },
                     {
                         label: 'Статус системы',
-                        href: '/api/status',
+                        href: '/api/public/health-status#status',
                         method: 'GET'
                     },
                     {
                         label: 'Режим биллинга',
-                        href: '/api/status/billing',
+                        href: '/api/public/health-status#billing',
                         method: 'GET'
                     }
                 ]
             },
             {
                 label: 'Тарифы',
-                href: '/api/plans',
+                href: '/api/public/plans',
                 childrens: [
                     {
                         label: 'Список тарифов',
-                        href: '/api/plans',
+                        href: '/api/public/plans#list',
                         method: 'GET'
                     },
                     {
                         label: 'Тариф по коду',
-                        href: '/api/plans/{code}',
+                        href: '/api/public/plans#one',
                         method: 'GET'
                     }
                 ]
             },
             {
                 label: 'Разрешения платформы',
-                href: '/api/permissions',
+                href: '/api/public/permissions',
                 method: 'GET'
             },
             {
                 label: 'Публичные компании',
-                href: '/api/visit-cards/{slug}',
+                href: '/api/public/companies',
                 method: 'GET'
             },
         ]

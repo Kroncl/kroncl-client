@@ -44,3 +44,12 @@
 .accent {
     color: var(--color-text-hint);
 }
+
+.method {
+    transition: color var(--transition);
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-underline-offset: .34em;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: .2em;
+}

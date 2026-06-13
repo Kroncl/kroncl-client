@@ -1,0 +1,43 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMethodBlock, MDXMermaBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { healthCheckResponseCodes, healthCheckSchema, statusResponseCodes, statusDataFields, incidentFields, dailyStatusFields, billingFields, billingResponseCodes } from './_schema';
+
+# Health & Статус платформы
+
+Методы, описываемые в этой главе, позволяют определить работоспособность платформы в данный момент. Используйте для написания обвязок <span className={mdx.codeTag}>health-check</span> для своих продуктов.
+
+<h1 id='health-check'># Health-Check</h1>
+<MDXMethodBlock path='/health' method='GET' />
+<MDXJsonSchemaBlock fields={healthCheckSchema} />
+<MDXStatusesBlock codes={healthCheckResponseCodes} />
+
+<h1 id='status'># Получение статуса платформы</h1>
+<MDXMethodBlock path='/status' method='GET' />
+
+Возвращает текущий статус платформы, активные инциденты и историю по компонентам за последние 7 дней.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={statusDataFields} />
+
+## Инцидент
+
+<MDXJsonSchemaBlock title='INCIDENT' fields={incidentFields} />
+
+## День в истории
+
+<MDXJsonSchemaBlock title='DAILY_STATUS' fields={dailyStatusFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={statusResponseCodes} />
+
+<h1 id='billing'># Получение режима биллинга</h1>
+<MDXMethodBlock path='/status/billing' method='GET' />
+
+Возвращает текущий режим биллинга платформы.
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={billingFields} />
+
+<MDXStatusesBlock codes={billingResponseCodes} />
