@@ -1,5 +1,3 @@
-// _schema.tsx — добавляем примеры
-
 import { MDXCodeBlock } from "@/assets/mdx";
 import { JsonField } from "@/assets/mdx/json-schema/utils";
 import { Code } from "@/assets/mdx/statuses-block";

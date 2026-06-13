@@ -82,80 +82,25 @@ export const navigationSections: DevNavSectionProps[] = [
         href: '/api/account',
         childrens: [
             {
-                label: 'Регистрация',
-                href: '/api/account/reg',
-                method: 'POST'
-            },
-            {
-                label: 'Проверка email',
-                href: '/api/account/check-email-unique',
-                method: 'GET'
-            },
-            {
-                label: 'Вход',
-                href: '/api/account/auth',
-                method: 'POST'
-            },
-            {
-                label: 'Вход по отпечатку',
-                href: '/api/account/fingerprints/auth',
-                method: 'POST'
-            },
-            {
-                label: 'Обновление токенов',
-                href: '/api/account/refresh',
-                method: 'POST'
-            },
-            {
-                label: 'Сброс пароля',
-                href: '/api/account/reset-password',
+                label: 'Управление',
+                href: '/api/account/manage',
                 childrens: [
                     {
-                        label: 'Отправить ссылку',
-                        href: '/api/account/reset-password/send-link',
-                        method: 'POST'
+                        label: 'Профиль',
+                        href: '/api/account/manage#get',
+                        method: 'GET'
                     },
                     {
-                        label: 'Проверить токен',
-                        href: '/api/account/reset-password/validate-token',
-                        method: 'POST'
+                        label: 'Обновить профиль',
+                        href: '/api/account/manage#update',
+                        method: 'PATCH'
                     },
                     {
-                        label: 'Сменить пароль',
-                        href: '/api/account/reset-password',
-                        method: 'POST'
-                    }
+                        label: 'Сводка аккаунта',
+                        href: '/api/account/manage#summary',
+                        method: 'GET'
+                    },
                 ]
-            },
-            {
-                label: 'Профиль',
-                href: '/api/account',
-                method: 'GET'
-            },
-            {
-                label: 'Обновить профиль',
-                href: '/api/account',
-                method: 'PATCH'
-            },
-            {
-                label: 'Подтвердить email',
-                href: '/api/account/confirm',
-                method: 'POST'
-            },
-            {
-                label: 'Повторный код',
-                href: '/api/account/confirm/resend',
-                method: 'POST'
-            },
-            {
-                label: 'Выход',
-                href: '/api/account/log-out',
-                method: 'POST'
-            },
-            {
-                label: 'Сводка аккаунта',
-                href: '/api/account/summary',
-                method: 'GET'
             },
             {
                 label: 'Приглашения',
@@ -163,38 +108,38 @@ export const navigationSections: DevNavSectionProps[] = [
                 childrens: [
                     {
                         label: 'Список приглашений',
-                        href: '/api/account/invitations',
+                        href: '/api/account/invitations#list',
                         method: 'GET'
                     },
                     {
                         label: 'Принять',
-                        href: '/api/account/invitations/{invitationId}/accept',
+                        href: '/api/account/invitations#accept',
                         method: 'POST'
                     },
                     {
                         label: 'Отклонить',
-                        href: '/api/account/invitations/{invitationId}/reject',
+                        href: '/api/account/invitations#reject',
                         method: 'POST'
                     }
                 ]
             },
             {
-                label: 'Отпечатки (Fingerprints)',
+                label: 'Отпечатки (Доступ третьим лицам)',
                 href: '/api/account/fingerprints',
                 childrens: [
                     {
                         label: 'Список',
-                        href: '/api/account/fingerprints',
+                        href: '/api/account/fingerprints#list',
                         method: 'GET'
                     },
                     {
                         label: 'Создать',
-                        href: '/api/account/fingerprints',
+                        href: '/api/account/fingerprints#create',
                         method: 'POST'
                     },
                     {
                         label: 'Отозвать',
-                        href: '/api/account/fingerprints/{fingerprintId}/revoke',
+                        href: '/api/account/fingerprints#revoke',
                         method: 'POST'
                     }
                 ]
@@ -205,47 +150,47 @@ export const navigationSections: DevNavSectionProps[] = [
                 childrens: [
                     {
                         label: 'Список ключей',
-                        href: '/api/account/api-keys',
+                        href: '/api/account/api-keys#list',
                         method: 'GET'
                     },
                     {
                         label: 'Создать ключ',
-                        href: '/api/account/api-keys',
+                        href: '/api/account/api-keys#create',
                         method: 'POST'
                     },
                     {
                         label: 'Получить ключ',
-                        href: '/api/account/api-keys/{keyId}',
+                        href: '/api/account/api-keys#get',
                         method: 'GET'
                     },
                     {
                         label: 'Отозвать ключ',
-                        href: '/api/account/api-keys/{keyId}/revoke',
+                        href: '/api/account/api-keys#revoke',
                         method: 'POST'
                     }
                 ]
-            }
-        ]
-    },
-    {
-        label: 'Компании',
-        href: '/api/companies',
-        childrens: [
-            {
-                label: 'Создать компанию',
-                href: '/api/companies',
-                method: 'POST'
             },
             {
-                label: 'Мои компании',
-                href: '/api/companies/my',
-                method: 'GET'
+                label: 'Компании',
+                href: '/api/account/companies',
+                childrens: [
+                    {
+                        label: 'Мои компании',
+                        href: '/api/account/companies#list',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Создать компанию',
+                        href: '/api/account/companies#create',
+                        method: 'POST'
+                    },
+                    {
+                        label: 'Проверить slug',
+                        href: '/api/account/companies#check-slug-unique',
+                        method: 'GET'
+                    }
+                ]
             },
-            {
-                label: 'Проверить slug',
-                href: '/api/companies/check-slug-unique',
-                method: 'GET'
-            }
         ]
     },
     {

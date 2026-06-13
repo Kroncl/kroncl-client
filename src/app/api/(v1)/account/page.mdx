@@ -1,0 +1,15 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+
+# Аккаунт
+
+Методы аккаунта позволяют выполнять ряд действий с учётной записью, к которой был выпущен <span className={mdx.codeTag}>&lt;API-KEY&gt;</span> приложения. Все методы требуют <Link href='/api/authorization' className={mdx.link}>авторизации</Link>.
+
+Возможности методов учётной записи:
+
+- просмотр и управление аккаунтом;
+- просмотр и создание организаций;
+- просмотр и управление отпечатками (доступ третьим лицам);
+- управление приглашениями в организации;
+- управление API-ключами (ротация).

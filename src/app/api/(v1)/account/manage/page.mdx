@@ -1,0 +1,51 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { accountFields, updateAccountRequestFields, summaryFields, getAccountResponseCodes, updateAccountResponseCodes, summaryResponseCodes } from './_schema';
+
+# Управление учётной записью
+
+Методы для получения и обновления данных аккаунта.
+
+<h1 id='get'># Получение аккаунта</h1>
+<MDXMethodBlock path='/account' method='GET' />
+
+Возвращает данные текущего аккаунта.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='ACCOUNT' fields={accountFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getAccountResponseCodes} />
+
+<h1 id='update'># Обновление данных</h1>
+<MDXMethodBlock path='/account' method='PATCH' />
+
+Обновляет данные текущего аккаунта. Все поля опциональны — передавайте только те, которые нужно изменить.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateAccountRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='ACCOUNT' fields={accountFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateAccountResponseCodes} />
+
+<h1 id='summary'># Сводка</h1>
+<MDXMethodBlock path='/account/summary' method='GET' />
+
+Возвращает сводную информацию по аккаунту: количество организаций, приглашений и отпечатков.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='SUMMARY' fields={summaryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={summaryResponseCodes} />

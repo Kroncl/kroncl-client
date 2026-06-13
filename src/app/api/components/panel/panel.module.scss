@@ -51,6 +51,7 @@
         display: block;
         overflow-y: scroll;
         padding: .7em .8em;
+        min-height: 100%;
 
         .grid {
             display: flex;
