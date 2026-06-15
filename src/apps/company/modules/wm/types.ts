@@ -53,7 +53,7 @@ export interface CategoriesResponse {
 export type UnitType = 'product' | 'service';
 export type UnitStatus = 'active' | 'inactive';
 export type InventoryType = 'tracked' | 'untracked';
-export type TrackingDetail = 'batch' | 'serial';  // НОВЫЙ ТИП
+export type TrackingDetail = 'batch' | 'serial';
 export type TrackedType = 'fifo' | 'lifo';
 export type CurrencyType = 'RUB';
 
@@ -64,7 +64,7 @@ export interface CatalogUnit {
     type: UnitType;
     status: UnitStatus;
     inventory_type: InventoryType;
-    tracking_detail?: TrackingDetail | null;  // НОВОЕ ПОЛЕ
+    tracking_detail?: TrackingDetail | null;
     tracked_type: TrackedType | null;
     unit: string;
     sale_price: number;

@@ -283,26 +283,26 @@ export const navigationSections: DevNavSectionProps[] = [
             },
             {
                 label: 'Тарификация',
-                href: '/api/companies/{id}/pricing',
+                href: '/api/company/pricing',
                 childrens: [
                     {
                         label: 'Текущий план',
-                        href: '/api/companies/{id}/pricing',
+                        href: '/api/company/pricing#current',
                         method: 'GET'
                     },
                     {
                         label: 'Транзакции',
-                        href: '/api/companies/{id}/pricing/transactions',
+                        href: '/api/company/pricing#transactions',
                         method: 'GET'
                     },
                     {
                         label: 'Отменить транзакцию',
-                        href: '/api/companies/{id}/pricing/transactions/{transactionId}/revoke',
+                        href: '/api/company/pricing#revoke-transaction',
                         method: 'POST'
                     },
                     {
                         label: 'Сменить тариф',
-                        href: '/api/companies/{id}/pricing/migrate',
+                        href: '/api/company/pricing#migrate',
                         method: 'POST'
                     }
                 ]

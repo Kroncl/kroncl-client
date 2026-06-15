@@ -1,5 +1,69 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { companyPricingPlanFields, migratePlanRequestFields, pricingTransactionFields, pricingTransactionsDataFields, currentPlanResponseCodes, migratePlanResponseCodes, transactionsListResponseCodes, revokeTransactionResponseCodes } from './_schema';
+import { pricingPlanFields } from '../../public/plans/_schema';
 
 # Тарификация компании
+
+Методы для управления тарифным планом организации.
+
+<h1 id='current'># Получение текущего плана</h1>
+<MDXMethodBlock path='/companies/{id}/pricing' method='GET' />
+
+Возвращает текущий тарифный план организации и оставшееся время.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={companyPricingPlanFields} />
+
+## Тариф
+
+<MDXJsonSchemaBlock title='PRICING_PLAN' fields={pricingPlanFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={currentPlanResponseCodes} />
+
+<h1 id='migrate'># Смена тарифа</h1>
+<MDXMethodBlock path='/companies/{id}/pricing/migrate' method='POST' />
+
+Меняет тарифный план организации. Средства за неиспользованный период не возвращаются.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='MIGRATE_REQUEST' fields={migratePlanRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='PRICING_TRANSACTION' fields={pricingTransactionFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={migratePlanResponseCodes} />
+
+<h1 id='transactions'># Получение транзакций</h1>
+<MDXMethodBlock path='/companies/{id}/pricing/transactions' method='GET' />
+
+Возвращает историю биллинговых транзакций организации.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={pricingTransactionsDataFields} />
+
+## Транзакция
+
+<MDXJsonSchemaBlock title='PRICING_TRANSACTION' fields={pricingTransactionFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={transactionsListResponseCodes} />
+
+<h1 id='revoke-transaction'># Отзыв транзакции</h1>
+<MDXMethodBlock path='/companies/{id}/pricing/transactions/{transactionId}/revoke' method='POST' />
+
+Отменяет биллинговую транзакцию.
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={revokeTransactionResponseCodes} />
