@@ -23,7 +23,6 @@ export const navigationSections: DevNavSectionProps[] = [
             }
         ]
     },
-    
     {
         label: 'Публичные методы',
         href: '/api/public',
@@ -213,15 +212,15 @@ export const navigationSections: DevNavSectionProps[] = [
                         method: 'PATCH'
                     },
                     {
+                        label: 'Разрешения компании',
+                        href: '/api/company/base#permissions',
+                        method: 'GET'
+                    },
+                    {
                         label: 'Удалить',
                         href: '/api/company/base#delete',
                         method: 'POST'
                     },
-                    {
-                        label: 'Разрешения',
-                        href: '/api/company/base#permissions',
-                        method: 'GET'
-                    }
                 ]
             },
             {
@@ -229,12 +228,56 @@ export const navigationSections: DevNavSectionProps[] = [
                 href: '/api/company/storage',
                 childrens: [
                     {
+                        label: 'Статус хранилища',
+                        href: '/api/company/storage#summary',
+                        method: 'GET'
+                    },
+                    {
                         label: 'База данных',
-                        href: '/api/company/storage/db'
+                        href: '/api/company/storage/db',
+                        childrens: [
+                            {
+                                label: 'Информация о БД',
+                                href: '/api/company/storage/db#info',
+                                method: 'GET'
+                            },
+                            {
+                                label: 'Ресурсы',
+                                href: '/api/company/storage/db#sources',
+                                method: 'GET'
+                            },
+                            {
+                                label: 'Распределение по модулям',
+                                href: '/api/company/storage/db#modules',
+                                method: 'GET'
+                            }
+                        ]
                     },
                     {
                         label: 'Объектное хранилище',
-                        href: '/api/company/storage/media'
+                        href: '/api/company/storage/media',
+                        childrens: [
+                            {
+                                label: 'Статистика бакета',
+                                href: '/api/company/storage/media#stats',
+                                method: 'GET'
+                            },
+                            {
+                                label: 'Получить файл',
+                                href: '/api/company/storage/media#get-file',
+                                method: 'GET'
+                            },
+                            // {
+                            //     label: 'Presigned URL',
+                            //     href: '/api/company/storage/media#presigned-url',
+                            //     method: 'GET'
+                            // },
+                            // {
+                            //     label: 'Загрузить файл',
+                            //     href: '/api/company/storage/media#upload',
+                            //     method: 'POST'
+                            // }
+                        ]
                     }
                 ]
             },

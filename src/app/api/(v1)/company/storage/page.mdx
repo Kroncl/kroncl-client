@@ -1,5 +1,40 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { storageSummaryFields, databaseStorageStatusFields, mediaBucketStatusFields, storageSummaryResponseCodes } from './_schema.tsx';
 
 # Хранилище организации
+
+<span className={mdx.underline}>Хранилище компании</span> — абстракция над всеми типами исчерпаемых ресурсов организации:
+
+- база данных (хранилище данных);
+- объектное хранилище (хранилище файлов).
+
+Каждый тарифный план имеет свои лимиты объёма для каждого типа хранилища. Методы работы с хранилищем помогают контролировать расход ресурсов.
+
+# При создании организации
+
+<Link href='/api/account/companies#create' className={mdx.link}>Метод создания организации</Link> срабатывает за миллисекунды, мгновенно запуская процесс инициализации хранилища, который может занимать несколько секунд.
+
+Пока все типы хранилищ не будут развёрнуты, методы модулей организации <span className={mdx.underline}>недоступны</span>. Чтобы контролировать процесс развёртывания, используйте <span className={mdx.codeTag}>polling</span> методов проверки состояния хранилищ, описанных ниже.
+
+<h1 id='summary'># Статус хранилища</h1>
+<MDXMethodBlock path='/companies/{id}/storage' method='GET' />
+
+Возвращает текущий статус всех типов хранилищ организации. Используйте для <span className={mdx.codeTag}>polling</span> с рекомендуемым интервалом в <span className={mdx.codeTag}>5 секунд</span> при создании компании — пока оба хранилища не вернут <span className={mdx.codeTag}>is_ready: true</span>, методы модулей недоступны.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={storageSummaryFields} />
+
+## База данных
+
+<MDXJsonSchemaBlock title='DATABASE_STATUS' fields={databaseStorageStatusFields} />
+
+## Объектное хранилище
+
+<MDXJsonSchemaBlock title='MEDIA_STATUS' fields={mediaBucketStatusFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={storageSummaryResponseCodes} />

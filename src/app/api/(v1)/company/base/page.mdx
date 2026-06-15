@@ -1,5 +1,67 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { companyDetailFields, updateCompanyRequestFields, companyPermissionsFields, getCompanyResponseCodes, updateCompanyResponseCodes, permissionsResponseCodes, deleteCompanyResponseCodes } from './_schema';
 
 # Базовые действия
+
+Базовые методы для управления организацией.
+
+<h1 id='get'># Получение компании</h1>
+<MDXMethodBlock path='/companies/{id}' method='GET' />
+
+Возвращает данные организации. Аккаунт должен быть участником.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COMPANY' fields={companyDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCompanyResponseCodes} />
+
+<h1 id='update'># Обновление</h1>
+<MDXMethodBlock path='/companies/{id}' method='PATCH' />
+
+Обновляет данные организации. Все поля опциональны.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateCompanyRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COMPANY' fields={companyDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateCompanyResponseCodes} />
+
+<h1 id='permissions'># Разрешения компании</h1>
+<MDXMethodBlock path='/companies/{id}/permissions' method='GET' />
+
+Возвращает список разрешений, доступных аккаунту в рамках организации.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='PERMISSION' fields={companyPermissionsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={permissionsResponseCodes} />
+
+<h1 id='delete'># Удаление</h1>
+<MDXMethodBlock path='/companies/{id}/delete' method='POST' />
+
+Безвозвратно удаляет организацию и все её данные.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DELETE_RESPONSE' fields={[
+    { code: 'company_id', required: true, type: 'string', title: 'ID компании', description: 'Идентификатор удалённой организации' },
+    { code: 'dropped', required: true, type: 'boolean', title: 'Удалена', description: 'Флаг успешного удаления' },
+]} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deleteCompanyResponseCodes} />
