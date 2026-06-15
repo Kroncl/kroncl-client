@@ -8,6 +8,12 @@ export const changelogs: ChangelogItem[] = [
     //     description: 'Автоматическое создание отгрузки товаров со склада, используемых в сделке.'
     // },
     {
+        status: 'in-progress',
+        version: '1.5.29',
+        title: 'API Разработчикам',
+        description: 'Открываем методы API платформы для разработчиков.'
+    },
+    {
         status: 'completed',
         version: '1.5.28',
         title: 'Прогнозирование финансов',

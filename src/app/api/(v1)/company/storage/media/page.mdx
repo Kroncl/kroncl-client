@@ -1,0 +1,32 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { mediaBucketStatsFields, bucketStatsResponseCodes } from './_schema';
+
+# Объектное хранилище
+
+Методы для работы с файловым хранилищем организации.
+
+<h1 id='stats'># Получение статистики</h1>
+<MDXMethodBlock path='/companies/{id}/storage/media' method='GET' />
+
+Возвращает статистику объектного хранилища: размер, количество файлов.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={mediaBucketStatsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={bucketStatsResponseCodes} />
+
+<h1 id='get-file'># Получение файла</h1>
+<MDXMethodBlock path='/companies/{id}/storage/media/file?path=...' method='GET' />
+
+Возвращает файл по указанному пути. Ответ — бинарные данные.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={[
+    { code: 'path', required: true, type: 'string', title: 'Путь', description: 'Путь к файлу в бакете (выдаётся в ответах при генерации файлов)' },
+]} />

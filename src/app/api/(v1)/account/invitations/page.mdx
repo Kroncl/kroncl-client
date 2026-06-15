@@ -1,0 +1,43 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { invitationFields, invitationsDataFields, invitationsListResponseCodes, acceptInvitationResponseCodes, rejectInvitationResponseCodes } from './_schema';
+
+# Приглашения
+
+Методы для работы с входящими приглашениями в организации.
+
+<h1 id='list'># Список приглашений</h1>
+<MDXMethodBlock path='/account/invitations' method='GET' />
+
+Возвращает список входящих приглашений с пагинацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={invitationsDataFields} />
+
+## Структура приглашения
+
+<MDXJsonSchemaBlock title='INVITATION' fields={invitationFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={invitationsListResponseCodes} />
+
+<h1 id='accept'># Принять приглашение</h1>
+<MDXMethodBlock path='/account/invitations/{invitationId}/accept' method='POST' />
+
+Принимает входящее приглашение. Аккаунт становится участником организации.
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={acceptInvitationResponseCodes} />
+
+<h1 id='reject'># Отклонить приглашение</h1>
+<MDXMethodBlock path='/account/invitations/{invitationId}/reject' method='POST' />
+
+Отклоняет входящее приглашение.
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={rejectInvitationResponseCodes} />

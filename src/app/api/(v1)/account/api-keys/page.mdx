@@ -1,0 +1,64 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { apiKeyListItemFields, apiKeyWithRawFields, apiKeyDetailFields, createApiKeyRequestFields, apiKeysDataFields, apiKeysListResponseCodes, getApiKeyResponseCodes, createApiKeyResponseCodes, revokeApiKeyResponseCodes } from './_schema';
+
+# API-ключи / Приложения
+
+Методы для управления API-ключами — программный доступ к платформе.
+
+<h1 id='list'># Получение ключей</h1>
+<MDXMethodBlock path='/account/api-keys' method='GET' />
+
+Возвращает список API-ключей аккаунта с пагинацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={apiKeysDataFields} />
+
+## Ключ в списке
+
+<MDXJsonSchemaBlock title='API_KEY_LIST_ITEM' fields={apiKeyListItemFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={apiKeysListResponseCodes} />
+
+<h1 id='get'># Получение ключа</h1>
+<MDXMethodBlock path='/account/api-keys/{keyId}' method='GET' />
+
+Возвращает детальную информацию об одном API-ключе. **Полный ключ не возвращается** — он доступен только при создании.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='API_KEY' fields={apiKeyDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getApiKeyResponseCodes} />
+
+<h1 id='create'># Создание ключа</h1>
+<MDXMethodBlock path='/account/api-keys' method='POST' />
+
+Создаёт новый API-ключ. Полный ключ возвращается **только один раз** — сохраните его сразу.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createApiKeyRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='API_KEY_WITH_RAW' fields={apiKeyWithRawFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createApiKeyResponseCodes} />
+
+<h1 id='revoke'># Отзыв ключа</h1>
+<MDXMethodBlock path='/account/api-keys/{keyId}/revoke' method='POST' />
+
+Деактивирует API-ключ. После отзыва ключ больше нельзя использовать для запросов.
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={revokeApiKeyResponseCodes} />

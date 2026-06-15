@@ -1,0 +1,23 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { visitCardFields, visitCardResponseCodes } from './_schema';
+
+# Публичные компании
+
+Компании на платформе Kroncl могут быть двух типов:
+
+- <span className={mdx.underline}>приватная</span> — не участники не имеют доступа к просмотру реквизитов компании;
+- <span className={mdx.underline}>публичная</span> — не участники имеют доступ к просмотру реквизитов компании.
+
+Метод получения реквизитов публичной компании:
+
+<MDXMethodBlock path='/visit-cards/{slug}' method='GET' />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='VISIT_CARD' fields={visitCardFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={visitCardResponseCodes} />

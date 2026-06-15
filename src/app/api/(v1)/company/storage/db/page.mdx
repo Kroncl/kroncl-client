@@ -1,0 +1,55 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { databaseStorageFields, totalStatsFields, databaseSourcesFields, moduleStatsFields, storageModulesDataFields, dbInfoResponseCodes, dbSourcesResponseCodes, dbModulesResponseCodes } from './_schema';
+
+# База данных
+
+Методы для контроля хранилища данных организации.
+
+<h1 id='info'># Получение информации</h1>
+<MDXMethodBlock path='/companies/{id}/storage/db' method='GET' />
+
+Возвращает основную информацию о базе данных организации: размер, количество таблиц, строк и подключений.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={databaseStorageFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={dbInfoResponseCodes} />
+
+<h1 id='sources'># Ресурсы</h1>
+<MDXMethodBlock path='/companies/{id}/storage/db/sources' method='GET' />
+
+Возвращает детальную информацию о ресурсах базы данных: таблицы, индексы, vacuum, строки.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={databaseSourcesFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={dbSourcesResponseCodes} />
+
+<h1 id='modules'># Распределение по модулям</h1>
+<MDXMethodBlock path='/companies/{id}/storage/db/sources/modules' method='GET' />
+
+Возвращает распределение ресурсов базы данных по модулям платформы.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={storageModulesDataFields} />
+
+## Модуль
+
+<MDXJsonSchemaBlock title='MODULE_STATS' fields={moduleStatsFields} />
+
+## Итого
+
+<MDXJsonSchemaBlock title='TOTAL_STATS' fields={totalStatsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={dbModulesResponseCodes} />

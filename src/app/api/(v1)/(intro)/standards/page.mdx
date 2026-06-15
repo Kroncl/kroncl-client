@@ -1,0 +1,54 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { apiResponseFields, responseCodes, paginationMetaFields, paginationResponse, paginationParamsFields } from './_schema';
+
+# Стандарты
+
+API Kroncl во всех своих методах соблюдает определённые стандарты, включая <span className={mdx.underline}>единый формат ответов</span>, <span className={mdx.underline}>пагинацию</span> и <span className={mdx.underline}>формат временных меток</span>. Соблюдение этих стандартов является главной причиной, по которой разработчик, вызывающий тот или иной метод, может быть уверен в том, что API вернёт данные в определённом формате. Это, в свою очередь, даёт возможность корректно обрабатывать все ответы, избегая неожиданных проблем с форматами.
+
+# Версионирование
+
+Текущая стабильная версия API Kroncl — <span className={mdx.codeTag}>v1</span>. Версия используется в <span className={mdx.codeTag}>BASE_URL</span> API. Мажорные версии, ломающие обратную совместимость, появляются крайне редко — мы уведомляем разработчиков о таких событиях релизами на <Link className={mdx.link} href='https://github.com/Kroncl'>официальном GitHub</Link> и по почте.
+
+Используйте текущий <span className={mdx.codeTag}>BASE_URL</span> как константу с версией <span className={mdx.codeTag}>v1</span>.
+
+<MDXUrlBlock url={process.env.NEXT_PUBLIC_API_URL || ''} />
+
+# Ответы методов
+
+Для ответов большинства методов (за исключением методов, возвращающих бинарные данные) используется кодировка <span className={mdx.codeTag}>application/json</span>. <span className={mdx.codeTag}>HTTP</span>-статусы соответствуют классической методологии <span className={mdx.codeTag}>REST</span>: <span className={mdx.codeTag}>2xx</span>, <span className={mdx.codeTag}>4xx</span>, <span className={mdx.codeTag}>5xx</span>.
+
+Методы этого API возвращают данные в <span className={mdx.underline}>едином формате ответов</span>, структура которого одинакова как в случае ошибок, так и в случае успеха.
+
+<MDXJsonSchemaBlock title='RESPONSE_JSON_SCHEMA' fields={apiResponseFields} />
+
+## Примеры ответов
+
+Для большего понимания приведём примеры ответов API:
+
+<MDXStatusesBlock codes={responseCodes} />
+
+# Пагинация
+
+Многие методы API используются для получения коллекций объектов. Это API использует <span className={mdx.codeTag}>page pagination</span> — <span className={mdx.codeTag}>4</span> параметра в массиве <span className={mdx.codeTag}>pagination</span> внутри поля <span className={mdx.codeTag}>data</span> ответа:
+
+<MDXJsonSchemaBlock title='PAGINATION_JSON_SCHEMA' fields={paginationMetaFields} />
+
+Для запросов используется <span className={mdx.codeTag}>2</span> параметра в <span className={mdx.codeTag}>URL</span> метода:
+
+<MDXJsonSchemaBlock title='PAGINATION_QUERY_PARAMS' fields={paginationParamsFields} />
+
+## Примеры пагинации
+
+Для понимания работы пагинации приведём пример ответа одного из методов:
+
+<MDXCodeBlock title='/account/invitations?limit=10&page=2' code={paginationResponse} />
+
+# Временные метки
+
+Для <span className={mdx.underline}>всех</span> временных меток этого API используется формат <span className={mdx.codeTag}>RFC 3339</span>. Приведём примеры:
+
+- <span className={mdx.codeTag}>2026-04-24T00:20:54.94462Z</span>
+- <span className={mdx.codeTag}>2026-06-13T15:29:02Z</span>
+- <span className={mdx.codeTag}>2026-06-13T15:13:40.340089Z</span>

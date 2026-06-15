@@ -1,0 +1,53 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: .6em;
+    margin: 1em 0;
+
+    .codes {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: .4em;
+        padding-bottom: .6em;
+        border-bottom: 1px dashed var(--color-stroke-primary);
+
+        .code {
+            display: block;
+            padding: .8em;
+            border-radius: .4em;
+            @include cursor(pointer);
+            position: relative;
+            
+            &.error {
+                background-color: rgba(255, 0, 0, 0.1);
+                color: red;
+            }
+            &.success {
+                background-color: rgba(24, 226, 24, 0.1);
+                color: rgb(5, 155, 5);
+            }
+            &.neutral {
+                background-color: rgba(226, 226, 24, 0.1);
+                color: rgb(206, 206, 15);
+            }
+
+            &.active {
+                &::after {
+                    position: absolute;
+                    content: "";
+                    top: 0;
+                    left: -.5em;
+                    height: 100%;
+                    width: .2em;
+                    background-color: var(--color-contrast);
+                    border-radius: 2em;
+                }
+            }
+        }
+    }
+    .active {
+        display: flex;
+    }
+}

@@ -40,6 +40,9 @@ const metaConfigs: Record<string, MetaConfig> = {
     'dev': {
         title: 'Kroncl | Разработчикам',
     },
+    'api': {
+        title: 'Kroncl | API | Разработчикам',
+    },
     'docs': {
         title: 'Kroncl | Документация',
     },

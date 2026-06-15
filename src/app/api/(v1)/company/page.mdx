@@ -1,0 +1,33 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+
+# Компания
+
+<span className={mdx.underline}>Компания</span> (организация) на платформе Kroncl — ключевая единица, ради методов которой чаще всего и используют API разработчики. В состав методов входят как базовые, например:
+
+- управление участниками;
+- просмотр логов;
+- настройка тарификации;
+- управление хранилищами: <span className={mdx.underline}>база данных</span> и <span className={mdx.underline}>объектное</span>;
+- взаимодействие с технической поддержкой;
+- администрация компании;
+- настройка документов;
+
+так и управленческие, модулей платформы:
+
+- управление клиентами <span className={mdx.codeTag}>CRM</span>;
+- управление сделками <span className={mdx.codeTag}>DM</span>;
+- управление финансами <span className={mdx.codeTag}>FM</span>;
+- управление персоналом <span className={mdx.codeTag}>HRM</span>;
+- управление каталогом и складом <span className={mdx.codeTag}>WM</span>.
+
+# Как вызывать?
+
+Каждая компания на платформе имеет уникальный <span className={mdx.underline}>постоянный</span> идентификатор (<span className={mdx.codeTag}>UUID v4</span>). Все запросы к конкретной компании строятся по формуле:
+
+<MDXUrlBlock url={`${process.env.NEXT_PUBLIC_API_URL || ''}/companies/{COMPANY_ID}`} label='Запросы к компании' />
+
+Если вы используете это API для работы исключительно с одной конкретной компанией — используйте идентификатор компании как константу без зазрений совести.
+
+Узнать идентификатор компании можно, <Link href='/api/account/companies#list' className={mdx.link}>получив коллекцию компаний аккаунта</Link> или в браузере, в <span className={mdx.codeTag}>URL</span> пространства организации.

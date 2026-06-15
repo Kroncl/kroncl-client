@@ -1,0 +1,38 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.card {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: .4em;
+    padding: 1em;
+    width: 14em;
+    min-height: 6em;
+    border: 1px solid var(--color-stroke-secondary);
+    transition: background-color var(--transition);
+    @include cursor(pointer);
+    border-radius: .6em;
+
+    .name {
+        @include lines-ellipsis(2);
+        line-height: 1.1;
+        font-size: 1.2em;
+        font-weight: 600;
+        letter-spacing: .02em;
+    }
+
+    .key {
+        color: var(--color-text-hint);
+    }
+    .date {
+        color: var(--color-text-ghost);
+        font-size: .9em;
+    }
+
+    @media (max-width: 720px) {
+        width: 100%;
+    }
+
+    &:hover {
+        background-color: var(--color-surface-glass-secondary);
+    }
+}

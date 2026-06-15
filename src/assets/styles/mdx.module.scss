@@ -22,10 +22,19 @@
     text-decoration-thickness: 2px;
 }
 
+
 .tag {
     padding: 0 .4em;
     border-radius: .4em;
     border: 1px dashed var(--color-stroke-primary);
+}
+
+.codeTag {
+    padding: .2em .4em;
+    border-radius: .4em;
+    border: 1px dashed var(--color-stroke-primary);
+    font-family: 'Courier New', Courier, monospace;
+    // font-family: 'Segoe UI', 'Roboto', 'Consolas', monospace;
 }
 
 .secondary {
@@ -34,4 +43,13 @@
 
 .accent {
     color: var(--color-text-hint);
+}
+
+.method {
+    transition: color var(--transition);
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-underline-offset: .34em;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: .2em;
 }

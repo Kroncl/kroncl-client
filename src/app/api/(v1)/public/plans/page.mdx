@@ -1,0 +1,38 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMethodBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { pricingPlanFields, pricingPlansDataFields, plansListResponseCodes, planByCodeResponseCodes } from './_schema';
+
+# Тарифы
+
+Методы для получения информации о тарифных планах платформы.
+
+<h1 id='list'># Список тарифов</h1>
+<MDXMethodBlock path='/plans' method='GET' />
+
+Возвращает список всех доступных тарифных планов.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={pricingPlansDataFields} />
+
+## Тарифный план
+
+<MDXJsonSchemaBlock title='PRICING_PLAN' fields={pricingPlanFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={plansListResponseCodes} />
+
+<h1 id='one'># Тариф по коду</h1>
+<MDXMethodBlock path='/plans/{code}' method='GET' />
+
+Возвращает один тарифный план по его уникальному коду.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={pricingPlanFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={planByCodeResponseCodes} />

@@ -1,0 +1,51 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { fingerprintListItemFields, fingerprintWithKeyFields, createFingerprintRequestFields, fingerprintsDataFields, fingerprintsListResponseCodes, createFingerprintResponseCodes, revokeFingerprintResponseCodes } from './_schema';
+
+# Отпечатки / Доступ третьим лицам
+
+Методы для управления fingerprint-ключами — быстрый вход без пароля.
+
+<h1 id='list'># Получение отпечатков</h1>
+<MDXMethodBlock path='/account/fingerprints' method='GET' />
+
+Возвращает список fingerprint-ключей аккаунта с пагинацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={fingerprintsDataFields} />
+
+## Отпечаток
+
+<MDXJsonSchemaBlock title='FINGERPRINT' fields={fingerprintListItemFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={fingerprintsListResponseCodes} />
+
+<h1 id='create'># Создание отпечатка</h1>
+<MDXMethodBlock path='/account/fingerprints' method='POST' />
+
+Создаёт новый fingerprint-ключ. Полный ключ возвращается **только один раз** — сохраните его сразу.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createFingerprintRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='FINGERPRINT_WITH_KEY' fields={fingerprintWithKeyFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createFingerprintResponseCodes} />
+
+<h1 id='revoke'># Отзыв отпечатка</h1>
+<MDXMethodBlock path='/account/fingerprints/{fingerprintId}/revoke' method='POST' />
+
+Деактивирует fingerprint-ключ. После отзыва ключ больше нельзя использовать для входа.
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={revokeFingerprintResponseCodes} />

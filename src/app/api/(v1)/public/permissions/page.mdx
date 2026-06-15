@@ -1,0 +1,18 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { permissionFields, permissionsResponseCodes } from './_schema';
+
+# Разрешения
+
+Каждая организация в рамках Kroncl имеет собственный набор разрешений, в зависимости от выбранного тарифного плана. Публичный метод получения всех разрешений позволяет узнать все актуальные разрешения <span className={mdx.underline}>всех</span> модулей и подсистем абстрактной организации на платформе, проще говоря — <span className={mdx.underline}>все возможные разрешения</span>.
+
+<MDXMethodBlock path='/permissions' method='GET' />
+
+## Разрешение
+
+<MDXJsonSchemaBlock title='PERMISSION' fields={permissionFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={permissionsResponseCodes} />

@@ -5,7 +5,7 @@ export const linksConfig = {
   createCompany: '/platform/companies/new',
   developerPortal: '/dev',
   developerGithub: 'https://github.com/Kroncl',
-  developerCommunity: '/community',
+  developerApi: '/api',
 
   get isProduction() {
     return process.env.NODE_ENV === 'production';

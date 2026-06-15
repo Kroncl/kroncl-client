@@ -1,0 +1,75 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.section {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: .3em;
+    overflow: hidden;
+
+    .base {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: .2em;
+
+        > .switcher {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.7em;
+            color: var(--color-icon-primary);
+            transition: color var(--transition);
+            @include cursor(pointer);
+
+            svg {
+                width: .8em;
+                height: .8em;
+                transform: rotate(90deg);
+                transition: transform var(--transition);
+            }
+
+            &:hover {
+                color: var(--color-accent);
+            }
+        }
+    }
+    .label {
+        @include text-ellipsis();
+        padding: .4em 0;
+        transition: color var(--transition);
+
+        .method {
+            display: inline-block;
+            padding: .2em .3em;
+            color: #eee;
+            border-radius: .2em;
+            margin-right: .2em;
+            font-size: .9em;
+
+            &.GET { background-color: rgb(59, 59, 255); }
+            &.POST { background-color: rgb(16, 191, 45); }
+            &.DELETE { background-color: rgb(255, 59, 59); }
+            &.PUT, &.PATCH { background-color: rgb(255, 154, 59); }
+        }
+
+        &:hover { color: var(--color-text-hint) !important; }
+        &.active { color: var(--color-text-hint) !important; }
+    }
+
+    .childrens {
+        font-size: .98em;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: .25em;
+        padding-left: 2.9em;
+        display: none;
+    }
+
+    &.opened {
+        > .base > .switcher svg {
+            transform: rotate(-90deg);
+        }
+        > .childrens {
+            display: flex;
+        }
+    }
+}
