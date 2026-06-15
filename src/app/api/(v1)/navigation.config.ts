@@ -309,64 +309,58 @@ export const navigationSections: DevNavSectionProps[] = [
             },
             {
                 label: 'Участники',
-                href: '/api/companies/{id}/accounts',
+                href: '/api/company/accounts',
                 childrens: [
                     {
                         label: 'Список',
-                        href: '/api/companies/{id}/accounts',
+                        href: '/api/company/accounts#list',
                         method: 'GET'
                     },
                     {
                         label: 'Участник',
-                        href: '/api/companies/{id}/accounts/{accountId}',
+                        href: '/api/company/accounts#one',
+                        method: 'GET',
+                    },
+                    {
+                        label: 'Разрешения участника',
+                        href: '/api/company/accounts#permissions',
                         method: 'GET'
                     },
                     {
+                        label: 'Настройки участника',
+                        href: '/api/company/accounts#settings',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Обновить настройки участника',
+                        href: '/api/company/accounts#update-settings',
+                        method: 'PATCH'
+                    },
+                    {
+                        label: 'Исключить участника',
+                        href: '/api/company/accounts#delete',
+                        method: 'DELETE'
+                    },
+                    {
                         label: 'Приглашения',
-                        href: '/api/companies/{id}/accounts/invitations',
+                        href: '/api/company/accounts/invitations',
                         childrens: [
                             {
                                 label: 'Список',
-                                href: '/api/companies/{id}/accounts/invitations',
+                                href: '/api/company/accounts/invitations#list',
                                 method: 'GET'
                             },
                             {
                                 label: 'Создать',
-                                href: '/api/companies/{id}/accounts/invitations',
+                                href: '/api/company/accounts/invitations#create',
                                 method: 'POST'
                             },
                             {
                                 label: 'Отозвать',
-                                href: '/api/companies/{id}/accounts/invitations/{invitationId}',
+                                href: '/api/company/accounts/invitations#revoke',
                                 method: 'DELETE'
                             }
                         ]
-                    }
-                ]
-            },
-            {
-                label: 'Аккаунты (настройки)',
-                href: '/api/companies/{id}/modules/accounts/{accountId}',
-                childrens: [
-                    {
-                        label: 'Удалить сотрудника',
-                        href: '/api/companies/{id}/modules/accounts/{accountId}',
-                        method: 'DELETE'
-                    },
-                    {
-                        label: 'Разрешения',
-                        href: '/api/companies/{id}/modules/accounts/{accountId}/permissions',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'Настройки',
-                        href: '/api/companies/{id}/modules/accounts/{accountId}/settings',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'Обновить настройки',
-                        href: '/api/companies/{id}/modules/accounts/{accountId}/settings',
-                        method: 'PATCH'
                     }
                 ]
             },
