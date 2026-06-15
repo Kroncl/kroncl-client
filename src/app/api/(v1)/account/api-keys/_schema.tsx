@@ -38,7 +38,7 @@ export const apiKeyDetailFields: JsonField[] = [
 
 export const createApiKeyRequestFields: JsonField[] = [
     { code: 'name', required: true, type: 'string', title: 'Название', description: 'Название приложения (например: Мой бот)' },
-    { code: 'expires_in', required: false, type: 'string', title: 'Срок жизни', description: '24h, 7d, 30d, never (по умолчанию never)' },
+    { code: 'expires_in', required: false, type: 'string', title: 'Срок жизни в часах +h', description: '24h, 48h, never (по умолчанию never)' },
     { code: 'daily_requests', required: false, type: 'int', title: 'Лимит в день', description: 'Максимальное количество запросов в сутки (по умолчанию 1000)' },
 ];
 

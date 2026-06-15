@@ -195,32 +195,46 @@ export const navigationSections: DevNavSectionProps[] = [
     },
     {
         label: 'Компания',
-        href: '/api/companies/{id}',
+        href: '/api/company',
         childrens: [
             {
                 label: 'Базовые действия',
-                href: '/ap/companies/{id}/base',
+                href: '/api/company/base',
                 childrens: [
                     
                     {
-                        label: 'Информация',
-                        href: '/api/companies/{id}',
+                        label: 'Получение компании',
+                        href: '/api/company/base#get',
                         method: 'GET'
                     },
                     {
                         label: 'Обновить',
-                        href: '/api/companies/{id}',
+                        href: '/api/company/base#update',
                         method: 'PATCH'
                     },
                     {
                         label: 'Удалить',
-                        href: '/api/companies/{id}/delete',
+                        href: '/api/company/base#delete',
                         method: 'POST'
                     },
                     {
                         label: 'Разрешения',
-                        href: '/api/companies/{id}/permissions',
+                        href: '/api/company/base#permissions',
                         method: 'GET'
+                    }
+                ]
+            },
+            {
+                label: 'Хранилище',
+                href: '/api/company/storage',
+                childrens: [
+                    {
+                        label: 'База данных',
+                        href: '/api/company/storage/db'
+                    },
+                    {
+                        label: 'Объектное хранилище',
+                        href: '/api/company/storage/media'
                     }
                 ]
             },
@@ -246,57 +260,6 @@ export const navigationSections: DevNavSectionProps[] = [
                     {
                         label: 'Сменить тариф',
                         href: '/api/companies/{id}/pricing/migrate',
-                        method: 'POST'
-                    }
-                ]
-            },
-            {
-                label: 'Хранилище',
-                href: '/api/companies/{id}/storage',
-                childrens: [
-                    {
-                        label: 'Сводка',
-                        href: '/api/companies/{id}/storage',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'База данных',
-                        href: '/api/companies/{id}/storage/db',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'Источники БД',
-                        href: '/api/companies/{id}/storage/db/sources',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'По модулям',
-                        href: '/api/companies/{id}/storage/db/sources/modules',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'Медиа',
-                        href: '/api/companies/{id}/storage/media',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'Файл',
-                        href: '/api/companies/{id}/storage/media/file',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'Удалить файл',
-                        href: '/api/companies/{id}/storage/media/file',
-                        method: 'DELETE'
-                    },
-                    {
-                        label: 'Presigned URL',
-                        href: '/api/companies/{id}/storage/media/presigned-url',
-                        method: 'GET'
-                    },
-                    {
-                        label: 'Загрузить',
-                        href: '/api/companies/{id}/storage/media/upload',
                         method: 'POST'
                     }
                 ]
