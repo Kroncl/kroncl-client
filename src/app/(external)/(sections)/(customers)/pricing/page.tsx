@@ -6,7 +6,6 @@ export const metadata: Metadata = getMetaConfig('pricing')
 import { QuickLinksBlock } from '@/app/(external)/components/quick-links/quick-links';
 import styles from './page.module.scss';
 import { ForPartnersBlock } from './slides/for-partners/block';
-import { StartBlock } from './slides/start/block';
 import { TariffsBlock } from './slides/tariffs/block';
 import { linksList } from './_links';
 import { TrialPeriodBlock } from './slides/trial/block';
@@ -14,12 +13,20 @@ import { ReadyToStartBlock } from '../businessmans/blocks/ready-to-start/block';
 import clsx from 'clsx';
 import { HeadBlock } from '../../(about)/slides/head/block';
 import { TariffDetailsBlock } from './slides/tariff-details/block';
+import { PinsManager } from '../../(about)/pins/manager';
+import { StartBlock } from '../(product)/components/start/block';
 
 export default function Page() {
     return (
+        <>
+        <PinsManager />
         <div className={styles.container}>
             <div className={styles.grid}>
-                <StartBlock className={styles.block} />
+                <StartBlock
+                    className={styles.block}
+                    title='Тарификация'
+                    description='Ценовая политика платформы'
+                />
                 
                 {/* <div className={styles.intervalFlex}>
                     <span />
@@ -55,5 +62,6 @@ export default function Page() {
                 <ReadyToStartBlock className={styles.block} />
             </div>
         </div>
+        </>
     )
 }
