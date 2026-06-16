@@ -399,48 +399,48 @@ export const navigationSections: DevNavSectionProps[] = [
                     // { label: 'WebSocket', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages/ws', method: 'GET' }
                 ]
             },
-            // {
-            //     label: 'Персонал (HRM)',
-            //     href: '/api/companies/{id}/modules/hrm',
-            //     childrens: [
-            //         { label: 'Отчёт', href: '/api/companies/{id}/modules/hrm/report', method: 'POST' },
-            //         {
-            //             label: 'Сотрудники',
-            //             href: '/api/companies/{id}/modules/hrm/employees',
-            //             childrens: [
-            //                 { label: 'Список', href: '/api/companies/{id}/modules/hrm/employees', method: 'GET' },
-            //                 { label: 'Создать', href: '/api/companies/{id}/modules/hrm/employees', method: 'POST' },
-            //                 { label: 'Карточка', href: '/api/companies/{id}/modules/hrm/employees/{employeeId}', method: 'GET' },
-            //                 { label: 'Обновить', href: '/api/companies/{id}/modules/hrm/employees/{employeeId}', method: 'PATCH' },
-            //                 { label: 'Деактивировать', href: '/api/companies/{id}/modules/hrm/employees/{employeeId}/deactivate', method: 'POST' },
-            //                 { label: 'Активировать', href: '/api/companies/{id}/modules/hrm/employees/{employeeId}/activate', method: 'POST' },
-            //                 { label: 'Привязать аккаунт', href: '/api/companies/{id}/modules/hrm/employees/{employeeId}/link-account', method: 'POST' },
-            //                 { label: 'Отвязать аккаунт', href: '/api/companies/{id}/modules/hrm/employees/{employeeId}/unlink-account', method: 'POST' },
-            //                 { label: 'Назначить должность', href: '/api/companies/{id}/modules/hrm/employees/{employeeId}/link-position', method: 'POST' },
-            //                 { label: 'Снять с должности', href: '/api/companies/{id}/modules/hrm/employees/{employeeId}/unlink-position', method: 'POST' }
-            //             ]
-            //         },
-            //         {
-            //             label: 'Должности',
-            //             href: '/api/companies/{id}/modules/hrm/positions',
-            //             childrens: [
-            //                 { label: 'Список', href: '/api/companies/{id}/modules/hrm/positions', method: 'GET' },
-            //                 { label: 'Создать', href: '/api/companies/{id}/modules/hrm/positions', method: 'POST' },
-            //                 { label: 'Карточка', href: '/api/companies/{id}/modules/hrm/positions/{positionId}', method: 'GET' },
-            //                 { label: 'Обновить', href: '/api/companies/{id}/modules/hrm/positions/{positionId}', method: 'PATCH' },
-            //                 { label: 'Удалить', href: '/api/companies/{id}/modules/hrm/positions/{positionId}', method: 'DELETE' }
-            //             ]
-            //         },
-            //         {
-            //             label: 'Аналитика',
-            //             href: '/api/companies/{id}/modules/hrm/analysis',
-            //             childrens: [
-            //                 { label: 'Сводка', href: '/api/companies/{id}/modules/hrm/analysis/summary', method: 'GET' },
-            //                 { label: 'Группировка', href: '/api/companies/{id}/modules/hrm/analysis/grouped', method: 'GET' }
-            //             ]
-            //         }
-            //     ]
-            // },
+            {
+                label: 'Персонал (HRM)',
+                href: '/api/company/hrm',
+                childrens: [
+                    { label: 'Отчёт', href: '/api/company/hrm/reports', method: 'POST' },
+                    {
+                        label: 'Должности',
+                        href: '/api/company/hrm/positions',
+                        childrens: [
+                            { label: 'Список', href: '/api/company/hrm/positions#list', method: 'GET' },
+                            { label: 'Создать', href: '/api/company/hrm/positions#create', method: 'POST' },
+                            { label: 'Карточка', href: '/api/company/hrm/positions#one', method: 'GET' },
+                            { label: 'Обновить', href: '/api/company/hrm/positions#update', method: 'PATCH' },
+                            { label: 'Удалить', href: '/api/company/hrm/positions#delete', method: 'DELETE' }
+                        ]
+                    },
+                    {
+                        label: 'Сотрудники',
+                        href: '/api/company/hrm/employees',
+                        childrens: [
+                            { label: 'Список', href: '/api/company/hrm/employees#list', method: 'GET' },
+                            { label: 'Создать', href: '/api/company/hrm/employees#create', method: 'POST' },
+                            { label: 'Карточка', href: '/api/company/hrm/employees#one', method: 'GET' },
+                            { label: 'Обновить', href: '/api/company/hrm/employees#update', method: 'PATCH' },
+                            { label: 'Деактивировать', href: '/api/company/hrm/employees#deactivate', method: 'POST' },
+                            { label: 'Активировать', href: '/api/company/hrm/employees#activate', method: 'POST' },
+                            { label: 'Привязать аккаунт', href: '/api/company/hrm/employees#link-account', method: 'POST' },
+                            { label: 'Отвязать аккаунт', href: '/api/company/hrm/employees#unlink-account', method: 'POST' },
+                            { label: 'Назначить должность', href: '/api/company/hrm/employees#link-position', method: 'POST' },
+                            { label: 'Снять с должности', href: '/api/company/hrm/employees#unlink-position', method: 'POST' },
+                        ]
+                    },
+                    {
+                        label: 'Аналитика',
+                        href: '/api/company/hrm/analysis',
+                        childrens: [
+                            { label: 'Сводка', href: '/api/company/hrm/analysis#summary', method: 'GET' },
+                            { label: 'Группировка', href: '/api/company/hrm/analysis#grouped', method: 'GET' }
+                        ]
+                    },
+                ]
+            },
             // {
             //     label: 'Финансы (FM)',
             //     href: '/api/companies/{id}/modules/fm',

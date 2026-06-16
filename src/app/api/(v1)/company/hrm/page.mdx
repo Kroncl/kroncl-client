@@ -3,3 +3,24 @@ import mdx from '@/assets/styles/mdx.module.scss';
 import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
 
 # Управление персоналом
+
+Модуль <span className={mdx.codeTag}>HRM</span> — управление сотрудниками, должностями и анализ штата.
+
+## Возможности
+
+- создание карточек сотрудников с контактными данными;
+- привязка аккаунтов платформы Kroncl к карточкам сотрудников;
+- назначение сотрудников на должности с наследованием разрешений;
+- активация и деактивация сотрудников без удаления данных;
+- создание должностей с гибким набором разрешений;
+- обновление и удаление должностей;
+- сводная аналитика по штату: количество, статусы, новые сотрудники;
+- группировка статистики по дням, месяцам и годам;
+- генерация Excel-отчётов по сотрудникам и должностям.
+
+## Навигация
+
+- <Link href='/api/company/hrm/employees' className={mdx.link}>Сотрудники</Link>
+- <Link href='/api/company/hrm/positions' className={mdx.link}>Должности</Link>
+- <Link href='/api/company/hrm/analysis' className={mdx.link}>Аналитика</Link>
+- <Link href='/api/company/hrm/reports' className={mdx.link}>Отчёты</Link>

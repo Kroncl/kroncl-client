@@ -1,0 +1,162 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { employeeFields, employeeDetailFields, createEmployeeRequestFields, linkAccountRequestFields, linkPositionRequestFields, unlinkPositionRequestFields, employeesDataFields, employeesListResponseCodes, getEmployeeResponseCodes, createEmployeeResponseCodes, updateEmployeeResponseCodes, deactivateEmployeeResponseCodes, activateEmployeeResponseCodes, linkAccountResponseCodes, unlinkAccountResponseCodes, linkPositionResponseCodes, unlinkPositionResponseCodes } from './_schema';
+
+# Сотрудники
+
+Методы для управления сотрудниками организации.
+
+<h1 id='list'># Список сотрудников</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees' method='GET' />
+
+Возвращает список сотрудников с пагинацией и поиском.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={employeesDataFields} />
+
+## Сотрудник
+
+<MDXJsonSchemaBlock title='EMPLOYEE' fields={employeeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={employeesListResponseCodes} />
+
+<h1 id='create'># Создание сотрудника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees' method='POST' />
+
+Создаёт новую карточку сотрудника. Сотрудник не обязан быть зарегистрирован на платформе.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createEmployeeRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE' fields={employeeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createEmployeeResponseCodes} />
+
+<h1 id='one'># Получение сотрудника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees/{employeeId}' method='GET' />
+
+Возвращает карточку сотрудника со списком должностей.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE_DETAIL' fields={employeeDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getEmployeeResponseCodes} />
+
+<h1 id='update'># Обновление сотрудника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees/{employeeId}' method='PATCH' />
+
+Обновляет данные сотрудника.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={createEmployeeRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE' fields={employeeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateEmployeeResponseCodes} />
+
+<h1 id='deactivate'># Деактивация сотрудника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees/{employeeId}/deactivate' method='POST' />
+
+Деактивирует карточку сотрудника. После деактивации сотрудник не может быть назначен ответственным.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE' fields={employeeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deactivateEmployeeResponseCodes} />
+
+<h1 id='activate'># Активация сотрудника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees/{employeeId}/activate' method='POST' />
+
+Активирует ранее деактивированную карточку сотрудника.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE' fields={employeeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={activateEmployeeResponseCodes} />
+
+<h1 id='link-account'># Привязать аккаунт</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees/{employeeId}/link-account' method='POST' />
+
+Привязывает аккаунт платформы Kroncl к карточке сотрудника. Аккаунт наследует разрешения от должностей сотрудника.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='LINK_REQUEST' fields={linkAccountRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE' fields={employeeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={linkAccountResponseCodes} />
+
+<h1 id='unlink-account'># Отвязать аккаунт</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees/{employeeId}/unlink-account' method='POST' />
+
+Отвязывает аккаунт платформы от карточки сотрудника.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE' fields={employeeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={unlinkAccountResponseCodes} />
+
+<h1 id='link-position'># Назначить должность</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees/{employeeId}/link-position' method='POST' />
+
+Назначает сотрудника на должность. Сотрудник наследует все разрешения должности.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='LINK_REQUEST' fields={linkPositionRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE_DETAIL' fields={employeeDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={linkPositionResponseCodes} />
+
+<h1 id='unlink-position'># Снять с должности</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/employees/{employeeId}/unlink-position' method='POST' />
+
+Снимает сотрудника с должности. Разрешения от должности перестают действовать.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UNLINK_REQUEST' fields={unlinkPositionRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEE_DETAIL' fields={employeeDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={unlinkPositionResponseCodes} />

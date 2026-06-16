@@ -1,0 +1,81 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { positionFields, createPositionRequestFields, updatePositionRequestFields, positionsDataFields, positionsListResponseCodes, getPositionResponseCodes, createPositionResponseCodes, updatePositionResponseCodes, deletePositionResponseCodes } from './_schema';
+
+# Должности
+
+Методы для управления должностями в организации.
+
+<h1 id='list'># Список должностей</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/positions' method='GET' />
+
+Возвращает список должностей с пагинацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={positionsDataFields} />
+
+## Должность
+
+<MDXJsonSchemaBlock title='POSITION' fields={positionFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={positionsListResponseCodes} />
+
+<h1 id='create'># Создание должности</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/positions' method='POST' />
+
+Создаёт новую должность с набором разрешений.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createPositionRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='POSITION' fields={positionFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createPositionResponseCodes} />
+
+<h1 id='one'># Получение должности</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/positions/{positionId}' method='GET' />
+
+Возвращает одну должность по идентификатору.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='POSITION' fields={positionFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getPositionResponseCodes} />
+
+<h1 id='update'># Обновление должности</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/positions/{positionId}' method='PATCH' />
+
+Обновляет данные должности. Все поля опциональны.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updatePositionRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='POSITION' fields={positionFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updatePositionResponseCodes} />
+
+<h1 id='delete'># Удаление должности</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/positions/{positionId}' method='DELETE' />
+
+Удаляет должность. Связанные сотрудники не удаляются, но теряют разрешения от этой должности.
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deletePositionResponseCodes} />
