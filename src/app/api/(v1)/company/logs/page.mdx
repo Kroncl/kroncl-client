@@ -1,5 +1,73 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { logFields, logActivityFields, getLogsQueryParamsFields, getActivityQueryParamsFields, logsDataFields, logsListResponseCodes, getLogResponseCodes, clearLogsResponseCodes, optimizeLogsResponseCodes, activityResponseCodes } from './_schema';
 
-# Логи компании
+<h1 id='list'># Получение логов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/logs' method='GET' />
+
+Возвращает список записей логов с пагинацией и фильтрацией.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={getLogsQueryParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={logsDataFields} />
+
+## Запись лога
+
+<MDXJsonSchemaBlock title='LOG' fields={logFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={logsListResponseCodes} />
+
+<h1 id='one'># Получение записи</h1>
+<MDXMethodBlock path='/companies/{id}/modules/logs/{logId}' method='GET' />
+
+Возвращает одну запись лога с полными метаданными.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='LOG_DETAIL' fields={logFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getLogResponseCodes} />
+
+<h1 id='clear'># Очистка логов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/logs/clear' method='POST' />
+
+Безвозвратно удаляет все записи логов организации.
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={clearLogsResponseCodes} />
+
+<h1 id='optimize'># Оптимизация</h1>
+<MDXMethodBlock path='/companies/{id}/modules/logs/optimize' method='POST' />
+
+Частично удаляет записи логов старше 30 дней, сохраняя недавнюю историю.
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={optimizeLogsResponseCodes} />
+
+<h1 id='activity'># Граф активности</h1>
+<MDXMethodBlock path='/companies/{id}/modules/logs/activity' method='GET' />
+
+Возвращает данные для графа активности — количество действий по дням.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={getActivityQueryParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='LOG_ACTIVITY' fields={logActivityFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={activityResponseCodes} />

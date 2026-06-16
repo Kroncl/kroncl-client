@@ -364,17 +364,17 @@ export const navigationSections: DevNavSectionProps[] = [
                     }
                 ]
             },
-            // {
-            //     label: 'Логи',
-            //     href: '/api/companies/{id}/modules/logs',
-            //     childrens: [
-            //         { label: 'Список', href: '/api/companies/{id}/modules/logs', method: 'GET' },
-            //         { label: 'Запись', href: '/api/companies/{id}/modules/logs/{logId}', method: 'GET' },
-            //         { label: 'Очистить', href: '/api/companies/{id}/modules/logs/clear', method: 'POST' },
-            //         { label: 'Оптимизировать', href: '/api/companies/{id}/modules/logs/optimize', method: 'POST' },
-            //         { label: 'Активность', href: '/api/companies/{id}/modules/logs/activity', method: 'GET' }
-            //     ]
-            // },
+            {
+                label: 'Логи',
+                href: '/api/company/logs',
+                childrens: [
+                    { label: 'Список', href: '/api/company/logs#list', method: 'GET' },
+                    { label: 'Запись', href: '/api/company/logs#one', method: 'GET' },
+                    { label: 'Очистить', href: '/api/company/logs#clear', method: 'POST' },
+                    { label: 'Оптимизировать', href: '/api/company/logs#optimize', method: 'POST' },
+                    { label: 'Активность', href: '/api/company/logs#activity', method: 'GET' }
+                ]
+            },
             // {
             //     label: 'Документы',
             //     href: '/api/companies/{id}/modules/docs',
