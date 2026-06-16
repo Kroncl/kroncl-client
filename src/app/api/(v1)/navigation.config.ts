@@ -307,98 +307,98 @@ export const navigationSections: DevNavSectionProps[] = [
                     }
                 ]
             },
-            // {
-            //     label: 'Участники',
-            //     href: '/api/company/accounts',
-            //     childrens: [
-            //         {
-            //             label: 'Список',
-            //             href: '/api/company/accounts#list',
-            //             method: 'GET'
-            //         },
-            //         {
-            //             label: 'Участник',
-            //             href: '/api/company/accounts#one',
-            //             method: 'GET',
-            //         },
-            //         {
-            //             label: 'Разрешения участника',
-            //             href: '/api/company/accounts#permissions',
-            //             method: 'GET'
-            //         },
-            //         {
-            //             label: 'Настройки участника',
-            //             href: '/api/company/accounts#settings',
-            //             method: 'GET'
-            //         },
-            //         {
-            //             label: 'Обновить настройки участника',
-            //             href: '/api/company/accounts#update-settings',
-            //             method: 'PATCH'
-            //         },
-            //         {
-            //             label: 'Исключить участника',
-            //             href: '/api/company/accounts#delete',
-            //             method: 'DELETE'
-            //         },
-            //         {
-            //             label: 'Приглашения',
-            //             href: '/api/company/accounts/invitations',
-            //             childrens: [
-            //                 {
-            //                     label: 'Список',
-            //                     href: '/api/company/accounts/invitations#list',
-            //                     method: 'GET'
-            //                 },
-            //                 {
-            //                     label: 'Создать',
-            //                     href: '/api/company/accounts/invitations#create',
-            //                     method: 'POST'
-            //                 },
-            //                 {
-            //                     label: 'Отозвать',
-            //                     href: '/api/company/accounts/invitations#revoke',
-            //                     method: 'DELETE'
-            //                 }
-            //             ]
-            //         }
-            //     ]
-            // },
-            // {
-            //     label: 'Логи',
-            //     href: '/api/companies/{id}/modules/logs',
-            //     childrens: [
-            //         { label: 'Список', href: '/api/companies/{id}/modules/logs', method: 'GET' },
-            //         { label: 'Запись', href: '/api/companies/{id}/modules/logs/{logId}', method: 'GET' },
-            //         { label: 'Очистить', href: '/api/companies/{id}/modules/logs/clear', method: 'POST' },
-            //         { label: 'Оптимизировать', href: '/api/companies/{id}/modules/logs/optimize', method: 'POST' },
-            //         { label: 'Активность', href: '/api/companies/{id}/modules/logs/activity', method: 'GET' }
-            //     ]
-            // },
-            // {
-            //     label: 'Документы',
-            //     href: '/api/companies/{id}/modules/docs',
-            //     childrens: [
-            //         { label: 'Список', href: '/api/companies/{id}/modules/docs', method: 'GET' },
-            //         { label: 'Документ', href: '/api/companies/{id}/modules/docs/{docId}', method: 'GET' },
-            //         { label: 'Настройки', href: '/api/companies/{id}/modules/docs/settings', method: 'GET' },
-            //         { label: 'Обновить настройки', href: '/api/companies/{id}/modules/docs/settings', method: 'PATCH' }
-            //     ]
-            // },
-            // {
-            //     label: 'Поддержка',
-            //     href: '/api/companies/{id}/modules/support/tickets',
-            //     childrens: [
-            //         { label: 'Список тикетов', href: '/api/companies/{id}/modules/support/tickets', method: 'GET' },
-            //         { label: 'Создать', href: '/api/companies/{id}/modules/support/tickets', method: 'POST' },
-            //         { label: 'Тикет', href: '/api/companies/{id}/modules/support/tickets/{ticketId}', method: 'GET' },
-            //         { label: 'Обновить статус', href: '/api/companies/{id}/modules/support/tickets/{ticketId}', method: 'PATCH' },
-            //         { label: 'Сообщения', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages', method: 'GET' },
-            //         { label: 'Отправить', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages', method: 'POST' },
-            //         { label: 'Прочитано', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages/{messageId}', method: 'PATCH' },
-            //         // { label: 'WebSocket', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages/ws', method: 'GET' }
-            //     ]
-            // },
+            {
+                label: 'Участники',
+                href: '/api/company/accounts',
+                childrens: [
+                    {
+                        label: 'Список',
+                        href: '/api/company/accounts#list',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Участник',
+                        href: '/api/company/accounts#one',
+                        method: 'GET',
+                    },
+                    {
+                        label: 'Разрешения участника',
+                        href: '/api/company/accounts#permissions',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Настройки участника',
+                        href: '/api/company/accounts#settings',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Обновить настройки участника',
+                        href: '/api/company/accounts#update-settings',
+                        method: 'PATCH'
+                    },
+                    {
+                        label: 'Исключить участника',
+                        href: '/api/company/accounts#delete',
+                        method: 'DELETE'
+                    },
+                    {
+                        label: 'Приглашения',
+                        href: '/api/company/accounts/invitations',
+                        childrens: [
+                            {
+                                label: 'Список',
+                                href: '/api/company/accounts/invitations#list',
+                                method: 'GET'
+                            },
+                            {
+                                label: 'Создать',
+                                href: '/api/company/accounts/invitations#create',
+                                method: 'POST'
+                            },
+                            {
+                                label: 'Отозвать',
+                                href: '/api/company/accounts/invitations#revoke',
+                                method: 'DELETE'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                label: 'Логи',
+                href: '/api/company/logs',
+                childrens: [
+                    { label: 'Список', href: '/api/company/logs#list', method: 'GET' },
+                    { label: 'Запись', href: '/api/company/logs#one', method: 'GET' },
+                    { label: 'Очистить', href: '/api/company/logs#clear', method: 'POST' },
+                    { label: 'Оптимизировать', href: '/api/company/logs#optimize', method: 'POST' },
+                    { label: 'Активность', href: '/api/company/logs#activity', method: 'GET' }
+                ]
+            },
+            {
+                label: 'Документы',
+                href: '/api/company/docs',
+                childrens: [
+                    { label: 'Список', href: '/api/company/docs#list', method: 'GET' },
+                    { label: 'Документ', href: '/api/company/docs#one', method: 'GET' },
+                    { label: 'Настройки', href: '/api/company/docs#settings', method: 'GET' },
+                    { label: 'Обновить настройки', href: '/api/company/docs#update-settings', method: 'PATCH' }
+                ]
+            },
+            {
+                label: 'Поддержка',
+                href: '/api/company/support',
+                childrens: [
+                    { label: 'Список тикетов', href: '/api/company/support#tickets', method: 'GET' },
+                    { label: 'Создать тикет', href: '/api/company/support#create-ticket', method: 'POST' },
+                    { label: 'Тикет', href: '/api/company/support#ticket', method: 'GET' },
+                    { label: 'Обновить статус', href: '/api/company/support#update-status', method: 'PATCH' },
+                    { label: 'Сообщения', href: '/api/company/support#messages', method: 'GET' },
+                    { label: 'Отправить', href: '/api/company/support#create-message', method: 'POST' },
+                    { label: 'Прочитатать', href: '/api/company/support#read-message', method: 'PATCH' },
+                    // { label: 'WebSocket', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages/ws', method: 'GET' }
+                ]
+            },
             // {
             //     label: 'Персонал (HRM)',
             //     href: '/api/companies/{id}/modules/hrm',
