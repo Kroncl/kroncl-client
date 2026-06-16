@@ -1,5 +1,127 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { supportLimitsFields, ticketFields, createTicketRequestFields, updateTicketStatusRequestFields, messageFields, createMessageRequestFields, updateMessageReadRequestFields, ticketsDataFields, messagesDataFields, ticketsListResponseCodes, createTicketResponseCodes, getTicketResponseCodes, updateTicketStatusResponseCodes, messagesListResponseCodes, createMessageResponseCodes, updateMessageReadResponseCodes } from './_schema';
 
 # Поддержка
+
+Методы для работы с тикетами технической поддержки.
+
+## Лимиты
+
+<MDXJsonSchemaBlock title='SUPPORT_LIMITS' fields={supportLimitsFields} app='no-format' />
+
+<h1 id='tickets'># Получение тикетов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/support/tickets' method='GET' />
+
+Возвращает список тикетов организации с пагинацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={ticketsDataFields} />
+
+## Тикет
+
+<MDXJsonSchemaBlock title='TICKET' fields={ticketFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={ticketsListResponseCodes} />
+
+<h1 id='create-ticket'># Создание тикета</h1>
+<MDXMethodBlock path='/companies/{id}/modules/support/tickets' method='POST' />
+
+Создаёт новый тикет. Первое сообщение передаётся в теле запроса.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createTicketRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='TICKET' fields={ticketFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createTicketResponseCodes} />
+
+<h1 id='ticket'># Получение тикета</h1>
+<MDXMethodBlock path='/companies/{id}/modules/support/tickets/{ticketId}' method='GET' />
+
+Возвращает один тикет по идентификатору.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='TICKET' fields={ticketFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getTicketResponseCodes} />
+
+<h1 id='update-status'># Обновление статуса тикета</h1>
+<MDXMethodBlock path='/companies/{id}/modules/support/tickets/{ticketId}' method='PATCH' />
+
+Изменяет статус тикета: закрыть или отозвать.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_STATUS' fields={updateTicketStatusRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='TICKET' fields={ticketFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateTicketStatusResponseCodes} />
+
+<h1 id='messages'># Сообщения тикета</h1>
+<MDXMethodBlock path='/companies/{id}/modules/support/tickets/{ticketId}/messages' method='GET' />
+
+Возвращает список сообщений тикета с пагинацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={messagesDataFields} />
+
+## Сообщение
+
+<MDXJsonSchemaBlock title='MESSAGE' fields={messageFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={messagesListResponseCodes} />
+
+<h1 id='create-message'># Создание сообщения</h1>
+<MDXMethodBlock path='/companies/{id}/modules/support/tickets/{ticketId}/messages' method='POST' />
+
+Отправляет новое сообщение в тикет.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_MESSAGE' fields={createMessageRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='MESSAGE' fields={messageFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createMessageResponseCodes} />
+
+<h1 id='read-message'># Прочитать сообщение</h1>
+<MDXMethodBlock path='/companies/{id}/modules/support/tickets/{ticketId}/messages/{messageId}' method='PATCH' />
+
+Изменяет статус прочтения сообщения.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_READ' fields={updateMessageReadRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='MESSAGE' fields={messageFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateMessageReadResponseCodes} />

@@ -385,20 +385,20 @@ export const navigationSections: DevNavSectionProps[] = [
                     { label: 'Обновить настройки', href: '/api/company/docs#update-settings', method: 'PATCH' }
                 ]
             },
-            // {
-            //     label: 'Поддержка',
-            //     href: '/api/companies/{id}/modules/support/tickets',
-            //     childrens: [
-            //         { label: 'Список тикетов', href: '/api/companies/{id}/modules/support/tickets', method: 'GET' },
-            //         { label: 'Создать', href: '/api/companies/{id}/modules/support/tickets', method: 'POST' },
-            //         { label: 'Тикет', href: '/api/companies/{id}/modules/support/tickets/{ticketId}', method: 'GET' },
-            //         { label: 'Обновить статус', href: '/api/companies/{id}/modules/support/tickets/{ticketId}', method: 'PATCH' },
-            //         { label: 'Сообщения', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages', method: 'GET' },
-            //         { label: 'Отправить', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages', method: 'POST' },
-            //         { label: 'Прочитано', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages/{messageId}', method: 'PATCH' },
-            //         // { label: 'WebSocket', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages/ws', method: 'GET' }
-            //     ]
-            // },
+            {
+                label: 'Поддержка',
+                href: '/api/company/support',
+                childrens: [
+                    { label: 'Список тикетов', href: '/api/company/support#tickets', method: 'GET' },
+                    { label: 'Создать тикет', href: '/api/company/support#create-ticket', method: 'POST' },
+                    { label: 'Тикет', href: '/api/company/support#ticket', method: 'GET' },
+                    { label: 'Обновить статус', href: '/api/company/support#update-status', method: 'PATCH' },
+                    { label: 'Сообщения', href: '/api/company/support#messages', method: 'GET' },
+                    { label: 'Отправить', href: '/api/company/support#create-message', method: 'POST' },
+                    { label: 'Прочитатать', href: '/api/company/support#read-message', method: 'PATCH' },
+                    // { label: 'WebSocket', href: '/api/companies/{id}/modules/support/tickets/{ticketId}/messages/ws', method: 'GET' }
+                ]
+            },
             // {
             //     label: 'Персонал (HRM)',
             //     href: '/api/companies/{id}/modules/hrm',
