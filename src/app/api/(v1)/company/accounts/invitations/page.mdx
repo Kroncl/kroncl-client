@@ -1,5 +1,55 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { companyInvitationFields, inviteAccountRequestFields, invitationsDataFields, revokeInvitationResponseFields, invitationsListResponseCodes, inviteAccountResponseCodes, revokeInvitationResponseCodes } from './_schema';
 
 # Приглашения в компанию
+
+Методы для управления приглашениями новых участников в организацию.
+
+<h1 id='list'># Получение приглашений</h1>
+<MDXMethodBlock path='/companies/{id}/accounts/invitations' method='GET' />
+
+Возвращает список отправленных приглашений с пагинацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={invitationsDataFields} />
+
+## Приглашение
+
+<MDXJsonSchemaBlock title='INVITATION' fields={companyInvitationFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={invitationsListResponseCodes} />
+
+<h1 id='create'># Создать приглашение</h1>
+<MDXMethodBlock path='/companies/{id}/accounts/invitations' method='POST' />
+
+Отправляет приглашение новому участнику на указанный email. Если аккаунт с таким email не зарегистрирован — ему будет предложено создать его.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='INVITE_REQUEST' fields={inviteAccountRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='INVITATION' fields={companyInvitationFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={inviteAccountResponseCodes} />
+
+<h1 id='revoke'># Отозвать приглашение</h1>
+<MDXMethodBlock path='/companies/{id}/accounts/invitations/{invitationId}' method='DELETE' />
+
+Отзывает отправленное приглашение. После отзыва пользователь не сможет принять его.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='REVOKE_RESPONSE' fields={revokeInvitationResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={revokeInvitationResponseCodes} />

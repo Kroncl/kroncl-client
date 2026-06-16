@@ -1,5 +1,97 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { companyAccountFields, companyPermissionsFields, accountPermissionsResponseCodes, companyAccountsDataFields, companyAccountSettingsFields, updateAccountSettingsRequestFields, accountsListResponseCodes, getAccountResponseCodes, getSettingsResponseCodes, updateSettingsResponseCodes, dropAccountResponseCodes } from './_schema.tsx';
 
 # Участники компании
+
+Методы для управления участниками организации.
+
+<h1 id='list'># Получение участников</h1>
+<MDXMethodBlock path='/companies/{id}/accounts' method='GET' />
+
+Возвращает список участников организации с пагинацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={companyAccountsDataFields} />
+
+## Участник
+
+<MDXJsonSchemaBlock title='COMPANY_ACCOUNT' fields={companyAccountFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={accountsListResponseCodes} />
+
+<h1 id='one'># Получение участника</h1>
+<MDXMethodBlock path='/companies/{id}/accounts/{accountId}' method='GET' />
+
+Возвращает данные одного участника организации.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COMPANY_ACCOUNT' fields={companyAccountFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getAccountResponseCodes} />
+
+<h1 id='permissions'># Разрешения участника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/accounts/{accountId}/permissions' method='GET' />
+
+Возвращает список разрешений конкретного участника в рамках организации.
+
+## Разрешение
+
+<MDXJsonSchemaBlock title='PERMISSION' fields={companyPermissionsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={accountPermissionsResponseCodes} />
+
+<h1 id='settings'># Настройки участника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/accounts/{accountId}/settings' method='GET' />
+
+Возвращает настройки разрешений участника: добавленные и убранные разрешения.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='ACCOUNT_SETTINGS' fields={companyAccountSettingsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getSettingsResponseCodes} />
+
+<h1 id='update-settings'># Обновление настроек участника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/accounts/{accountId}/settings' method='PATCH' />
+
+Обновляет настройки разрешений участника. Все поля опциональны.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateAccountSettingsRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='ACCOUNT_SETTINGS' fields={companyAccountSettingsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateSettingsResponseCodes} />
+
+<h1 id='delete'># Исключить участника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/accounts/{accountId}' method='DELETE' />
+
+Исключает участника из организации. Участник теряет доступ ко всем данным компании.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DELETE_RESPONSE' fields={[
+    { code: 'account_id', required: true, type: 'string', title: 'ID аккаунта', description: 'Идентификатор исключённого участника' },
+    { code: 'removed', required: true, type: 'boolean', title: 'Исключён', description: 'Флаг успешного исключения' },
+]} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={dropAccountResponseCodes} />

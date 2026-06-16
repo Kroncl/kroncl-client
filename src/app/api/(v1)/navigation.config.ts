@@ -307,63 +307,63 @@ export const navigationSections: DevNavSectionProps[] = [
                     }
                 ]
             },
-            // {
-            //     label: 'Участники',
-            //     href: '/api/company/accounts',
-            //     childrens: [
-            //         {
-            //             label: 'Список',
-            //             href: '/api/company/accounts#list',
-            //             method: 'GET'
-            //         },
-            //         {
-            //             label: 'Участник',
-            //             href: '/api/company/accounts#one',
-            //             method: 'GET',
-            //         },
-            //         {
-            //             label: 'Разрешения участника',
-            //             href: '/api/company/accounts#permissions',
-            //             method: 'GET'
-            //         },
-            //         {
-            //             label: 'Настройки участника',
-            //             href: '/api/company/accounts#settings',
-            //             method: 'GET'
-            //         },
-            //         {
-            //             label: 'Обновить настройки участника',
-            //             href: '/api/company/accounts#update-settings',
-            //             method: 'PATCH'
-            //         },
-            //         {
-            //             label: 'Исключить участника',
-            //             href: '/api/company/accounts#delete',
-            //             method: 'DELETE'
-            //         },
-            //         {
-            //             label: 'Приглашения',
-            //             href: '/api/company/accounts/invitations',
-            //             childrens: [
-            //                 {
-            //                     label: 'Список',
-            //                     href: '/api/company/accounts/invitations#list',
-            //                     method: 'GET'
-            //                 },
-            //                 {
-            //                     label: 'Создать',
-            //                     href: '/api/company/accounts/invitations#create',
-            //                     method: 'POST'
-            //                 },
-            //                 {
-            //                     label: 'Отозвать',
-            //                     href: '/api/company/accounts/invitations#revoke',
-            //                     method: 'DELETE'
-            //                 }
-            //             ]
-            //         }
-            //     ]
-            // },
+            {
+                label: 'Участники',
+                href: '/api/company/accounts',
+                childrens: [
+                    {
+                        label: 'Список',
+                        href: '/api/company/accounts#list',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Участник',
+                        href: '/api/company/accounts#one',
+                        method: 'GET',
+                    },
+                    {
+                        label: 'Разрешения участника',
+                        href: '/api/company/accounts#permissions',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Настройки участника',
+                        href: '/api/company/accounts#settings',
+                        method: 'GET'
+                    },
+                    {
+                        label: 'Обновить настройки участника',
+                        href: '/api/company/accounts#update-settings',
+                        method: 'PATCH'
+                    },
+                    {
+                        label: 'Исключить участника',
+                        href: '/api/company/accounts#delete',
+                        method: 'DELETE'
+                    },
+                    {
+                        label: 'Приглашения',
+                        href: '/api/company/accounts/invitations',
+                        childrens: [
+                            {
+                                label: 'Список',
+                                href: '/api/company/accounts/invitations#list',
+                                method: 'GET'
+                            },
+                            {
+                                label: 'Создать',
+                                href: '/api/company/accounts/invitations#create',
+                                method: 'POST'
+                            },
+                            {
+                                label: 'Отозвать',
+                                href: '/api/company/accounts/invitations#revoke',
+                                method: 'DELETE'
+                            }
+                        ]
+                    }
+                ]
+            },
             // {
             //     label: 'Логи',
             //     href: '/api/companies/{id}/modules/logs',
