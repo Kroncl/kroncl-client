@@ -1,5 +1,72 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { docFields, docsSettingsFields, updateDocsSettingsRequestFields, getDocsQueryParamsFields, docsDataFields, docsListResponseCodes, getDocResponseCodes, getSettingsResponseCodes, updateSettingsResponseCodes } from './_schema';
 
 # Документы компании
+
+<span className={mdx.underline}>Документы компании</span> — все сгенерированные модулями файлы: отчёты, накладные и прочее. Для получения бинарных файлов используйте методы <Link href='/api/company/storage/media#get-file' className={mdx.link}>объектного хранилища</Link>.
+
+<h1 id='list'># Получение документов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/docs' method='GET' />
+
+Возвращает список сгенерированных документов с пагинацией и фильтрацией по модулю и типу.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={getDocsQueryParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={docsDataFields} />
+
+## Документ
+
+<MDXJsonSchemaBlock title='DOC' fields={docFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={docsListResponseCodes} />
+
+<h1 id='one'># Получение документа</h1>
+<MDXMethodBlock path='/companies/{id}/modules/docs/{docId}' method='GET' />
+
+Возвращает метаданные одного документа. Для скачивания файла используйте путь из поля <span className={mdx.codeTag}>object_path</span> через методы объектного хранилища.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DOC' fields={docFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getDocResponseCodes} />
+
+<h1 id='settings'># Настройки документов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/docs/settings' method='GET' />
+
+Возвращает текущие настройки для генерации документов: реквизиты, банковские данные, гарантийные условия.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DOCS_SETTINGS' fields={docsSettingsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getSettingsResponseCodes} />
+
+<h1 id='update-settings'># Обновить настройки</h1>
+<MDXMethodBlock path='/companies/{id}/modules/docs/settings' method='PATCH' />
+
+Обновляет настройки документов. Все поля опциональны — передавайте только те, которые нужно изменить.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateDocsSettingsRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DOCS_SETTINGS' fields={docsSettingsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateSettingsResponseCodes} />

@@ -375,16 +375,16 @@ export const navigationSections: DevNavSectionProps[] = [
                     { label: 'Активность', href: '/api/company/logs#activity', method: 'GET' }
                 ]
             },
-            // {
-            //     label: 'Документы',
-            //     href: '/api/companies/{id}/modules/docs',
-            //     childrens: [
-            //         { label: 'Список', href: '/api/companies/{id}/modules/docs', method: 'GET' },
-            //         { label: 'Документ', href: '/api/companies/{id}/modules/docs/{docId}', method: 'GET' },
-            //         { label: 'Настройки', href: '/api/companies/{id}/modules/docs/settings', method: 'GET' },
-            //         { label: 'Обновить настройки', href: '/api/companies/{id}/modules/docs/settings', method: 'PATCH' }
-            //     ]
-            // },
+            {
+                label: 'Документы',
+                href: '/api/company/docs',
+                childrens: [
+                    { label: 'Список', href: '/api/company/docs#list', method: 'GET' },
+                    { label: 'Документ', href: '/api/company/docs#one', method: 'GET' },
+                    { label: 'Настройки', href: '/api/company/docs#settings', method: 'GET' },
+                    { label: 'Обновить настройки', href: '/api/company/docs#update-settings', method: 'PATCH' }
+                ]
+            },
             // {
             //     label: 'Поддержка',
             //     href: '/api/companies/{id}/modules/support/tickets',
