@@ -182,7 +182,7 @@ export default function Page() {
 
     const showPayBlock = () => {
         if (!companyPlan || !goalPlan) return false;
-        if (pendingTransaction) return false;
+        // if (pendingTransaction) return false;
         if (!isBillingOn) return false;
         
         const daysLeft = companyPlan.days_left;
@@ -264,7 +264,7 @@ export default function Page() {
                         </motion.div>
                     )}
 
-                    {showPaymentBlock() && pendingTransaction && (
+                    {/* {showPaymentBlock() && pendingTransaction && (
                         <motion.div
                             key="payment-block"
                             variants={blockVariants}
@@ -280,7 +280,7 @@ export default function Page() {
                                 onError={handlePaymentError}
                             />
                         </motion.div>
-                    )}
+                    )} */}
                 </AnimatePresence>
 
                 <div className={styles.grid}>

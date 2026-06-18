@@ -1,6 +1,9 @@
 import { PricingPlan } from "@/apps/pricing/types";
-import { CurrencyType } from "../wm/types";
 import { PaginationMeta } from "@/apps/shared/pagination/types";
+
+// --------
+// COMPANY PRICING PLAN
+// --------
 
 export interface CompanyPricingPlan {
   is_trial: boolean;
@@ -11,10 +14,25 @@ export interface CompanyPricingPlan {
   next_plan?: PricingPlan;
 }
 
+// --------
+// MIGRATE PLAN
+// --------
+
 export interface MigratePlanRequest {
   plan_code: string;
   period: "month" | "year";
+  success_url?: string;
 }
+
+export interface InitPaymentResponse {
+  transaction: PricingTransaction;
+  payment_page_url: string;
+  payment_id: string;
+}
+
+// --------
+// TRANSACTIONS
+// --------
 
 export type TransactionStatus = "success" | "pending" | "unsuccess" | "revoked";
 
@@ -23,7 +41,7 @@ export interface PricingTransaction {
   company_id: string;
   account_id: string;
   amount: number | null;
-  currency: CurrencyType;
+  currency: "RUB";
   status: TransactionStatus;
   plan_code: string | null;
   is_trial: boolean;
@@ -34,6 +52,6 @@ export interface PricingTransaction {
 }
 
 export interface PricingTransactionsResponse {
-    transactions: PricingTransaction[];
-    pagination: PaginationMeta;
+  transactions: PricingTransaction[];
+  pagination: PaginationMeta;
 }
