@@ -14,7 +14,7 @@ export function PinsManager({
     const { data: billingStatus, isLoading: billingLoading } = useBillingStatus();
     const isBillingOn = billingStatus?.mode === 'on';
 
-    if (!isBillingOn) return <PinBillingOff className={className} />
+    if (isBillingOn) return <Pin2026 className={className} />;
 
-    return <Pin2026 className={className} />
+    return <PinBillingOff className={className} />
 }

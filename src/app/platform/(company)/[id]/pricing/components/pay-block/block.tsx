@@ -1,4 +1,4 @@
-import { CompanyPricingPlan, PricingTransaction } from '@/apps/company/modules/pricing/types';
+import { CompanyPricingPlan, InitPaymentResponse, PricingTransaction } from '@/apps/company/modules/pricing/types';
 import styles from './block.module.scss';
 import { PricingPlan } from '@/apps/pricing/types';
 import clsx from 'clsx';
@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { pluralizeDays } from '@/assets/utils/date';
 import { ModalTooltip } from '@/app/components/tooltip/tooltip';
 import { usePricing } from '@/apps/company/modules';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import Spinner from '@/assets/ui-kit/spinner/spinner';
 
 export interface PayBlockProps {
@@ -26,6 +26,7 @@ export function PayBlock({
     onError
 }: PayBlockProps) {
     const params = useParams();
+    const pathname = usePathname();
     const companyId = params.id as string;
     const pricingModule = usePricing();
     
@@ -69,13 +70,20 @@ export function PayBlock({
     const handlePayment = async () => {
         setLoading(true);
         try {
+            // Формируем success_url: текущий путь без query параметров + /success
+            const basePath = pathname?.split('?')[0] || '';
+            const successUrl = `${window.location.origin}${basePath}/success`;
+
             const response = await pricingModule.migrate({
                 plan_code: goalPlan.code,
-                period: period
+                period: period,
+                success_url: successUrl
             });
             
             if (response.status && response.data) {
-                onSuccess?.(response.data);
+                // Открываем страницу оплаты в том же окне
+                window.location.href = response.data.payment_page_url;
+                onSuccess?.(response.data.transaction);
             } else {
                 onError?.(response.message || 'Ошибка при оплате');
             }
@@ -122,7 +130,7 @@ export function PayBlock({
                         variant='accent'
                         onClick={handlePayment}
                         disabled={loading}
-                        children='Начать оплату'
+                        children='Оплатить'
                         loading={loading}
                     />
                 </div>
