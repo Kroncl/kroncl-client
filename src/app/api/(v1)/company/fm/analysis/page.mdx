@@ -1,0 +1,48 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    analysisSummaryFields,
+    groupedStatsFields,
+    getAnalysisParamsFields,
+    summaryResponseCodes,
+    groupedResponseCodes
+} from './_schema';
+
+# Аналитика
+
+Методы для аналитики финансовых показателей организации.
+
+<h1 id='summary'># Сводка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/analysis/summary' method='GET' />
+
+Возвращает сводные показатели по финансовым операциям за период.
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_ANALYSIS_PARAMS' fields={getAnalysisParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='ANALYSIS_SUMMARY' fields={analysisSummaryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={summaryResponseCodes} />
+
+<h1 id='grouped'># Группировка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/analysis/grouped' method='GET' />
+
+Возвращает аналитику с группировкой по категориям, сотрудникам или периодам.
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_ANALYSIS_PARAMS' fields={getAnalysisParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='GROUPED_STATS' fields={groupedStatsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={groupedResponseCodes} />

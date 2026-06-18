@@ -1,0 +1,42 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { employeesSummaryFields, groupedStatsFields, analysisQueryParamsFields, groupedAnalysisQueryParamsFields, analysisSummaryResponseCodes, analysisGroupedResponseCodes } from './_schema';
+
+# Аналитика
+
+Методы для анализа данных по сотрудникам.
+
+<h1 id='summary'># Сводка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/analysis/summary' method='GET' />
+
+Возвращает сводную статистику по сотрудникам за выбранный период.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={analysisQueryParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='EMPLOYEES_SUMMARY' fields={employeesSummaryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={analysisSummaryResponseCodes} />
+
+<h1 id='grouped'># Группировка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/hrm/analysis/grouped' method='GET' />
+
+Возвращает статистику по сотрудникам, сгруппированную по дням, месяцам или годам.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={groupedAnalysisQueryParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='GROUPED_STATS' fields={groupedStatsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={analysisGroupedResponseCodes} />

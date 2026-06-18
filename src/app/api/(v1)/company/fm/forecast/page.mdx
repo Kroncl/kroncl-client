@@ -1,0 +1,46 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { forecastQueryParamsFields, forecastDataPointFields, forecastTimelineResponseFields, forecastSummaryResponseFields, timelineResponseCodes, summaryResponseCodes } from './_schema';
+
+# Прогнозирование
+
+Методы для прогнозирования финансов организации на основе исторических данных. Используется математическая модель <span className={mdx.codeTag}>Theta</span>, работающая от 2 точек анализа и не требующая настройки.
+
+<h1 id='timeline'># График прогноза</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/forecast/timeline' method='GET' />
+
+Возвращает массив точек для построения графика прогноза баланса. Исторические точки помечены <span className={mdx.codeTag}>is_actual: true</span>, прогнозные — <span className={mdx.codeTag}>is_actual: false</span>.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={forecastQueryParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={forecastTimelineResponseFields} />
+
+## Точка данных
+
+<MDXJsonSchemaBlock title='DATA_POINT' fields={forecastDataPointFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={timelineResponseCodes} />
+
+<h1 id='summary'># Сводка прогноза</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/forecast/summary' method='GET' />
+
+Возвращает сводные показатели прогноза: баланс, доходы, расходы, чистый поток и количество операций. Включает текущие показатели для сравнения.
+
+## Query-параметры
+
+<MDXJsonSchemaBlock title='QUERY_PARAMS' fields={forecastQueryParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={forecastSummaryResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={summaryResponseCodes} />

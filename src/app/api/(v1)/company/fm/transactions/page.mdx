@@ -1,0 +1,82 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    transactionFields, 
+    transactionDetailFields, 
+    createTransactionRequestFields,
+    getTransactionsParamsFields,
+    transactionsDataFields,
+    getTransactionsResponseCodes,
+    getTransactionResponseCodes,
+    createTransactionResponseCodes,
+    reverseTransactionResponseCodes
+} from './_schema';
+
+# Транзакции
+
+Методы для управления финансовыми транзакциями (операциями) организации.
+
+<h1 id='list'># Список транзакций</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions' method='GET' />
+
+Возвращает список транзакций с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={transactionsDataFields} />
+
+## Транзакция
+
+<MDXJsonSchemaBlock title='TRANSACTION' fields={transactionFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_TRANSACTIONS_PARAMS' fields={getTransactionsParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getTransactionsResponseCodes} />
+
+<h1 id='create'># Создание транзакции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions' method='POST' />
+
+Создаёт новую финансовую транзакцию.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createTransactionRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='TRANSACTION_DETAIL' fields={transactionDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createTransactionResponseCodes} />
+
+<h1 id='one'># Получение транзакции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions/{transactionId}' method='GET' />
+
+Возвращает детальную информацию о транзакции.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='TRANSACTION_DETAIL' fields={transactionDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getTransactionResponseCodes} />
+
+<h1 id='reverse'># Сторнирование транзакции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions/{transactionId}/reverse' method='POST' />
+
+Создаёт обратную транзакцию (сторно) для отмены существующей.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='TRANSACTION_DETAIL' fields={transactionDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={reverseTransactionResponseCodes} />

@@ -85,7 +85,7 @@ const docsList200: string = `{
     }
 }`;
 
-const getDoc200: string = `{
+export const getDoc200: string = `{
     "status": true,
     "message": "Doc retrieved successfully",
     "data": {
