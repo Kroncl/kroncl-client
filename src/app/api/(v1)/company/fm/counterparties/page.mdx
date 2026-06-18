@@ -1,0 +1,114 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    counterpartyFields,
+    counterpartiesDataFields,
+    createCounterpartyRequestFields,
+    updateCounterpartyRequestFields,
+    getCounterpartiesParamsFields,
+    getCounterpartiesResponseCodes,
+    getCounterpartyResponseCodes,
+    createCounterpartyResponseCodes,
+    updateCounterpartyResponseCodes,
+    activateCounterpartyResponseCodes,
+    deactivateCounterpartyResponseCodes
+} from './_schema';
+
+# Контрагенты
+
+Методы для управления контрагентами организации.
+
+<h1 id='list'># Список контрагентов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/counterparties' method='GET' />
+
+Возвращает список контрагентов с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={counterpartiesDataFields} />
+
+## Контрагент
+
+<MDXJsonSchemaBlock title='COUNTERPARTY' fields={counterpartyFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_COUNTERPARTIES_PARAMS' fields={getCounterpartiesParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCounterpartiesResponseCodes} />
+
+<h1 id='create'># Создание контрагента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/counterparties' method='POST' />
+
+Создаёт нового контрагента.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createCounterpartyRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COUNTERPARTY' fields={counterpartyFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createCounterpartyResponseCodes} />
+
+<h1 id='one'># Получение контрагента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/counterparties/{counterpartyId}' method='GET' />
+
+Возвращает информацию о контрагенте.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COUNTERPARTY' fields={counterpartyFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCounterpartyResponseCodes} />
+
+<h1 id='update'># Обновление контрагента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/counterparties/{counterpartyId}' method='PATCH' />
+
+Обновляет данные контрагента.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateCounterpartyRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COUNTERPARTY' fields={counterpartyFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateCounterpartyResponseCodes} />
+
+<h1 id='deactivate'># Деактивация контрагента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/counterparties/{counterpartyId}/deactivate' method='POST' />
+
+Деактивирует контрагента.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COUNTERPARTY' fields={counterpartyFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deactivateCounterpartyResponseCodes} />
+
+<h1 id='activate'># Активация контрагента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/counterparties/{counterpartyId}/activate' method='POST' />
+
+Активирует деактивированного контрагента.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='COUNTERPARTY' fields={counterpartyFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={activateCounterpartyResponseCodes} />

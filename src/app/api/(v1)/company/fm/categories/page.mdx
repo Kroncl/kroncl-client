@@ -1,0 +1,101 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    categoryFields,
+    categoriesDataFields,
+    createCategoryRequestFields,
+    updateCategoryRequestFields,
+    getCategoriesParamsFields,
+    getCategoriesResponseCodes,
+    getCategoryResponseCodes,
+    createCategoryResponseCodes,
+    updateCategoryResponseCodes,
+    deleteCategoryResponseFields,
+    deleteCategoryResponseCodes
+} from './_schema';
+
+# Категории
+
+Методы для управления категориями транзакций.
+
+<h1 id='list'># Список категорий</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions/categories' method='GET' />
+
+Возвращает список категорий с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={categoriesDataFields} />
+
+## Категория
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_CATEGORIES_PARAMS' fields={getCategoriesParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCategoriesResponseCodes} />
+
+<h1 id='create'># Создание категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions/categories' method='POST' />
+
+Создаёт новую категорию транзакций.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createCategoryRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createCategoryResponseCodes} />
+
+<h1 id='one'># Получение категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions/categories/{categoryId}' method='GET' />
+
+Возвращает информацию о категории.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCategoryResponseCodes} />
+
+<h1 id='update'># Обновление категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions/categories/{categoryId}' method='PATCH' />
+
+Обновляет данные категории.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateCategoryRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateCategoryResponseCodes} />
+
+<h1 id='delete'># Удаление категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/transactions/categories/{categoryId}' method='DELETE' />
+
+Удаляет категорию.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DELETE' fields={deleteCategoryResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deleteCategoryResponseCodes} />

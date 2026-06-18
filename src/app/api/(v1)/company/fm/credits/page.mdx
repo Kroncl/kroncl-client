@@ -1,0 +1,154 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    creditFields,
+    creditDetailFields,
+    creditsDataFields,
+    createCreditRequestFields,
+    updateCreditRequestFields,
+    payCreditRequestFields,
+    getCreditsParamsFields,
+    getCreditsResponseCodes,
+    getCreditResponseCodes,
+    createCreditResponseCodes,
+    updateCreditResponseCodes,
+    activateCreditResponseCodes,
+    deactivateCreditResponseCodes,
+    payCreditResponseCodes,
+    creditPaymentsResponseFields,
+    transactionDetailFields,
+    getCreditTransactionsResponseCodes
+} from './_schema';
+
+# Кредиты
+
+Методы для управления кредитами и долгами организации.
+
+<h1 id='list'># Список кредитов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/credits' method='GET' />
+
+Возвращает список кредитов с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={creditsDataFields} />
+
+## Кредит
+
+<MDXJsonSchemaBlock title='CREDIT' fields={creditFields} />
+
+## Детали кредита
+
+<MDXJsonSchemaBlock title='CREDIT_DETAIL' fields={creditDetailFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_CREDITS_PARAMS' fields={getCreditsParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCreditsResponseCodes} />
+
+<h1 id='create'># Создание кредита</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/credits' method='POST' />
+
+Создаёт новый кредит или долг.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createCreditRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CREDIT_DETAIL' fields={creditDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createCreditResponseCodes} />
+
+<h1 id='one'># Получение кредита</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/credits/{creditId}' method='GET' />
+
+Возвращает информацию о кредите.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CREDIT_DETAIL' fields={creditDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCreditResponseCodes} />
+
+<h1 id='transactions'># Транзакции по кредиту</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/credits/{creditId}/transactions' method='GET' />
+
+Возвращает список платежей по кредиту.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CREDIT_PAYMENTS_RESPONSE' fields={creditPaymentsResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCreditTransactionsResponseCodes} />
+
+<h1 id='pay'># Платёж по кредиту</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/credits/{creditId}/pay' method='POST' />
+
+Создаёт платёж по кредиту.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='PAY_REQUEST' fields={payCreditRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='TRANSACTION_DETAIL' fields={transactionDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={payCreditResponseCodes} />
+
+<h1 id='update'># Обновление кредита</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/credits/{creditId}' method='PATCH' />
+
+Обновляет данные кредита.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateCreditRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CREDIT_DETAIL' fields={creditDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateCreditResponseCodes} />
+
+<h1 id='deactivate'># Деактивация кредита</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/credits/{creditId}/deactivate' method='POST' />
+
+Деактивирует кредит.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CREDIT_DETAIL' fields={creditDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deactivateCreditResponseCodes} />
+
+<h1 id='activate'># Активация кредита</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/credits/{creditId}/activate' method='POST' />
+
+Активирует деактивированный кредит.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CREDIT_DETAIL' fields={creditDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={activateCreditResponseCodes} />

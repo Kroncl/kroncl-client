@@ -441,76 +441,76 @@ export const navigationSections: DevNavSectionProps[] = [
                     },
                 ]
             },
-            // {
-            //     label: 'Финансы (FM)',
-            //     href: '/api/companies/{id}/modules/fm',
-            //     childrens: [
-            //         {
-            //             label: 'Прогнозирование',
-            //             href: '/api/companies/{id}/modules/fm/forecast',
-            //             childrens: [
-            //                 { label: 'График', href: '/api/companies/{id}/modules/fm/forecast/timeline', method: 'GET' },
-            //                 { label: 'Сводка', href: '/api/companies/{id}/modules/fm/forecast/summary', method: 'GET' }
-            //             ]
-            //         },
-            //         { label: 'Отчёт', href: '/api/companies/{id}/modules/fm/report', method: 'POST' },
-            //         {
-            //             label: 'Транзакции',
-            //             href: '/api/companies/{id}/modules/fm/transactions',
-            //             childrens: [
-            //                 { label: 'Список', href: '/api/companies/{id}/modules/fm/transactions', method: 'GET' },
-            //                 { label: 'Создать', href: '/api/companies/{id}/modules/fm/transactions', method: 'POST' },
-            //                 { label: 'Детали', href: '/api/companies/{id}/modules/fm/transactions/{transactionId}', method: 'GET' },
-            //                 { label: 'Сторнировать', href: '/api/companies/{id}/modules/fm/transactions/{transactionId}/reverse', method: 'POST' },
-            //                 {
-            //                     label: 'Категории',
-            //                     href: '/api/companies/{id}/modules/fm/transactions/categories',
-            //                     childrens: [
-            //                         { label: 'Список', href: '/api/companies/{id}/modules/fm/transactions/categories', method: 'GET' },
-            //                         { label: 'Создать', href: '/api/companies/{id}/modules/fm/transactions/categories', method: 'POST' },
-            //                         { label: 'Детали', href: '/api/companies/{id}/modules/fm/transactions/categories/{categoryId}', method: 'GET' },
-            //                         { label: 'Обновить', href: '/api/companies/{id}/modules/fm/transactions/categories/{categoryId}', method: 'PATCH' },
-            //                         { label: 'Удалить', href: '/api/companies/{id}/modules/fm/transactions/categories/{categoryId}', method: 'DELETE' }
-            //                     ]
-            //                 }
-            //             ]
-            //         },
-            //         {
-            //             label: 'Аналитика',
-            //             href: '/api/companies/{id}/modules/fm/analysis',
-            //             childrens: [
-            //                 { label: 'Сводка', href: '/api/companies/{id}/modules/fm/analysis/summary', method: 'GET' },
-            //                 { label: 'Группировка', href: '/api/companies/{id}/modules/fm/analysis/grouped', method: 'GET' }
-            //             ]
-            //         },
-            //         {
-            //             label: 'Контрагенты',
-            //             href: '/api/companies/{id}/modules/fm/counterparties',
-            //             childrens: [
-            //                 { label: 'Список', href: '/api/companies/{id}/modules/fm/counterparties', method: 'GET' },
-            //                 { label: 'Создать', href: '/api/companies/{id}/modules/fm/counterparties', method: 'POST' },
-            //                 { label: 'Детали', href: '/api/companies/{id}/modules/fm/counterparties/{counterpartyId}', method: 'GET' },
-            //                 { label: 'Обновить', href: '/api/companies/{id}/modules/fm/counterparties/{counterpartyId}', method: 'PATCH' },
-            //                 { label: 'Деактивировать', href: '/api/companies/{id}/modules/fm/counterparties/{counterpartyId}/deactivate', method: 'POST' },
-            //                 { label: 'Активировать', href: '/api/companies/{id}/modules/fm/counterparties/{counterpartyId}/activate', method: 'POST' }
-            //             ]
-            //         },
-            //         {
-            //             label: 'Кредиты',
-            //             href: '/api/companies/{id}/modules/fm/credits',
-            //             childrens: [
-            //                 { label: 'Список', href: '/api/companies/{id}/modules/fm/credits', method: 'GET' },
-            //                 { label: 'Создать', href: '/api/companies/{id}/modules/fm/credits', method: 'POST' },
-            //                 { label: 'Детали', href: '/api/companies/{id}/modules/fm/credits/{creditId}', method: 'GET' },
-            //                 { label: 'Транзакции', href: '/api/companies/{id}/modules/fm/credits/{creditId}/transactions', method: 'GET' },
-            //                 { label: 'Платёж', href: '/api/companies/{id}/modules/fm/credits/{creditId}/pay', method: 'POST' },
-            //                 { label: 'Обновить', href: '/api/companies/{id}/modules/fm/credits/{creditId}', method: 'PATCH' },
-            //                 { label: 'Деактивировать', href: '/api/companies/{id}/modules/fm/credits/{creditId}/deactivate', method: 'POST' },
-            //                 { label: 'Активировать', href: '/api/companies/{id}/modules/fm/credits/{creditId}/activate', method: 'POST' }
-            //             ]
-            //         }
-            //     ]
-            // },
+            {
+                label: 'Финансы (FM)',
+                href: '/api/company/fm',
+                childrens: [
+                    { label: 'Отчёт', href: '/api/company/fm/reports#create', method: 'POST' },
+                    {
+                        label: 'Прогнозирование',
+                        href: '/api/company/fm/forecast',
+                        childrens: [
+                            { label: 'График', href: '/api/company/fm/forecast#timeline', method: 'GET' },
+                            { label: 'Сводка', href: '/api/company/fm/forecast#summary', method: 'GET' }
+                        ]
+                    },
+                    {
+                        label: 'Транзакции',
+                        href: '/api/company/fm/transactions',
+                        childrens: [
+                            { label: 'Список', href: '/api/company/fm/transactions#list', method: 'GET' },
+                            { label: 'Создать', href: '/api/company/fm/transactions#create', method: 'POST' },
+                            { label: 'Детали', href: '/api/company/fm/transactions#one', method: 'GET' },
+                            { label: 'Сторнировать', href: '/api/company/fm/transactions#reverse', method: 'POST' },
+                            {
+                                label: 'Категории',
+                                href: '/api/company/fm/categories',
+                                childrens: [
+                                    { label: 'Список', href: '/api/company/fm/categories#list', method: 'GET' },
+                                    { label: 'Создать', href: '/api/company/fm/categories#create', method: 'POST' },
+                                    { label: 'Детали', href: '/api/company/fm/categories#one', method: 'GET' },
+                                    { label: 'Обновить', href: '/api/company/fm/categories#update', method: 'PATCH' },
+                                    { label: 'Удалить', href: '/api/company/fm/categories#delete', method: 'DELETE' }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        label: 'Аналитика',
+                        href: '/api/company/fm/analysis',
+                        childrens: [
+                            { label: 'Сводка', href: '/api/company/fm/analysis#summary', method: 'GET' },
+                            { label: 'Группировка', href: '/api/company/fm/analysis#grouped', method: 'GET' }
+                        ]
+                    },
+                    {
+                        label: 'Контрагенты',
+                        href: '/api/company/fm/counterparties',
+                        childrens: [
+                            { label: 'Список', href: '/api/company/fm/counterparties#list', method: 'GET' },
+                            { label: 'Создать', href: '/api/company/fm/counterparties#create', method: 'POST' },
+                            { label: 'Детали', href: '/api/company/fm/counterparties#one', method: 'GET' },
+                            { label: 'Обновить', href: '/api/company/fm/counterparties#update', method: 'PATCH' },
+                            { label: 'Деактивировать', href: '/api/company/fm/counterparties#deactivate', method: 'POST' },
+                            { label: 'Активировать', href: '/api/company/fm/counterparties#activate', method: 'POST' }
+                        ]
+                    },
+                    {
+                        label: 'Кредиты',
+                        href: '/api/company/fm/credits',
+                        childrens: [
+                            { label: 'Список', href: '/api/company/fm/credits#list', method: 'GET' },
+                            { label: 'Создать', href: '/api/company/fm/credits#create', method: 'POST' },
+                            { label: 'Детали', href: '/api/company/fm/credits#one', method: 'GET' },
+                            { label: 'Транзакции', href: '/api/company/fm/credits#transactions', method: 'GET' },
+                            { label: 'Платёж', href: '/api/company/fm/credits#pay', method: 'POST' },
+                            { label: 'Обновить', href: '/api/company/fm/credits#update', method: 'PATCH' },
+                            { label: 'Деактивировать', href: '/api/company/fm/credits#deactivate', method: 'POST' },
+                            { label: 'Активировать', href: '/api/company/fm/credits#activate', method: 'POST' }
+                        ]
+                    }
+                ]
+            },
             // {
             //     label: 'Клиенты (CRM)',
             //     href: '/api/companies/{id}/modules/crm',

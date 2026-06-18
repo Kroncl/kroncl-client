@@ -1,0 +1,32 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { fmReportRequestFields, fmReportResponseFields, docFields, fmReportResponseCodes } from './_schema';
+
+# Отчёты
+
+Методы для генерации отчётов по модулю.
+
+- Для получения коллекции сгенерированных модулем отчётов используйте метод <Link href='/api/company/docs#list' className={mdx.link}>документов компании</Link> с фильтрацией по <span className={mdx.codeTag}>module</span>.
+- Для получения бинарного файла отчёта используйте метод <Link href='/api/company/storage/media#get-file' className={mdx.link}>объектного хранилища</Link>.
+
+<h1 id='create'># Создание отчёта</h1>
+<MDXMethodBlock path='/companies/{id}/modules/fm/report' method='POST' />
+
+Генерирует Excel-отчёт по модулю <span className={mdx.codeTag}>FM</span>. Каждая сущность — отдельный лист. В поле <span className={mdx.codeTag}>types</span> запроса передаётся массив нужных типов. Можно ограничить период с помощью <span className={mdx.codeTag}>start_date</span> и <span className={mdx.codeTag}>end_date</span>. Сгенерированный документ будет доступен в списке документов компании.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='GENERATE_REQUEST' fields={fmReportRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={fmReportResponseFields} />
+
+## Документ
+
+<MDXJsonSchemaBlock title='DOC' fields={docFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={fmReportResponseCodes} />
