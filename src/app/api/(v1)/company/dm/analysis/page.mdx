@@ -1,0 +1,68 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    analysisParamsFields,
+    dealAnalysisSummaryFields,
+    groupedStatsFields,
+    dealTransactionsSummaryFields,
+    summaryResponseCodes,
+    groupedResponseCodes,
+    financialSummaryResponseCodes,
+    groupedAnalysisParamsFields
+} from './_schema';
+
+# Аналитика
+
+Методы для аналитики по сделкам организации.
+
+<h1 id='summary'># Сводка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/analysis/summary' method='GET' />
+
+Возвращает сводные показатели по сделкам за период.
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='ANALYSIS_PARAMS' fields={analysisParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_ANALYSIS_SUMMARY' fields={dealAnalysisSummaryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={summaryResponseCodes} />
+
+<h1 id='grouped'># Группировка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/analysis/grouped' method='GET' />
+
+Возвращает аналитику с группировкой по типам, статусам, сотрудникам, клиентам или периодам.
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GROUPED_ANALYSIS_PARAMS' fields={groupedAnalysisParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='GROUPED_STATS' fields={groupedStatsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={groupedResponseCodes} />
+
+<h1 id='financial-summary'># Финансовая сводка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/analysis/financial-summary' method='GET' />
+
+Возвращает финансовые показатели по сделкам за период (суммы, количество транзакций).
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='ANALYSIS_PARAMS' fields={analysisParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_TRANSACTIONS_SUMMARY' fields={dealTransactionsSummaryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={financialSummaryResponseCodes} />

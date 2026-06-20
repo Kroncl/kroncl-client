@@ -610,72 +610,72 @@ export const navigationSections: DevNavSectionProps[] = [
                         ]
                     }
                 ]
+            },
+            {
+                label: "Сделки (DM)",
+                href: "/api/company/dm",
+                childrens: [
+                    {
+                        label: "Типы",
+                        href: "/api/company/dm/types",
+                        childrens: [
+                            { label: "Список", href: "/api/company/dm/types#list", method: "GET" },
+                            { label: "Создать", href: "/api/company/dm/types#create", method: "POST" },
+                            { label: "Детали", href: "/api/company/dm/types#one", method: "GET" },
+                            { label: "Обновить", href: "/api/company/dm/types#update", method: "PATCH" },
+                            { label: "Удалить", href: "/api/company/dm/types#delete", method: "DELETE" }
+                        ]
+                    },
+                    {
+                        label: "Статусы",
+                        href: "/api/company/dm/statuses",
+                        childrens: [
+                            { label: "Список", href: "/api/company/dm/statuses#list", method: "GET" },
+                            { label: "Создать", href: "/api/company/dm/statuses#create", method: "POST" },
+                            { label: "Пересортировать", href: "/api/company/dm/statuses#reorder", method: "PUT" },
+                            { label: "Детали", href: "/api/company/dm/statuses#one", method: "GET" },
+                            { label: "Обновить", href: "/api/company/dm/statuses#update", method: "PATCH" },
+                            { label: "Удалить", href: "/api/company/dm/statuses#delete", method: "DELETE" }
+                        ]
+                    },
+                    {
+                        label: "Сделки",
+                        href: "/api/company/dm/deals",
+                        childrens: [
+                            { label: "Список", href: "/api/company/dm/deals#list", method: "GET" },
+                            { label: "Создать", href: "/api/company/dm/deals#create", method: "POST" },
+                            {
+                                label: "Сделка",
+                                href: "/api/company/dm/deals/deal",
+                                childrens: [
+                                    { label: "Детали", href: "/api/company/dm/deals/deal#one", method: "GET" },
+                                    { label: "Обновить", href: "/api/company/dm/deals/deal#update", method: "PATCH" },
+                                    { label: "Удалить", href: "/api/company/dm/deals/deal#delete", method: "DELETE" },
+                                    { label: "Накладная", href: "/api/company/dm/deals/deal#invoice", method: "POST" },
+                                    {
+                                        label: "Транзакции сделки",
+                                        href: "/api/company/dm/deals/deal/transactions",
+                                        childrens: [
+                                            { label: "Список", href: "/api/company/dm/deals/deal/transactions#list", method: "GET" },
+                                            { label: "Создать", href: "/api/company/dm/deals/deal/transactions#create", method: "POST" },
+                                            { label: "Сводка", href: "/api/company/dm/deals/deal/transactions#summary", method: "GET" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        label: "Аналитика",
+                        href: "/api/company/dm/analysis",
+                        childrens: [
+                            { label: "Сводка", href: "/api/company/dm/analysis#summary", method: "GET" },
+                            { label: "Группировка", href: "/api/company/dm/analysis#grouped", method: "GET" },
+                            { label: "Фин. сводка", href: "/api/company/dm/analysis#financial-summary", method: "GET" }
+                        ]
+                    }
+                ]
             }
-            // {
-            //     label: 'Сделки (DM)',
-            //     href: '/api/companies/{id}/modules/dm',
-            //     childrens: [
-            //         {
-            //             label: 'Типы',
-            //             href: '/api/companies/{id}/modules/dm/types',
-            //             childrens: [
-            //                 { label: 'Список', href: '/api/companies/{id}/modules/dm/types', method: 'GET' },
-            //                 { label: 'Создать', href: '/api/companies/{id}/modules/dm/types', method: 'POST' },
-            //                 { label: 'Детали', href: '/api/companies/{id}/modules/dm/types/{typeId}', method: 'GET' },
-            //                 { label: 'Обновить', href: '/api/companies/{id}/modules/dm/types/{typeId}', method: 'PATCH' },
-            //                 { label: 'Удалить', href: '/api/companies/{id}/modules/dm/types/{typeId}', method: 'DELETE' }
-            //             ]
-            //         },
-            //         {
-            //             label: 'Статусы',
-            //             href: '/api/companies/{id}/modules/dm/statuses',
-            //             childrens: [
-            //                 { label: 'Список', href: '/api/companies/{id}/modules/dm/statuses', method: 'GET' },
-            //                 { label: 'Создать', href: '/api/companies/{id}/modules/dm/statuses', method: 'POST' },
-            //                 { label: 'Пересортировать', href: '/api/companies/{id}/modules/dm/statuses/reorder', method: 'PUT' },
-            //                 { label: 'Детали', href: '/api/companies/{id}/modules/dm/statuses/{statusId}', method: 'GET' },
-            //                 { label: 'Обновить', href: '/api/companies/{id}/modules/dm/statuses/{statusId}', method: 'PATCH' },
-            //                 { label: 'Удалить', href: '/api/companies/{id}/modules/dm/statuses/{statusId}', method: 'DELETE' }
-            //             ]
-            //         },
-            //         {
-            //             label: 'Сделки',
-            //             href: '/api/companies/{id}/modules/dm/deals',
-            //             childrens: [
-            //                 { label: 'Список', href: '/api/companies/{id}/modules/dm/deals', method: 'GET' },
-            //                 { label: 'Создать', href: '/api/companies/{id}/modules/dm/deals', method: 'POST' },
-            //                 {
-            //                     label: 'Сделка',
-            //                     href: '/api/companies/{id}/modules/dm/deals/{dealId}',
-            //                     childrens: [
-            //                         { label: 'Детали', href: '/api/companies/{id}/modules/dm/deals/{dealId}', method: 'GET' },
-            //                         { label: 'Обновить', href: '/api/companies/{id}/modules/dm/deals/{dealId}', method: 'PATCH' },
-            //                         { label: 'Удалить', href: '/api/companies/{id}/modules/dm/deals/{dealId}', method: 'DELETE' },
-            //                         { label: 'Накладная', href: '/api/companies/{id}/modules/dm/deals/{dealId}/invoice', method: 'POST' },
-            //                         {
-            //                             label: 'Транзакции сделки',
-            //                             href: '/api/companies/{id}/modules/dm/deals/{dealId}/transactions',
-            //                             childrens: [
-            //                                 { label: 'Список', href: '/api/companies/{id}/modules/dm/deals/{dealId}/transactions', method: 'GET' },
-            //                                 { label: 'Создать', href: '/api/companies/{id}/modules/dm/deals/{dealId}/transactions', method: 'POST' },
-            //                                 { label: 'Сводка', href: '/api/companies/{id}/modules/dm/deals/{dealId}/transactions/summary', method: 'GET' }
-            //                             ]
-            //                         }
-            //                     ]
-            //                 }
-            //             ]
-            //         },
-            //         {
-            //             label: 'Аналитика',
-            //             href: '/api/companies/{id}/modules/dm/analysis',
-            //             childrens: [
-            //                 { label: 'Сводка', href: '/api/companies/{id}/modules/dm/analysis/summary', method: 'GET' },
-            //                 { label: 'Группировка', href: '/api/companies/{id}/modules/dm/analysis/grouped', method: 'GET' },
-            //                 { label: 'Фин. сводка', href: '/api/companies/{id}/modules/dm/analysis/financial-summary', method: 'GET' }
-            //             ]
-            //         }
-            //     ]
-            // }
         ]
     }
 ];
