@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
 import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
-import { companyPricingPlanFields, migratePlanRequestFields, pricingTransactionFields, pricingTransactionsDataFields, currentPlanResponseCodes, migratePlanResponseCodes, transactionsListResponseCodes, revokeTransactionResponseCodes } from './_schema';
+import { companyPricingPlanFields, initPaymentResponseFields, migratePlanRequestFields, pricingTransactionFields, pricingTransactionsDataFields, currentPlanResponseCodes, migratePlanResponseCodes, transactionsListResponseCodes, revokeTransactionResponseCodes } from './_schema';
 import { pricingPlanFields } from '../../public/plans/_schema';
 
 # Тарификация компании
@@ -35,6 +35,8 @@ import { pricingPlanFields } from '../../public/plans/_schema';
 <MDXJsonSchemaBlock title='MIGRATE_REQUEST' fields={migratePlanRequestFields} />
 
 ## Структура ответа
+
+<MDXJsonSchemaBlock title='MIGRATE_RESPONSE' fields={initPaymentResponseFields} />
 
 <MDXJsonSchemaBlock title='PRICING_TRANSACTION' fields={pricingTransactionFields} />
 

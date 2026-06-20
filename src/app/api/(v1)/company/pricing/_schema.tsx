@@ -14,6 +14,13 @@ export const companyPricingPlanFields: JsonField[] = [
 export const migratePlanRequestFields: JsonField[] = [
     { code: 'plan_code', required: true, type: 'string', title: 'Код тарифа', description: 'Код нового тарифного плана (financier, titan, stoic)' },
     { code: 'period', required: true, type: 'enum', title: 'Период', description: 'Период оплаты', enum: ['month', 'year'] },
+    { code: 'success_url', required: false, type: 'string', title: 'URL успеха', description: 'URL для редиректа после успешной оплаты' },
+];
+
+export const initPaymentResponseFields: JsonField[] = [
+    { code: 'transaction', required: true, type: 'array', title: 'Транзакция', description: 'Созданная транзакция (PricingTransaction)' },
+    { code: 'payment_page_url', required: true, type: 'string', title: 'Ссылка на оплату', description: 'Ссылка на страницу оплаты Т-Банка' },
+    { code: 'payment_id', required: true, type: 'string', title: 'ID платежа', description: 'Идентификатор платежа в Т-Банке' },
 ];
 
 export const pricingTransactionFields: JsonField[] = [
@@ -25,6 +32,7 @@ export const pricingTransactionFields: JsonField[] = [
     { code: 'status', required: true, type: 'enum', title: 'Статус', description: 'Статус транзакции', enum: ['success', 'pending', 'unsuccess', 'revoked'] },
     { code: 'plan_code', required: false, type: 'string', title: 'Тариф', description: 'Код оплаченного тарифа' },
     { code: 'is_trial', required: true, type: 'boolean', title: 'Пробный', description: 'Относится ли к тестовому периоду' },
+    { code: 'next_plan_code', required: false, type: 'string', title: 'Следующий тариф', description: 'Код следующего тарифа (для запланированного перехода)' },
     { code: 'expires_at', required: true, type: 'string', title: 'Истекает', description: 'Дата окончания периода (RFC 3339)' },
     { code: 'created_at', required: true, type: 'string', title: 'Создана', description: 'Дата создания (RFC 3339)' },
     { code: 'updated_at', required: true, type: 'string', title: 'Обновлена', description: 'Дата обновления (RFC 3339)' },
@@ -68,19 +76,24 @@ const currentPlan200: string = `{
 
 const migratePlan200: string = `{
     "status": true,
-    "message": "Plan migrated successfully",
+    "message": "Payment initiated successfully",
     "data": {
-        "id": "880e8400-e29b-41d4-a716-446655440070",
-        "company_id": "660e8400-e29b-41d4-a716-446655440020",
-        "account_id": "550e8400-e29b-41d4-a716-446655440001",
-        "amount": 4800,
-        "currency": "RUB",
-        "status": "success",
-        "plan_code": "stoic",
-        "is_trial": false,
-        "expires_at": "2026-07-14T00:00:00Z",
-        "created_at": "2026-06-14T12:00:00Z",
-        "updated_at": "2026-06-14T12:00:00Z"
+        "transaction": {
+            "id": "880e8400-e29b-41d4-a716-446655440070",
+            "company_id": "660e8400-e29b-41d4-a716-446655440020",
+            "account_id": "550e8400-e29b-41d4-a716-446655440001",
+            "amount": 4800,
+            "currency": "RUB",
+            "status": "pending",
+            "plan_code": "stoic",
+            "is_trial": false,
+            "next_plan_code": null,
+            "expires_at": "2026-07-14T00:00:00Z",
+            "created_at": "2026-06-14T12:00:00Z",
+            "updated_at": "2026-06-14T12:00:00Z"
+        },
+        "payment_page_url": "https://securepay.tinkoff.ru/pay/xxx",
+        "payment_id": "1234567890"
     },
     "meta": {
         "timestamp": "2026-06-14T12:00:00Z",
@@ -104,6 +117,7 @@ const transactionsList200: string = `{
                 "status": "success",
                 "plan_code": "stoic",
                 "is_trial": false,
+                "next_plan_code": null,
                 "expires_at": "2026-07-14T00:00:00Z",
                 "created_at": "2026-06-14T12:00:00Z",
                 "updated_at": "2026-06-14T12:00:00Z"
