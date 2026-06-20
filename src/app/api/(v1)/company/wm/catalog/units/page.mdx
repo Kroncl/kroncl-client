@@ -1,0 +1,114 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    unitFields,
+    unitsDataFields,
+    createUnitRequestFields,
+    updateUnitRequestFields,
+    getUnitsParamsFields,
+    getUnitsResponseCodes,
+    getUnitResponseCodes,
+    createUnitResponseCodes,
+    updateUnitResponseCodes,
+    activateUnitResponseCodes,
+    deactivateUnitResponseCodes
+} from './_schema';
+
+# Товарные позиции
+
+Методы для управления товарными позициями (товары и услуги) в каталоге.
+
+<h1 id='list'># Список товарных позиций</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/units' method='GET' />
+
+Возвращает список товарных позиций с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={unitsDataFields} />
+
+## Товарная позиция
+
+<MDXJsonSchemaBlock title='UNIT' fields={unitFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_UNITS_PARAMS' fields={getUnitsParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getUnitsResponseCodes} />
+
+<h1 id='create'># Создание товарной позиции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/units' method='POST' />
+
+Создаёт новую товарную позицию (товар или услугу) в каталоге.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createUnitRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='UNIT' fields={unitFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createUnitResponseCodes} />
+
+<h1 id='one'># Получение товарной позиции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/units/{unitId}' method='GET' />
+
+Возвращает информацию о товарной позиции.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='UNIT' fields={unitFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getUnitResponseCodes} />
+
+<h1 id='update'># Обновление товарной позиции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/units/{unitId}' method='PATCH' />
+
+Обновляет данные товарной позиции.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateUnitRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='UNIT' fields={unitFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateUnitResponseCodes} />
+
+<h1 id='deactivate'># Деактивация товарной позиции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/units/{unitId}/deactivate' method='POST' />
+
+Деактивирует товарную позицию.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='UNIT' fields={unitFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deactivateUnitResponseCodes} />
+
+<h1 id='activate'># Активация товарной позиции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/units/{unitId}/activate' method='POST' />
+
+Активирует деактивированную товарную позицию.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='UNIT' fields={unitFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={activateUnitResponseCodes} />

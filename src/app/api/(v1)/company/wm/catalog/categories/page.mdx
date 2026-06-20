@@ -1,0 +1,114 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    categoryFields,
+    categoriesDataFields,
+    createCategoryRequestFields,
+    updateCategoryRequestFields,
+    getCategoriesParamsFields,
+    getCategoriesResponseCodes,
+    getCategoryResponseCodes,
+    createCategoryResponseCodes,
+    updateCategoryResponseCodes,
+    activateCategoryResponseCodes,
+    deactivateCategoryResponseCodes
+} from './_schema';
+
+# Категории каталога
+
+Методы для управления категориями товаров и услуг.
+
+<h1 id='list'># Список категорий</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/categories' method='GET' />
+
+Возвращает список категорий каталога с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={categoriesDataFields} />
+
+## Категория
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_CATEGORIES_PARAMS' fields={getCategoriesParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCategoriesResponseCodes} />
+
+<h1 id='create'># Создание категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/categories' method='POST' />
+
+Создаёт новую категорию в каталоге.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createCategoryRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createCategoryResponseCodes} />
+
+<h1 id='one'># Получение категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/categories/{categoryId}' method='GET' />
+
+Возвращает информацию о категории.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getCategoryResponseCodes} />
+
+<h1 id='update'># Обновление категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/categories/{categoryId}' method='PATCH' />
+
+Обновляет данные категории.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateCategoryRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateCategoryResponseCodes} />
+
+<h1 id='deactivate'># Деактивация категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/categories/{categoryId}/deactivate' method='POST' />
+
+Деактивирует категорию.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deactivateCategoryResponseCodes} />
+
+<h1 id='activate'># Активация категории</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/catalog/categories/{categoryId}/activate' method='POST' />
+
+Активирует деактивированную категорию.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CATEGORY' fields={categoryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={activateCategoryResponseCodes} />

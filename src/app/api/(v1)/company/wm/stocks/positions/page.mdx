@@ -1,0 +1,48 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    positionWithUnitFields,
+    stockPositionsDataFields,
+    getStockPositionsParamsFields,
+    getStockPositionsResponseCodes,
+    getStockPositionResponseCodes
+} from './_schema';
+
+# Позиции
+
+Методы для управления складскими позициями.
+
+<h1 id='list'># Список позиций</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/stocks/positions' method='GET' />
+
+Возвращает список складских позиций с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={stockPositionsDataFields} />
+
+## Позиция
+
+<MDXJsonSchemaBlock title='POSITION_WITH_UNIT' fields={positionWithUnitFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_STOCK_POSITIONS_PARAMS' fields={getStockPositionsParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getStockPositionsResponseCodes} />
+
+<h1 id='one'># Получение позиции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/stocks/positions/{positionId}' method='GET' />
+
+Возвращает детальную информацию о складской позиции.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='POSITION_WITH_UNIT' fields={positionWithUnitFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getStockPositionResponseCodes} />
