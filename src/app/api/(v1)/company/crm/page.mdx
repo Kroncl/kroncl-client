@@ -1,5 +1,22 @@
 import Link from 'next/link';
 import mdx from '@/assets/styles/mdx.module.scss';
-import { MDXCodeBlock, MDXStatusesBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
 
-# Клиенты / CRM
+# Клиенты (CRM)
+
+Модуль <span className={mdx.codeTag}>CRM</span> — управление клиентской базой, источниками, аналитикой и отчётами.
+
+## Возможности
+
+- создание и управление клиентами (физлица и юрлица);
+- ведение источников привлечения клиентов;
+- активация и деактивация клиентов и источников;
+- сводная аналитика по клиентской базе;
+- группировка клиентов по источникам и периодам;
+- генерация Excel-отчётов по клиентам и источникам.
+
+## Навигация
+
+- <Link href='/api/company/crm/clients' className={mdx.link}>Клиенты</Link>
+- <Link href='/api/company/crm/sources' className={mdx.link}>Источники</Link>
+- <Link href='/api/company/crm/analysis' className={mdx.link}>Аналитика</Link>
+- <Link href='/api/company/crm/reports' className={mdx.link}>Отчёты</Link>

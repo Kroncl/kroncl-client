@@ -1,0 +1,48 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    clientsSummaryFields,
+    groupedClientsStatsFields,
+    getAnalysisParamsFields,
+    summaryResponseCodes,
+    groupedResponseCodes
+} from './_schema';
+
+# Аналитика
+
+Методы для аналитики клиентской базы организации.
+
+<h1 id='summary'># Сводка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/analysis/summary' method='GET' />
+
+Возвращает сводные показатели по клиентам за период.
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_ANALYSIS_PARAMS' fields={getAnalysisParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CLIENTS_SUMMARY' fields={clientsSummaryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={summaryResponseCodes} />
+
+<h1 id='grouped'># Группировка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/analysis/grouped' method='GET' />
+
+Возвращает аналитику с группировкой по источникам или периодам.
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_ANALYSIS_PARAMS' fields={getAnalysisParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='GROUPED_CLIENTS_STATS' fields={groupedClientsStatsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={groupedResponseCodes} />

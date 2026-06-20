@@ -1,0 +1,119 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    clientFields,
+    clientDetailFields,
+    clientsDataFields,
+    createClientRequestFields,
+    updateClientRequestFields,
+    getClientsParamsFields,
+    getClientsResponseCodes,
+    getClientResponseCodes,
+    createClientResponseCodes,
+    updateClientResponseCodes,
+    activateClientResponseCodes,
+    deactivateClientResponseCodes
+} from './_schema';
+
+# Клиенты
+
+Методы для управления клиентами организации.
+
+<h1 id='list'># Список клиентов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/clients' method='GET' />
+
+Возвращает список клиентов с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={clientsDataFields} />
+
+## Клиент
+
+<MDXJsonSchemaBlock title='CLIENT' fields={clientFields} />
+
+## Детали клиента
+
+<MDXJsonSchemaBlock title='CLIENT_DETAIL' fields={clientDetailFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_CLIENTS_PARAMS' fields={getClientsParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getClientsResponseCodes} />
+
+<h1 id='create'># Создание клиента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/clients' method='POST' />
+
+Создаёт нового клиента.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createClientRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CLIENT_DETAIL' fields={clientDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createClientResponseCodes} />
+
+<h1 id='one'># Получение клиента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/clients/{clientId}' method='GET' />
+
+Возвращает детальную информацию о клиенте.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CLIENT_DETAIL' fields={clientDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getClientResponseCodes} />
+
+<h1 id='update'># Обновление клиента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/clients/{clientId}' method='PATCH' />
+
+Обновляет данные клиента.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateClientRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CLIENT_DETAIL' fields={clientDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateClientResponseCodes} />
+
+<h1 id='deactivate'># Деактивация клиента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/clients/{clientId}/deactivate' method='POST' />
+
+Деактивирует клиента.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CLIENT_DETAIL' fields={clientDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deactivateClientResponseCodes} />
+
+<h1 id='activate'># Активация клиента</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/clients/{clientId}/activate' method='POST' />
+
+Активирует деактивированного клиента.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CLIENT_DETAIL' fields={clientDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={activateClientResponseCodes} />

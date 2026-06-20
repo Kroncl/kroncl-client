@@ -1,0 +1,114 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    sourceFields,
+    sourcesDataFields,
+    createSourceRequestFields,
+    updateSourceRequestFields,
+    getSourcesParamsFields,
+    getSourcesResponseCodes,
+    getSourceResponseCodes,
+    createSourceResponseCodes,
+    updateSourceResponseCodes,
+    activateSourceResponseCodes,
+    deactivateSourceResponseCodes
+} from './_schema';
+
+# Источники
+
+Методы для управления источниками клиентов.
+
+<h1 id='list'># Список источников</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/sources' method='GET' />
+
+Возвращает список источников клиентов с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={sourcesDataFields} />
+
+## Источник
+
+<MDXJsonSchemaBlock title='SOURCE' fields={sourceFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_SOURCES_PARAMS' fields={getSourcesParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getSourcesResponseCodes} />
+
+<h1 id='create'># Создание источника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/sources' method='POST' />
+
+Создаёт новый источник клиентов.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createSourceRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='SOURCE' fields={sourceFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createSourceResponseCodes} />
+
+<h1 id='one'># Получение источника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/sources/{sourceId}' method='GET' />
+
+Возвращает информацию об источнике.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='SOURCE' fields={sourceFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getSourceResponseCodes} />
+
+<h1 id='update'># Обновление источника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/sources/{sourceId}' method='PATCH' />
+
+Обновляет данные источника.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateSourceRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='SOURCE' fields={sourceFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateSourceResponseCodes} />
+
+<h1 id='deactivate'># Деактивация источника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/sources/{sourceId}/deactivate' method='POST' />
+
+Деактивирует источник.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='SOURCE' fields={sourceFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deactivateSourceResponseCodes} />
+
+<h1 id='activate'># Активация источника</h1>
+<MDXMethodBlock path='/companies/{id}/modules/crm/sources/{sourceId}/activate' method='POST' />
+
+Активирует деактивированный источник.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='SOURCE' fields={sourceFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={activateSourceResponseCodes} />
