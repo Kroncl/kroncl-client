@@ -1,0 +1,74 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    stockBatchFields,
+    batchWithPositionsFields,
+    positionWithUnitFields,
+    stockBatchesDataFields,
+    createStockBatchRequestFields,
+    getStockBatchesParamsFields,
+    getStockBatchesResponseCodes,
+    getStockBatchResponseCodes,
+    createStockBatchResponseCodes,
+    createStockBatchResponseFields,
+} from './_schema';
+
+# Партии
+
+Методы для управления складскими партиями.
+
+<h1 id='list'># Список партий</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/stocks/batches' method='GET' />
+
+Возвращает список партий с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={stockBatchesDataFields} />
+
+## Партия
+
+<MDXJsonSchemaBlock title='STOCK_BATCH' fields={stockBatchFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_STOCK_BATCHES_PARAMS' fields={getStockBatchesParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getStockBatchesResponseCodes} />
+
+<h1 id='create'># Создание партии</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/stocks/batches' method='POST' />
+
+Создаёт новую складскую партию (оприходование или списание).
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createStockBatchRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='CREATE_RESPONSE' fields={createStockBatchResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createStockBatchResponseCodes} />
+
+<h1 id='one'># Получение партии</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/stocks/batches/{batchId}' method='GET' />
+
+Возвращает детальную информацию о партии с позициями.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='BATCH_WITH_POSITIONS' fields={batchWithPositionsFields} />
+
+## Позиция
+
+<MDXJsonSchemaBlock title='POSITION_WITH_UNIT' fields={positionWithUnitFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getStockBatchResponseCodes} />

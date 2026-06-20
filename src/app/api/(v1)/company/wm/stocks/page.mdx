@@ -1,0 +1,29 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    stockBalanceItemFields,
+    stockBalanceResponseCodes,
+    getStockBalanceParamsFields
+} from './_schema';
+
+# Склад
+
+Методы для управления складскими остатками.
+
+<h1 id='balance'># Остатки</h1>
+<MDXMethodBlock path='/companies/{id}/modules/wm/stocks/balance' method='GET' />
+
+Возвращает текущие остатки товаров на складе.
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_STOCK_BALANCE_PARAMS' fields={getStockBalanceParamsFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='STOCK_BALANCE_ITEM' fields={stockBalanceItemFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={stockBalanceResponseCodes} />
