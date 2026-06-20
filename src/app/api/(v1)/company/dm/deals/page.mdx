@@ -1,0 +1,53 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    dealFields,
+    dealsDataFields,
+    createDealRequestFields,
+    getDealsParamsFields,
+    getDealsResponseCodes,
+    createDealResponseCodes
+} from './_schema';
+
+# Сделки
+
+Методы для управления сделками организации.
+
+<h1 id='list'># Список сделок</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals' method='GET' />
+
+Возвращает список сделок с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={dealsDataFields} />
+
+## Сделка
+
+<MDXJsonSchemaBlock title='DEAL' fields={dealFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_DEALS_PARAMS' fields={getDealsParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getDealsResponseCodes} />
+
+<h1 id='create'># Создание сделки</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals' method='POST' />
+
+Создаёт новую сделку.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createDealRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL' fields={dealFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createDealResponseCodes} />

@@ -1,0 +1,68 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    transactionDetailFields,
+    transactionsDataFields,
+    getTransactionsParamsFields,
+    createTransactionRequestFields,
+    dealTransactionsSummaryFields,
+    getTransactionsResponseCodes,
+    createTransactionResponseCodes,
+    getSummaryResponseCodes
+} from './_schema';
+
+# Транзакции сделки
+
+Методы для управления транзакциями по сделке.
+
+<h1 id='list'># Список транзакций</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals/{dealId}/transactions' method='GET' />
+
+Возвращает список транзакций по сделке с пагинацией и фильтрацией.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={transactionsDataFields} />
+
+## Транзакция
+
+<MDXJsonSchemaBlock title='TRANSACTION_DETAIL' fields={transactionDetailFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_TRANSACTIONS_PARAMS' fields={getTransactionsParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getTransactionsResponseCodes} />
+
+<h1 id='create'># Создание транзакции</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals/{dealId}/transactions' method='POST' />
+
+Создаёт новую транзакцию по сделке.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createTransactionRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='TRANSACTION_DETAIL' fields={transactionDetailFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createTransactionResponseCodes} />
+
+<h1 id='summary'># Сводка</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals/{dealId}/transactions/summary' method='GET' />
+
+Возвращает сводку по транзакциям сделки.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_TRANSACTIONS_SUMMARY' fields={dealTransactionsSummaryFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getSummaryResponseCodes} />

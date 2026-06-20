@@ -1,0 +1,121 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    dealStatusFields,
+    dealStatusesDataFields,
+    createDealStatusRequestFields,
+    updateDealStatusRequestFields,
+    reorderDealStatusesRequestFields,
+    getDealStatusesParamsFields,
+    getDealStatusesResponseCodes,
+    getDealStatusResponseCodes,
+    createDealStatusResponseCodes,
+    updateDealStatusResponseCodes,
+    deleteDealStatusResponseCodes,
+    reorderDealStatusesResponseCodes,
+    reorderDealStatusesResponseFields,
+    deleteDealStatusResponseFields
+} from './_schema';
+
+# Статусы сделок
+
+Методы для управления статусами сделок.
+
+<h1 id='list'># Список статусов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/statuses' method='GET' />
+
+Возвращает список статусов сделок с пагинацией и поиском.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={dealStatusesDataFields} />
+
+## Статус
+
+<MDXJsonSchemaBlock title='DEAL_STATUS' fields={dealStatusFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_DEAL_STATUSES_PARAMS' fields={getDealStatusesParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getDealStatusesResponseCodes} />
+
+<h1 id='create'># Создание статуса</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/statuses' method='POST' />
+
+Создаёт новый статус сделки.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createDealStatusRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_STATUS' fields={dealStatusFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createDealStatusResponseCodes} />
+
+<h1 id='reorder'># Пересортировка статусов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/statuses/reorder' method='PUT' />
+
+Изменяет порядок сортировки статусов.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='REORDER_REQUEST' fields={reorderDealStatusesRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='REORDER_RESPONSE' fields={reorderDealStatusesResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={reorderDealStatusesResponseCodes} />
+
+<h1 id='one'># Получение статуса</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/statuses/{statusId}' method='GET' />
+
+Возвращает информацию о статусе сделки.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_STATUS' fields={dealStatusFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getDealStatusResponseCodes} />
+
+<h1 id='update'># Обновление статуса</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/statuses/{statusId}' method='PATCH' />
+
+Обновляет данные статуса сделки.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateDealStatusRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_STATUS' fields={dealStatusFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateDealStatusResponseCodes} />
+
+<h1 id='delete'># Удаление статуса</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/statuses/{statusId}' method='DELETE' />
+
+Удаляет статус сделки.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DELETE' fields={deleteDealStatusResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deleteDealStatusResponseCodes} />

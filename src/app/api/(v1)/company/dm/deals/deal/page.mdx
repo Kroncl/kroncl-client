@@ -1,0 +1,93 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    dealWithPositionsFields,
+    dealPositionFields,
+    updateDealRequestFields,
+    updateDealPositionFields,
+    deleteDealResponseFields,
+    invoiceRequestFields,
+    invoicePositionFields,
+    invoiceResponseFields,
+    getDealResponseCodes,
+    updateDealResponseCodes,
+    deleteDealResponseCodes,
+    invoiceResponseCodes
+} from './_schema';
+
+# Сделка
+
+Методы для управления конкретной сделкой.
+
+<h1 id='one'># Детали сделки</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals/{dealId}' method='GET' />
+
+Возвращает детальную информацию о сделке с позициями.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_WITH_POSITIONS' fields={dealWithPositionsFields} />
+
+## Позиция сделки
+
+<MDXJsonSchemaBlock title='DEAL_POSITION' fields={dealPositionFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getDealResponseCodes} />
+
+<h1 id='update'># Обновление сделки</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals/{dealId}' method='PATCH' />
+
+Обновляет данные сделки и её позиции.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateDealRequestFields} />
+
+## Позиция для обновления
+
+<MDXJsonSchemaBlock title='UPDATE_DEAL_POSITION' fields={updateDealPositionFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_WITH_POSITIONS' fields={dealWithPositionsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateDealResponseCodes} />
+
+<h1 id='delete'># Удаление сделки</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals/{dealId}' method='DELETE' />
+
+Удаляет сделку.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DELETE' fields={deleteDealResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deleteDealResponseCodes} />
+
+<h1 id='invoice'># Накладная</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/deals/{dealId}/invoice' method='POST' />
+
+Генерирует накладную по сделке.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='INVOICE_REQUEST' fields={invoiceRequestFields} />
+
+## Позиция накладной
+
+<MDXJsonSchemaBlock title='INVOICE_POSITION' fields={invoicePositionFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='INVOICE_RESPONSE' fields={invoiceResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={invoiceResponseCodes} />

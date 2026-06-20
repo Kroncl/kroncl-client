@@ -1,0 +1,101 @@
+import Link from 'next/link';
+import mdx from '@/assets/styles/mdx.module.scss';
+import { MDXCodeBlock, MDXStatusesBlock, MDXMethodBlock, MDXJsonSchemaBlock, MDXMermaidBlock, MDXUrlBlock, MDXImageBlock } from '@/assets/mdx';
+import { 
+    dealTypeFields,
+    dealTypesDataFields,
+    createDealTypeRequestFields,
+    updateDealTypeRequestFields,
+    getDealTypesParamsFields,
+    getDealTypesResponseCodes,
+    getDealTypeResponseCodes,
+    createDealTypeResponseCodes,
+    updateDealTypeResponseCodes,
+    deleteDealTypeResponseCodes,
+    deleteDealTypeResponseFields
+} from './_schema';
+
+# Типы сделок
+
+Методы для управления типами сделок.
+
+<h1 id='list'># Список типов</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/types' method='GET' />
+
+Возвращает список типов сделок с пагинацией и поиском.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DATA' fields={dealTypesDataFields} />
+
+## Тип сделки
+
+<MDXJsonSchemaBlock title='DEAL_TYPE' fields={dealTypeFields} />
+
+## Параметры запроса
+
+<MDXJsonSchemaBlock title='GET_DEAL_TYPES_PARAMS' fields={getDealTypesParamsFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getDealTypesResponseCodes} />
+
+<h1 id='create'># Создание типа</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/types' method='POST' />
+
+Создаёт новый тип сделки.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='CREATE_REQUEST' fields={createDealTypeRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_TYPE' fields={dealTypeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={createDealTypeResponseCodes} />
+
+<h1 id='one'># Получение типа</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/types/{typeId}' method='GET' />
+
+Возвращает информацию о типе сделки.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_TYPE' fields={dealTypeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={getDealTypeResponseCodes} />
+
+<h1 id='update'># Обновление типа</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/types/{typeId}' method='PATCH' />
+
+Обновляет данные типа сделки.
+
+## Структура запроса
+
+<MDXJsonSchemaBlock title='UPDATE_REQUEST' fields={updateDealTypeRequestFields} />
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='DEAL_TYPE' fields={dealTypeFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={updateDealTypeResponseCodes} />
+
+<h1 id='delete'># Удаление типа</h1>
+<MDXMethodBlock path='/companies/{id}/modules/dm/types/{typeId}' method='DELETE' />
+
+Удаляет тип сделки.
+
+## Структура ответа
+
+<MDXJsonSchemaBlock title='RESPONSE_DELETE' fields={deleteDealTypeResponseFields} />
+
+## Примеры ответов
+
+<MDXStatusesBlock codes={deleteDealTypeResponseCodes} />
