@@ -9,6 +9,12 @@ export const changelogs: ChangelogItem[] = [
     // },
     {
         status: 'in-progress',
+        version: '1.5.35',
+        title: 'Мультивалютность',
+        description: 'Финансовый учёт с множественностью валют операций.'
+    },
+    {
+        status: 'completed',
         version: '1.5.29',
         title: 'API Разработчикам',
         description: 'Открываем методы API платформы для разработчиков.'
