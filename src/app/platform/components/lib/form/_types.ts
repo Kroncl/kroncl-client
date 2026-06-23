@@ -38,7 +38,7 @@ export interface PlatformFormTextareaProps extends Omit<TextareaProps, 'onChange
 export interface PlatformFormVariantOption {
   value: string;
   label: ReactNode;
-  description?: string;
+  description?: React.ReactNode;
   icon?: ReactNode;
   disabled?: boolean;
 }
@@ -49,6 +49,7 @@ export interface PlatformFormVariantsProps {
   onChange: (value: string) => void;
   disabled?: boolean;
   className?: string;
+  defaultCount?: 3;
 }
 
 export interface PlatformFormMultiVariantsProps {
