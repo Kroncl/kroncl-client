@@ -64,7 +64,7 @@ export interface PlatformFormMultiVariantsProps {
 
 export interface PlatformFormStatusProps {
   type: 'error' | 'success' | 'info';
-  message: string;
+  message: React.ReactNode;
   icon?: ReactNode;
   className?: string;
 }
