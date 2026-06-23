@@ -23,6 +23,16 @@ const RATE_SOURCE_LABELS: Record<RateSource, string> = {
     manual: 'Ручной ввод',
 };
 
-export function getRateSourceLabel(source: RateSource): string {
+const RATE_SOURCE_SHORT_LABELS: Record<RateSource, string> = {
+    cbr: 'ЦБ РФ',
+    coingecko: 'CoinGecko',
+    manual: 'Ручной ввод',
+};
+
+
+export function getRateSourceLabel(source: RateSource, short?: boolean): string {
+    if (short) {
+        return RATE_SOURCE_SHORT_LABELS[source] || source;
+    }
     return RATE_SOURCE_LABELS[source] || source;
 }
