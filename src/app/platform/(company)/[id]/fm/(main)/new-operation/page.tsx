@@ -21,6 +21,10 @@ import { PERMISSIONS } from '@/apps/permissions/codes.config';
 import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
 import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
 import { DOCS_LINK_FM_OPERATIONS } from '@/app/docs/(v1)/internal.config';
+import { ChooseCurrencyBlock } from './choose-currency/block';
+import { useCurrency } from '@/apps/currency/hooks';
+import { formatDateTime } from '@/assets/utils/date';
+import { Currency, getRateSourceLabel } from '@/apps/currency/types';
 
 type Direction = 'income' | 'expense';
 type AmountStatus = 'idle' | 'valid' | 'invalid';
@@ -37,10 +41,11 @@ export default function Page() {
     const { showMessage } = useMessage();
     
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
     const [formData, setFormData] = useState({
         amount: '',
         direction: 'expense' as Direction,
-        currency: 'RUB' as CurrencyType,
+        currency: '',
         comment: '',
         categoryId: null as string | null,
         employee: null as Employee | null
@@ -81,8 +86,9 @@ export default function Page() {
         setFormData(prev => ({ ...prev, direction: value as Direction }));
     };
 
-    const handleCurrencyChange = (value: string) => {
-        setFormData(prev => ({ ...prev, currency: value as CurrencyType }));
+    const handleCurrencyChange = (code: string, currency: Currency) => {
+        setFormData(prev => ({ ...prev, currency: code }));
+        setSelectedCurrency(currency);
     };
 
     const handleCategorySelect = (category: TransactionCategory | null) => {
@@ -176,6 +182,11 @@ export default function Page() {
         return <PlatformNotAllowed permission={PERMISSIONS.FM_TRANSACTIONS_CREATE} />;
     }
 
+    const amount = parseFloat(formData.amount);
+    const convertedAmount = selectedCurrency && amount > 0
+        ? (amount * selectedCurrency.rate.rate).toLocaleString('ru-RU')
+        : null;
+
     return (
         <>
             <PlatformHead
@@ -195,6 +206,12 @@ export default function Page() {
                         type='text'
                         disabled={isLoading}
                     />
+                    {convertedAmount && selectedCurrency && (
+                        <PlatformFormStatus
+                            type='info'
+                            message={selectedCurrency.id === 'RUB' ? 'Сумма в рублях' : `В пересчёте на рубли: ${convertedAmount} ₽, курс на ${formatDateTime(selectedCurrency.rate.updated_at)}, источник: ${getRateSourceLabel(selectedCurrency.rate.source)}`}
+                        />
+                    )}
                     {amountStatus !== 'idle' && (
                         <PlatformFormStatus
                             type={amountStatusInfo.type}
@@ -203,7 +220,6 @@ export default function Page() {
                         />
                     )}
                 </PlatformFormSection>
-
                 <PlatformFormSection title='Тип операции'>
                     <PlatformFormVariants
                         options={[
@@ -217,13 +233,9 @@ export default function Page() {
                 </PlatformFormSection>
 
                 <PlatformFormSection title='Валюта'>
-                    <PlatformFormVariants
-                        options={[
-                            { value: 'RUB', label: '₽ RUB' }
-                        ]}
+                    <ChooseCurrencyBlock
                         value={formData.currency}
                         onChange={handleCurrencyChange}
-                        disabled={isLoading}
                     />
                 </PlatformFormSection>
 

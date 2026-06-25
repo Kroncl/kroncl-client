@@ -66,7 +66,7 @@ export interface TransactionDetail extends TransactionListItem {
 
 export interface CreateTransactionRequest {
     base_amount: number;
-    currency: CurrencyType;
+    currency: string;
     direction: TransactionDirection;
     employee_id?: string;
     comment?: string;
