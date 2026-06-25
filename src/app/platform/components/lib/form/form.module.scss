@@ -93,9 +93,11 @@
         display: flex;
         flex-flow: column nowrap;
         gap: .5em;
+        position: relative;
         padding: 1em;
         border: 2px solid transparent;
         max-width: 10rem;
+        overflow: hidden;
         border-radius: .45rem;
         background-color: var(--color-surface-primary);
         @include cursor(pointer);
@@ -130,6 +132,15 @@
         }
         &.active {
             border-color: var(--color-accent);
+        }
+
+        &.more {
+            color: var(--color-text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 1em;
+            padding-right: 1em;
         }
     }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useBillingStatus } from "@/apps/status/hoos";
-import { Pin as Pin2026 } from "./2026/pin";
+import { Pin as PinRates } from "./rates/pin";
 import { Pin as PinBillingOff } from "./test-mode/pin";
 
 export interface PinsManagerProps {
@@ -12,9 +12,9 @@ export function PinsManager({
     className
 }: PinsManagerProps) {
     const { data: billingStatus, isLoading: billingLoading } = useBillingStatus();
-    const isBillingOn = billingStatus?.mode === 'on';
+    const isBillingOff = billingStatus?.mode === 'off';
 
-    if (isBillingOn) return <Pin2026 className={className} />;
+    if (isBillingOff) return <PinBillingOff className={className} />;
 
-    return <PinBillingOff className={className} />
+    return <PinRates className={className} />
 }

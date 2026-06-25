@@ -16,6 +16,9 @@ import {
 import Button from '@/assets/ui-kit/button/button';
 import Link from 'next/link';
 import Textarea from '@/assets/ui-kit/textarea/textarea';
+import Arrow from '@/assets/ui-kit/icons/arrow';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 
 export function PlatformFormBody({
@@ -89,30 +92,57 @@ export function PlatformFormVariants({
   value,
   onChange,
   disabled,
-  className
+  className,
+  defaultCount
 }: Readonly<PlatformFormVariantsProps>) {
+  const [expanded, setExpanded] = useState(false);
+  const hasMore = defaultCount && options.length > defaultCount;
+
+  const visibleOptions = hasMore && !expanded
+    ? options.slice(0, defaultCount)
+    : options;
+
+  const hiddenCount = hasMore ? options.length - defaultCount : 0;
+
   return (
     <div className={clsx(styles.variants, className)}>
-      {options.map((option) => (
+      <AnimatePresence initial={false}>
+        {visibleOptions.map((option) => (
+          <motion.div
+            key={option.value}
+            layout
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.13 }}
+            className={clsx(
+              styles.item,
+              value === option.value && styles.active,
+              disabled && styles.disabled
+            )}
+            data-value={option.value}
+            onClick={() => !disabled && !option.disabled && onChange(option.value)}
+          >
+            <div className={styles.name}>
+              {option.icon}
+              {option.label}
+            </div>
+            {option.description && (
+              <div className={styles.description}>{option.description}</div>
+            )}
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
+      {hasMore && (
         <div
-          key={option.value}
-          className={clsx(
-            styles.item,
-            value === option.value && styles.active,
-            disabled && styles.disabled
-          )}
-          data-value={option.value}
-          onClick={() => !disabled && !option.disabled && onChange(option.value)}
+          className={clsx(styles.item, styles.more, expanded && styles.opened)}
+          onClick={() => setExpanded(!expanded)}
         >
-          <div className={styles.name}>
-            {option.icon}
-            {option.label}
-          </div>
-          {option.description && (
-            <div className={styles.description}>{option.description}</div>
-          )}
+          {/* <Arrow /> */}
+          {!expanded ? <span className={styles.moreCount}>+{hiddenCount}</span> : 'Скрыть'}
         </div>
-      ))}
+      )}
     </div>
   );
 }

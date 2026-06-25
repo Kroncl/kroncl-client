@@ -1,0 +1,23 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.accent {
+    color: var(--color-accent);
+}
+
+.crypto {
+    display: inline-block;
+    padding: .05em .33em;
+    background-color: var(--color-accent);
+    color: var(--color-accent-text-primary);
+    border-radius: .05em;
+    border-bottom-left-radius: .4em;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    right: 0;
+}
+.source {
+    font-size: .9em;
+    color: var(--color-text-secondary);
+    margin-top: .3em;
+}

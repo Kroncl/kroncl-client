@@ -20,12 +20,16 @@ import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
 import { PlatformModalConfirmation } from '@/app/platform/components/lib/modal/confirmation/confirmation';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
-import { PlatformFormBody, PlatformFormInput, PlatformFormSection, PlatformFormTextarea, PlatformFormVariants } from '@/app/platform/components/lib/form';
+import { PlatformFormBody, PlatformFormInput, PlatformFormSection, PlatformFormStatus, PlatformFormTextarea, PlatformFormVariants } from '@/app/platform/components/lib/form';
 import Button from '@/assets/ui-kit/button/button';
 import clsx from 'clsx';
 import { Employee } from '@/apps/company/modules/hrm/types';
+import { ChooseCurrencyBlock } from '@/app/platform/(company)/[id]/fm/(main)/new-operation/choose-currency/block';
+import { Currency, getRateSourceLabel } from '@/apps/currency/types';
+import { formatDateTime } from '@/assets/utils/date';
 
 type TransactionDirection = 'income' | 'expense';
+type AmountStatus = 'idle' | 'valid' | 'invalid';
 
 export interface FinanceBlockProps {
     className?: string;
@@ -57,11 +61,16 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
     const [isCreating, setIsCreating] = useState(false);
     const [employees, setEmployees] = useState<Employee[]>([]);
     const [employeesLoading, setEmployeesLoading] = useState(false);
+    const [selectedCurrency, setSelectedCurrency] = useState<Currency | null>(null);
+    const [amountStatus, setAmountStatus] = useState<AmountStatus>('idle');
+    const [amountMessage, setAmountMessage] = useState('');
+
     const [formData, setFormData] = useState({
         amount: '',
         direction: 'expense' as TransactionDirection,
         comment: '',
-        employee_id: ''
+        employee_id: '',
+        currency: ''
     });
 
     const [reverseModal, setReverseModal] = useState<{
@@ -160,6 +169,11 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
         setFormData(prev => ({ ...prev, amount: cleaned }));
     };
 
+    const handleCurrencyChange = (code: string, currency: Currency) => {
+        setFormData(prev => ({ ...prev, currency: code }));
+        setSelectedCurrency(currency);
+    };
+    
     const handleCreateTransaction = async () => {
         const amount = parseFloat(formData.amount);
         if (isNaN(amount) || amount <= 0) {
@@ -167,32 +181,32 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
             return;
         }
 
+        if (!formData.currency) {
+            showMessage({ label: 'Выберите валюту', variant: 'error' });
+            return;
+        }
+
         setIsCreating(true);
         try {
             const response = await dmModule.createDealTransaction(dealId, {
                 base_amount: amount,
-                currency: 'RUB',
+                currency: formData.currency, // ← было 'RUB'
                 direction: formData.direction,
                 comment: formData.comment.trim() || undefined,
                 employee_id: formData.employee_id || undefined
             });
 
             if (response.status) {
-                showMessage({
-                    label: 'Операция создана',
-                    variant: 'success'
-                });
+                showMessage({ label: 'Операция создана', variant: 'success' });
                 setIsCreateModalOpen(false);
-                setFormData({ amount: '', direction: 'expense', comment: '', employee_id: '' });
+                setFormData({ amount: '', direction: 'expense', comment: '', employee_id: '', currency: '' });
+                setSelectedCurrency(null);
                 loadData();
             } else {
                 throw new Error(response.message || 'Ошибка создания операции');
             }
         } catch (error: any) {
-            showMessage({
-                label: error.message || 'Не удалось создать операцию',
-                variant: 'error'
-            });
+            showMessage({ label: error.message || 'Не удалось создать операцию', variant: 'error' });
         } finally {
             setIsCreating(false);
         }
@@ -293,14 +307,7 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
                     </div>
                     <div className={styles.formWrap}>
                         <PlatformFormBody className={styles.form}>
-                            <PlatformFormSection title='Сумма операции'>
-                                <PlatformFormInput
-                                    value={formData.amount}
-                                    onChange={handleAmountChange}
-                                    placeholder='0.00'
-                                    disabled={isCreating}
-                                />
-                            </PlatformFormSection>
+                            
                             <PlatformFormSection title='Тип'>
                                 <PlatformFormVariants
                                     value={formData.direction}
@@ -320,6 +327,34 @@ export function FinanceBlock({ className, dealId }: FinanceBlockProps) {
                                     ]}
                                 />
                             </PlatformFormSection>
+                            
+                            <PlatformFormSection title='Сумма операции'>
+                                <PlatformFormInput
+                                    value={formData.amount}
+                                    onChange={handleAmountChange}
+                                    placeholder='0.00'
+                                    disabled={isCreating}
+                                />
+                                {selectedCurrency && parseFloat(formData.amount) > 0 && (
+                                    <PlatformFormStatus
+                                        className={styles.amountStatus}
+                                        type='info'
+                                        message={selectedCurrency.id === 'RUB' ? 'Сумма в рублях' : (
+                                            <>
+                                            В пересчёте на рубли: <span className={styles.accent}>{(parseFloat(formData.amount) * selectedCurrency.rate.rate).toLocaleString('ru-RU')}₽</span>, курс на {formatDateTime(selectedCurrency.rate.updated_at)}
+                                            </>
+                                        )}
+                                    />
+                                )}
+                            </PlatformFormSection>
+
+                            <PlatformFormSection title='Валюта'>
+                                <ChooseCurrencyBlock
+                                    value={formData.currency}
+                                    onChange={handleCurrencyChange}
+                                />
+                            </PlatformFormSection>
+
                             {isAllowed(ALLOW_HRM_EMPLOYEES) && (
                                 <PlatformFormSection title="Сотрудник">
                                     {employeesLoading ? (

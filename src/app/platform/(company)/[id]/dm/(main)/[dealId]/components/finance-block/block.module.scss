@@ -1,5 +1,14 @@
 @use '@/assets/styles/_mixins.scss' as *;
 
+// form
+.amountStatus {
+    line-height: 1.4 !important;
+
+    .accent {
+        color: var(--color-accent) !important;
+    }
+}
+
 .page {
     position: relative;
 

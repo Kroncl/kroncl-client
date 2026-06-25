@@ -14,6 +14,8 @@ import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
 import { PlatformModalConfirmation } from '@/app/platform/components/lib/modal/confirmation/confirmation';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { useFm } from '@/apps/company/modules';
+import { useCurrencies } from '@/apps/currency/hooks';
+import { Currency } from '@/apps/currency/types';
 
 export interface TransactionCardProps {
     transaction: TransactionListItem;
@@ -21,13 +23,6 @@ export interface TransactionCardProps {
     onReverse?: () => void;
     showReverse?: boolean;
 }
-
-const currencySymbols: Record<string, string> = {
-    RUB: '₽',
-    KZT: '₸',
-    USD: '$',
-    EUR: '€'
-};
 
 export function TransactionCard({
     transaction,
@@ -40,6 +35,9 @@ export function TransactionCard({
     const fmModule = useFm();
     const { showMessage } = useMessage();
     
+    const { data: currencies = [] } = useCurrencies();
+    const currencyMap = new Map(currencies.map((c: Currency) => [c.id, c.type === 'crypto' ? c.id : c.symbol?.trim() || c.id]));
+
     const {
         id,
         base_amount,
@@ -57,7 +55,7 @@ export function TransactionCard({
 
     const formattedAmount = Math.abs(base_amount).toLocaleString('ru-RU');
     const sign = direction === 'income' ? '+' : '-';
-    const symbol = currencySymbols[currency] || currency;
+    const symbol = currencyMap.get(currency) || currency;
     
     const employeeFullName = `${employee_first_name || ''} ${employee_last_name || ''}`.trim();
     const employeeInitials = `${employee_first_name?.[0] || ''}${employee_last_name?.[0] || ''}`;
