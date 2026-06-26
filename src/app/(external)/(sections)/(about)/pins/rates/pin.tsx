@@ -9,6 +9,7 @@ import { DOCS_LINK } from "@/app/docs/(v1)/internal.config";
 import { useCurrencies } from "@/apps/currency/hooks";
 import { linksConfig } from "@/config/links.config";
 import Spinner from "@/assets/ui-kit/spinner/spinner";
+import { formatRate } from "@/apps/currency/types";
 
 export function Pin({className}: PageBlockProps) {
     const { data: currencies = [], isLoading } = useCurrencies();
@@ -36,7 +37,7 @@ export function Pin({className}: PageBlockProps) {
                         {mixed.slice(0,4).map((currency, index) => (
                             <div key={index} className={styles.item}>
                                 <div className={styles.id}>{currency.id}</div>
-                                {currency.id !== 'RUB' && (<div className={styles.rate}>{currency.rate.rate.toLocaleString('ru-RU')}&#8381;</div>)}
+                                {currency.id !== 'RUB' && (<div className={styles.rate}>{formatRate(currency)}</div>)}
                             </div>
                         ))}
                         <div className={styles.item}>

@@ -4,7 +4,7 @@ import Button from '@/assets/ui-kit/button/button';
 import { DOCS_LINK_COMPANIES_LOGS } from '@/app/docs/(v1)/internal.config';
 import Wallet from '@/assets/ui-kit/icons/wallet';
 import { linksConfig } from '@/config/links.config';
-import { Currency, getRateSourceLabel } from '@/apps/currency/types';
+import { Currency, formatRate, getRateSourceLabel } from '@/apps/currency/types';
 import { useCurrencies } from '@/apps/currency/hooks';
 import clsx from 'clsx';
 import { formatDate, formatDateTime } from '@/assets/utils/date';
@@ -20,7 +20,7 @@ export function CurrencyItem({
         <div className={clsx(styles.item, currency.type === 'crypto' && styles.crypto)}>
             <div className={styles.id}>{currency.id}</div>
             <div className={styles.name}>{currency.name}</div>
-            {currency.id !== 'RUB' && (<div className={styles.rate}>{currency.rate.rate.toLocaleString('ru-RU')}&#8381;</div>)}
+            {currency.id !== 'RUB' && (<div className={styles.rate}>{formatRate(currency)}</div>)}
 
             {currency.id !== 'RUB' && (<div className={styles.source}>{getRateSourceLabel(currency.rate.source, true)}</div>)}
         </div>
