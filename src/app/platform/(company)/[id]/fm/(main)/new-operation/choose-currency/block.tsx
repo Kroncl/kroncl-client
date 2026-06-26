@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import styles from './block.module.scss';
 import { PlatformFormVariants } from '@/app/platform/components/lib/form';
 import { useCurrencies } from '@/apps/currency/hooks';
-import { Currency, getRateSourceLabel } from '@/apps/currency/types';
+import { Currency, formatRate, getRateSourceLabel } from '@/apps/currency/types';
 import { formatDateTime } from '@/assets/utils/date';
 
 const LAST_CURRENCY_KEY = 'kroncl_last_currency';
@@ -95,7 +95,7 @@ export function ChooseCurrencyBlock({
             <>
                 {c.name}<br />
                 <span className={styles.accent}>
-                    {c.rate.rate.toLocaleString('ru-RU')}&#8381;
+                    {formatRate(c)}
                 </span>{' '}
                 на {formatDateTime(c.rate.updated_at)}
                 {c.id !== 'RUB' && (

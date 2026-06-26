@@ -36,3 +36,15 @@ export function getRateSourceLabel(source: RateSource, short?: boolean): string 
     }
     return RATE_SOURCE_LABELS[source] || source;
 }
+
+export const formatRate = (currency: Currency): string => {
+    if (currency.type === 'crypto') {
+        return currency.rate.rate.toLocaleString('ru-RU', {
+            maximumFractionDigits: 2,
+        }) + ' ₽';
+    }
+    return currency.rate.rate.toLocaleString('ru-RU', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }) + ' ₽';
+};
