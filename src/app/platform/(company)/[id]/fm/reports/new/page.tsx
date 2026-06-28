@@ -32,16 +32,16 @@ const REPORT_TYPES = [
         label: 'Категории',
         description: 'Справочная информация о категориях транзакций'
     },
-    { 
-        value: 'counterparties', 
-        label: 'Контрагенты',
-        description: 'Список контрагентов с их контактными данными'
-    },
-    { 
-        value: 'credits', 
-        label: 'Кредиты',
-        description: 'Информация о кредитах, займах и графиках платежей'
-    }
+    // { 
+    //     value: 'counterparties', 
+    //     label: 'Контрагенты',
+    //     description: 'Список контрагентов с их контактными данными'
+    // },
+    // { 
+    //     value: 'credits', 
+    //     label: 'Кредиты',
+    //     description: 'Информация о кредитах, займах и графиках платежей'
+    // }
 ];
 
 export default function Page() {

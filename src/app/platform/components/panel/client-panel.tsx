@@ -72,7 +72,8 @@ const iconComponents: Record<string, ComponentType<{ className?: string }>> = {
   'invitations': Invitations,
   'book': Book,
   'home': Home,
-  'dev': Dev
+  'dev': Dev,
+  'counterparties': Business
 };
 
 export default function ClientPanel({

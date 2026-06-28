@@ -482,32 +482,6 @@ export const navigationSections: DevNavSectionProps[] = [
                             { label: 'Сводка', href: '/api/company/fm/analysis#summary', method: 'GET' },
                             { label: 'Группировка', href: '/api/company/fm/analysis#grouped', method: 'GET' }
                         ]
-                    },
-                    {
-                        label: 'Контрагенты',
-                        href: '/api/company/fm/counterparties',
-                        childrens: [
-                            { label: 'Список', href: '/api/company/fm/counterparties#list', method: 'GET' },
-                            { label: 'Создать', href: '/api/company/fm/counterparties#create', method: 'POST' },
-                            { label: 'Детали', href: '/api/company/fm/counterparties#one', method: 'GET' },
-                            { label: 'Обновить', href: '/api/company/fm/counterparties#update', method: 'PATCH' },
-                            { label: 'Деактивировать', href: '/api/company/fm/counterparties#deactivate', method: 'POST' },
-                            { label: 'Активировать', href: '/api/company/fm/counterparties#activate', method: 'POST' }
-                        ]
-                    },
-                    {
-                        label: 'Кредиты',
-                        href: '/api/company/fm/credits',
-                        childrens: [
-                            { label: 'Список', href: '/api/company/fm/credits#list', method: 'GET' },
-                            { label: 'Создать', href: '/api/company/fm/credits#create', method: 'POST' },
-                            { label: 'Детали', href: '/api/company/fm/credits#one', method: 'GET' },
-                            { label: 'Транзакции', href: '/api/company/fm/credits#transactions', method: 'GET' },
-                            { label: 'Платёж', href: '/api/company/fm/credits#pay', method: 'POST' },
-                            { label: 'Обновить', href: '/api/company/fm/credits#update', method: 'PATCH' },
-                            { label: 'Деактивировать', href: '/api/company/fm/credits#deactivate', method: 'POST' },
-                            { label: 'Активировать', href: '/api/company/fm/credits#activate', method: 'POST' }
-                        ]
                     }
                 ]
             },

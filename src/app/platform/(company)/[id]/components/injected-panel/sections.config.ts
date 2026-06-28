@@ -47,6 +47,12 @@ function allSections(companyId: string): Section[] {
         lvl: PLAN_MAX_LVL
     },
     {
+        name: 'Контрагенты',
+        href: `/platform/${companyId}/cpm`,
+        icon: 'counterparties',
+        lvl: PLAN_MAX_LVL
+    },
+    {
         name: 'Каталог',
         href: `/platform/${companyId}/wm`,
         icon: 'catalog',

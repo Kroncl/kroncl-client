@@ -13,7 +13,8 @@ export interface PricingPlanStructure {
 
 export const modulesLVL3: PricingPlanModule[] = [
     { name: 'Финансы', docsLink: DOCS_LINK_FM },
-    { name: 'Управление сотрудниками', docsLink: DOCS_LINK_HRM }
+    { name: 'Управление сотрудниками', docsLink: DOCS_LINK_HRM },
+    { name: 'Контрагенты' },
 ];
 
 export const modulesLVL2: PricingPlanModule[] = [

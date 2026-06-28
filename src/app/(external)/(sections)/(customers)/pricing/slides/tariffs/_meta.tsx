@@ -4,6 +4,7 @@ export const pricingTheses: Record<number, TariffTesis[]> = {
     3: [
         { marker: true, about: 'Финансы' },
         { marker: true, about: 'Управление персоналом' },
+        { marker: true, about: 'Контрагенты' },
     ],
     2: [
         { marker: true, about: 'Клиентская база' },

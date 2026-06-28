@@ -24,20 +24,20 @@ export const fmSections: DocsNavSectionProps[] = [
             }
         ]
     },
-    {
-        label: 'Долговые обязательства',
-        href: '/docs/companies/modules/fm/debt-obligations',
-        childrens: [
-            {
-                label: 'Контрагенты',
-                href: '/docs/companies/modules/fm/debt-obligations/counterparties'
-            },
-            {
-                label: 'Кредиты & Дебеты',
-                href: '/docs/companies/modules/fm/debt-obligations/credits-debts'
-            },
-        ]
-    },
+    // {
+    //     label: 'Долговые обязательства',
+    //     href: '/docs/companies/modules/fm/debt-obligations',
+    //     childrens: [
+    //         {
+    //             label: 'Контрагенты',
+    //             href: '/docs/companies/modules/fm/debt-obligations/counterparties'
+    //         },
+    //         {
+    //             label: 'Кредиты & Дебеты',
+    //             href: '/docs/companies/modules/fm/debt-obligations/credits-debts'
+    //         },
+    //     ]
+    // },
     {
         label: 'Отчёты',
         href: DOCS_LINK_FM_REPORTS

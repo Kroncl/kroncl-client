@@ -62,9 +62,6 @@ export const PERMISSIONS = {
     FM_TRANSACTIONS_CATEGORIES_UPDATE: 'fm.transactions.categories.update',
     FM_TRANSACTIONS_CATEGORIES_DELETE: 'fm.transactions.categories.delete',
     FM_ANALYSIS: 'fm.analysis',
-    FM_COUNTERPARTIES: 'fm.counterparties',
-    FM_COUNTERPARTIES_CREATE: 'fm.counterparties.create',
-    FM_COUNTERPARTIES_UPDATE: 'fm.counterparties.update',
     FM_CREDITS: 'fm.credits',
     FM_CREDITS_CREATE: 'fm.credits.create',
     FM_CREDITS_UPDATE: 'fm.credits.update',
@@ -120,6 +117,12 @@ export const PERMISSIONS = {
     DM_DEALS_TRANSACTIONS_CREATE: 'dm.deals.transactions.create',
     DM_DEALS_TRANSACTIONS_SUMMARY: 'dm.deals.transactions.summary',
     DM_ANALYSIS: 'dm.analysis',
+
+    // CPM
+    CPM: 'cpm',
+    CPM_COUNTERPARTIES: 'cpm.counterparties',
+    CPM_COUNTERPARTIES_CREATE: 'cpm.counterparties.create',
+    CPM_COUNTERPARTIES_UPDATE: 'cpm.counterparties.update'
 } as const;
 
 export type PermissionCode = typeof PERMISSIONS[keyof typeof PERMISSIONS];

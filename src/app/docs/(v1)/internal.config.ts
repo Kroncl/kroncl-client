@@ -38,9 +38,9 @@ export const DOCS_LINK_FM_ANALYSIS = DOCS_LINK_FM_MOVEMENT + '/analysis';
 export const DOCS_LINK_FM_REPORTS = DOCS_LINK_FM + '/reports';
 export const DOCS_LINK_FM_FORECAST = DOCS_LINK_FM + '/forecast'
 
-export const DOCS_LINK_FM_DEBT_OBLIGATIONS = DOCS_LINK_FM + '/debt-obligations';
-export const DOCS_LINK_FM_DEBT_OBLIGATIONS_COUNTERPARTIES = DOCS_LINK_FM_DEBT_OBLIGATIONS + '/counterparties';
-export const DOCS_LINK_FM_DEBT_OBLIGATIONS_CREDITS_DEBTS = DOCS_LINK_FM_DEBT_OBLIGATIONS + '/credits-debts';
+// export const DOCS_LINK_FM_DEBT_OBLIGATIONS = DOCS_LINK_FM + '/debt-obligations';
+// export const DOCS_LINK_FM_DEBT_OBLIGATIONS_COUNTERPARTIES = DOCS_LINK_FM_DEBT_OBLIGATIONS + '/counterparties';
+// export const DOCS_LINK_FM_DEBT_OBLIGATIONS_CREDITS_DEBTS = DOCS_LINK_FM_DEBT_OBLIGATIONS + '/credits-debts';
 
 // CRM
 export const DOCS_LINK_CRM_CLIENTS = DOCS_LINK_CRM + '/clients';

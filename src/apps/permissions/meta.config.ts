@@ -341,27 +341,6 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'fm',
         category: 'analysis',
     },
-    [PERMISSIONS.FM_COUNTERPARTIES]: {
-        code: PERMISSIONS.FM_COUNTERPARTIES,
-        title: 'Просмотр контрагентов',
-        description: 'Доступ к списку контрагентов',
-        module: 'fm',
-        category: 'counterparties',
-    },
-    [PERMISSIONS.FM_COUNTERPARTIES_CREATE]: {
-        code: PERMISSIONS.FM_COUNTERPARTIES_CREATE,
-        title: 'Создание контрагентов',
-        description: 'Возможность добавлять новых контрагентов',
-        module: 'fm',
-        category: 'counterparties',
-    },
-    [PERMISSIONS.FM_COUNTERPARTIES_UPDATE]: {
-        code: PERMISSIONS.FM_COUNTERPARTIES_UPDATE,
-        title: 'Редактирование контрагентов',
-        description: 'Изменение данных контрагентов',
-        module: 'fm',
-        category: 'counterparties',
-    },
     [PERMISSIONS.FM_CREDITS]: {
         code: PERMISSIONS.FM_CREDITS,
         title: 'Просмотр кредитов',
@@ -710,6 +689,36 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         description: 'Доступ к отчётам по сделкам',
         module: 'dm',
         category: 'analysis',
+    },
+
+    // CPM
+    [PERMISSIONS.CPM]: {
+        code: PERMISSIONS.CPM,
+        title: 'Контрагенты',
+        description: 'Доступ к модулю управления контрагентами',
+        module: 'cpm',
+        category: 'counterparties',
+    },
+    [PERMISSIONS.CPM_COUNTERPARTIES]: {
+        code: PERMISSIONS.CPM_COUNTERPARTIES,
+        title: 'Просмотр контрагентов',
+        description: 'Доступ к списку контрагентов',
+        module: 'cpm',
+        category: 'counterparties',
+    },
+    [PERMISSIONS.CPM_COUNTERPARTIES_CREATE]: {
+        code: PERMISSIONS.CPM_COUNTERPARTIES_CREATE,
+        title: 'Создание контрагентов',
+        description: 'Возможность добавлять новых контрагентов',
+        module: 'cpm',
+        category: 'counterparties',
+    },
+    [PERMISSIONS.CPM_COUNTERPARTIES_UPDATE]: {
+        code: PERMISSIONS.CPM_COUNTERPARTIES_UPDATE,
+        title: 'Редактирование контрагентов',
+        description: 'Изменение данных контрагентов',
+        module: 'cpm',
+        category: 'counterparties',
     },
 };
 

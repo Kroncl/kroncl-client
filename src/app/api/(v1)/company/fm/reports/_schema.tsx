@@ -6,7 +6,7 @@ import { docFields } from "../../docs/_schema";
 export { docFields };
 
 export const fmReportRequestFields: JsonField[] = [
-    { code: 'types', required: true, type: 'array', title: 'Типы', description: 'Типы отчётов для генерации (string[]: transactions, categories, counterparties, credits)' },
+    { code: 'types', required: true, type: 'array', title: 'Типы', description: 'Типы отчётов для генерации (string[]: transactions, categories)' },
     { code: 'start_date', required: false, type: 'string', title: 'Начало', description: 'Начальная дата фильтрации (RFC 3339)' },
     { code: 'end_date', required: false, type: 'string', title: 'Конец', description: 'Конечная дата фильтрации (RFC 3339)' },
     { code: 'comment', required: false, type: 'string', title: 'Комментарий', description: 'Комментарий к отчёту' },

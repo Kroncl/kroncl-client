@@ -309,10 +309,10 @@ export default function Page() {
                     <div className={styles.name}>Категории</div>
                     <div className={styles.description}>Категории расходов/доходов</div>
                 </Link>
-                <Link href={`/platform/${companyId}/fm/credits`} className={styles.card}>
+                {/* <Link href={`/platform/${companyId}/fm/credits`} className={styles.card}>
                     <div className={styles.name}>Долги</div>
                     <div className={styles.description}>Управление долговыми обязательствами</div>
-                </Link>
+                </Link> */}
             </div>
 
             {transactions.length === 0 ? (

@@ -9,7 +9,13 @@ export const changelogs: ChangelogItem[] = [
     // },
     {
         status: 'in-progress',
-        version: '1.5.35',
+        version: '1.5.32',
+        title: 'Контрагенты',
+        description: 'Модуль CPM: управление контрагентами.'
+    },
+    {
+        status: 'completed',
+        version: '1.5.30',
         title: 'Мультивалютность',
         description: 'Финансовый учёт с множественностью валют операций: RUB, EUR, USD, BTC, ETH...'
     },

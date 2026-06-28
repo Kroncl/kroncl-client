@@ -1,6 +1,7 @@
 import { PaginationMeta } from "@/apps/shared/pagination/types";
 import { Employee } from "@/apps/company/modules/hrm/types";
 import { Doc } from "../docs/types";
+import { Counterparty } from "../cpm/types";
 
 // --------
 // ANALYSIS
@@ -131,52 +132,6 @@ export interface GetCategoriesParams {
 
 export interface CategoriesResponse {
     categories: TransactionCategory[];
-    pagination: PaginationMeta;
-}
-
-// --------
-// COUNTERPARTIES
-// --------
-
-export type CounterpartyType = 'bank' | 'organization' | 'person';
-export type CounterpartyStatus = 'active' | 'inactive';
-
-export interface Counterparty {
-    id: string;
-    name: string;
-    comment: string | null;
-    type: CounterpartyType;
-    status: CounterpartyStatus;
-    metadata: Record<string, any> | null;
-    created_at: string;
-    updated_at: string;
-}
-
-export interface CreateCounterpartyRequest {
-    name: string;
-    type: CounterpartyType;
-    comment?: string;
-    status?: CounterpartyStatus;
-    metadata?: Record<string, any>;
-}
-
-export interface UpdateCounterpartyRequest {
-    name?: string;
-    comment?: string | null;
-    type?: CounterpartyType;
-    metadata?: Record<string, any>;
-}
-
-export interface GetCounterpartiesParams {
-    page?: number;
-    limit?: number;
-    type?: CounterpartyType;
-    status?: CounterpartyStatus;
-    search?: string;
-}
-
-export interface CounterpartiesResponse {
-    counterparties: Counterparty[];
     pagination: PaginationMeta;
 }
 
