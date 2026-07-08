@@ -29,7 +29,7 @@ export default function Page() {
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
-        type: 'legal' as CounterpartyType,
+        type: 'organization' as CounterpartyType,
         inn: '',
         ogrn: '',
         kpp: '',

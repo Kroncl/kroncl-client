@@ -128,8 +128,10 @@
             gap: .9em;
 
             .button {
-                transition: transform var(--transition);
-                border-radius: .5em;
+                transition: transform var(--transition),
+                            box-shadow var(--transition);
+                // border-radius: .5em;
+                border: none;
 
                 .svg {
                     width: 1.2em;
@@ -140,6 +142,7 @@
 
                 &:hover {
                     transform: scale(1.02);
+                    box-shadow: 0 0 2px var(--color-accent);
 
                     .svg {
                         fill: var(--color-text-primary);

@@ -185,11 +185,11 @@
         padding: 1em 0;
         // background-color: var(--color-surface-elevated);
         flex-flow: row nowrap;
+        gap: .8em;
 
         .input {
             width: 100%;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
+            height: 3.3em;
             background-color: var(--color-surface-primary);
             border: 1px solid var(--color-stroke-secondary);
 
@@ -199,8 +199,11 @@
             }
         }
         .button {
-            border-bottom-left-radius: 0;
-            border-top-left-radius: 0;
+            height: 3.3em;
+            // border-bottom-left-radius: 0;
+            // border-top-left-radius: 0;
+            padding-left: 2em !important;
+            padding-right: 2em !important;
             border: 1px solid var(--color-stroke-secondary);
 
             .svg {

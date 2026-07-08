@@ -56,6 +56,7 @@ export function PlatformHead({
   
   const activePath = getFullUrl();
   const [searchValue, setSearchValue] = useState(searchProps.defaultValue || '');
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     sections.forEach(section => {
@@ -70,14 +71,18 @@ export function PlatformHead({
     });
   }, [activePath, sections, pathname, searchParams]);
 
-  // Создаем дебаунс функцию
+
   const debouncedSearch = useDebouncedCallback(
-    (value: string) => {
-      if (searchProps.onSearch) {
-        searchProps.onSearch(value);
-      }
-    },
-    searchProps.debounceMs || 500
+      (value: string) => {
+          if (searchProps.onSearch) {
+              setIsSearching(true);
+              // Сбрасываем после выполнения (если onSearch асинхронный — нужно прокинуть управление)
+              searchProps.onSearch(value);
+              // Если onSearch синхронный или не возвращает промис — сразу сбрасываем
+              setTimeout(() => setIsSearching(false), 300);
+          }
+      },
+      searchProps.debounceMs || 500
   );
 
   // Обработчик изменения инпута
@@ -200,11 +205,13 @@ export function PlatformHead({
           />
           {searchProps.searchButton !== false && (
             <Button 
-              className={styles.button} 
-              variant='accent'
-              onClick={handleSearchClick}
+                className={styles.button} 
+                variant='accent'
+                disabled={!searchValue.trim() && !isSearching}
+                onClick={handleSearchClick}
+                loading={isSearching}
             >
-              <Search className={styles.svg} />
+                {!isSearching && <Search className={styles.svg} />}
             </Button>
           )}
         </div>
