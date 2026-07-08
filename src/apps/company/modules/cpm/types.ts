@@ -9,6 +9,11 @@ export interface Counterparty {
     comment: string | null;
     type: CounterpartyType;
     status: CounterpartyStatus;
+    inn: string | null;
+    ogrn: string | null;
+    kpp: string | null;
+    address: string | null;
+    default_currency: string | null;
     metadata: Record<string, any> | null;
     created_at: string;
     updated_at: string;
@@ -19,6 +24,11 @@ export interface CreateCounterpartyRequest {
     comment?: string;
     type: CounterpartyType;
     status?: CounterpartyStatus;
+    inn?: string;
+    ogrn?: string;
+    kpp?: string;
+    address?: string;
+    default_currency?: string;
     metadata?: Record<string, any>;
 }
 
@@ -26,6 +36,11 @@ export interface UpdateCounterpartyRequest {
     name?: string;
     comment?: string | null;
     type?: CounterpartyType;
+    inn?: string | null;
+    ogrn?: string | null;
+    kpp?: string | null;
+    address?: string | null;
+    default_currency?: string | null;
     metadata?: Record<string, any> | null;
 }
 
@@ -41,7 +56,6 @@ export interface CounterpartiesResponse {
     counterparties: Counterparty[];
     pagination: PaginationMeta;
 }
-
 
 // utils
 

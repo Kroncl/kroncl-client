@@ -1,0 +1,7 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.interLine {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px dashed var(--color-stroke-primary);
+}

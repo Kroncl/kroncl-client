@@ -1,4 +1,5 @@
 import { accountsModule } from "./accounts/api";
+import { cpmModule } from "./cpm/api";
 import { crmModule } from "./crm/api";
 import { dmModule } from "./dm/api";
 import { fmModule } from "./fm/api";
@@ -23,6 +24,7 @@ export const useLogs = () => useCompanyModule(logsModule);
 export const useCrm = () => useCompanyModule(crmModule);
 export const useWm = () => useCompanyModule(wmModule);
 export const useDm = () => useCompanyModule(dmModule);
+export const useCpm = () => useCompanyModule(cpmModule);
 export const usePricing = () => useCompanyModule(pricingModule);
 export const useSupport = () => useCompanyModule(supportModule);
 export const useManage = () => useCompanyModule(manageModule);

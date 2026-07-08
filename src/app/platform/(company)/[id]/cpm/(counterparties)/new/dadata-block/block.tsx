@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './block.module.scss';
 import { CounterpartyPreview } from '@/apps/shared/dadata/types';
@@ -49,6 +49,8 @@ export function DaDataBlock({ className, onSelect }: DaDataBlockProps) {
     const [results, setResults] = useState<CounterpartyPreview[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [selected, setSelected] = useState(false);
+    const cachedResults = useRef<CounterpartyPreview[]>([]);
 
     const fetchSuggestions = useCallback(async (q: string) => {
         if (q.trim().length < 2) {
@@ -59,17 +61,21 @@ export function DaDataBlock({ className, onSelect }: DaDataBlockProps) {
 
         setLoading(true);
         setError(null);
+        setSelected(false);
         try {
             const response = await dadataApi.suggestParties(q);
             if (response.status && response.data) {
                 setResults(response.data);
+                cachedResults.current = response.data;
             } else {
                 setError(response.message || 'Ошибка запроса');
                 setResults([]);
+                cachedResults.current = [];
             }
         } catch {
             setError('Не удалось загрузить подсказки');
             setResults([]);
+            cachedResults.current = [];
         } finally {
             setLoading(false);
         }
@@ -81,7 +87,13 @@ export function DaDataBlock({ className, onSelect }: DaDataBlockProps) {
     }, [query, fetchSuggestions]);
 
     const handleSelect = (counterparty: CounterpartyPreview) => {
+        setSelected(true);
         onSelect?.(counterparty);
+
+        // Сначала анимация скрытия, потом удаление из DOM
+        setTimeout(() => {
+            setResults([]);
+        }, 300);
     };
 
     return (
@@ -92,7 +104,7 @@ export function DaDataBlock({ className, onSelect }: DaDataBlockProps) {
                 onChange={setQuery}
             />
             <div className={styles.grid}>
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                     {loading && (
                         <motion.div
                             key="loading"
@@ -111,30 +123,31 @@ export function DaDataBlock({ className, onSelect }: DaDataBlockProps) {
                             className={styles.error}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
                         >
                             {error}
                         </motion.div>
                     )}
 
-                    {!loading && !error && results.length === 0 && query.length >= 2 && (
+                    {!loading && !error && results.length === 0 && query.length >= 2 && !selected && (
                         <motion.div
                             key="empty"
                             className={styles.empty}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
                         >
                             Ничего не найдено
                         </motion.div>
                     )}
 
-                    {!loading &&
-                        results.map((cp, index) => (
-                            <Item
-                                key={index}
-                                counterparty={cp}
-                                onClick={() => handleSelect(cp)}
-                            />
-                        ))}
+                    {results.map((cp, index) => (
+                        <Item
+                            key={index}
+                            counterparty={cp}
+                            onClick={() => handleSelect(cp)}
+                        />
+                    ))}
                 </AnimatePresence>
             </div>
         </div>
