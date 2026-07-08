@@ -1,35 +1,35 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import { PlatformFormBody, PlatformFormInput, PlatformFormSection, PlatformFormTextarea, PlatformFormUnify, PlatformFormVariants } from "@/app/platform/components/lib/form";
 import { PlatformHead } from "@/app/platform/components/lib/head/head";
 import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
+import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
 import { PERMISSIONS } from "@/apps/permissions/codes.config";
 import { usePermission } from "@/apps/permissions/hooks";
-import { DaDataBlock } from "./dadata-block/block";
-import styles from './page.module.scss';
+import styles from '../new/page.module.scss';
 import Button from "@/assets/ui-kit/button/button";
-import { ChooseCurrencyBlock } from "../../../fm/(main)/new-operation/choose-currency/block";
-import { CounterpartyPreview } from "@/apps/shared/dadata/types";
+import { ChooseCurrencyBlock } from "../../../../fm/(main)/new-operation/choose-currency/block";
 import { CounterpartyType } from "@/apps/company/modules/cpm/types";
 import { useCpm } from "@/apps/company/modules";
 import { useMessage } from "@/app/platform/components/lib/message/provider";
-import { useParams } from "next/navigation";
 
 export default function Page() {
     const router = useRouter();
     const params = useParams();
     const companyId = params.id as string;
+    const counterpartyId = params.counterpartyId as string;
     const cpmModule = useCpm();
     const { showMessage } = useMessage();
 
-    const ALLOW_PAGE = usePermission(PERMISSIONS.CPM_COUNTERPARTIES_CREATE);
+    const ALLOW_PAGE = usePermission(PERMISSIONS.CPM_COUNTERPARTIES_UPDATE);
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isFetching, setIsFetching] = useState(true);
     const [formData, setFormData] = useState({
         name: '',
-        type: 'legal' as CounterpartyType,
+        type: 'organization' as CounterpartyType,
         inn: '',
         ogrn: '',
         kpp: '',
@@ -38,17 +38,32 @@ export default function Page() {
         comment: '',
     });
 
-    const handleDaDataSelect = (preview: CounterpartyPreview) => {
-        setFormData(prev => ({
-            ...prev,
-            name: preview.name || prev.name,
-            inn: preview.inn || prev.inn,
-            ogrn: preview.ogrn || prev.ogrn,
-            kpp: preview.kpp || prev.kpp,
-            address: preview.address || prev.address,
-            type: preview.type === 'person' ? 'person' : (prev.type === 'bank' ? 'bank' : 'organization'),
-        }));
-    };
+    useEffect(() => {
+        const fetchCounterparty = async () => {
+            try {
+                const response = await cpmModule.getCounterparty(counterpartyId);
+                if (response.status && response.data) {
+                    const cp = response.data;
+                    setFormData({
+                        name: cp.name || '',
+                        type: cp.type || 'organization',
+                        inn: cp.inn || '',
+                        ogrn: cp.ogrn || '',
+                        kpp: cp.kpp || '',
+                        address: cp.address || '',
+                        default_currency: cp.default_currency || '',
+                        comment: cp.comment || '',
+                    });
+                }
+            } catch {
+                showMessage({ label: 'Не удалось загрузить контрагента', variant: 'error' });
+                router.push(`/platform/${companyId}/cpm`);
+            } finally {
+                setIsFetching(false);
+            }
+        };
+        fetchCounterparty();
+    }, [counterpartyId]);
 
     const handleSubmit = async () => {
         if (!formData.name.trim()) {
@@ -58,45 +73,42 @@ export default function Page() {
 
         setIsLoading(true);
         try {
-            const response = await cpmModule.createCounterparty({
+            const response = await cpmModule.updateCounterparty(counterpartyId, {
                 name: formData.name.trim(),
                 type: formData.type,
-                inn: formData.inn.trim() || undefined,
-                ogrn: formData.ogrn.trim() || undefined,
-                kpp: formData.kpp.trim() || undefined,
-                address: formData.address.trim() || undefined,
-                default_currency: formData.default_currency || undefined,
-                comment: formData.comment.trim() || undefined,
+                inn: formData.inn.trim() || null,
+                ogrn: formData.ogrn.trim() || null,
+                kpp: formData.kpp.trim() || null,
+                address: formData.address.trim() || null,
+                default_currency: formData.default_currency || null,
+                comment: formData.comment.trim() || null,
             });
 
             if (response.status) {
-                showMessage({ label: 'Контрагент создан', variant: 'success' });
-                router.push(`/platform/${companyId}/cpm`);
+                showMessage({ label: 'Контрагент обновлён', variant: 'success' });
+                router.push(`/platform/${companyId}/cpm/${counterpartyId}`);
             } else {
-                throw new Error(response.message || 'Ошибка создания');
+                throw new Error(response.message || 'Ошибка обновления');
             }
         } catch (error: any) {
-            showMessage({ label: error.message || 'Не удалось создать контрагента', variant: 'error' });
+            showMessage({ label: error.message || 'Не удалось обновить контрагента', variant: 'error' });
         } finally {
             setIsLoading(false);
         }
     };
 
+    if (ALLOW_PAGE.isLoading || isFetching) return <PlatformLoading />;
     if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
-        <PlatformNotAllowed permission={PERMISSIONS.CPM_COUNTERPARTIES_CREATE} />
+        <PlatformNotAllowed permission={PERMISSIONS.CPM_COUNTERPARTIES_UPDATE} />
     );
 
     return (
         <>
         <PlatformHead
-            title='Создание контрагента'
-            description="Инициализация записи контрагента."
+            title='Редактирование контрагента'
+            description="Обновление данных контрагента."
         />
         <PlatformFormBody>
-            <PlatformFormSection title='Поиск контрагента' description='Автоматическая подстановка реквизитов'>
-                <DaDataBlock onSelect={handleDaDataSelect} />
-            </PlatformFormSection>
-            <div className={styles.interLine} />
             <PlatformFormSection title='Наименование'>
                 <PlatformFormInput
                     placeholder="ООО «Ромашка»"
@@ -171,7 +183,7 @@ export default function Page() {
                     onClick={handleSubmit}
                     disabled={isLoading || !formData.name.trim()}
                 >
-                    {isLoading ? 'Создание...' : 'Создать контрагента'}
+                    {isLoading ? 'Сохранение...' : 'Сохранить изменения'}
                 </Button>
             </section>
         </PlatformFormBody>

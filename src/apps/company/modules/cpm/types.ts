@@ -1,6 +1,6 @@
 import { PaginationMeta } from "@/apps/shared/pagination/types";
 
-export type CounterpartyType = 'bank' | 'legal' | 'person';
+export type CounterpartyType = 'bank' | 'organization' | 'person';
 export type CounterpartyStatus = 'active' | 'inactive';
 
 export interface Counterparty {
@@ -61,7 +61,7 @@ export interface CounterpartiesResponse {
 
 const COUNTERPARTY_TYPE_LABELS: Record<CounterpartyType, string> = {
     bank: 'Банк',
-    legal: 'Юрлицо',
+    organization: 'Организация',
     person: 'Физлицо',
 };
 
