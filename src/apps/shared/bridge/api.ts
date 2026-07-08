@@ -271,7 +271,7 @@ class ApiBridge {
         return this.makeRequest<T>(endpoint, options, retryCount, false);
     }
 
-    get<T>(endpoint: string, options?: RequestOptions): Promise<ApiResponse<T>> {
+    get<T>(endpoint: string, options?: RequestOptions,): Promise<ApiResponse<T>> {
         return this.request<T>(endpoint, { ...options, method: 'GET' });
     }
 

@@ -41,6 +41,7 @@ export default function Page() {
     const ALLOW_ANALYSIS = usePermission(PERMISSIONS.FM_ANALYSIS);
     const ALLOW_FORECAST = usePermission(PERMISSIONS.FM_FORECAST);
     const ALLOW_REPORTS = usePermission(PERMISSIONS.DOCS)
+    const ALLOW_CATEGORIES = usePermission(PERMISSIONS.FM_TRANSACTIONS_CATEGORIES)
 
     const fmModule = useFm();
     const pathname = usePathname();
@@ -289,26 +290,28 @@ export default function Page() {
             <div className={styles.cards}>
                 {isAllowed(ALLOW_ANALYSIS) && (
                     <Link href={`/platform/${companyId}/fm/e2e`} className={clsx(styles.card, styles.accent)}>
-                    <div className={styles.name}>Анализ</div>
-                    <div className={styles.description}>Диаграммы распределения финансовых операций</div>
-                </Link>
+                        <div className={styles.name}>Анализ</div>
+                        <div className={styles.description}>Диаграммы распределения финансовых операций</div>
+                    </Link>
                 )}
                 {isAllowed(ALLOW_FORECAST) && (
                     <Link href={`/platform/${companyId}/fm/forecast`} className={styles.card}>
-                    <div className={styles.name}>Прогнозирование</div>
-                    <div className={styles.description}>Прогноз финансов компании</div>
-                </Link>
+                        <div className={styles.name}>Прогнозирование</div>
+                        <div className={styles.description}>Прогноз финансов компании</div>
+                    </Link>
                 )}
                 {isAllowed(ALLOW_REPORTS) && (
                     <Link href={`/platform/${companyId}/fm/reports`} className={styles.card}>
-                    <div className={styles.name}>Отчёты</div>
-                    <div className={styles.description}>Просмотр и создание финансовых отчётов</div>
-                </Link>
+                        <div className={styles.name}>Отчёты</div>
+                        <div className={styles.description}>Просмотр и создание финансовых отчётов</div>
+                    </Link>
                 )}
-                <Link href={`/platform/${companyId}/fm/categories`} className={clsx(styles.card)}>
-                    <div className={styles.name}>Категории</div>
-                    <div className={styles.description}>Категории расходов/доходов</div>
-                </Link>
+                {isAllowed(ALLOW_CATEGORIES) && (
+                    <Link href={`/platform/${companyId}/fm/categories`} className={clsx(styles.card)}>
+                        <div className={styles.name}>Категории</div>
+                        <div className={styles.description}>Категории расходов/доходов</div>
+                    </Link>
+                )}
                 {/* <Link href={`/platform/${companyId}/fm/credits`} className={styles.card}>
                     <div className={styles.name}>Долги</div>
                     <div className={styles.description}>Управление долговыми обязательствами</div>

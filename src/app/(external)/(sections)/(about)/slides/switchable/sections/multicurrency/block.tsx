@@ -44,7 +44,7 @@ export function MulticurrencyBlock() {
                     {currencies.length} валют
                 </div>
                 <div className={styles.description}>
-                    Поддерживает финансовый модуль платформы
+                    Поддерживает финансовый модуль платформы.
                 </div>
             </div>
             <div className={styles.actions}>
