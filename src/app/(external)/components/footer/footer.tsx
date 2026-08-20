@@ -10,8 +10,8 @@ import Sun from '@/assets/ui-kit/icons/sun';
 import Moon from '@/assets/ui-kit/icons/moon';
 import { ThemeSwitcher } from './switcher/switcher';
 import { linksList } from './_links';
-import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from '../../(sections)/(customers)/(papers)/navigation.config';
-import { PlatformStatusWidget } from '@/app/(external)/(sections)/status/components/widget/widget';
+// import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from '../../(sections)/(customers)/(papers)/navigation.config';
+// import { PlatformStatusWidget } from '@/app/(external)/(sections)/status/components/widget/widget';
 
 export function Footer() {
     return (
@@ -33,7 +33,7 @@ export function Footer() {
                         </div>
                     ))}
                     <div className={clsx(styles.group, styles.status)}>
-                        <PlatformStatusWidget className={styles.widget} />
+                        {/* <PlatformStatusWidget className={styles.widget} /> */}
                     </div>
                 </div>
             </div>

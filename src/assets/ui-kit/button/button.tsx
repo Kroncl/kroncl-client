@@ -7,6 +7,7 @@ import Spinner from '../spinner/spinner';
 import Link, { LinkProps } from 'next/link';
 
 export type ButtonVariant = 'orange' | 'default' | 'leader' | 'light' | 'contrast' | 'elevated' | 'empty' | 'glass' | 'brand' | 'accent' | 'red' | 'green';
+export type ButtonBorder = 'default' | 'round' | 'none';
 
 interface CommonProps {
   children?: ReactNode;
@@ -17,6 +18,7 @@ interface CommonProps {
   className?: string;
   disabled?: boolean;
   icon?: ReactNode;
+  border?: ButtonBorder;
 }
 
 export type ButtonProps = CommonProps & (
@@ -35,6 +37,7 @@ export default function Button({
   disabled = false,
   icon,
   as = 'button',
+  border = 'default',
   ...props
 }: ButtonProps) {
   const isDisabled = disabled || loading;
@@ -60,7 +63,9 @@ export default function Button({
       [styles.loading]: loading,
       [styles.disabled]: disabled
     },
-    className
+    className,
+    border === 'round' && styles.round,
+    border === 'none' && styles.borderNone
   );
 
   // Рендер содержимого с иконкой

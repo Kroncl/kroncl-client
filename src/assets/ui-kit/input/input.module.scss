@@ -57,6 +57,15 @@
   &.fullWidth {
     width: 100%;
   }
+  
+  // Border
+  &.round {
+    border-radius: 3em;
+  }
+  &.borderNone {
+    border-width: 0;
+  }
+
 
   // Sizes
   &.bg {

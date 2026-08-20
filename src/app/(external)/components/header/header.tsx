@@ -22,23 +22,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { slideDown } from './_animations';
 import { getRandomGradient } from '@/assets/utils/avatars';
 import Arrow from '@/assets/ui-kit/icons/arrow';
-import { DivorceBlock } from './divorce/block';
+import { ModalMenu } from './modal-menu/menu';
 
 export function Header() {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
     const { login, user, status } = useAuth();
-
-    // Инициализация темы при загрузке
-    useEffect(() => {
-        const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-        setTheme(initialTheme);
-        document.documentElement.setAttribute('data-theme', initialTheme);
-    }, []);
 
     // Установка светлой темы
     const setLightTheme = () => {
@@ -66,48 +56,6 @@ export function Header() {
         setIsMenuOpen(false);
     };
 
-    const renderNavigationItem = (item: typeof navigationConfig[0], itemIndex: number) => {
-        const isActive = isSectionActive(pathname, item);
-        
-        if (item.out) {
-            return (
-                <a 
-                    href={item.href}
-                    target="_blank"
-                    key={itemIndex}
-                    rel="noopener noreferrer"
-                    className={clsx(styles.section, isActive && styles.active)}
-                >
-                    <span className={styles.name}>{item.name}</span>
-                    <span className={styles.icon}><OutLink className={styles.svg} /></span>
-                </a>
-            );
-        }
-
-        if (item.subItems) {
-            return (
-                <div 
-                    className={clsx(styles.section, styles.divorceSection)}
-                    key={itemIndex}
-                >
-                    <span className={styles.name}>{item.name}</span>
-                    <span className={styles.icon}><Arrow className={clsx(styles.svg, styles.rotate)} /></span>
-                    <DivorceBlock className={styles.divorce} items={item.subItems} />
-                </div>
-            )
-        }
-
-        return (
-            <Link 
-                href={item.href}
-                key={itemIndex}
-                className={clsx(styles.section, isActive && styles.active)}
-            >
-                <span className={styles.name}>{item.name}</span>
-            </Link>
-        );
-    };
-
     
     const [showAccountModal, setShowAccountModal] = useState(false);
     const [hideTimer, setHideTimer] = useState<NodeJS.Timeout | null>(null);
@@ -127,26 +75,6 @@ export function Header() {
         setHideTimer(timer);
     };
 
-    useEffect(() => {
-    if (user) {
-        setShowAccountModal(true);
-
-        const timer = setTimeout(() => {
-        setShowAccountModal(false);
-        }, 5000);
-        
-        setHideTimer(timer);
-        
-        return () => {
-        if (hideTimer) {
-            clearTimeout(hideTimer);
-        }
-        };
-    } else {
-        setShowAccountModal(false);
-    }
-    }, [user]);
-
     return (
         <>
             <header className={clsx(styles.container, isMenuOpen && styles.active)}>
@@ -157,55 +85,40 @@ export function Header() {
                 </Link>
 
                 <div className={styles.navigation}>
-                    <div className={styles.frame}>
-                        {navigationConfig.map((item, index) => (
-                            renderNavigationItem(item, index)
-                        ))}
-                    </div>
+                    {navigationConfig.map((item, index) => (
+                        <div className={styles.section}>
+                            <span className={styles.name}>{item.name}</span>
+                        </div>
+                    ))}
                 </div>
                 
                 <div className={styles.actions}>
-                    {/* <div className={styles.theme}>
-                        <div className={styles.switcher}>
-                            <span 
-                                className={clsx(styles.box, theme === 'light' && styles.active)} 
-                                onClick={setLightTheme}
-                            >
-                                <Sun className={styles.svg} />
-                            </span>
-                            <span 
-                                className={clsx(styles.box, theme === 'dark' && styles.active)} 
-                                onClick={setDarkTheme}
-                            >
-                                <Moon className={styles.svg} />
-                            </span>
-                        </div>
-                    </div> */}
-                    {!user && (
+                    {!user ? (
                         <div className={styles.buttons}>
                             <Button 
                                 className={styles.button} 
-                                variant='empty'
+                                variant='glass'
                                 as="a"
-                                href={authLinks.login}
-                                // target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Войти
-                            </Button>
-                            <Button 
-                                className={styles.button} 
-                                variant='accent'
-                                as="a"
+                                border='round'
                                 href={authLinks.registration}
                                 // target="_blank"
                                 rel="noopener noreferrer"
                             >
                                 Начать бесплатно
                             </Button>
+                            <Button 
+                                className={styles.button} 
+                                variant='accent'
+                                as="a"
+                                border='round'
+                                href={authLinks.login}
+                                // target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Войти
+                            </Button>
                         </div>
-                    )}
-                    {user && (
+                    ) : (
                         <div className={styles.account}>
                             <span 
                             className={styles.avatar}
@@ -218,14 +131,7 @@ export function Header() {
                                     style={{backgroundImage: `url('${user.avatar_url}')`}} 
                                 />
                             ) : (
-                                // Рандомный яркий градиент
-                                <span 
-                                    className={`${styles.img} ${styles.gradient}`}
-                                    style={{ 
-                                        background: getRandomGradient(user)
-                                    }}
-                                >
-                                    {/* Можно добавить первую букву имени */}
+                                <span className={`${styles.img} ${styles.default}`}>
                                     {user.name?.charAt(0).toUpperCase()}
                                 </span>
                             )}
@@ -265,6 +171,11 @@ export function Header() {
                         )}
                     </div>
                 </div>
+
+                {/* Previews */}
+                <ModalMenu
+                    className={styles.modalMenu}
+                />
             </header>
 
             {/* Mobile menu */}

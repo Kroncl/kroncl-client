@@ -89,6 +89,16 @@
     width: 100%;
   }
 
+  // Border
+  &.round {
+    border-radius: 3em;
+    padding-left: 1.3em;
+    padding-right: 1.3em;
+  }
+  &.borderNone {
+    border-width: 0;
+  }
+
   // Sizes
   &.bg {
     font-size: 1.25em;

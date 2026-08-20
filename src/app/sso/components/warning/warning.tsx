@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import styles from '../../layout.module.scss';
-import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from '@/app/(external)/(sections)/(customers)/(papers)/navigation.config';
+// import { PAPERS_LINK_PLATFORM_USAGE, PAPERS_LINK_POLICY_PRIVACY } from '@/app/(external)/(sections)/(customers)/(papers)/navigation.config';
 
 export function Warning() {
   return (
@@ -20,7 +20,7 @@ export function Warning() {
       }}
     >
       Совершая любые действия с аккаунтом Kroncl, включая вход и регистрацию, вы принимаете{' '}
-      <Link href={PAPERS_LINK_POLICY_PRIVACY}>
+      {/* <Link href={PAPERS_LINK_POLICY_PRIVACY}>
         <motion.span
           className={styles.link}
           whileHover={{ 
@@ -44,7 +44,7 @@ export function Warning() {
         >
           Правила использования платформы
         </motion.span>
-      </Link>
+      </Link> */}
       .
     </motion.div>
   );
