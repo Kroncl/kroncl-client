@@ -11,19 +11,22 @@
     border-bottom: 1px solid var(--color-stroke-primary);
     display: flex;
     flex-flow: row nowrap;
+    color: var(--color-text-primary);
 
     .preview {
         display: flex;
         flex-flow: column nowrap;
-        width: 18%;
+        min-width: 12rem;
+        max-width: 12rem;
         background-color: var(--color-surface-glass);
         // max-width: 4rem;
+        padding-bottom: 3rem;
 
         .label {
-            height: 30%;
-            min-height: 4rem;
+            min-height: 5rem;
+            max-height: 5rem;
             // border: 1px solid red;
-            background-color: rgba(124, 234, 124, 0.398)
+            background-color: var(--color-contrast-secondary);
         }
         .info {
             display: flex;
@@ -44,10 +47,73 @@
         }
         .actions {
             display: flex;
-            flex-flow: row nowrap;
+            flex-flow: row wrap;
             gap: .5rem;
             font-size: .56em;
             padding: 1rem;
+        }
+    }
+
+    .content {
+        display: flex;
+        flex-flow: row wrap;
+        gap: 1rem 2rem;
+        font-size: .7em;
+        padding: 1.3rem;
+        align-items: start;
+
+        .col {
+            display: flex;
+            flex: 1;
+            min-width: 13rem;
+            max-width: 13rem;
+            flex-flow: column nowrap;
+            gap: .5rem;
+
+            .head {
+                display: flex;
+                flex-flow: row nowrap;
+                align-items: center;
+                gap: .3em;
+                font-weight: 600;
+
+                svg {
+                    width: 1.2em;
+                    height: 1.2em;
+                    color: var(--color-icon-primary);
+                }
+
+                .title {
+                    @include text-ellipsis();
+                }
+            }
+            .description {
+                font-size: .76em;
+                line-height: 1.4;
+                color: var(--color-text-secondary);
+            }
+            .links {
+                display: flex;
+                flex-flow: column nowrap;
+                gap: .6rem;
+                margin: .4rem 0;
+                font-size: .8em;
+
+                .link {
+                    font-weight: 600;
+                    @include text-ellipsis();
+                }
+            }
+                
+            .link {
+                @include cursor(pointer);
+
+                &:hover {
+                    text-decoration: underline;
+                    text-decoration-line: underline;
+                    color: var(--color-green);
+                }
+            }
         }
     }
 

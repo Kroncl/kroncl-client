@@ -1,46 +1,74 @@
 import clsx from 'clsx';
-import { NavigationSubItem } from '../navigation.config';
 import styles from './menu.module.scss';
 import Link from 'next/link';
 import Button from '@/assets/ui-kit/button/button';
-import { authLinks, linksConfig } from '@/config/links.config';
-import { LogoFull } from '@/assets/ui-kit/logo/full/full';
-import Kanban from '@/assets/ui-kit/icons/kanban';
-import Github from '@/assets/ui-kit/logos/github';
-
-export interface ModalMenuProps {
-    className?: string;
-    items?: NavigationSubItem[];
-}
+import { MenuProps } from './_types';
 
 export function ModalMenu({
     className,
-    items
-}: ModalMenuProps) {
+    preview,
+    content
+}: MenuProps) {
     return (
         <div className={clsx(styles.menu, className)}>
             <div className={styles.preview}>
                 <div className={styles.label}></div>
                 <div className={styles.info}>
                     <div className={styles.title}>
-                        Разъёбывайте эти опелевские генераторы
+                        {preview.title}
                     </div>
-                    <div className={styles.description}>
-                        Прежде чем приступить к программированию, сделайте домашнее задание, чтобы спроектировать и спланировать отличное приложение.
+                    {preview.description && (
+                        <div className={styles.description}>
+                            {preview.description}
+                        </div>
+                    )}
+                </div>
+                {preview.actions && preview.actions.length > 0 && (
+                    <div className={styles.actions}>
+                        {preview.actions.map((action, index) => (
+                            <Button 
+                                key={index}
+                                {...action}
+                                className={clsx(styles.action, action.className)}
+                            />
+                        ))}
                     </div>
-                </div>
-                <div className={styles.actions}>
-                    <Button 
-                        border='round'
-                        variant='accent'
-                        children='Начните сейчас'
-                        className={styles.action}
-                    />
-                </div>
+                )}
             </div>
             <div className={styles.content}>
-
+                {content.items.map((item, index) => (
+                    <div key={index} className={styles.col}>
+                        <div className={styles.head}>
+                            {item.icon && (<span className={styles.icon}>{item.icon}</span>)}
+                            {item.href ? (
+                                <Link href={item.href} className={clsx(styles.title, styles.link)}>
+                                    {item.title}
+                                </Link>
+                            ) : (
+                                <span className={clsx(styles.title)}>
+                                    {item.title}
+                                </span>
+                            )}
+                        </div>
+                        {item.description && (
+                            <div className={styles.description}>
+                                {item.description}
+                            </div>
+                        )}
+                        {item.links && item.links.length > 0 && (
+                            <div className={styles.links}>
+                                {item.links.map((link, linkIndex) => (
+                                    <Link 
+                                        key={linkIndex}
+                                        {...link}
+                                        className={clsx(styles.link)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
         </div>
-    )
+    );
 }
