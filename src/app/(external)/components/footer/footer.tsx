@@ -16,25 +16,18 @@ import { linksList } from './_links';
 export function Footer() {
     return (
         <footer className={styles.container}>
-            <div className={styles.focus}>
-                <div className={styles.brand}>
-                    <div className={styles.logo}><LogoFull /></div>
-                    {/* <MailingSubscribeWidget className={styles.mailingWidget} /> */}
-                    <ThemeSwitcher className={styles.switcher} />
-                </div>
-                <div className={styles.sections}>
-                    {linksList.map((group, index) => (
-                        <div key={index} className={styles.group}>
-                            {group.capture && (<div className={styles.name}>{group.capture}</div>)}
-                            
-                            {group.links.map((link, index) => (
-                                <Link key={index} href={link.href} className={styles.section}>{link.capture}</Link>
-                            ))}
-                        </div>
-                    ))}
-                    <div className={clsx(styles.group, styles.status)}>
-                        {/* <PlatformStatusWidget className={styles.widget} /> */}
+            <div className={styles.sections}>
+                {linksList.map((group, index) => (
+                    <div key={index} className={styles.group}>
+                        {group.capture && (<div className={styles.name}>{group.capture.toUpperCase()}</div>)}
+                        
+                        {group.links.map((link, index) => (
+                            <Link key={index} href={link.href} className={styles.section}>{link.capture}</Link>
+                        ))}
                     </div>
+                ))}
+                <div className={clsx(styles.group, styles.status)}>
+                    {/* <PlatformStatusWidget className={styles.widget} /> */}
                 </div>
             </div>
         </footer>

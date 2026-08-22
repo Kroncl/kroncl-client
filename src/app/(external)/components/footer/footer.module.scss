@@ -4,90 +4,89 @@
 .container {
     border-top: 1px solid var(--color-stroke-secondary);
     display: flex;
-    padding: 1rem .8rem;
+    padding: 1rem 1rem;
     justify-content: center;
     font-size: .6em;
-    background-color: var(--color-surface-glass-secondary);
-}
-
-// focus area
-.focus {
+    background-color: var(--color-header);
     display: flex;
-    width: 100%;
-    max-width: var(--focus-width);
     flex-flow: row nowrap;
     gap: 3rem;
+}
 
-    .brand {
+.brand {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: .1em;
+    max-width: 9rem;
+    align-items: start;
+    
+    .logo {
+        height: fit-content;
+        font-size: 1.45em;
+    }
+    .slogan {
+        font-size: .6em;
+        color: grey;
+        line-height: 1.3;
+        // padding-left: .7em;
+    }
+
+    .mailingWidget {
+        width: 100%;
+        margin-top: 1rem;
+        font-size: .6em;
+    }
+
+    .switcher {
+        margin-top: .8rem;
+        font-size: 1.5em;
+    }
+}
+.sections {
+    display: flex;
+    flex: 1;
+    flex-flow: row wrap;
+    gap: 2rem 1.5rem;
+    padding: .5rem 0 3rem 0;
+    font-size: .65em;
+
+    .group {
         display: flex;
         flex-flow: column nowrap;
-        gap: .1em;
+        gap: 1.2em;
+        min-width: 9rem;
         max-width: 9rem;
-        align-items: start;
-        
-        .logo {
-            height: fit-content;
-            font-size: 1.45em;
+
+        .name {
+            margin-bottom: .4em;
+            color: var(--color-text-ghost);
+            font-weight: 500;
         }
-        .slogan {
-            font-size: .6em;
-            color: grey;
+        .section {
+            font-size: .95em;
+            @include cursor(pointer);
+            transition: color var(--transition);
             line-height: 1.3;
-            // padding-left: .7em;
+            color: var(--color-text-primary);
+
+            &:hover {
+                color: var(--color-text-hint);
+            }
         }
 
-        .mailingWidget {
-            width: 100%;
-            margin-top: 1rem;
-            font-size: .6em;
+        &.papers {
+            min-width: 18rem;
+            max-width: 18rem;
         }
-
-        .switcher {
-            margin-top: .8rem;
-            font-size: 1.5em;
-        }
-    }
-    .sections {
-        display: flex;
-        flex: 1;
-        flex-flow: row wrap;
-        gap: 2rem 1.5rem;
-        padding: .5rem 0 3rem 0;
-        font-size: .6em;
-
-        .group {
-            display: flex;
-            flex-flow: column nowrap;
-            gap: 1.2em;
-            min-width: 9rem;
-            max-width: 9rem;
-
-            .name {
-                margin-bottom: .4em;
-                color: var(--color-text-ghost);
-            }
-            .section {
-                font-size: .95em;
-                @include cursor(pointer);
-                transition: color var(--transition);
-                line-height: 1.3;
-                color: var(--color-text-primary);
-
-                &:hover {
-                    color: var(--color-text-hint);
-                }
-            }
-
-            &.papers {
-                min-width: 18rem;
-                max-width: 18rem;
-            }
-            &.status {
-                justify-content: end;
-            }
+        &.status {
+            justify-content: end;
         }
     }
+}
 
+// media
+
+.container {
     @media (max-width: 720px) {
         flex-flow: row wrap;
         gap: .2rem;

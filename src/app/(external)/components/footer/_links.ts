@@ -57,6 +57,19 @@ export const linksList: FooterGroup[] = [
         ]
     },
     {
+        capture: 'Платформа',
+        links: [
+            { capture: 'Управление финансами', href: '/fm' },
+            { capture: 'Клиентская база', href: '/crm' },
+            { capture: 'Каталог & Склад', href: '/wm' },
+            { capture: 'Управление персоналом', href: '/hrm' },
+            { capture: 'Управление сделками', href: '/dm' },
+            { capture: 'Активность', href: '/activity' },
+            { capture: 'Хранилище', href: '/storage' },
+            { capture: 'Безопасность', href: '/security' }
+        ]
+    },
+    {
         capture: 'Закон',
         links: [
             // { capture: 'Политика конфиденциальности', href: PAPERS_LINK_POLICY_PRIVACY },
