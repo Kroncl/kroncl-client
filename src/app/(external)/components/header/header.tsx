@@ -17,22 +17,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { slideDown } from './_animations';
 import { ModalMenu } from './modal-menu/menu';
 import { ThemeSwitcher } from '../footer/switcher/switcher';
+import { ModalTooltip } from '@/app/components/tooltip/tooltip';
 
 export function Header() {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // const { user } = useAuth();
-
-    const user = {
-        id: '12931238012893',
-        email: 'emai sdfsdfsdf sdf sdfsdfsdfl',
-        name: 'Serafim',
-        // avatar_url: 'https://avatars.githubusercontent.com/u/132403496?v=4',
-        auth_type: 'password',
-        status: 'active',
-        created_at: '',
-        updated_at: ''
-    }
+    const { user } = useAuth();
     
     // Состояние для меню навигации
     const [activeMenuIndex, setActiveMenuIndex] = useState<number | null>(null);
@@ -148,33 +138,39 @@ export function Header() {
                     </div>
                     {!user ? (
                         <div className={styles.buttons}>
-                            <Button 
-                                className={clsx(styles.button)}
-                                as="a"
-                                variant='link'
-                                href={authLinks.registration}
-                            >
-                                Начать бесплатно
-                            </Button>
-                            <Button 
-                                className={clsx(styles.button)}
-                                as="a"
-                                variant='link'
-                                href={authLinks.login}
-                            >
-                                Войти
-                            </Button>
+                            <ModalTooltip content='Регистрация аккаунта' compact>
+                                <Button 
+                                    className={clsx(styles.button)}
+                                    as="a"
+                                    variant='link'
+                                    href={authLinks.registration}
+                                >
+                                    Начать бесплатно
+                                </Button>
+                            </ModalTooltip>
+                            <ModalTooltip content='Вход в существующий аккаунт' compact>
+                                <Button 
+                                    className={clsx(styles.button)}
+                                    as="a"
+                                    variant='link'
+                                    href={authLinks.login}
+                                >
+                                    Войти
+                                </Button>
+                            </ModalTooltip>
                         </div>
                     ) : (
                         <div className={styles.buttons}>
-                            <Button 
-                                className={clsx(styles.button, styles.cut)}
-                                as="a"
-                                variant='link'
-                                href='/platform'
-                            >
-                                Продолжить
-                            </Button>
+                            <ModalTooltip content='Продолжить' compact>
+                                <Button 
+                                    className={clsx(styles.button, styles.cut)}
+                                    as="a"
+                                    variant='link'
+                                    href='/platform'
+                                >
+                                    Продолжить
+                                </Button>
+                            </ModalTooltip>
                         </div>
                     )}
                     <div className={styles.burger} onClick={toggleMenu}>

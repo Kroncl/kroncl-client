@@ -1,7 +1,7 @@
 @use '@/assets/styles/_mixins.scss' as *;
 
 .content {
-    background: var(--color-surface-glass);
+    background: var(--color-surface-tertiary);
     border: 1px solid var(--color-stroke-secondary);
     color: var(--color-text-primary);
     font-size: 12px;

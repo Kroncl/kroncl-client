@@ -8,10 +8,12 @@
     min-height: 20rem;
     background-color: var(--color-header);
     width: 100%;
-    border-bottom: 1px solid var(--color-stroke-primary);
+    border-bottom: 5px solid var(--color-green);
     display: flex;
     flex-flow: row nowrap;
     color: var(--color-text-primary);
+    max-height: 100vh;
+    overflow-y: scroll;
 
     .preview {
         display: flex;
@@ -117,15 +119,15 @@
         }
     }
 
-    &::after {
-        content: "";
-        position: absolute;
-        z-index: 1000;
-        height: 5px;
-        width: 100%;
-        bottom: -5px;
-        left: 0;
-        pointer-events: none;
-        background: linear-gradient(180deg, var(--color-surface-secondary), transparent);
-    }
+    // &::after {
+    //     content: "";
+    //     position: absolute;
+    //     z-index: 1000;
+    //     height: 5px;
+    //     width: 100%;
+    //     bottom: -5px;
+    //     left: 0;
+    //     pointer-events: none;
+    //     background: linear-gradient(180deg, var(--color-surface-secondary), transparent);
+    // }
 }

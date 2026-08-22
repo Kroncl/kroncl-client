@@ -1,5 +1,24 @@
 @use '@/assets/styles/_mixins.scss' as *;
 
-.page {
-    
+.slideContent {
+    display: flex;
+    flex: 1;
+    max-width: var(--focus-width);
+}
+
+.slide {
+    &:nth-child(1) {
+        // background: linear-gradient(180deg, transparent, var(--color-surface-tertiary))
+        // background-color: #ffd6d6;
+        // color: #000000dd !important;
+    }
+    &:nth-child(2) {
+        // background-color: var(--color-surface-tertiary);
+    }
+    &:nth-child(3) {
+        // background: linear-gradient(180deg, var(--color-surface-tertiary), transparent)
+    }
+    &:nth-child(4) {
+        // background: linear-gradient(180deg, var(--color-surface-tertiary), transparent)
+    }
 }

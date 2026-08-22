@@ -1,0 +1,13 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.slide {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    font-size: .55em;
+
+    @media (max-width: 720px) {
+        padding: .8rem;
+        font-size: .6em;
+    }
+}
