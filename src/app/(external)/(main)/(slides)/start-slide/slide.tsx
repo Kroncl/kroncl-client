@@ -12,24 +12,26 @@ export default function StartSlide({
     className
 }: PageBlockProps) {
     const { user } = useAuth();
-    
+    const currentYear: number = new Date().getFullYear();
+
     return (
         <>
         <div className={clsx(styles.slide, className)}>
             <div className={styles.col}>
                 <div className={styles.title}>
-                    Улучшите свое приложение для новейших устройств Pixel
+                    Учётная система для управления вашим предприятием
                 </div>
                 <div className={styles.description}>
-                    Новое семейство Pixel 11 и Pixel Watch 5 открывают новые возможности для вашего приложения. Узнайте, как создавать адаптивные макеты для складных устройств и разрабатывать интерфейсы Wear OS с управлением жестами. Подробнее о внедрении искусственного интеллекта на устройстве с помощью API ML Kit Prompt для оптимизации вашего приложения в экосистеме Pixel.
+                    Место жизни вашего предприятия в быстром и не перегруженном облаке Kroncl. Управляйте организацией из любой точки мира. 
+                    Предотвратите кассовые разрывы, ведите простой учёт деятельности вашего бизнеса и получите понимание его рентабельности. Готовьтесь к масштабированию без проблем с 1с или Excel.
                 </div>
                 <div className={styles.actions}>
                     {!user ? (
                         <>
                             <Button 
-                                className={clsx(styles.button)}
+                                className={clsx(styles.button, styles.black)}
                                 as="a"
-                                variant='green'
+                                variant='contrast'
                                 text='bold'
                                 border='round'
                                 href={authLinks.registration}
@@ -39,7 +41,7 @@ export default function StartSlide({
                             <Button 
                                 className={clsx(styles.button)}
                                 as="a"
-                                variant='empty'
+                                variant='glass'
                                 border='round'
                                 href={authLinks.login}
                             >
@@ -48,19 +50,24 @@ export default function StartSlide({
                         </>
                     ) : (
                         <Button 
-                            className={clsx(styles.button, styles.cut)}
+                            className={clsx(styles.button)}
                             as="a"
                             variant='green'
                             text='bold'
                             border='round'
                             href='/platform'
                         >
-                            Продолжить
+                            Продолжить как &nbsp;<span className={styles.cut}>{user.name}</span>
                         </Button>
                     )}
                 </div>
             </div>
-        </div>    
+        </div>
+        <span className={styles.modal}>
+            <span className={styles.slogan}>новые времена - новые решения</span>
+            <span className={styles.year}>{currentYear+1}</span>
+        </span>
+        {/* <img src='/images/mock-ups/company-fm-analysis-cut.png' className={styles.mockUp} /> */}
         </>
     )
 }
