@@ -8,10 +8,12 @@ import Moon from '@/assets/ui-kit/icons/moon';
 
 export interface ThemeSwitcherProps {
     className?: string;
+    type?: 'any' | 'one';
 }
 
 export function ThemeSwitcher({
-    className
+    className,
+    type = 'any'
 }: ThemeSwitcherProps) {
     
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -45,19 +47,31 @@ export function ThemeSwitcher({
     };
 
     return (
-        <div className={clsx(styles.switcher, className)}>
-            <span 
-                className={clsx(styles.box, theme === 'light' && styles.active)} 
-                onClick={setLightTheme}
-            >
-                <Sun className={styles.svg} />
-            </span>
-            <span 
-                className={clsx(styles.box, theme === 'dark' && styles.active)} 
-                onClick={setDarkTheme}
-            >
-                <Moon className={styles.svg} />
-            </span>
+        <div className={clsx(styles.switcher, className, type === 'one' && styles.one)}>
+            {type === 'any' && (
+                <>
+                <span 
+                    className={clsx(styles.box, theme === 'light' && styles.active)} 
+                    onClick={setLightTheme}
+                >
+                    <Sun className={styles.svg} />
+                </span>
+                <span 
+                    className={clsx(styles.box, theme === 'dark' && styles.active)} 
+                    onClick={setDarkTheme}
+                >
+                    <Moon className={styles.svg} />
+                </span>
+                </>
+            )}
+            {type === 'one' && (
+                <span 
+                    className={clsx(styles.box)} 
+                    onClick={theme === 'dark' ? setLightTheme : setDarkTheme}
+                >
+                    {theme === 'dark' ? (<Moon className={styles.svg} />) : (<Sun className={styles.svg} />)}
+                </span>
+            )}
         </div>
     )
 }

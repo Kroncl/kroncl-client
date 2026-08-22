@@ -35,10 +35,11 @@ export const navigationConfig: NavigationItem[] = [
                 actions: [
                     {
                         children: 'Создать компанию',
-                        variant: 'contrast',
+                        variant: 'green',
                         border: 'round',
                         as: 'link',
-                        href: '/product/start'
+                        href: '/product/start',
+                        text: 'bold'
                     }
                 ]
             },

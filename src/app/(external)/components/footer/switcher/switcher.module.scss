@@ -4,8 +4,8 @@
     height: 1em;
     display: inline-flex;
     flex-flow: row nowrap;
-    border-radius: 1em;
-    background-color: var(--color-surface-glass);
+    border-radius: .2em;
+    background-color: var(--color-surface-tertiary);
     border: 1px solid var(--color-stroke-secondary);
     overflow: hidden;
 
@@ -16,15 +16,16 @@
         align-items: center;
         justify-content: center;
         transition: background-color var(--transition), border-color var(--transition);
-        border-radius: .3em;
+        border-radius: .2em;
         border: 1px solid transparent;
         @include cursor(pointer);
-
+        
         .svg {
             width: 40%;
             height: 40%;
             fill: var(--color-icon-primary);
             transition: fill var(--transition);
+            margin-bottom: 3%;
         }
 
         &:hover {
@@ -35,6 +36,20 @@
 
             .svg {
                 fill: var(--color-leader);
+            }
+        }
+    }
+
+    &.one {
+        border-radius: 50%;
+        background-color: transparent;
+        border: none;
+        
+        .box {
+            .svg {
+                width: 50%;
+                height: 50%;
+                fill: var(--color-text-secondary);
             }
         }
     }

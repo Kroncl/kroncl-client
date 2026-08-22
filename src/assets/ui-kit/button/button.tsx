@@ -6,8 +6,9 @@ import { ButtonHTMLAttributes, AnchorHTMLAttributes, ReactNode } from 'react';
 import Spinner from '../spinner/spinner';
 import Link, { LinkProps } from 'next/link';
 
-export type ButtonVariant = 'orange' | 'default' | 'leader' | 'light' | 'contrast' | 'elevated' | 'empty' | 'glass' | 'brand' | 'accent' | 'red' | 'green';
+export type ButtonVariant = 'default' | 'link' | 'orange' | 'leader' | 'light' | 'contrast' | 'elevated' | 'empty' | 'glass' | 'brand' | 'accent' | 'red' | 'green';
 export type ButtonBorder = 'default' | 'round' | 'none';
+export type ButtonText = 'default' | 'bold';
 
 interface CommonProps {
   children?: ReactNode;
@@ -19,6 +20,7 @@ interface CommonProps {
   disabled?: boolean;
   icon?: ReactNode;
   border?: ButtonBorder;
+  text?: ButtonText;
 }
 
 export type ButtonProps = CommonProps & (
@@ -38,6 +40,7 @@ export default function Button({
   icon,
   as = 'button',
   border = 'default',
+  text = 'default',
   ...props
 }: ButtonProps) {
   const isDisabled = disabled || loading;
@@ -57,6 +60,7 @@ export default function Button({
       [styles.red]: variant === 'red',
       [styles.green]: variant === 'green',
       [styles.orange]: variant === 'orange',
+      [styles.link]: variant === 'link',
       [styles.fullWidth]: fullWidth,
       [styles.sm]: size === 'sm',
       [styles.lg]: size === 'lg',
@@ -65,7 +69,8 @@ export default function Button({
     },
     className,
     border === 'round' && styles.round,
-    border === 'none' && styles.borderNone
+    border === 'none' && styles.borderNone,
+    text === 'bold' && styles.bold,
   );
 
   // Рендер содержимого с иконкой

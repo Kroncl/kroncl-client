@@ -3,12 +3,12 @@
     --color-brand: rgb(239, 111, 111);
     --color-brand-light: var(--color-brand);
     --color-brand-pale: var(--color-brand);
-    --color-leader: #0e0e0f;
+    --color-leader: #121212;
     --color-contrast: #ebebeb;
     --color-contrast-light: #c8c8c8;
     --color-contrast-secondary: #c8c8c8;
     --color-contrast-tertiary: #b3b1b1;
-    --color-header: #1e1e1e;
+    --color-header: #121212;
     --color-accent: #2560ff;
     --color-accent-text-primary: #ffffff;
     
@@ -56,6 +56,10 @@
     // ==================== ICONS ====================
     --color-icon-primary: #adadad;
     --color-icon-active: var(--color-accent);
+
+    // ==================== LINKS ====================
+    --color-link-primary: #aecbfa;
+    --color-link-primary-background: #15305c;
     
     // ==================== EXTENDED PALETTE ====================
     --color-red: #f63939;

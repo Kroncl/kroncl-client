@@ -54,6 +54,10 @@
   &.light {
     background-color: var(--color-surface-light);
   }
+  &.green {
+    background-color: var(--color-green);
+    color: #000;
+  }
   &.fullWidth {
     width: 100%;
   }

@@ -16,11 +16,23 @@ import { useAuth } from '@/apps/account/auth/context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { slideDown } from './_animations';
 import { ModalMenu } from './modal-menu/menu';
+import { ThemeSwitcher } from '../footer/switcher/switcher';
 
 export function Header() {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { user } = useAuth();
+    // const { user } = useAuth();
+
+    const user = {
+        id: '12931238012893',
+        email: 'emai sdfsdfsdf sdf sdfsdfsdfl',
+        name: 'Serafim',
+        // avatar_url: 'https://avatars.githubusercontent.com/u/132403496?v=4',
+        auth_type: 'password',
+        status: 'active',
+        created_at: '',
+        updated_at: ''
+    }
     
     // Состояние для меню навигации
     const [activeMenuIndex, setActiveMenuIndex] = useState<number | null>(null);
@@ -131,70 +143,38 @@ export function Header() {
                 </div>
                 
                 <div className={styles.actions}>
+                    <div className={styles.themeSwitcher}>
+                        <ThemeSwitcher type='one' className={styles.switcher} />
+                    </div>
                     {!user ? (
                         <div className={styles.buttons}>
                             <Button 
-                                className={styles.button} 
-                                variant='glass'
+                                className={clsx(styles.button)}
                                 as="a"
-                                border='round'
+                                variant='link'
                                 href={authLinks.registration}
                             >
                                 Начать бесплатно
                             </Button>
                             <Button 
-                                className={styles.button} 
-                                variant='accent'
+                                className={clsx(styles.button)}
                                 as="a"
-                                border='round'
+                                variant='link'
                                 href={authLinks.login}
                             >
                                 Войти
                             </Button>
                         </div>
                     ) : (
-                        <div className={styles.account}>
-                            <span 
-                                className={styles.avatar}
-                                onMouseEnter={handleAccountMouseEnter}
-                                onMouseLeave={handleAccountMouseLeave}
+                        <div className={styles.buttons}>
+                            <Button 
+                                className={clsx(styles.button, styles.cut)}
+                                as="a"
+                                variant='link'
+                                href='/platform'
                             >
-                                {user.avatar_url ? (
-                                    <span 
-                                        className={styles.img} 
-                                        style={{backgroundImage: `url('${user.avatar_url}')`}} 
-                                    />
-                                ) : (
-                                    <span className={`${styles.img} ${styles.default}`}>
-                                        {user.name?.charAt(0).toUpperCase()}
-                                    </span>
-                                )}
-                            </span>
-
-                            <AnimatePresence>
-                                {showAccountModal && (
-                                    <motion.div 
-                                        className={styles.modal}
-                                        variants={slideDown}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="hidden"
-                                        key="account-modal"
-                                        onMouseEnter={handleAccountMouseEnter}
-                                        onMouseLeave={handleAccountMouseLeave}
-                                    >
-                                        <div className={styles.title}>
-                                            <span className={styles.contrast}>{user.name}</span>
-                                        </div>
-                                        <div className={styles.description}>
-                                            Получен доступ к аккаунту. Продолжить работу?
-                                        </div>
-                                        <Button as='link' href='/sso/redirect' fullWidth className={styles.button} variant='accent'>
-                                            Продолжить
-                                        </Button>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                                Продолжить
+                            </Button>
                         </div>
                     )}
                     <div className={styles.burger} onClick={toggleMenu}>
