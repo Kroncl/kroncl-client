@@ -6,6 +6,7 @@
     gap: .5rem;
     color: var(--color-text-primary);
     padding: 1rem 0;
+    padding-bottom: 0 !important;
 
     .capture {
         font-size: 2em;
@@ -36,22 +37,23 @@
         justify-content: center;
     }
 
-    .grid {
-        display: flex;
-        flex-flow: row wrap;
-        gap: 1rem;
+    .architectureVisual {
         margin-top: .5rem;
-        
-        .col {
-            border: 1px solid var(--color-stroke-primary);
-            display: flex;
-            flex: 1;
-            min-height: 20rem;
-            border-radius: 1.2rem;
+        height: 70vh;
+        position: relative;
+
+        .block {
         }
 
         @media (max-width: 720px) {
-            flex-direction: column;
+            height: 50vh;
+
+            .block {
+                position: absolute !important;
+                z-index: 1;
+                right: -100%;
+                width: 180%;
+            }
         }
     }
 }

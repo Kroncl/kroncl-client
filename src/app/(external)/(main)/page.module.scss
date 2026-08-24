@@ -26,9 +26,13 @@
         // background: linear-gradient(180deg, var(--color-surface-tertiary), transparent)
     }
     &:nth-child(5) {
-        background: var(--color-surface-tertiary);
+        // background: var(--color-surface-tertiary);
     }
     &:nth-child(6) {
+        // background: var(--color-surface-tertiary);
+    }
+    &:nth-child(7) {
+        padding-bottom: 0 !important;
         // background: var(--color-surface-tertiary);
     }
 }

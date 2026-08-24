@@ -1,0 +1,204 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.block {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: var(--color-text-ghost);
+
+    .layer {
+        position: absolute;
+        z-index: 100;
+        bottom: 0;
+        right: 0;
+        border-top-left-radius: .2rem;
+        border-left: 1px dashed var(--color-stroke-primary);
+        border-top: 1px dashed var(--color-stroke-primary);
+        transition: border-color var(--transition);
+
+        &:hover {
+            border-color: var(--color-contrast);
+        }
+
+        &:nth-child(1) {
+            width: 100%;
+            height: 100%;
+
+            &::before {
+                position: absolute;
+                top: 20%;
+                left: -4.3em;
+                content: 'АККАУНТ [A]';
+                font-family: 'Courier New', monospace;
+                font-size: .67em;
+                display: inline-block;
+                transform: rotate(-90deg);
+            }
+        }
+        &:nth-child(2) {
+            width: 88%;
+            height: 88%;
+            background-color: var(--color-surface-glass);
+
+            &::before {
+                position: absolute;
+                top: 20%;
+                left: -4.5em;
+                content: 'КОМПАНИЯ [C]';
+                font-family: 'Courier New', monospace;
+                font-size: .67em;
+                display: inline-block;
+                transform: rotate(-90deg);
+            }
+        }
+        &:nth-child(3) {
+            width: 68%;
+            height: 68%;
+            background-color: var(--color-surface-glass);
+
+            &::before {
+                position: absolute;
+                top: 20%;
+                left: -3.9em;
+                content: 'МОДУЛИ [M]';
+                font-family: 'Courier New', monospace;
+                font-size: .67em;
+                display: inline-block;
+                transform: rotate(-90deg);
+            }
+        }
+        &:nth-child(4) {
+            width: 20%;
+            height: 20%;
+            background-color: var(--color-surface-glass);
+
+            &::before {
+                position: absolute;
+                top: 34%;
+                left: -3.7em;
+                content: 'ЯДРО [GO]';
+                font-family: 'Courier New', monospace;
+                font-size: .67em;
+                display: inline-block;
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
+    .line {
+        position: absolute;
+        z-index: 101;
+        left: 0;
+        bottom: 20%;
+        height: 1px;
+        border-top: 1px dashed var(--color-stroke-primary);
+        @include cursor(pointer);
+        transition: border-color var(--transition);
+
+        &:hover {
+            border-color: var(--color-contrast);
+        }
+
+        &.line1 {
+            width: 32%;
+
+            &::before {
+                position: absolute;
+                top: .6em;
+                right: 5%;
+                content: '[A:C:M]';
+                font-family: 'Courier New', monospace;
+                font-size: .67em;
+                display: inline-block;
+            }
+        }
+    }
+
+    .sector {
+        position: absolute;
+        z-index: 103;
+        top: 0;
+        left: 0%;
+        height: 100%;
+        border-right: 1px dashed var(--color-stroke-primary);
+        transition: border-color var(--transition);
+
+        &:hover {
+            border-color: var(--color-contrast);
+        }
+        
+        @for $i from 1 through 6 {
+            &:nth-child(#{$i}) {
+                width: $i * 10%;
+            }
+        }
+
+        &:nth-child(1)::before {
+            content: '[CPM]';
+            position: absolute;
+            z-index: 104;
+            top: 10%;
+            right: -.2em;
+            font-family: 'Courier New', monospace;
+            font-size: .67em;
+            display: inline-block;
+            transform: rotate(-90deg);
+        }
+        &:nth-child(2)::before {
+            content: '[DM]';
+            position: absolute;
+            z-index: 104;
+            top: 10%;
+            right: -.2em;
+            font-family: 'Courier New', monospace;
+            font-size: .67em;
+            display: inline-block;
+            transform: rotate(-90deg);
+        }
+        &:nth-child(3)::before {
+            content: '[CRM]';
+            position: absolute;
+            z-index: 104;
+            top: 10%;
+            right: -.2em;
+            font-family: 'Courier New', monospace;
+            font-size: .67em;
+            display: inline-block;
+            transform: rotate(-90deg);
+        }
+        &:nth-child(4)::before {
+            content: '[WM]';
+            position: absolute;
+            z-index: 104;
+            top: 10%;
+            right: -.2em;
+            font-family: 'Courier New', monospace;
+            font-size: .67em;
+            display: inline-block;
+            transform: rotate(-90deg);
+        }
+        &:nth-child(5)::before {
+            content: '[HRM]';
+            position: absolute;
+            z-index: 104;
+            top: 10%;
+            right: -.2em;
+            font-family: 'Courier New', monospace;
+            font-size: .67em;
+            display: inline-block;
+            transform: rotate(-90deg);
+        }
+        &:nth-child(6)::before {
+            content: '[FM]';
+            position: absolute;
+            z-index: 104;
+            top: 10%;
+            right: -.2em;
+            font-family: 'Courier New', monospace;
+            font-size: .67em;
+            display: inline-block;
+            transform: rotate(-90deg);
+        }
+    }
+}
