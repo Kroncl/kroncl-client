@@ -33,6 +33,10 @@
     }
     &:nth-child(7) {
         padding-bottom: 0 !important;
+        overflow: hidden;
         // background: var(--color-surface-tertiary);
+    }
+    &:nth-child(8) {
+        background-color: var(--color-contrast)
     }
 }

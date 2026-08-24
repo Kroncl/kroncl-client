@@ -16,7 +16,7 @@ export default function DesignSlide({
             <div className={styles.capture}>Спроектировано<br />для малого бизнеса</div>
             <div className={styles.description}>От внешнего вида до архитектуры модулей - чтобы малому бизнесу было удобно.</div>
             <div className={styles.architectureVisual}>
-                <ArchitectureBlock className={styles.block} />
+                <ArchitectureBlock layers={true} className={styles.block} />
             </div>
         </div>
         </>

@@ -7,6 +7,7 @@ import { style } from 'framer-motion/client';
 import { useAuth } from '@/apps/account/auth/context/AuthContext';
 import Button from '@/assets/ui-kit/button/button';
 import { authLinks } from '@/config/links.config';
+import ArchitectureBlock from '../design-slide/architecture-block/block';
 
 export default function StartSlide({
     className
@@ -67,6 +68,7 @@ export default function StartSlide({
             <span className={styles.slogan}>новые времена - новые решения</span>
             <span className={styles.year}>{currentYear+1}</span>
         </span>
+        <ArchitectureBlock className={styles.architectureVisual} />
         {/* <img src='/images/mock-ups/company-fm-analysis-cut.png' className={styles.mockUp} /> */}
         </>
     )

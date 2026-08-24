@@ -75,6 +75,7 @@
     right: 2.4rem;
     font-size: .7rem;
     color: var(--color-leader);
+    display: none;
 
     .slogan {
         display: block;
@@ -89,6 +90,15 @@
     }
 }
 
+.architectureVisual {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    right: 0;
+    width: 40% !important;
+    color: #1b1b1bd4 !important;
+}
+
 @media (max-width: 720px) {
     .slide {
         padding-bottom: 3rem;
@@ -96,5 +106,9 @@
     .modal {
         font-size: .44rem;
         right: 1rem;
+        display: block;
+    }
+    .architectureVisual {
+        display: none !important;
     }
 }

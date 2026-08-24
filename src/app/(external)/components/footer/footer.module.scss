@@ -54,8 +54,9 @@
         display: flex;
         flex-flow: column nowrap;
         gap: 1.2em;
-        min-width: 9rem;
-        max-width: 9rem;
+        flex: 1;
+        min-width: 8rem;
+        max-width: 8rem;
 
         .name {
             margin-bottom: .4em;

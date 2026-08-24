@@ -9,6 +9,7 @@ import AllWorldSlide from './(slides)/all-world-slide/slide';
 import ModulesSlide from './(slides)/modules-slide/slide';
 import TarifficationSlide from './(slides)/tariffication-slide/slide';
 import DesignSlide from './(slides)/design-slide/slide';
+import CommunitySlide from './(slides)/community-slide/slide';
 
 export default function MainPage() {
     return (
@@ -20,6 +21,7 @@ export default function MainPage() {
         <Slide className={clsx(styles.slide)}><ModulesSlide className={styles.slideContent} /></Slide>
         <Slide className={clsx(styles.slide)}><TarifficationSlide className={styles.slideContent} /></Slide>
         <Slide className={clsx(styles.slide)}><DesignSlide className={styles.slideContent} /></Slide>
+        <Slide className={clsx(styles.slide)}><CommunitySlide className={styles.slideContent} /></Slide>
         </>
     )
 }

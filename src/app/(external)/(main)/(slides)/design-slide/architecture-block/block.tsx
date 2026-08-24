@@ -10,23 +10,27 @@ import { ModalTooltip } from '@/app/components/tooltip/tooltip';
 
 export interface ArchitectureBlockProps {
     className?: string;
+    layers?: boolean;
 }
 
 export default function ArchitectureBlock({
-    className
+    className,
+    layers = false
 }: ArchitectureBlockProps) {
     return (
-        <div className={clsx(styles.block, className)}>
+        <div className={clsx(styles.block, className, layers && styles.backgrounds)}>
             <div className={clsx(styles.layer)}></div>
             <div className={clsx(styles.layer)}></div>
-            <div className={clsx(styles.layer)}>
-                <div className={clsx(styles.sector)}></div>
-                <div className={clsx(styles.sector)}></div>
-                <div className={clsx(styles.sector)}></div>
-                <div className={clsx(styles.sector)}></div>
-                <div className={clsx(styles.sector)}></div>
-                <div className={clsx(styles.sector)}></div>
-            </div>
+            <ModalTooltip content='В составе модулей: управление контрагентами, клиентами, складом, сотрудниками, финансами и сделками.'>
+                <div className={clsx(styles.layer)}>
+                    <div className={clsx(styles.sector)}></div>
+                    <div className={clsx(styles.sector)}></div>
+                    <div className={clsx(styles.sector)}></div>
+                    <div className={clsx(styles.sector)}></div>
+                    <div className={clsx(styles.sector)}></div>
+                    <div className={clsx(styles.sector)}></div>
+                </div>
+            </ModalTooltip>
             <ModalTooltip content='Ядро Kroncl написано на производительном языке Golang и содержит базовую логику взаимодействия модулей, обеспечения безопасности компаний и многое другое.'>
                 <div className={clsx(styles.layer)}></div>
             </ModalTooltip>

@@ -39,7 +39,7 @@
         &:nth-child(2) {
             width: 88%;
             height: 88%;
-            background-color: var(--color-surface-glass);
+            // background-color: var(--color-surface-glass);
 
             &::before {
                 position: absolute;
@@ -55,7 +55,7 @@
         &:nth-child(3) {
             width: 68%;
             height: 68%;
-            background-color: var(--color-surface-glass);
+            // background-color: var(--color-surface-glass);
 
             &::before {
                 position: absolute;
@@ -71,7 +71,7 @@
         &:nth-child(4) {
             width: 20%;
             height: 20%;
-            background-color: var(--color-surface-glass);
+            // background-color: var(--color-surface-glass);
 
             &::before {
                 position: absolute;
@@ -199,6 +199,12 @@
             font-size: .67em;
             display: inline-block;
             transform: rotate(-90deg);
+        }
+    }
+
+    &.backgrounds {
+        .layer {
+            background-color: var(--color-surface-glass);
         }
     }
 }
