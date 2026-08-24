@@ -15,6 +15,7 @@ import Star from "@/assets/ui-kit/icons/star";
 import { NavigationSection } from "@/assets/utils/sections";
 import { MenuProps } from "./modal-menu/_types";
 import Package from "@/assets/ui-kit/icons/package";
+import { linksConfig } from "@/config/links.config";
 
 export interface NavigationItem extends NavigationSection {
     name: string;
@@ -26,8 +27,8 @@ const iconStyles = { width: 16, height: 16 };
 
 export const navigationConfig: NavigationItem[] = [
     {
-        name: 'Решения',
-        href: '/modules',
+        name: 'Продукт',
+        href: '/product',
         menu: {
             preview: {
                 title: 'Инструменты малого бизнеса на каждый день',
@@ -38,7 +39,7 @@ export const navigationConfig: NavigationItem[] = [
                         variant: 'green',
                         border: 'round',
                         as: 'link',
-                        href: '/product/start',
+                        href: linksConfig.createCompany,
                         text: 'bold'
                     }
                 ]
@@ -48,7 +49,7 @@ export const navigationConfig: NavigationItem[] = [
                     {
                         icon: <Wallet />,
                         title: 'Финансы',
-                        href: '/products/',
+                        href: '/product/fm',
                         description: `
                         Управление финансами предприятия. Кошелёк компании. Дебет & Кредит. Операции в 16 валютах.
                         `,
@@ -61,6 +62,7 @@ export const navigationConfig: NavigationItem[] = [
                     },
                     {
                         icon: <Team />,
+                        href: '/product/hrm',
                         title: 'Сотрудники & Команда',
                         description: 'Управление штатом сотрудников. Планирование рабочего календаря, фонда оплаты труда. Календарь загруженности. Распределение задач.',
                         links: [
@@ -73,6 +75,7 @@ export const navigationConfig: NavigationItem[] = [
                     },
                     {
                         icon: <Kanban />,
+                        href: '/product/dm',
                         title: 'Сделки',
                         description: 'Управление сделками. Воронка заказов, назначение ответственных сотрудников, создание накладных, бюджет сделки, автоматическое создание прихода после завершения. Кастомизируйте воронку под структуру своей компании: настривайте статусы, добавляйте комментарии.',
                         links: [
@@ -84,6 +87,7 @@ export const navigationConfig: NavigationItem[] = [
                     },
                     {
                         icon: <Business />,
+                        href: '/product/cpm',
                         title: 'Контрагенты & Поставщики',
                         description: 'Быстрый поиск по базам реквизитов юридических лиц. Учёт контрагентов, двустороннего оборота.',
                         links: [
@@ -97,6 +101,7 @@ export const navigationConfig: NavigationItem[] = [
                     {
                         icon: <Clients />,
                         title: 'Клиенты',
+                        href: '/product/crm',
                         description: 'Управление',
                         links: [
                             { href: '/product/team', children: 'Управление командой' },
@@ -107,6 +112,7 @@ export const navigationConfig: NavigationItem[] = [
                     },
                     {
                         icon: <Package />,
+                        href: '/product/wm',
                         title: 'Каталог & Склад',
                         description: 'Управление',
                         links: [

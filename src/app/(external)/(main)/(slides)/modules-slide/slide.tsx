@@ -93,7 +93,7 @@ export default function ModulesSlide({
                 <div className={styles.actions}>
                     <Button
                         as='link'
-                        href='/'
+                        href='/product'
                         children='Подробно о модулях'
                         text='bold'
                         variant='contrast'

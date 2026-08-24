@@ -28,7 +28,7 @@ export function Header() {
     const [activeMenuIndex, setActiveMenuIndex] = useState<number | null>(null);
     const [menuPosition, setMenuPosition] = useState({ left: 0 });
     const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const sectionRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => setIsMenuOpen(false);
@@ -109,7 +109,8 @@ export function Header() {
 
                 <div className={styles.navigation}>
                     {navigationConfig.map((item, index) => (
-                        <div 
+                        <Link
+                            href={item.href} 
                             key={index}
                             ref={(el) => { sectionRefs.current[index] = el; }}
                             className={clsx(
@@ -128,7 +129,7 @@ export function Header() {
                                     </svg>
                                 </span>
                             )}
-                        </div>
+                        </Link>
                     ))}
                 </div>
                 

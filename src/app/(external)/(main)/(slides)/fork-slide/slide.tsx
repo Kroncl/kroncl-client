@@ -16,18 +16,18 @@ export default function ForkSlide({
         <>
         <div className={clsx(styles.slide, className)}>
             <div className={styles.grid}>
-                <div className={styles.col}>
+                <Link href='/product' className={styles.col}>
                     <span className={styles.icon}><Code /></span>
                     <span className={styles.title}>Модули</span>
-                </div>
-                <div className={styles.col}>
+                </Link>
+                <Link href='/docs' className={styles.col}>
                     <span className={styles.icon}><Book /></span>
                     <span className={styles.title}>Документация</span>
-                </div>
-                <div className={styles.col}>
+                </Link>
+                <Link href='/integrations' className={styles.col}>
                     <span className={styles.icon}><Puzzle /></span>
                     <span className={styles.title}>Интеграции</span>
-                </div>
+                </Link>
             </div>
             <ModalTooltip content='6 модулей в бесплатном тарифном плане на 30 дней'>
             <div className={styles.text}>

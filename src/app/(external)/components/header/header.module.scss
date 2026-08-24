@@ -103,7 +103,11 @@
                 }
             }
             &.active {
+                .name {
+                    color: var(--color-contrast);
+                }
                 &::after {
+                    opacity: 1;
                     background-color: var(--color-green);
                 }
             }

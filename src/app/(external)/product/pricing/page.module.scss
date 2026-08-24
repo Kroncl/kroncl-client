@@ -1,0 +1,19 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.slideContent {
+    display: flex;
+    flex: 1;
+    max-width: var(--focus-width);
+}
+
+.slide {
+    position: relative;
+    
+    &:nth-child(1) {
+        // background: linear-gradient(180deg, transparent, var(--color-surface-tertiary))
+        // background-color: #ffd6d6;
+        // color: #000000dd !important;
+        // background-color: rgb(249, 210, 216);
+        overflow: hidden;
+    }
+}
