@@ -32,7 +32,7 @@
         }
         .actions {
             font-weight: 500;
-            font-size: .72em;
+            font-size: .78em;
             display: flex;
             flex-flow: row wrap;
             justify-content: center;
@@ -55,45 +55,43 @@
                 font-size: .7em;
             }
             .actions {
-                font-size: .6em;
+                font-size: .7em;
             }
         }
     }
 }
 
-.mockUp {
-    position: absolute;
-    z-index: 1;
-    bottom: 0;
-    right: 0;
-    width: 33%;
-}
-
 .modal {
     position: absolute;
     z-index: 1;
-    bottom: -3.3em;
-    right: 2.4rem;
-    font-size: .7rem;
-    color: var(--color-text-primary);
-    display: none;
+    bottom: -1em;
+    left: 0;
+    padding: 0 1em;
+    color: var(--color-surface-glass);
+    width: 100%;
+    text-align: center;
+    font-size: 1.4em;
+    overflow: hidden;
 
-    .slogan {
-        display: block;
-        text-align: right;
-        padding-right: .5em;
+    .grid {
+        display: inline-flex;
+        flex-flow: row nowrap;
+        gap: 1em;
     }
-    .year {
-        display: block;
-        font-size: 12em;
-        font-weight: 600;
-        text-align: right;
+
+    svg {
+        width: 6em;
+        height: 6em;
+    }
+
+    @media (max-width: 720px) {
+        font-size: .3em;
     }
 }
 
 @media (max-width: 720px) {
     .slide {
-        padding-bottom: 3rem;
+        padding-bottom: 1.4rem;
     }
     .modal {
         font-size: .44rem;

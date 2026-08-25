@@ -8,6 +8,12 @@ import { useAuth } from '@/apps/account/auth/context/AuthContext';
 import Button from '@/assets/ui-kit/button/button';
 import { authLinks } from '@/config/links.config';
 import ArchitectureBlock from '@/app/(external)/(main)/(slides)/design-slide/architecture-block/block';
+import Package from '@/assets/ui-kit/icons/package';
+import Clients from '@/assets/ui-kit/icons/clients';
+import Kanban from '@/assets/ui-kit/icons/kanban';
+import Wallet from '@/assets/ui-kit/icons/wallet';
+import Team from '@/assets/ui-kit/icons/team';
+import Business from '@/assets/ui-kit/icons/business';
 
 export default function StartSlide({
     className
@@ -52,6 +58,16 @@ export default function StartSlide({
                         </Button>
                     )}
                 </div>
+            </div>
+        </div>
+        <div className={styles.modal}>
+            <div className={styles.grid}>
+                <Package />
+                <Clients />
+                <Kanban />
+                <Wallet />
+                <Team />
+                <Business />
             </div>
         </div>
         {/* <img src='/images/mock-ups/company-fm-analysis-cut.png' className={styles.mockUp} /> */}
