@@ -107,8 +107,8 @@
             display: inline-flex;
             padding: .4em;
             transition: background-color var(--transition);
-            border-radius: .5em;
             @include cursor(pointer);
+            font-weight: 500 !important;
             background-color: transparent;
 
             .svg {
@@ -169,8 +169,8 @@
     .input, .action {
         width: 100%;
         gap: .7em;
-        height: 3.2em;
-        border-radius: .75em;
+        // height: 3.2em;
+        // border-radius: .75em;
 
         .svg {
             width: 1.3em;

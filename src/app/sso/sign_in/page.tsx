@@ -240,7 +240,7 @@ export default function LoginPage() {
                     >
                         <Button 
                             className={styles.action} 
-                            variant='contrast'
+                            variant='accent'
                             onClick={handleLogin}
                             loading={isLoadingForm}
                             disabled={isLoadingForm}
@@ -267,7 +267,7 @@ export default function LoginPage() {
                         >
                             <Button 
                                 className={styles.action} 
-                                variant='accent'
+                                variant='contrast'
                                 disabled={isLoadingForm}
                                 as='link'
                                 href={authLinks.registration}
