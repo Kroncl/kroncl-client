@@ -30,7 +30,7 @@ export default function StartSlide({
                     {!user ? (
                         <>
                             <Button 
-                                className={clsx(styles.button, styles.black)}
+                                className={clsx(styles.button)}
                                 as="a"
                                 variant='contrast'
                                 text='bold'
@@ -64,11 +64,11 @@ export default function StartSlide({
                 </div>
             </div>
         </div>
-        <span className={styles.modal}>
+        {/* <span className={styles.modal}>
             <span className={styles.slogan}>новые времена - новые решения</span>
             <span className={styles.year}>{currentYear+1}</span>
         </span>
-        <ArchitectureBlock className={styles.architectureVisual} />
+        <ArchitectureBlock className={styles.architectureVisual} /> */}
         {/* <img src='/images/mock-ups/company-fm-analysis-cut.png' className={styles.mockUp} /> */}
         </>
     )
