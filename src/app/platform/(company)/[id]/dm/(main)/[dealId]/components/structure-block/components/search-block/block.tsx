@@ -8,7 +8,7 @@ import { useWm } from '@/apps/company/modules';
 import { CatalogUnit, PositionWithUnit } from '@/apps/company/modules/wm/types';
 import Spinner from '@/assets/ui-kit/spinner/spinner';
 import Button from '@/assets/ui-kit/button/button';
-import { getUnitRu } from '@/app/platform/(company)/[id]/wm/(catalog)/units/new/_units';
+import { getUnitRu } from '@/app/platform/(company)/[id]/wm/catalog/units/new/_units';
 
 export type SearchMode = 'catalog' | 'stock';
 

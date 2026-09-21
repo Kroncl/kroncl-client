@@ -7,7 +7,7 @@ import { isAllowed, usePermission } from '@/apps/permissions/hooks';
 import { PERMISSIONS } from '@/apps/permissions/codes.config';
 import { PlatformLoading } from '@/app/platform/components/lib/loading/loading';
 import { PlatformNotAllowed } from '@/app/platform/components/lib/not-allowed/block';
-import { DocCard } from '../../docs/components/doc-card/card';
+import { DocCard } from '../../../docs/components/doc-card/card';
 import { PlatformPagination } from '@/app/platform/components/lib/pagination/pagination';
 import { usePagination } from '@/apps/shared/pagination/hooks/usePagination';
 import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';

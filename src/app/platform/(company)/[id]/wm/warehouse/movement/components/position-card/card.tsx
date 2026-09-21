@@ -8,7 +8,7 @@ import Close from "@/assets/ui-kit/icons/close";
 import Input from "@/assets/ui-kit/input/input";
 import { ModalTooltip } from "@/app/components/tooltip/tooltip";
 import { CatalogUnit } from "@/apps/company/modules/wm/types";
-import { getUnitRu } from "../../../(catalog)/units/new/_units";
+import { getUnitRu } from "../../../../catalog/units/new/_units";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 

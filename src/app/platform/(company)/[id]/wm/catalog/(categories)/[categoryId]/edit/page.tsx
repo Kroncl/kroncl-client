@@ -1,50 +1,84 @@
 'use client';
 
-import { PlatformFormBody, PlatformFormInput, PlatformFormSection } from "@/app/platform/components/lib/form";
+import { PlatformFormBody, PlatformFormInput, PlatformFormSection, PlatformFormStatus } from "@/app/platform/components/lib/form";
 import { PlatformHead } from "@/app/platform/components/lib/head/head";
 import Button from "@/assets/ui-kit/button/button";
+import SuccessStatus from "@/assets/ui-kit/icons/success-status";
+import ErrorStatus from "@/assets/ui-kit/icons/error-status";
 import { useState, useEffect } from 'react';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { useWm } from '@/apps/company/modules';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
+import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
 import { ChooseCategoryModal } from "../../../components/choose-category-modal/modal";
 import { CatalogCategory } from '@/apps/company/modules/wm/types';
 import styles from './page.module.scss';
 import { CategoryCard } from "../../../components/category-card/card";
-import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { usePermission } from "@/apps/permissions/hooks";
 import { PERMISSIONS } from "@/apps/permissions/codes.config";
 import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
 import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
-import { DOCS_LINK_WM, DOCS_LINK_WM_CATALOG_CATEGORIES } from "@/app/docs/(v1)/internal.config";
+import { DOCS_LINK_WM_CATALOG_CATEGORIES } from "@/app/docs/(v1)/internal.config";
 
-export default function NewCategoryPage() {
+export default function EditCategoryPage() {
     // perms
-    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG_CATEGORIES_CREATE)
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG_CATEGORIES_UPDATE)
 
     const wmModule = useWm();
     const { showMessage } = useMessage();
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const parentId = searchParams.get('parent_id');
+    const params = useParams();
+    const categoryId = params.categoryId as string;
     
     const [isLoading, setIsLoading] = useState(false);
-    const [isFetchingParent, setIsFetchingParent] = useState(!!parentId);
+    const [isFetching, setIsFetching] = useState(true);
+    const [isFetchingParent, setIsFetchingParent] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [isModalChooseCategoryOpen, setIsModalChooseCategoryOpen] = useState(false);
-    const [selectedParentCategory, setSelectedParentCategory] = useState<CatalogCategory | null>(null);
     
     const [formData, setFormData] = useState({
         name: '',
         comment: ''
     });
+    
+    const [selectedParentCategory, setSelectedParentCategory] = useState<CatalogCategory | null>(null);
+    const [originalParentId, setOriginalParentId] = useState<string | null>(null);
 
-    // Загружаем родительскую категорию если есть parent_id
     useEffect(() => {
-        if (parentId) {
-            loadParentCategory(parentId);
+        loadCategory();
+    }, [categoryId]);
+
+    const loadCategory = async () => {
+        setIsFetching(true);
+        setError(null);
+        try {
+            const response = await wmModule.getCategory(categoryId);
+            if (response.status) {
+                setFormData({
+                    name: response.data.name,
+                    comment: response.data.comment || ''
+                });
+                
+                // Если есть родительская категория, загружаем её данные
+                if (response.data.parent_id) {
+                    setOriginalParentId(response.data.parent_id);
+                    await loadParentCategory(response.data.parent_id);
+                }
+            } else {
+                throw new Error(response.message || 'Ошибка загрузки категории');
+            }
+        } catch (err: any) {
+            setError(err.message || 'Не удалось загрузить категорию');
+            showMessage({
+                label: err.message || 'Не удалось загрузить категорию',
+                variant: 'error'
+            });
+        } finally {
+            setIsFetching(false);
         }
-    }, [parentId]);
+    };
 
     const loadParentCategory = async (id: string) => {
         setIsFetchingParent(true);
@@ -88,24 +122,24 @@ export default function NewCategoryPage() {
 
         setIsLoading(true);
         try {
-            const response = await wmModule.createCategory({
-                name: formData.name.trim(),
-                comment: formData.comment.trim() || undefined,
-                parent_id: selectedParentCategory?.id || parentId || undefined
+            const response = await wmModule.updateCategory(categoryId, {
+                name: formData.name.trim() || undefined,
+                comment: formData.comment.trim() || '',
+                parent_id: selectedParentCategory?.id || ''
             });
 
             if (response.status) {
                 showMessage({
-                    label: 'Категория успешно создана',
+                    label: 'Категория успешно обновлена',
                     variant: 'success'
                 });
                 router.back();
             } else {
-                throw new Error(response.message || 'Ошибка создания категории');
+                throw new Error(response.message || 'Ошибка обновления категории');
             }
         } catch (error: any) {
             showMessage({
-                label: error.message || 'Не удалось создать категорию',
+                label: error.message || 'Не удалось обновить категорию',
                 variant: 'error'
             });
         } finally {
@@ -113,21 +147,25 @@ export default function NewCategoryPage() {
         }
     };
 
-    const isFormValid = formData.name.trim().length > 0;
-
-    if (ALLOW_PAGE.isLoading) return (
+    if (isFetching || ALLOW_PAGE.isLoading) {
         <PlatformLoading />
-    )
+    }
+
+    if (error) {
+        <PlatformError error={error} />
+    }
 
     if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
-        <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG_CATEGORIES_CREATE} />
+        <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG_CATEGORIES_UPDATE} />
     )
+
+    const isFormValid = formData.name.trim().length > 0;
 
     return (
         <>
             <PlatformHead
-                title='Новая категория'
-                description="Создание новой категории товаров или услуг."
+                title='Редактирование категории'
+                description="Изменение параметров категории товаров или услуг."
                 docsEscort={{
                     href: DOCS_LINK_WM_CATALOG_CATEGORIES,
                     title: 'Подробнее о категориях каталога'
@@ -196,7 +234,7 @@ export default function NewCategoryPage() {
                         onClick={handleSubmit}
                         disabled={!isFormValid || isLoading}
                     >
-                        {isLoading ? 'Создание...' : 'Создать категорию'}
+                        {isLoading ? 'Сохранение...' : 'Сохранить изменения'}
                     </Button>
                 </section>
             </PlatformFormBody>

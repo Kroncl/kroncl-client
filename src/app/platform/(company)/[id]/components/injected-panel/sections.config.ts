@@ -48,8 +48,14 @@ function allSections(companyId: string): Section[] {
     },
     {
         name: 'Каталог',
-        href: `/platform/${companyId}/wm`,
+        href: `/platform/${companyId}/wm/catalog`,
         icon: 'catalog',
+        lvl: PLAN_MID_LVL
+    },
+    {
+        name: 'Склад',
+        href: `/platform/${companyId}/wm/warehouse`,
+        icon: 'warehouse',
         lvl: PLAN_MID_LVL
     },
     {

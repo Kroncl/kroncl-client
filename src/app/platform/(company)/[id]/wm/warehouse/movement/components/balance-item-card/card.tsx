@@ -7,7 +7,7 @@ import { shortenId } from '@/assets/utils/ids';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ModalTooltip } from '@/app/components/tooltip/tooltip';
-import { getUnitRu } from '../../../(catalog)/units/new/_units';
+import { getUnitRu } from '../../../../catalog/units/new/_units';
 
 export interface BalanceItemCardProps {
     className?: string;

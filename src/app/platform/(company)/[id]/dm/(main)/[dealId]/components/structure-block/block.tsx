@@ -8,7 +8,7 @@ import Close from '@/assets/ui-kit/icons/close';
 import { CatalogUnit, PositionWithUnit } from '@/apps/company/modules/wm/types';
 import { DealPosition } from '@/apps/company/modules/dm/types';
 import { PlatformEmptyCanvas } from '@/app/platform/components/lib/empty-canvas/canvas';
-import { getUnitRu } from '@/app/platform/(company)/[id]/wm/(catalog)/units/new/_units';
+import { getUnitRu } from '@/app/platform/(company)/[id]/wm/catalog/units/new/_units';
 import { useMemo } from 'react';
 import clsx from 'clsx';
 

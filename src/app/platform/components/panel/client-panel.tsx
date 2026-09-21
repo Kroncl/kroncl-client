@@ -36,6 +36,7 @@ import Home from '@/assets/ui-kit/icons/home';
 import { AccountCompany } from '@/apps/account/companies/types';
 import { APP_VERSION } from '@/config/version.config';
 import Dev from '@/assets/ui-kit/icons/dev';
+import Package from '@/assets/ui-kit/icons/package';
 
 interface PlatformPanelProps {
   className?: string;

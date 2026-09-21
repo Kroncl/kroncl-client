@@ -13,7 +13,7 @@ import { PlatformModal } from "@/app/platform/components/lib/modal/modal";
 import { PlatformModalConfirmation } from "@/app/platform/components/lib/modal/confirmation/confirmation";
 import { useMessage } from "@/app/platform/components/lib/message/provider";
 import { motion } from 'framer-motion';
-import { getStatusLabel } from "../../../components/category-card/_utils";
+import { getStatusLabel } from "../../components/category-card/_utils";
 import styles from './page.module.scss';
 import Link from "next/link";
 import clsx from "clsx";

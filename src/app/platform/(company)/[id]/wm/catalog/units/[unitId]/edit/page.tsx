@@ -6,31 +6,37 @@ import Button from "@/assets/ui-kit/button/button";
 import { useState, useEffect, useMemo } from 'react';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { useWm } from '@/apps/company/modules';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { PlatformModal } from '@/app/platform/components/lib/modal/modal';
 import { ChooseCategoryModal } from "../../../components/choose-category-modal/modal";
 import { CatalogCategory, UnitType, InventoryType, TrackedType, TrackingDetail } from '@/apps/company/modules/wm/types';
 import styles from './page.module.scss';
 import { CategoryCard } from "../../../components/category-card/card";
 import Spinner from '@/assets/ui-kit/spinner/spinner';
-import { _units } from "./_units";
+import { _units } from "../../new/_units";
 import { usePermission } from "@/apps/permissions/hooks";
 import { PERMISSIONS } from "@/apps/permissions/codes.config";
 import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
+import { PlatformError } from "@/app/platform/components/lib/error/block";
 import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 import { DOCS_LINK_WM_CATALOG_UNITS } from "@/app/docs/(v1)/internal.config";
 
-export default function NewUnitPage() {
-    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG_UNITS_CREATE)
-    
+export default function EditUnitPage() {
+    const params = useParams();
+    const companyId = params.id as string;
+    const unitId = params.unitId as string;
+
+    // perms
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG_UNITS_UPDATE)
+        
     const wmModule = useWm();
     const { showMessage } = useMessage();
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const categoryId = searchParams.get('category_id');
     
     const [isLoading, setIsLoading] = useState(false);
-    const [isFetchingCategory, setIsFetchingCategory] = useState(!!categoryId);
+    const [isFetching, setIsFetching] = useState(true);
+    const [isFetchingCategory, setIsFetchingCategory] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const [isModalChooseCategoryOpen, setIsModalChooseCategoryOpen] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<CatalogCategory | null>(null);
     
@@ -47,40 +53,64 @@ export default function NewUnitPage() {
         currency: 'RUB' as const
     });
 
+    // Фильтруем единицы измерения
     const unitOptions = useMemo(() => {
-        if (formData.type === 'service') {
-            return _units.filter(unit => unit.value === 'pcs');
-        }
         if (formData.tracking_detail === 'serial') {
             return _units.filter(unit => unit.value === 'pcs');
         }
         return _units;
-    }, [formData.type, formData.tracking_detail]);
+    }, [formData.tracking_detail]);
 
-    useEffect(() => {
-        if (formData.type === 'service') {
-            setFormData(prev => ({ 
-                ...prev, 
-                unit: 'pcs',
-                inventory_type: 'untracked',
-                tracking_detail: undefined,
-                tracked_type: undefined,
-                purchase_price: ''
-            }));
-        }
-    }, [formData.type]);
-
+    // Автоматически ставим 'pcs' для serial
     useEffect(() => {
         if (formData.tracking_detail === 'serial' && formData.unit !== 'pcs') {
             setFormData(prev => ({ ...prev, unit: 'pcs' }));
         }
     }, [formData.tracking_detail]);
 
+    // Загружаем данные позиции
     useEffect(() => {
-        if (categoryId) {
-            loadCategory(categoryId);
+        loadUnit();
+    }, [unitId]);
+
+    const loadUnit = async () => {
+        setIsFetching(true);
+        setError(null);
+        try {
+            const response = await wmModule.getUnit(unitId);
+            
+            if (response.status) {
+                const unit = response.data;
+                setFormData({
+                    name: unit.name,
+                    comment: unit.comment || '',
+                    type: unit.type,
+                    inventory_type: unit.inventory_type,
+                    tracking_detail: unit.tracking_detail || undefined,
+                    tracked_type: unit.tracked_type || undefined,
+                    unit: unit.unit,
+                    sale_price: unit.sale_price.toString(),
+                    purchase_price: unit.purchase_price?.toString() || '',
+                    currency: unit.currency
+                });
+
+                // Загружаем категорию
+                if (unit.category_id) {
+                    await loadCategory(unit.category_id);
+                }
+            } else {
+                throw new Error(response.message || 'Ошибка загрузки позиции');
+            }
+        } catch (err: any) {
+            setError(err.message || 'Не удалось загрузить позицию');
+            showMessage({
+                label: err.message || 'Не удалось загрузить позицию',
+                variant: 'error'
+            });
+        } finally {
+            setIsFetching(false);
         }
-    }, [categoryId]);
+    };
 
     const loadCategory = async (id: string) => {
         setIsFetchingCategory(true);
@@ -105,10 +135,15 @@ export default function NewUnitPage() {
     };
 
     const handleTypeChange = (value: string) => {
+        const newType = value as UnitType;
         setFormData(prev => ({ 
             ...prev, 
-            type: value as UnitType,
-            unit: value === 'service' ? 'pcs' : prev.unit
+            type: newType,
+            // Сбрасываем inventory_type при смене типа
+            inventory_type: newType === 'service' ? 'untracked' : prev.inventory_type,
+            // Для услуги убираем purchase_price и tracking_detail
+            purchase_price: newType === 'service' ? '' : prev.purchase_price,
+            tracking_detail: newType === 'service' ? undefined : prev.tracking_detail
         }));
     };
 
@@ -117,11 +152,13 @@ export default function NewUnitPage() {
         setFormData(prev => ({ 
             ...prev, 
             inventory_type: newInventoryType,
+            // Если выбрали untracked, убираем tracked_type, purchase_price и tracking_detail
             ...(newInventoryType === 'untracked' ? { 
                 tracked_type: undefined,
                 purchase_price: '',
                 tracking_detail: undefined
             } : {
+                // Если tracked, ставим tracking_detail по умолчанию И tracked_type для batch
                 tracking_detail: 'batch',
                 tracked_type: 'fifo'
             })
@@ -133,10 +170,12 @@ export default function NewUnitPage() {
         setFormData(prev => ({ 
             ...prev, 
             tracking_detail: newTrackingDetail,
+            // Если выбрали serial, убираем tracked_type и ставим unit='pcs'
             ...(newTrackingDetail === 'serial' ? { 
                 tracked_type: undefined,
                 unit: 'pcs'
             } : {
+                // Если batch, ставим tracked_type по умолчанию
                 tracked_type: 'fifo'
             })
         }));
@@ -170,6 +209,7 @@ export default function NewUnitPage() {
     };
 
     const handleSubmit = async () => {
+        // Валидация
         if (!formData.name.trim()) {
             showMessage({ label: 'Название обязательно', variant: 'error' });
             return;
@@ -187,13 +227,14 @@ export default function NewUnitPage() {
 
         const salePrice = parseFloat(formData.sale_price);
         if (isNaN(salePrice) || salePrice < 0) {
-            showMessage({ label: 'Укажите корректную цену', variant: 'error' });
+            showMessage({ label: 'Укажите корректную цену продажи', variant: 'error' });
             return;
         }
 
+        // Для tracked товаров проверяем все поля
         if (formData.inventory_type === 'tracked') {
             if (!formData.tracking_detail) {
-                showMessage({ label: 'Укажите детализацию учета', variant: 'error' });
+                showMessage({ label: 'Укажите детализацию учета (batch/serial)', variant: 'error' });
                 return;
             }
 
@@ -203,49 +244,69 @@ export default function NewUnitPage() {
                 return;
             }
 
+            // Для batch-учета проверяем tracked_type
             if (formData.tracking_detail === 'batch' && !formData.tracked_type) {
-                showMessage({ label: 'Укажите метод учета', variant: 'error' });
+                showMessage({ label: 'Укажите метод учета (FIFO/LIFO)', variant: 'error' });
                 return;
             }
+
+            // Для serial-учета проверяем что tracked_type не указан
+            if (formData.tracking_detail === 'serial' && formData.tracked_type) {
+                showMessage({ label: 'Для поштучного учета метод списания не применяется', variant: 'error' });
+                return;
+            }
+        }
+
+        // Для услуги проверяем что inventory_type = untracked
+        if (formData.type === 'service' && formData.inventory_type !== 'untracked') {
+            showMessage({ label: 'Услуги не могут быть tracked', variant: 'error' });
+            return;
         }
 
         setIsLoading(true);
         try {
             const request: any = {
-                name: formData.name.trim(),
-                comment: formData.comment.trim() || undefined,
+                name: formData.name.trim() || undefined,
+                comment: formData.comment.trim() || null,
                 type: formData.type,
                 inventory_type: formData.inventory_type,
                 unit: formData.unit.trim(),
                 sale_price: parseFloat(formData.sale_price),
                 currency: 'RUB',
-                category_id: selectedCategory.id,
-                status: 'active'
+                category_id: selectedCategory.id
             };
 
+            // Добавляем поля для tracked товаров
             if (formData.inventory_type === 'tracked') {
                 request.tracking_detail = formData.tracking_detail;
                 request.purchase_price = parseFloat(formData.purchase_price);
                 
                 if (formData.tracking_detail === 'batch') {
                     request.tracked_type = formData.tracked_type;
+                } else {
+                    request.tracked_type = null;
                 }
+            } else {
+                // Для untracked убираем все поля учета
+                request.tracking_detail = null;
+                request.tracked_type = null;
+                request.purchase_price = null;
             }
 
-            const response = await wmModule.createUnit(request);
+            const response = await wmModule.updateUnit(unitId, request);
 
             if (response.status) {
                 showMessage({
-                    label: 'Позиция успешно создана',
+                    label: 'Товарная позиция успешно обновлена',
                     variant: 'success'
                 });
                 router.back();
             } else {
-                throw new Error(response.message || 'Ошибка создания');
+                throw new Error(response.message || 'Ошибка обновления');
             }
         } catch (error: any) {
             showMessage({
-                label: error.message || 'Не удалось создать позицию',
+                label: error.message || 'Не удалось обновить позицию',
                 variant: 'error'
             });
         } finally {
@@ -270,17 +331,28 @@ export default function NewUnitPage() {
             if (formData.tracking_detail === 'batch' && !formData.tracked_type) return false;
         }
         
+        if (formData.type === 'service' && formData.inventory_type !== 'untracked') return false;
+        
         return true;
     };
 
-    if (ALLOW_PAGE.isLoading) return <PlatformLoading />;
-    if (!ALLOW_PAGE.allowed) return <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG_UNITS_CREATE} />;
+    if (isFetching || ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    )
+
+    if (error) return (
+        <PlatformError error={error} />
+    )
+
+    if (!ALLOW_PAGE.isLoading && !ALLOW_PAGE.allowed) return (
+        <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG_UNITS_UPDATE} />
+    )
 
     return (
         <>
             <PlatformHead
-                title='Новая товарная позиция'
-                description="Создание новой позиции в каталоге товаров и услуг."
+                title='Редактирование позиции'
+                description="Изменение параметров товарной позиции."
                 docsEscort={{
                     href: DOCS_LINK_WM_CATALOG_UNITS,
                     title: 'Подробнее о товарных позициях'
@@ -345,27 +417,42 @@ export default function NewUnitPage() {
                     />
                 </PlatformFormSection>
 
-                {formData.type !== 'service' && (
-                    <PlatformFormSection title='Тип учета'>
-                        <PlatformFormVariants
-                            options={[
-                                { value: 'tracked', label: 'Складской учет' },
-                                { value: 'untracked', label: 'Без учета' }
-                            ]}
-                            value={formData.inventory_type}
-                            onChange={handleInventoryTypeChange}
-                            disabled={isLoading}
-                        />
-                    </PlatformFormSection>
-                )}
+                <PlatformFormSection title='Тип учета'>
+                    <PlatformFormVariants
+                        options={[
+                            { 
+                                value: 'tracked', 
+                                label: 'Складской учет',
+                                description: 'Отслеживание остатков на складе',
+                                disabled: formData.type === 'service' 
+                            },
+                            { 
+                                value: 'untracked', 
+                                label: 'Без учета',
+                                description: 'Позиция не учитывается на складе (цифровые товары, услуги)'
+                            }
+                        ]}
+                        value={formData.inventory_type}
+                        onChange={handleInventoryTypeChange}
+                        disabled={isLoading || formData.type === 'service'}
+                    />
+                </PlatformFormSection>
 
-                {formData.inventory_type === 'tracked' && formData.type !== 'service' && (
+                {formData.inventory_type === 'tracked' && (
                     <>
                         <PlatformFormSection title='Детализация учета'>
                             <PlatformFormVariants
                                 options={[
-                                    { value: 'batch', label: 'Партионный учет' },
-                                    { value: 'serial', label: 'Поштучный учет' }
+                                    { 
+                                        value: 'batch', 
+                                        label: 'Партионный учет',
+                                        description: 'Учет по партиям с FIFO/LIFO. Подходит для массовых товаров.'
+                                    },
+                                    { 
+                                        value: 'serial', 
+                                        label: 'Поштучный учет',
+                                        description: 'Каждый экземпляр учитывается отдельно. Для уникальных товаров.'
+                                    }
                                 ]}
                                 value={formData.tracking_detail || 'batch'}
                                 onChange={handleTrackingDetailChange}
@@ -377,8 +464,16 @@ export default function NewUnitPage() {
                             <PlatformFormSection title='Метод учета партий'>
                                 <PlatformFormVariants
                                     options={[
-                                        { value: 'fifo', label: 'FIFO' },
-                                        { value: 'lifo', label: 'LIFO' }
+                                        { 
+                                            value: 'fifo', 
+                                            label: 'FIFO',
+                                            description: 'Первым пришел — первым ушел (First In, First Out).'
+                                        },
+                                        { 
+                                            value: 'lifo', 
+                                            label: 'LIFO',
+                                            description: 'Последним пришел — первым ушел (Last In, First Out).'
+                                        }
                                     ]}
                                     value={formData.tracked_type || 'fifo'}
                                     onChange={handleTrackedTypeChange}
@@ -394,15 +489,13 @@ export default function NewUnitPage() {
                         options={unitOptions}
                         value={formData.unit}
                         onChange={handleUnitChange}
-                        disabled={isLoading || formData.type === 'service' || formData.tracking_detail === 'serial'}
+                        disabled={isLoading || (formData.tracking_detail === 'serial' && formData.unit === 'pcs')}
                     />
-                    {formData.type === 'service' && (
-                        <div style={{ color: 'var(--color-text-hint)', marginTop: '0.2em' }}>
-                            Для услуг доступна только единица "Штука (pcs)"
-                        </div>
-                    )}
-                    {formData.tracking_detail === 'serial' && formData.type !== 'service' && (
-                        <div style={{ color: 'var(--color-text-hint)', marginTop: '0.2em' }}>
+                    {formData.tracking_detail === 'serial' && (
+                        <div style={{  
+                            color: 'var(--color-text-hint)', 
+                            marginTop: '0.2em' 
+                        }}>
                             Для поштучного учета доступна только единица "Штука (pcs)"
                         </div>
                     )}
@@ -418,7 +511,7 @@ export default function NewUnitPage() {
                     />
                 </PlatformFormSection>
 
-                {formData.inventory_type === 'tracked' && formData.type !== 'service' && (
+                {formData.inventory_type === 'tracked' && (
                     <PlatformFormSection title='Цена закупки (₽)'>
                         <PlatformFormInput
                             placeholder="0.00"
@@ -445,11 +538,12 @@ export default function NewUnitPage() {
                         onClick={handleSubmit}
                         disabled={!isFormValid() || isLoading}
                     >
-                        {isLoading ? 'Создание...' : 'Создать позицию'}
+                        {isLoading ? 'Сохранение...' : 'Сохранить изменения'}
                     </Button>
                 </section>
             </PlatformFormBody>
 
+            {/* выбор категории */}
             <PlatformModal
                 isOpen={isModalChooseCategoryOpen}
                 onClose={() => setIsModalChooseCategoryOpen(false)}

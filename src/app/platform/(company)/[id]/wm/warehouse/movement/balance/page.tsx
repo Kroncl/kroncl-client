@@ -3,7 +3,7 @@
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './page.module.scss';
 import { PlatformHead } from '@/app/platform/components/lib/head/head';
-import { sectionsList } from '../../_sections';
+import { sectionsList } from '../../../catalog/_sections';
 import { useEffect, useState } from 'react';
 import { useWm } from '@/apps/company/modules';
 import { StockBalanceItem } from '@/apps/company/modules/wm/types';

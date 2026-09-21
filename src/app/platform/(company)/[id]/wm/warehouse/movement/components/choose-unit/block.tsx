@@ -6,7 +6,7 @@ import { useWm } from '@/apps/company/modules';
 import { useEffect, useState, forwardRef } from 'react';
 import { CatalogUnit } from '@/apps/company/modules/wm/types';
 import Spinner from '@/assets/ui-kit/spinner/spinner';
-import { UnitCard } from '../../../components/unit-card/card';
+import { UnitCard } from '../../../../catalog/components/unit-card/card';
 
 export interface ChooseUnitBlockProps {
     className?: string;
