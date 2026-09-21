@@ -1,0 +1,165 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.frame {
+    display: flex;
+    flex: 1;
+    flex-flow: column nowrap;
+    gap: .5em;
+
+    .head {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: .8em;
+        font-size: .8em;
+        border-bottom: 1px dashed var(--color-stroke-secondary);
+        padding-bottom: .5em;
+        align-items: center;
+
+        .filters {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: .6em;
+
+            .item {
+                display: flex;
+                flex-flow: row nowrap;
+                gap: .5em;
+                border: 1px solid var(--color-stroke-secondary);
+                padding: .8em;
+                border-radius: 4em;
+                background-color: var(--color-surface-elevated);
+            }
+        }
+
+        .input {
+            min-width: 20rem;
+
+            &:focus {
+                border-color: var(--color-contrast);
+            }
+        }
+    }
+    .body {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: .6em;
+        flex: 1;
+        // border: 1px dashed red;
+        align-items: start;
+        padding: .7em 0;
+        position: relative;
+
+        .item {
+            display: flex;
+            flex-flow: column nowrap;
+            gap: .5em;
+            align-items: start;
+            position: relative;
+            z-index: 2;
+
+            .base {
+                display: flex;
+                flex-flow: row nowrap;
+                gap: .6em;
+            }
+
+            .info {
+                display: inline-flex;
+                flex-flow: row nowrap;
+                align-items: center;
+                gap: .5em;
+                padding: 0 1em;
+                height: 3em;
+                font-size: .87em;
+                border-radius: 1.3em;
+                background-color: var(--color-surface-glass-secondary);
+                border: 1px solid var(--color-stroke-primary);
+                position: relative;
+                @include cursor(pointer);
+                transition: background-color var(--transition),
+                            border-color var(--transition);
+
+                &:hover {
+                    background-color: var(--color-surface-elevated);
+                }
+            }
+
+            .actions {
+                font-size: .8em;
+                display: flex;
+                flex-flow: row nowrap;
+                gap: .5em;
+                left: 100%;
+
+                .action {
+                    border-radius: 1.1em;
+                    height: 3.2em;
+                    min-width: 12em;
+                }
+            }
+
+            .childrens {
+                display: flex;
+                flex-flow: column nowrap;
+                gap: .5em;
+                padding-left: 2em;
+                position: relative;
+
+                .plug {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: var(--color-surface-elevated);
+                    padding: 2em;
+                    min-width: 10em;
+                    border-radius: 1rem;
+                }
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    z-index: 2;
+                    left: 1em;
+                    bottom: 0;
+                    height: calc(100% + .5em);
+                    width: 2px;
+                    background-color: var(--color-stroke-primary);
+                }
+
+                .item::before {
+                    content: "";
+                    position: absolute;
+                    z-index: 2;
+                    left: -1em;
+                    width: 1em;
+                    top: 1em;
+                    height: 2px;
+                    background-color: var(--color-stroke-primary);
+                }
+            }
+        }
+    }
+
+    // back canvas
+    .canvas {
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 0;
+
+        span {
+            display: flex;
+            flex: 1;
+            border-right: 1px dashed var(--color-stroke-secondary);
+
+            &:last-child {
+                border-right: none;
+            }
+        }
+    }
+}

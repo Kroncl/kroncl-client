@@ -1,0 +1,38 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.control {
+    display: flex;
+    flex-flow: row wrap;
+    gap: .6em;
+    font-size: .8em;
+    margin-bottom: 1em;
+
+    .button {
+        padding: .36em .7em;
+        border-radius: 1em;
+        background-color: var(--color-surface-light);
+        color: var(--color-text-primary);
+        @include cursor(pointer);
+
+        &.accent {
+            background-color: var(--color-accent);
+            color: var(--color-accent-text-primary);
+        }
+    }
+}
+
+// catalog main tree
+.tree {
+    min-height: 27rem;
+    margin: 1rem 0;
+    // background-color: var(--color-surface-elevated);
+    // border-radius: .9rem;
+    // box-shadow: 0 0 5px var(--color-surface-tertiary);
+    // padding: .7rem;
+    // border: 1px solid var(--color-stroke-secondary);
+    // transition: box-shadow var(--transition);
+
+    // &:hover {
+    //     box-shadow: 0 0 6px var(--color-surface-light);
+    // }
+}

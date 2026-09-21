@@ -39,9 +39,26 @@
     border-color: var(--color-background-contrast);
   }
   
+  &.brand + .checkmark {
+    border: 1px solid var(--color-brand);
+  }
   &.brand:checked + .checkmark {
     background: var(--color-brand);
     border-color: var(--color-brand);
+  }
+  &.accent + .checkmark {
+    border: 1px solid var(--color-accent);
+  }
+  &.accent:checked + .checkmark {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+  &.contrast + .checkmark {
+    border: 1px solid var(--color-contrast);
+  }
+  &.contrast:checked + .checkmark {
+    background: var(--color-contrast);
+    border-color: var(--color-contrast);
   }
   &.alternative:checked + .checkmark {
     background: var(--color-alternative-primary);

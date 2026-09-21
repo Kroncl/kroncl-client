@@ -41,7 +41,7 @@ export const wmModule = (companyApi: CompanyApi) => ({
             if (params.limit !== undefined) queryParams.limit = params.limit;
             if (params.status !== undefined) queryParams.status = params.status;
             if (params.parent_id !== undefined) {
-                queryParams.parent_id = params.parent_id === null ? undefined : params.parent_id;
+                queryParams.parent_id = params.parent_id === null ? 'null' : params.parent_id;
             }
             if (params.search !== undefined) queryParams.search = params.search;
         }
