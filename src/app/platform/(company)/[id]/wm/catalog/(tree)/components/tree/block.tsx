@@ -19,12 +19,14 @@ import {
 
 type CatalogTreeItemProps = {
     className?: string;
+    activeId: string | null;
+    setActiveId: (id: string | null) => void;
 } & (
     | { type: 'category'; category: CatalogCategory }
     | { type: 'unit'; unit: CatalogUnit }
 )
 
-function CatalogTreeItem({ className, ...props }: CatalogTreeItemProps) {
+function CatalogTreeItem({ className, activeId, setActiveId, ...props }: CatalogTreeItemProps) {
     const wmModule = useWm();
 
     const [open, setOpen] = useState(false);
@@ -34,10 +36,19 @@ function CatalogTreeItem({ className, ...props }: CatalogTreeItemProps) {
     const [loaded, setLoaded] = useState(false);
 
     const isCategory = props.type === 'category';
+    const isActive = isCategory && activeId === props.category.id;
 
     async function handleClick() {
         if (!isCategory) return;
-        setOpen(o => !o);
+        const next = !open;
+        setOpen(next);
+
+        if (next) {
+            setActiveId(props.category.id);
+        } else if (activeId === props.category.id) {
+            setActiveId(null);
+        }
+
         if (loaded) return;
 
         setLoading(true);
@@ -66,8 +77,10 @@ function CatalogTreeItem({ className, ...props }: CatalogTreeItemProps) {
                         {isCategory ? props.category.name : props.unit.name}
                     </div>
                 </div>
-                {/* <AnimatePresence>
-                    {isCategory && open && (
+            </div>
+            {isCategory && open && !loading && (
+                <div className={styles.childrens}>
+                    {isActive && (
                         <motion.div
                             className={styles.actions}
                             variants={actionsVariants}
@@ -79,10 +92,30 @@ function CatalogTreeItem({ className, ...props }: CatalogTreeItemProps) {
                             <Button children='Добавить' className={styles.action} variant='contrast' />
                         </motion.div>
                     )}
-                </AnimatePresence> */}
-            </div>
-            {loading && (
+                    {childrenCategories && childrenCategories.map(c => (
+                        <CatalogTreeItem
+                            key={c.id}
+                            className={styles.item}
+                            type='category'
+                            category={c}
+                            activeId={activeId}
+                            setActiveId={setActiveId}
+                        />
+                    ))}
+                    {childrenUnits && childrenUnits.map(u => (
+                        <CatalogTreeItem
+                            key={u.id}
+                            className={styles.item}
+                            type='unit'
+                            unit={u}
+                            activeId={activeId}
+                            setActiveId={setActiveId}
+                        />
+                    ))}
+                </div>
+            )}
             <AnimatePresence mode='wait'>
+                {loading && (
                     <motion.div
                         key='plug'
                         className={styles.plug}
@@ -94,52 +127,8 @@ function CatalogTreeItem({ className, ...props }: CatalogTreeItemProps) {
                     >
                         <Spinner size='md' variant='contrast' />
                     </motion.div>
+                )}
             </AnimatePresence>
-            )}
-            {isCategory && open && !loading && (
-                <div className={styles.childrens}>
-                    {isCategory && open && (
-                        <div className={styles.actions}>
-                            <Button children='Добавить' className={styles.action} variant='contrast' />
-                        </div>
-                    )}
-                    <AnimatePresence mode='wait'>
-                        {loading && (
-                            <motion.div
-                                key='plug'
-                                className={styles.plug}
-                                variants={plugVariants}
-                                initial='hidden'
-                                animate='visible'
-                                exit='exit'
-                                transition={plugTransition}
-                            >
-                                <Spinner size='md' variant='contrast' />
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                    {!loading && (
-                        <>
-                            {childrenCategories && childrenCategories.map(c => (
-                                <CatalogTreeItem
-                                    key={c.id}
-                                    className={styles.item}
-                                    type='category'
-                                    category={c}
-                                />
-                            ))}
-                            {childrenUnits && childrenUnits.map(u => (
-                                <CatalogTreeItem
-                                    key={u.id}
-                                    className={styles.item}
-                                    type='unit'
-                                    unit={u}
-                                />
-                            ))}
-                        </>
-                    )}
-                </div>
-            )}
         </div>
     );
 }
@@ -153,6 +142,7 @@ export function CatalogTree({ className }: CatalogTreeProps) {
 
     const [categories, setCategories] = useState<CatalogCategory[]>([]);
     const [loading, setLoading] = useState(true);
+    const [activeId, setActiveId] = useState<string | null>(null);
 
     useEffect(() => {
         wmModule.getCategories({ parent_id: null })
@@ -165,7 +155,7 @@ export function CatalogTree({ className }: CatalogTreeProps) {
     return (
         <div className={clsx(styles.frame, className)}>
             <div className={styles.head}>
-                <Input placeholder='Категория / Товараная позиция' className={styles.input} />
+                <Input placeholder='Категория / Товарная позиция' className={styles.input} />
                 <div className={styles.filters}>
                     <div className={styles.item}>
                         <Checkbox variant='contrast' />
@@ -190,11 +180,12 @@ export function CatalogTree({ className }: CatalogTreeProps) {
                             className={styles.item}
                             type='category'
                             category={c}
+                            activeId={activeId}
+                            setActiveId={setActiveId}
                         />
                     ))
                 )}
 
-                
                 {/** back canvas */}
                 <div className={styles.canvas}>
                     <span /><span /><span /><span />
