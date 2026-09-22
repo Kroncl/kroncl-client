@@ -42,6 +42,13 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
     },
 
     // Company
+    [PERMISSIONS.COMPANY_SUMMARY]: {
+        code: PERMISSIONS.COMPANY_SUMMARY,
+        title: 'Сводка компании',
+        description: 'Получение сводки модулей компании',
+        module: 'company',
+        category: 'settings',
+    },
     [PERMISSIONS.COMPANY_UPDATE]: {
         code: PERMISSIONS.COMPANY_UPDATE,
         title: 'Редактирование компании',

@@ -9,6 +9,7 @@ export const PERMISSIONS = {
     PRICING_TRANSACTIONS: 'pricing.transactions',
 
     // Company
+    COMPANY_SUMMARY: 'company.summary',
     COMPANY_UPDATE: 'company.update',
     COMPANY_DELETE: 'company.delete',
 

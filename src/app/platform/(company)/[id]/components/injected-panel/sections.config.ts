@@ -2,39 +2,40 @@ import { useMemo } from "react";
 import { PanelSection } from "../../../../components/panel/_types";
 
 export interface Section extends PanelSection {
-    lvl: number;    // требуемый lvl тарифного плана
+    lvl: number;
+    key?: string;
 }
 
 export const PLAN_MIN_LVL = 1;
 export const PLAN_MID_LVL = 2;
 export const PLAN_MAX_LVL = 3;
 
-export function sections(companyId: string, lvl: number): Section[] {
-    const all = allSections(companyId);
-    return all.filter(section => section.lvl >= lvl);
+export function sectionsList(companyId: string, lvl: number): Section[] {
+    return allSections(companyId).filter(section => section.lvl >= lvl);
 }
 
-// memo
 export function useSections(companyId: string, lvl: number): Section[] {
-    return useMemo(() => sections(companyId, lvl), [companyId, lvl]);
+    return useMemo(() => sectionsList(companyId, lvl), [companyId, lvl]);
 }
 
 function allSections(companyId: string): Section[] {
     return ([
-    // {
-    //     name: 'Рабочее место',
-    //     href: `/platform/${companyId}`,
-    //     icon: 'home',
-    //     exact: true,
-    //     lvl: PLAN_MAX_LVL
-    // },
     {
+        name: 'Сводка',
+        href: `/platform/${companyId}`,
+        icon: 'home',
+        exact: true,
+        lvl: PLAN_MAX_LVL
+    },
+    {
+        key: 'deals_total',
         name: 'Сделки',
         href: `/platform/${companyId}/dm`,
         icon: 'deals',
         lvl: PLAN_MIN_LVL
     },
     {
+        key: 'clients_total',
         name: 'Клиенты',
         href: `/platform/${companyId}/crm`,
         icon: 'clients',
@@ -47,6 +48,7 @@ function allSections(companyId: string): Section[] {
         lvl: PLAN_MAX_LVL
     },
     {
+        key: 'units_total',
         name: 'Каталог',
         href: `/platform/${companyId}/wm/catalog`,
         icon: 'catalog',
@@ -59,6 +61,7 @@ function allSections(companyId: string): Section[] {
         lvl: PLAN_MID_LVL
     },
     {
+        key: 'employees_total',
         name: 'Сотрудники',
         href: `/platform/${companyId}/hrm`,
         icon: 'team',

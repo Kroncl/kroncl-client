@@ -31,6 +31,10 @@ export default function CatalogPage() {
     // perms
     const ALLOW_PAGE = usePermission(PERMISSIONS.WM_CATALOG)
 
+    if (ALLOW_PAGE.isLoading) return (
+        <PlatformLoading />
+    )
+
     if (!isAllowed(ALLOW_PAGE)) return (
         <PlatformNotAllowed permission={PERMISSIONS.WM_CATALOG} />
     )
