@@ -1,0 +1,49 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: .5em;
+    left: 100%;
+    min-width: 20em;
+    background-color: var(--color-surface-glass);
+    border: 1px solid var(--color-stroke-secondary);
+    padding: 1em;
+    border-radius: 1em;
+
+    .action {
+        border-radius: 1.1em;
+        height: 3.2em;
+        padding: 0 2em;
+    }
+    .split {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: .5em;
+
+        .full {
+            flex: 1;
+        }   
+    }
+    .tip {
+        font-size: .8em;
+        color: var(--color-text-secondary);
+        text-align: center;
+    }
+
+    .form {
+        font-size: 1em !important;
+        min-width: 20em;
+        max-width: 30em;
+
+        .acts {
+            display: flex;
+            flex-flow: row nowrap;
+            gap: .5em;
+            
+            .action {
+                flex: 1;
+            }
+        }
+    }
+}

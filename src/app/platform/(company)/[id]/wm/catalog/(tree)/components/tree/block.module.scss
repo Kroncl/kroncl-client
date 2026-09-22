@@ -33,9 +33,34 @@
 
         .input {
             min-width: 20rem;
+            border-radius: 1em;
 
             &:focus {
                 border-color: var(--color-contrast);
+            }
+        }
+        .action {
+            border-radius: 1em;
+            height: 3em;
+        }
+
+        .control {
+            display: flex;
+            flex: 1;
+            flex-flow: row nowrap;
+            gap: .8em;
+            justify-content: end;
+            align-items: center;
+
+            .tip {
+                color: var(--color-text-secondary);
+                margin-right: 1em;
+            }
+            .action {
+                border-radius: 1em;
+            }
+            .action.selected {
+                border: 2px solid var(--color-contrast);
             }
         }
     }
@@ -86,16 +111,6 @@
 
             .actions {
                 font-size: .8em;
-                display: flex;
-                flex-flow: row nowrap;
-                gap: .5em;
-                left: 100%;
-
-                .action {
-                    border-radius: 1.1em;
-                    height: 3.2em;
-                    min-width: 12em;
-                }
             }
 
             .childrens {
@@ -137,6 +152,19 @@
                     background-color: var(--color-stroke-primary);
                 }
             }
+        }
+
+        &.scale100 {
+            font-size: 1em;
+        }
+        &.scale75 {
+            font-size: .75em;
+        }
+        &.scale90 {
+            font-size: .9em;
+        }
+        &.scale125 {
+            font-size: 1.25em;
         }
     }
 

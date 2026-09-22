@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './block.module.scss';
 import Input from '@/assets/ui-kit/input/input';
 import Button from '@/assets/ui-kit/button/button';
@@ -10,46 +10,42 @@ import Checkbox from '@/assets/ui-kit/checkbox/checkbox';
 import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { CatalogCategory, CatalogUnit } from '@/apps/company/modules/wm/types';
 import { useWm } from '@/apps/company/modules';
-import {
-    actionsTransition,
-    actionsVariants,
-    plugTransition,
-    plugVariants,
-} from './_animations';
+import { CatalogTreeItemActions } from './actions/block';
 
 type CatalogTreeItemProps = {
     className?: string;
     activeId: string | null;
     setActiveId: (id: string | null) => void;
+    initialActivePath?: string[];
 } & (
     | { type: 'category'; category: CatalogCategory }
     | { type: 'unit'; unit: CatalogUnit }
 )
 
-function CatalogTreeItem({ className, activeId, setActiveId, ...props }: CatalogTreeItemProps) {
+function CatalogTreeItem({
+    className,
+    activeId,
+    setActiveId,
+    initialActivePath = [],
+    ...props
+}: CatalogTreeItemProps) {
     const wmModule = useWm();
 
-    const [open, setOpen] = useState(false);
+    const isCategory = props.type === 'category';
+    const itemId = isCategory ? props.category.id : props.unit.id;
+
+    const shouldBeOpen = isCategory && initialActivePath.includes(itemId);
+
+    const [open, setOpen] = useState(shouldBeOpen);
     const [loading, setLoading] = useState(false);
     const [childrenCategories, setChildrenCategories] = useState<CatalogCategory[]>([]);
     const [childrenUnits, setChildrenUnits] = useState<CatalogUnit[]>([]);
     const [loaded, setLoaded] = useState(false);
 
-    const isCategory = props.type === 'category';
-    const isActive = isCategory && activeId === props.category.id;
+    const isActive = activeId === itemId;
 
-    async function handleClick() {
+    async function loadChildren() {
         if (!isCategory) return;
-        const next = !open;
-        setOpen(next);
-
-        if (next) {
-            setActiveId(props.category.id);
-        } else if (activeId === props.category.id) {
-            setActiveId(null);
-        }
-
-        if (loaded) return;
 
         setLoading(true);
         try {
@@ -65,32 +61,62 @@ function CatalogTreeItem({ className, activeId, setActiveId, ...props }: Catalog
         }
     }
 
+    // авто-раскрытие пути при монтировании
+    useEffect(() => {
+        if (shouldBeOpen && !loaded && !loading) {
+            loadChildren();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    async function handleClick() {
+        if (isActive) {
+            setActiveId(null);
+        } else {
+            setActiveId(itemId);
+        }
+
+        if (!isCategory) return;
+
+        const next = !open;
+        setOpen(next);
+
+        if (!next || loaded) return;
+
+        await loadChildren();
+    }
+
+    async function handleCreated() {
+        await loadChildren();
+    }
+
     return (
         <div className={className}>
             <div className={styles.base}>
                 <div
                     className={styles.info}
                     onClick={handleClick}
-                    style={{ cursor: isCategory ? 'pointer' : 'default' }}
+                    style={{ cursor: 'pointer' }}
                 >
                     <div className={styles.name}>
                         {isCategory ? props.category.name : props.unit.name}
                     </div>
                 </div>
             </div>
-            {isCategory && open && !loading && (
+            {open && !loading && (
                 <div className={styles.childrens}>
                     {isActive && (
-                        <motion.div
+                        <CatalogTreeItemActions
+                            key={isCategory
+                                ? `${props.category.id}-${props.category.status}`
+                                : `${props.unit.id}-${props.unit.status}`}
                             className={styles.actions}
-                            variants={actionsVariants}
-                            initial='hidden'
-                            animate='visible'
-                            exit='exit'
-                            transition={actionsTransition}
-                        >
-                            <Button children='Добавить' className={styles.action} variant='contrast' />
-                        </motion.div>
+                            onCreated={handleCreated}
+                            {...(isCategory
+                                ? { type: 'category' as const, category: props.category }
+                                : { type: 'unit' as const, unit: props.unit }
+                            )}
+                        />
                     )}
                     {childrenCategories && childrenCategories.map(c => (
                         <CatalogTreeItem
@@ -100,6 +126,7 @@ function CatalogTreeItem({ className, activeId, setActiveId, ...props }: Catalog
                             category={c}
                             activeId={activeId}
                             setActiveId={setActiveId}
+                            initialActivePath={initialActivePath}
                         />
                     ))}
                     {childrenUnits && childrenUnits.map(u => (
@@ -110,25 +137,17 @@ function CatalogTreeItem({ className, activeId, setActiveId, ...props }: Catalog
                             unit={u}
                             activeId={activeId}
                             setActiveId={setActiveId}
+                            initialActivePath={initialActivePath}
                         />
                     ))}
                 </div>
             )}
-            <AnimatePresence mode='wait'>
-                {loading && (
-                    <motion.div
-                        key='plug'
-                        className={styles.plug}
-                        variants={plugVariants}
-                        initial='hidden'
-                        animate='visible'
-                        exit='exit'
-                        transition={plugTransition}
-                    >
-                        <Spinner size='md' variant='contrast' />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+
+            {loading && (
+                <div className={styles.plug}>
+                    <Spinner size='md' variant='contrast' />
+                </div>
+            )}
         </div>
     );
 }
@@ -139,11 +158,20 @@ export interface CatalogTreeProps {
 
 export function CatalogTree({ className }: CatalogTreeProps) {
     const wmModule = useWm();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+
+    const activeFromUrl = searchParams.get('category');
 
     const [categories, setCategories] = useState<CatalogCategory[]>([]);
     const [loading, setLoading] = useState(true);
-    const [activeId, setActiveId] = useState<string | null>(null);
+    const [activeId, setActiveIdState] = useState<string | null>(activeFromUrl);
+    const [initialActivePath, setInitialActivePath] = useState<string[]>([]);
 
+    const SCALE_KEY = 'kroncl.catalog.tree.scale';
+    const [scale, setScale] = useState<TreeScale>(100);
+
+    // грузим корневые категории
     useEffect(() => {
         wmModule.getCategories({ parent_id: null })
             .then(res => {
@@ -151,6 +179,67 @@ export function CatalogTree({ className }: CatalogTreeProps) {
             })
             .finally(() => setLoading(false));
     }, []);
+
+    // синхронизация activeId с URL (на случай back/forward и внешних переходов)
+    useEffect(() => {
+        setActiveIdState(activeFromUrl);
+    }, [activeFromUrl]);
+
+    // строим путь до activeFromUrl
+    useEffect(() => {
+        if (!activeFromUrl) {
+            setInitialActivePath([]);
+            return;
+        }
+
+        let cancelled = false;
+
+        async function buildPath() {
+            const path: string[] = [];
+            let currentId: string | null = activeFromUrl;
+
+            while (currentId) {
+                path.unshift(currentId);
+                try {
+                    const res = await wmModule.getCategory(currentId);
+                    // если это не категория (например, id юнита) — прекращаем
+                    if (!res.status || !res.data) break;
+                    currentId = res.data.parent_id;
+                } catch {
+                    // не категория или удалена — прекращаем, но не ломаем path
+                    break;
+                }
+            }
+
+            if (!cancelled) setInitialActivePath(path);
+        }
+
+        buildPath();
+        return () => { cancelled = true; };
+    }, [activeFromUrl]);
+
+    function setActiveId(id: string | null) {
+        setActiveIdState(id);
+
+        const params = new URLSearchParams(searchParams.toString());
+        if (id) params.set('category', id);
+        else params.delete('category');
+
+        const url = `${pathname}?${params.toString()}`;
+        window.history.replaceState(null, '', url);
+    }
+
+    type TreeScale = 75 | 100 | 125;
+
+    useEffect(() => {
+        const saved = Number(localStorage.getItem(SCALE_KEY));
+        if (saved === 75 || saved === 100 || saved === 125) setScale(saved);
+    }, []);
+
+    function updateScale(next: TreeScale) {
+        setScale(next);
+        localStorage.setItem(SCALE_KEY, String(next));
+    }
 
     return (
         <div className={clsx(styles.frame, className)}>
@@ -167,9 +256,24 @@ export function CatalogTree({ className }: CatalogTreeProps) {
                     </div>
                 </div>
                 <Button children='Найти' variant='contrast' className={styles.action} />
+                
+                {/** рабочая область */}
+                <div className={styles.control}>
+                    <div className={styles.tip}>Масштаб</div>
+                    {([75, 90, 100, 125] as TreeScale[]).map(s => (
+                        <Button
+                            key={s}
+                            className={clsx(styles.action, scale === s && styles.selected)}
+                            variant='glass'
+                            onClick={() => updateScale(s)}
+                        >
+                            {s}%
+                        </Button>
+                    ))}
+                </div>
             </div>
-            <div className={styles.body}>
-                {loading ? (
+            <div className={clsx(styles.body, styles['scale'+scale])}>
+                {loading || (activeFromUrl && initialActivePath.length === 0) ? (
                     <div className={styles.plug}>
                         <Spinner size='md' variant='contrast' />
                     </div>
@@ -182,6 +286,7 @@ export function CatalogTree({ className }: CatalogTreeProps) {
                             category={c}
                             activeId={activeId}
                             setActiveId={setActiveId}
+                            initialActivePath={initialActivePath}
                         />
                     ))
                 )}
