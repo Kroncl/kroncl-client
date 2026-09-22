@@ -117,7 +117,7 @@
                 display: flex;
                 flex-flow: column nowrap;
                 gap: .5em;
-                padding-left: 2em;
+                padding-left: 5em;
                 position: relative;
 
                 .plug {
@@ -145,8 +145,8 @@
                     content: "";
                     position: absolute;
                     z-index: 2;
-                    left: -1em;
-                    width: 1em;
+                    left: -4em;
+                    width: 4em;
                     top: 1em;
                     height: 2px;
                     background-color: var(--color-stroke-primary);
