@@ -84,6 +84,12 @@
         padding: .7em 0;
         position: relative;
 
+
+        .root {
+            z-index: 2;
+            font-size: .8em;
+        }
+
         .item {
             display: flex;
             flex-flow: column nowrap;

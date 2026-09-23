@@ -6,19 +6,16 @@ import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { CategoryFormData, UnitFormData } from './_types';
 
 type UseCreateArgs = {
-    isCategory: boolean;
-    parentCategoryId: string;
+    parentCategoryId: string | null;
     onCreated: () => void;
 };
 
-export function useCreate({ isCategory, parentCategoryId, onCreated }: UseCreateArgs) {
+export function useCreate({ parentCategoryId, onCreated }: UseCreateArgs) {
     const wmModule = useWm();
     const { showMessage } = useMessage();
     const [isLoading, setIsLoading] = useState(false);
 
     async function createCategory(data: CategoryFormData) {
-        if (!isCategory) return false;
-
         setIsLoading(true);
         try {
             const response = await wmModule.createCategory({
@@ -45,8 +42,6 @@ export function useCreate({ isCategory, parentCategoryId, onCreated }: UseCreate
     }
 
     async function createUnit(data: UnitFormData) {
-        if (!isCategory) return false;
-
         setIsLoading(true);
         try {
             const request: any = {

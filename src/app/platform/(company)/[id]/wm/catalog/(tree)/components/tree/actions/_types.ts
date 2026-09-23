@@ -8,6 +8,7 @@ export type CatalogTreeItemActionsProps = {
 } & (
     | { type: 'category'; category: CatalogCategory }
     | { type: 'unit'; unit: CatalogUnit }
+    | { type: 'root' }
 );
 
 export type CategoryFormData = {

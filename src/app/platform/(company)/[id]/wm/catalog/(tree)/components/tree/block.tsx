@@ -11,7 +11,6 @@ import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { CatalogCategory, CatalogUnit } from '@/apps/company/modules/wm/types';
 import { useWm } from '@/apps/company/modules';
 import { CatalogTreeItemActions } from './actions/block';
-import { formatDate } from '@/assets/utils/date';
 import Folder from '@/assets/ui-kit/icons/folder';
 
 type TreeScale = 75 | 90 | 100 | 125;
@@ -109,9 +108,10 @@ function CatalogTreeItem({
                     )}
                     <div className={styles.name}>
                         {isCategory && (<Folder className={styles.svg} />)}
-                        <span className={styles.text}>{isCategory ? props.category.name : props.unit.name}</span>
+                        <span className={styles.text}>
+                            {isCategory ? props.category.name : props.unit.name}
+                        </span>
                     </div>
-                    {/* <div className={styles.meta}>{props.type === 'category' && formatDate(props.category.created_at)}</div> */}
                 </div>
             </div>
 
@@ -181,34 +181,32 @@ export function CatalogTree({ className }: CatalogTreeProps) {
 
     const activeFromUrl = searchParams.get('category');
 
-    // ---------- ROOT TREE ----------
     const [categories, setCategories] = useState<CatalogCategory[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // ---------- ACTIVE ----------
     const [activeId, setActiveIdState] = useState<string | null>(activeFromUrl);
     const [initialActivePath, setInitialActivePath] = useState<string[]>([]);
 
-    // ---------- SCALE ----------
     const SCALE_KEY = 'kroncl.catalog.tree.scale';
     const [scale, setScale] = useState<TreeScale>(100);
 
-    // ---------- FILTERS ----------
     const [searchInput, setSearchInput] = useState('');
     const [activeOnly, setActiveOnly] = useState(false);
     const [inactiveOnly, setInactiveOnly] = useState(false);
 
-    // применённые фильтры — то, что реально ушло на сервер
     const [appliedSearch, setAppliedSearch] = useState('');
     const [appliedStatus, setAppliedStatus] = useState<CategoryStatus | undefined>(undefined);
 
-    // ---------- SEARCH RESULTS ----------
     const [searchResults, setSearchResults] = useState<CatalogCategory[] | null>(null);
     const [searchLoading, setSearchLoading] = useState(false);
 
     const isSearchMode = appliedSearch.trim().length > 0 || appliedStatus !== undefined;
 
-    // грузим корневые категории
+    async function handleReloadRoots() {
+        const res = await wmModule.getCategories({ parent_id: null });
+        if (res.status) setCategories(res.data.categories);
+    }
+
     useEffect(() => {
         wmModule.getCategories({ parent_id: null })
             .then(res => {
@@ -217,12 +215,10 @@ export function CatalogTree({ className }: CatalogTreeProps) {
             .finally(() => setLoading(false));
     }, []);
 
-    // синхронизация activeId с URL
     useEffect(() => {
         setActiveIdState(activeFromUrl);
     }, [activeFromUrl]);
 
-    // строим путь до activeFromUrl
     useEffect(() => {
         if (!activeFromUrl) {
             setInitialActivePath([]);
@@ -266,7 +262,6 @@ export function CatalogTree({ className }: CatalogTreeProps) {
         window.history.replaceState(null, '', url);
     }
 
-    // ---------- SCALE PERSIST ----------
     useEffect(() => {
         const saved = Number(localStorage.getItem(SCALE_KEY));
         if (saved === 75 || saved === 90 || saved === 100 || saved === 125) {
@@ -279,7 +274,6 @@ export function CatalogTree({ className }: CatalogTreeProps) {
         localStorage.setItem(SCALE_KEY, String(next));
     }
 
-    // ---------- FILTER HANDLERS ----------
     function handleActiveToggle(checked: boolean) {
         setActiveOnly(checked);
         if (checked) setInactiveOnly(false);
@@ -336,7 +330,6 @@ export function CatalogTree({ className }: CatalogTreeProps) {
         <div className={clsx(styles.frame, className)}>
             <div className={styles.head}>
                 <div className={styles.line}>
-                    {/** поисковик */}
                     <Input
                         placeholder='Категория'
                         className={styles.input}
@@ -374,7 +367,6 @@ export function CatalogTree({ className }: CatalogTreeProps) {
                         </div>
                     </div>
 
-                    {/** контроль масштаба */}
                     <div className={styles.control}>
                         <div className={styles.tip}>Масштаб</div>
                         {([75, 90, 100, 125] as TreeScale[]).map(s => (
@@ -390,12 +382,13 @@ export function CatalogTree({ className }: CatalogTreeProps) {
                     </div>
                 </div>
 
-                {/** результат поиска */}
                 {(isSearchMode && !searchLoading) && (
                     <div className={clsx(styles.line, styles.searchTotal)}>
-                        <div className={styles.text}>{searchResults && searchResults.length > 0
-                            ? `Найдено: ${searchResults.length}`
-                            : 'Ничего не найдено'}</div>
+                        <div className={styles.text}>
+                            {searchResults && searchResults.length > 0
+                                ? `Найдено: ${searchResults.length}`
+                                : 'Ничего не найдено'}
+                        </div>
                         <Button
                             children='Сбросить'
                             variant='light'
@@ -407,6 +400,12 @@ export function CatalogTree({ className }: CatalogTreeProps) {
             </div>
 
             <div className={clsx(styles.body, styles['scale' + scale])}>
+                <CatalogTreeItemActions
+                    className={styles.root}
+                    onCreated={handleReloadRoots}
+                    type='root'
+                />
+
                 {isSearchMode ? (
                     searchLoading ? (
                         <div className={styles.plug}>
@@ -444,7 +443,6 @@ export function CatalogTree({ className }: CatalogTreeProps) {
                     )
                 )}
 
-                {/** back canvas */}
                 <div className={styles.canvas}>
                     <span /><span /><span /><span />
                 </div>

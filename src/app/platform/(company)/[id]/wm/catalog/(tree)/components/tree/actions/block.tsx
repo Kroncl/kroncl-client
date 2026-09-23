@@ -25,26 +25,33 @@ export function CatalogTreeItemActions({
 }: CatalogTreeItemActionsProps) {
     const params = useParams();
     const companyId = params.id as string;
+
+    const isRoot = props.type === 'root';
     const isCategory = props.type === 'category';
-    const label = isCategory ? 'категорией' : 'позицией';
+    const label = isRoot ? 'каталогом' : isCategory ? 'категорией' : 'позицией';
 
     const [mode, setMode] = useState<CreateMode>('none');
 
-    const parentCategoryId = isCategory ? props.category.id : props.unit.category_id;
+    const parentCategoryId = isRoot
+        ? null
+        : isCategory
+            ? (props.category.parent_id ?? props.category.id)
+            : props.unit.category_id;
 
     const categoryForm = useCategoryForm();
     const unitForm = useUnitForm();
 
     const { isLoading, createCategory, createUnit } = useCreate({
-        isCategory,
         parentCategoryId,
         onCreated,
     });
 
     const status = useToggleStatus(
-        isCategory
-            ? { type: 'category', category: props.category, onUpdated: onCreated }
-            : { type: 'unit', unit: props.unit, onUpdated: onCreated }
+        isRoot
+            ? null
+            : isCategory
+                ? { type: 'category', category: props.category, onUpdated: onCreated }
+                : { type: 'unit', unit: props.unit, onUpdated: onCreated }
     );
 
     // ============================================
@@ -97,28 +104,59 @@ export function CatalogTreeItemActions({
 
     return (
         <div className={clsx(styles.container, className)}>
-            {!isCategory && (
+            {!isCategory && !isRoot && (
                 <div className={styles.unitPreview}>
-                    <div className={styles.line}><span className={styles.accent}>Тип:</span> {props.unit.type === 'service' ? 'Услуга' : 'Товар'}</div>
-                    <div className={styles.line}><span className={styles.accent}>Комментарий:</span> {props.unit.comment ? props.unit.comment : '-'}</div>
-                    {props.unit.type === 'product' && (<div className={styles.line}><span className={styles.accent}>Остатки отслеживаются?:</span> {props.unit.inventory_type === 'tracked' ? 'Да' : 'Нет'}</div>)}
-                    {props.unit.tracking_detail && (<div className={styles.line}><span className={styles.accent}>Тип учёта:</span> {props.unit.tracking_detail === 'batch' ? 'Партийный' : 'Поштучный'}</div>)}
+                    <div className={styles.line}>
+                        <span className={styles.accent}>Тип:</span> {props.unit.type === 'service' ? 'Услуга' : 'Товар'}
+                    </div>
+                    <div className={styles.line}>
+                        <span className={styles.accent}>Комментарий:</span> {props.unit.comment ? props.unit.comment : '-'}
+                    </div>
+                    {props.unit.type === 'product' && (
+                        <div className={styles.line}>
+                            <span className={styles.accent}>Остатки отслеживаются?:</span> {props.unit.inventory_type === 'tracked' ? 'Да' : 'Нет'}
+                        </div>
+                    )}
+                    {props.unit.tracking_detail && (
+                        <div className={styles.line}>
+                            <span className={styles.accent}>Тип учёта:</span> {props.unit.tracking_detail === 'batch' ? 'Партийный' : 'Поштучный'}
+                        </div>
+                    )}
                     <span className={styles.inter} />
-                    {(props.unit.purchase_price) && (<div className={styles.line}><span className={styles.accent}>Закупочная цена (базовая):</span> {props.unit.purchase_price.toLocaleString('ru-RU')} &#8381;</div>)}
-                    <div className={styles.line}><span className={styles.accent}>{props.unit.type === 'service' ? 'Стоимость' : 'Цена продажи'} <ModalTooltip content='Можно переопределить по факту совершения сделки/отгрузки'><span className={styles.underline}>базовая</span></ModalTooltip>:</span> {props.unit.sale_price.toLocaleString('ru-RU')} &#8381;</div>
+                    {props.unit.purchase_price && (
+                        <div className={styles.line}>
+                            <span className={styles.accent}>Закупочная цена (базовая):</span> {props.unit.purchase_price.toLocaleString('ru-RU')} &#8381;
+                        </div>
+                    )}
+                    <div className={styles.line}>
+                        <span className={styles.accent}>
+                            {props.unit.type === 'service' ? 'Стоимость' : 'Цена продажи'}{' '}
+                            <ModalTooltip content='Можно переопределить по факту совершения сделки/отгрузки'>
+                                <span className={styles.underline}>базовая</span>
+                            </ModalTooltip>:
+                        </span>{' '}
+                        {props.unit.sale_price.toLocaleString('ru-RU')} &#8381;
+                    </div>
                 </div>
             )}
-            
-            {mode === 'none' && (
+
+            {isRoot && mode === 'none' && (
+                <Button
+                    children='Создать в корне'
+                    className={styles.action}
+                    variant='contrast'
+                    onClick={() => setMode('category')}
+                />
+            )}
+
+            {!isRoot && mode === 'none' && (
                 <>
-                    {isCategory && (
-                        <Button
-                            children='Добавить'
-                            className={styles.action}
-                            variant='contrast'
-                            onClick={() => setMode('choose')}
-                        />
-                    )}
+                    <Button
+                        children='Добавить'
+                        className={styles.action}
+                        variant='contrast'
+                        onClick={() => setMode('choose')}
+                    />
                     <div className={styles.split}>
                         <Button
                             children={status.isActive ? 'Деактивировать' : 'Активировать'}
@@ -142,7 +180,7 @@ export function CatalogTreeItemActions({
                 </>
             )}
 
-            {isCategory && mode === 'choose' && (
+            {!isRoot && mode === 'choose' && (
                 <div className={styles.split}>
                     <Button
                         children='Подкатегорию'

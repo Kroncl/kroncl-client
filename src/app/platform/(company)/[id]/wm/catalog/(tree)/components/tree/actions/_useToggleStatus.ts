@@ -7,26 +7,31 @@ import { CatalogCategory, CatalogUnit } from '@/apps/company/modules/wm/types';
 
 type UseToggleStatusArgs =
     | { type: 'category'; category: CatalogCategory; onUpdated: () => void }
-    | { type: 'unit'; unit: CatalogUnit; onUpdated: () => void };
+    | { type: 'unit'; unit: CatalogUnit; onUpdated: () => void }
+    | null;
 
 export function useToggleStatus(args: UseToggleStatusArgs) {
     const wmModule = useWm();
     const { showMessage } = useMessage();
 
-    const isCategory = args.type === 'category';
-    const initialStatus = isCategory ? args.category.status : args.unit.status;
+    const isRoot = args === null;
+    const initialStatus = isRoot
+        ? null
+        : args.type === 'category'
+            ? args.category.status
+            : args.unit.status;
 
-    const [status, setStatus] = useState(initialStatus);
+    const [status, setStatus] = useState<'active' | 'inactive' | null>(initialStatus);
     const [isLoading, setIsLoading] = useState(false);
 
     const isActive = status === 'active';
 
     async function toggle() {
-        if (isLoading) return;
+        if (isRoot || isLoading || !args) return;
 
         setIsLoading(true);
         try {
-            const response = isCategory
+            const response = args.type === 'category'
                 ? (isActive
                     ? await wmModule.deactivateCategory(args.category.id)
                     : await wmModule.activateCategory(args.category.id))
@@ -38,8 +43,8 @@ export function useToggleStatus(args: UseToggleStatusArgs) {
                 setStatus(isActive ? 'inactive' : 'active');
                 showMessage({
                     label: isActive
-                        ? `${isCategory ? 'Категория' : 'Позиция'} деактивирована`
-                        : `${isCategory ? 'Категория' : 'Позиция'} активирована`,
+                        ? `${args.type === 'category' ? 'Категория' : 'Позиция'} деактивирована`
+                        : `${args.type === 'category' ? 'Категория' : 'Позиция'} активирована`,
                     variant: 'success',
                 });
                 args.onUpdated();
