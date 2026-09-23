@@ -111,8 +111,8 @@ export default function Page() {
     return (
         <>
             <PlatformHead
-                title='Складские отчёты'
-                description='Excel-отчёты по каталогу товаров, остаткам, партиям и складским позициям.'
+                title='Отчёты по каталогу'
+                description='Excel-отчёты по каталогу (товарному предложению) компании.'
                 searchProps={{
                     placeholder: 'Поиск по отчётам',
                     defaultValue: searchParams.get('search') || '',
@@ -125,7 +125,7 @@ export default function Page() {
                         children: 'Создать отчёт',
                         variant: 'accent',
                         as: 'link',
-                        href: `/platform/${companyId}/wm/reports/new`
+                        href: `/platform/${companyId}/wm/catalog/reports/new`
                     }
                 ] : undefined}
                 docsEscort={{

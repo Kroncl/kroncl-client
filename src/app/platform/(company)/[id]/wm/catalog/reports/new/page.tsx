@@ -31,21 +31,6 @@ const REPORT_TYPES = [
         label: 'Товары и услуги',
         description: 'Список товаров с ценами и характеристиками'
     },
-    { 
-        value: 'stock_balance', 
-        label: 'Остатки на складе',
-        description: 'Текущие остатки товаров на складе'
-    },
-    { 
-        value: 'stock_batches', 
-        label: 'Партии (поставки)',
-        description: 'История приходов и расходов на складе'
-    },
-    { 
-        value: 'stock_positions', 
-        label: 'Складские позиции',
-        description: 'Детальный учёт складских позиций'
-    }
 ];
 
 export default function Page() {
@@ -141,7 +126,7 @@ export default function Page() {
         <>
             <PlatformHead
                 title='Новый отчёт'
-                description='Создание складского отчёта по каталогу, остаткам, партиям или позициям.'
+                description='Создание отчёта по каталогу.'
                 docsEscort={{
                     href: DOCS_LINK_WM_REPORTS,
                     title: 'Подробнее об отчётах'
