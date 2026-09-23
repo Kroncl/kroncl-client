@@ -152,7 +152,7 @@ export default function CategoryPage() {
             icon: <Edit />,
             variant: 'accent' as const,
             as: 'link' as const,
-            href: `/platform/${companyId}/wm/${categoryId}/edit`
+            href: `/platform/${companyId}/wm/catalog/categories/${categoryId}/edit`
         }
     ] : [];
 

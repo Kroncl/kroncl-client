@@ -134,8 +134,8 @@ export default function UnitsPage() {
                         variant: 'accent',
                         as: 'link',
                         href: categoryId 
-                            ? `/platform/${companyId}/wm/units/new?category_id=${categoryId}`
-                            : `/platform/${companyId}/wm/units/new`,
+                            ? `/platform/${companyId}/wm/catalog/units/new?category_id=${categoryId}`
+                            : `/platform/${companyId}/wm/catalog/units/new`,
                         icon: <Plus />
                     }
                 ] : undefined}

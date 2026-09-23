@@ -171,7 +171,7 @@ export default function UnitPage() {
             icon: <Edit />,
             variant: 'accent' as const,
             as: 'link' as const,
-            href: `/platform/${companyId}/wm/units/${unitId}/edit`
+            href: `/platform/${companyId}/wm/catalog/units/${unitId}/edit`
         }
     ] : [];
 

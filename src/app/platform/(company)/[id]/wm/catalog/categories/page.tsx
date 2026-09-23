@@ -134,8 +134,8 @@ export default function CatalogPage() {
                         variant: 'accent',
                         as: 'link',
                         href: categoryId 
-                            ? `/platform/${companyId}/wm/new?parent_id=${categoryId}`
-                            : `/platform/${companyId}/wm/new`,
+                            ? `/platform/${companyId}/wm/catalog/categories/new?parent_id=${categoryId}`
+                            : `/platform/${companyId}/wm/catalog/categories/new`,
                         icon: <Plus />
                     }
                 ] : undefined}

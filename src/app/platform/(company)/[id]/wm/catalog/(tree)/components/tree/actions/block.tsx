@@ -16,6 +16,7 @@ import { useToggleStatus } from './_useToggleStatus';
 import { buildCategorySteps, buildUnitSteps } from './_forms';
 import Edit from "@/assets/ui-kit/icons/edit";
 import { useParams } from "next/navigation";
+import { ModalTooltip } from "@/app/components/tooltip/tooltip";
 
 export function CatalogTreeItemActions({
     className,
@@ -96,6 +97,18 @@ export function CatalogTreeItemActions({
 
     return (
         <div className={clsx(styles.container, className)}>
+            {!isCategory && (
+                <div className={styles.unitPreview}>
+                    <div className={styles.line}><span className={styles.accent}>Тип:</span> {props.unit.type === 'service' ? 'Услуга' : 'Товар'}</div>
+                    <div className={styles.line}><span className={styles.accent}>Комментарий:</span> {props.unit.comment ? props.unit.comment : '-'}</div>
+                    {props.unit.type === 'product' && (<div className={styles.line}><span className={styles.accent}>Остатки отслеживаются?:</span> {props.unit.inventory_type === 'tracked' ? 'Да' : 'Нет'}</div>)}
+                    {props.unit.tracking_detail && (<div className={styles.line}><span className={styles.accent}>Тип учёта:</span> {props.unit.tracking_detail === 'batch' ? 'Партийный' : 'Поштучный'}</div>)}
+                    <span className={styles.inter} />
+                    {(props.unit.purchase_price) && (<div className={styles.line}><span className={styles.accent}>Закупочная цена (базовая):</span> {props.unit.purchase_price.toLocaleString('ru-RU')} &#8381;</div>)}
+                    <div className={styles.line}><span className={styles.accent}>{props.unit.type === 'service' ? 'Стоимость' : 'Цена продажи'} <ModalTooltip content='Можно переопределить по факту совершения сделки/отгрузки'><span className={styles.underline}>базовая</span></ModalTooltip>:</span> {props.unit.sale_price.toLocaleString('ru-RU')} &#8381;</div>
+                </div>
+            )}
+            
             {mode === 'none' && (
                 <>
                     {isCategory && (

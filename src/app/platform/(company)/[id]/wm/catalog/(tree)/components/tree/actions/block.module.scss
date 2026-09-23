@@ -46,4 +46,27 @@
             }
         }
     }
+
+    .unitPreview {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: .5em;
+        padding-bottom: 1em;
+        border-bottom: 1px dashed var(--color-stroke-primary);
+
+        .line {
+            color: var(--color-text-ghost);
+            line-height: 1.2;
+
+            .accent {
+                color: var(--color-text-primary)
+            }
+            .underline {
+                color: var(--color-text-description);
+                text-decoration: underline dashed 2px var(--color-stroke-primary);
+                text-underline-offset: 3px;
+                @include cursor(pointer);
+            }
+        }
+    }
 }
