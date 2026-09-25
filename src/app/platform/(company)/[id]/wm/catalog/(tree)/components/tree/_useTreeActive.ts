@@ -8,16 +8,15 @@ export function useTreeActive() {
     const wmModule = useWm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
-    const router = useRouter();
 
+    // начальное значение читаем один раз при монтировании
     const activeFromUrl = searchParams.get('category');
 
     const [activeId, setActiveIdState] = useState<string | null>(activeFromUrl);
     const [initialActivePath, setInitialActivePath] = useState<string[]>([]);
 
-    useEffect(() => {
-        setActiveIdState(activeFromUrl);
-    }, [activeFromUrl]);
+    // НЕ синхронизируем activeId из URL при изменениях
+    // (URL меняется только через наш setActiveId, а он уже обновляет state)
 
     useEffect(() => {
         if (!activeFromUrl) {
@@ -54,11 +53,12 @@ export function useTreeActive() {
 
         if (!persist) return;
 
-        const params = new URLSearchParams(searchParams.toString());
+        const params = new URLSearchParams(window.location.search);
         if (id) params.set('category', id);
         else params.delete('category');
 
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        const url = `${pathname}?${params.toString()}`;
+        window.history.replaceState(null, '', url);
     }
 
     return { activeId, setActiveId, initialActivePath };
