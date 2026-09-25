@@ -5,6 +5,7 @@ export type CreateMode = 'none' | 'choose' | 'category' | 'unit';
 export type CatalogTreeItemActionsProps = {
     className?: string;
     onCreated: () => void;
+    onStatusUpdated?: (id: string, status: 'active' | 'inactive') => void;
 } & (
     | { type: 'category'; category: CatalogCategory }
     | { type: 'unit'; unit: CatalogUnit }

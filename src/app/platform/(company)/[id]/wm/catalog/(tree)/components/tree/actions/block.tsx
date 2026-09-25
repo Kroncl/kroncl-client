@@ -21,6 +21,7 @@ import { ModalTooltip } from "@/app/components/tooltip/tooltip";
 export function CatalogTreeItemActions({
     className,
     onCreated,
+    onStatusUpdated,
     ...props
 }: CatalogTreeItemActionsProps) {
     const params = useParams();
@@ -50,8 +51,16 @@ export function CatalogTreeItemActions({
         isRoot
             ? null
             : isCategory
-                ? { type: 'category', category: props.category, onUpdated: onCreated }
-                : { type: 'unit', unit: props.unit, onUpdated: onCreated }
+                ? {
+                    type: 'category',
+                    category: props.category,
+                    onUpdated: (next) => onStatusUpdated?.(props.category.id, next),
+                }
+                : {
+                    type: 'unit',
+                    unit: props.unit,
+                    onUpdated: (next) => onStatusUpdated?.(props.unit.id, next),
+                }
     );
 
     // ============================================
@@ -149,14 +158,16 @@ export function CatalogTreeItemActions({
                 />
             )}
 
-            {!isRoot && mode === 'none' && (
+            {!isRoot && (
                 <>
-                    <Button
-                        children='Добавить'
-                        className={styles.action}
-                        variant='contrast'
-                        onClick={() => setMode('choose')}
-                    />
+                    {(isCategory && mode !== 'unit') && (
+                        <Button
+                            children='Добавить'
+                            className={styles.action}
+                            variant='contrast'
+                            onClick={() => setMode('choose')}
+                        />
+                    )}
                     <div className={styles.split}>
                         <Button
                             children={status.isActive ? 'Деактивировать' : 'Активировать'}

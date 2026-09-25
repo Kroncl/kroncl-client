@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { useEffect, useMemo, useState } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import styles from './block.module.scss';
 import Input from '@/assets/ui-kit/input/input';
 import Button from '@/assets/ui-kit/button/button';
@@ -16,11 +16,14 @@ import Folder from '@/assets/ui-kit/icons/folder';
 type TreeScale = 75 | 90 | 100 | 125;
 type CategoryStatus = 'active' | 'inactive';
 
+type StatusUpdate = (id: string, status: 'active' | 'inactive') => void;
+
 type CatalogTreeItemProps = {
     className?: string;
     activeId: string | null;
     setActiveId: (id: string | null, persist: boolean) => void;
     initialActivePath?: string[];
+    onStatusUpdated?: StatusUpdate;
 } & (
     | { type: 'category'; category: CatalogCategory }
     | { type: 'unit'; unit: CatalogUnit }
@@ -31,6 +34,7 @@ function CatalogTreeItem({
     activeId,
     setActiveId,
     initialActivePath = [],
+    onStatusUpdated,
     ...props
 }: CatalogTreeItemProps) {
     const wmModule = useWm();
@@ -75,22 +79,32 @@ function CatalogTreeItem({
     async function handleClick() {
         if (isActive) {
             setActiveId(null, isCategory);
-        } else {
-            setActiveId(itemId, isCategory);
+            if (isCategory) setOpen(false);
+            return;
         }
+
+        setActiveId(itemId, isCategory);
 
         if (!isCategory) return;
 
-        const next = !open;
-        setOpen(next);
-
-        if (!next || loaded) return;
-
-        await loadChildren();
+        if (!open) {
+            setOpen(true);
+            if (!loaded) await loadChildren();
+        }
     }
 
     async function handleCreated() {
         await loadChildren();
+    }
+
+    function handleStatusUpdated(id: string, status: 'active' | 'inactive') {
+        setChildrenCategories(prev =>
+            (prev ?? []).map(c => (c.id === id ? { ...c, status } : c))
+        );
+        setChildrenUnits(prev =>
+            (prev ?? []).map(u => (u.id === id ? { ...u, status } : u))
+        );
+        onStatusUpdated?.(id, status);
     }
 
     return (
@@ -117,9 +131,10 @@ function CatalogTreeItem({
 
             {!isCategory && isActive && (
                 <CatalogTreeItemActions
-                    key={`${props.unit.id}-${props.unit.status}`}
+                    key={props.unit.id}
                     className={styles.actions}
                     onCreated={handleCreated}
+                    onStatusUpdated={handleStatusUpdated}
                     type='unit'
                     unit={props.unit}
                 />
@@ -129,9 +144,10 @@ function CatalogTreeItem({
                 <div className={styles.childrens}>
                     {isActive && (
                         <CatalogTreeItemActions
-                            key={`${props.category.id}-${props.category.status}`}
+                            key={props.category.id}
                             className={styles.actions}
                             onCreated={handleCreated}
+                            onStatusUpdated={handleStatusUpdated}
                             type='category'
                             category={props.category}
                         />
@@ -145,6 +161,7 @@ function CatalogTreeItem({
                             activeId={activeId}
                             setActiveId={setActiveId}
                             initialActivePath={initialActivePath}
+                            onStatusUpdated={handleStatusUpdated}
                         />
                     ))}
                     {childrenUnits && childrenUnits.map(u => (
@@ -156,6 +173,7 @@ function CatalogTreeItem({
                             activeId={activeId}
                             setActiveId={setActiveId}
                             initialActivePath={initialActivePath}
+                            onStatusUpdated={handleStatusUpdated}
                         />
                     ))}
                 </div>
@@ -178,6 +196,7 @@ export function CatalogTree({ className }: CatalogTreeProps) {
     const wmModule = useWm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     const activeFromUrl = searchParams.get('category');
 
@@ -205,6 +224,13 @@ export function CatalogTree({ className }: CatalogTreeProps) {
     async function handleReloadRoots() {
         const res = await wmModule.getCategories({ parent_id: null });
         if (res.status) setCategories(res.data.categories);
+    }
+
+    // Обновление статуса корневой категории
+    function handleRootStatusUpdated(id: string, status: 'active' | 'inactive') {
+        setCategories(prev =>
+            prev.map(c => (c.id === id ? { ...c, status } : c))
+        );
     }
 
     useEffect(() => {
@@ -258,8 +284,7 @@ export function CatalogTree({ className }: CatalogTreeProps) {
         if (id) params.set('category', id);
         else params.delete('category');
 
-        const url = `${pathname}?${params.toString()}`;
-        window.history.replaceState(null, '', url);
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
 
     useEffect(() => {
@@ -438,6 +463,7 @@ export function CatalogTree({ className }: CatalogTreeProps) {
                                 activeId={activeId}
                                 setActiveId={setActiveId}
                                 initialActivePath={initialActivePath}
+                                onStatusUpdated={handleRootStatusUpdated}
                             />
                         ))
                     )

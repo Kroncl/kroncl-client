@@ -5,9 +5,11 @@ import { useWm } from '@/apps/company/modules';
 import { useMessage } from '@/app/platform/components/lib/message/provider';
 import { CatalogCategory, CatalogUnit } from '@/apps/company/modules/wm/types';
 
+type StatusValue = 'active' | 'inactive';
+
 type UseToggleStatusArgs =
-    | { type: 'category'; category: CatalogCategory; onUpdated: () => void }
-    | { type: 'unit'; unit: CatalogUnit; onUpdated: () => void }
+    | { type: 'category'; category: CatalogCategory; onUpdated: (status: StatusValue) => void }
+    | { type: 'unit'; unit: CatalogUnit; onUpdated: (status: StatusValue) => void }
     | null;
 
 export function useToggleStatus(args: UseToggleStatusArgs) {
@@ -15,13 +17,13 @@ export function useToggleStatus(args: UseToggleStatusArgs) {
     const { showMessage } = useMessage();
 
     const isRoot = args === null;
-    const initialStatus = isRoot
+    const initialStatus: StatusValue | null = isRoot
         ? null
         : args.type === 'category'
             ? args.category.status
             : args.unit.status;
 
-    const [status, setStatus] = useState<'active' | 'inactive' | null>(initialStatus);
+    const [status, setStatus] = useState<StatusValue | null>(initialStatus);
     const [isLoading, setIsLoading] = useState(false);
 
     const isActive = status === 'active';
@@ -40,14 +42,15 @@ export function useToggleStatus(args: UseToggleStatusArgs) {
                     : await wmModule.activateUnit(args.unit.id));
 
             if (response.status) {
-                setStatus(isActive ? 'inactive' : 'active');
+                const next: StatusValue = isActive ? 'inactive' : 'active';
+                setStatus(next);
                 showMessage({
                     label: isActive
                         ? `${args.type === 'category' ? 'Категория' : 'Позиция'} деактивирована`
                         : `${args.type === 'category' ? 'Категория' : 'Позиция'} активирована`,
                     variant: 'success',
                 });
-                args.onUpdated();
+                args.onUpdated(next);
             } else {
                 throw new Error(response.message || 'Ошибка обновления статуса');
             }
