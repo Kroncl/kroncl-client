@@ -160,14 +160,6 @@ export function CatalogTreeItemActions({
 
             {!isRoot && (
                 <>
-                    {(isCategory && mode !== 'unit') && (
-                        <Button
-                            children='Добавить'
-                            className={styles.action}
-                            variant='contrast'
-                            onClick={() => setMode('choose')}
-                        />
-                    )}
                     <div className={styles.split}>
                         <Button
                             children={status.isActive ? 'Деактивировать' : 'Активировать'}
@@ -188,6 +180,14 @@ export function CatalogTreeItemActions({
                             icon={<Edit />}
                         />
                     </div>
+                    {(isCategory && mode !== 'choose' && mode !== 'unit') && (
+                        <Button
+                            children='Добавить'
+                            className={styles.action}
+                            variant='contrast'
+                            onClick={() => setMode('choose')}
+                        />
+                    )}
                 </>
             )}
 

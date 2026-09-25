@@ -102,6 +102,11 @@
                 display: flex;
                 flex-flow: row nowrap;
                 gap: .6em;
+
+                &.goal {
+                    border-radius: 1.3em;
+                    border: 1px dashed var(--color-contrast);
+                }
             }
             
 
@@ -139,6 +144,14 @@
 
                     .text {
                         @include text-ellipsis();
+                    }
+
+                    .indicator {
+                        min-width: .4em;
+                        max-width: .4em;
+                        height: .4em;
+                        border-radius: 50%;
+                        background-color: var(--color-contrast);
                     }
                 }
                 .meta {
@@ -194,6 +207,22 @@
                     top: 1em;
                     height: 2px;
                     background-color: var(--color-stroke-primary);
+                }
+            }
+
+            &.selected {
+                border: 1px dashed var(--color-contrast);
+                border-radius: 1.3em;
+            }
+            
+            &.active {
+                .info .name .indicator {
+                    background-color: var(--color-green);
+                }
+            }
+            &.inactive {
+                .info .name .indicator {
+                    background-color: var(--color-red);
                 }
             }
         }
