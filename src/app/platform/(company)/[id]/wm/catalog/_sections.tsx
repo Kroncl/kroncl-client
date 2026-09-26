@@ -9,6 +9,11 @@ export const sectionsList = (companyId: string): PlatformHeadSection[] => {
             exact: true
         },
         {
+            label: 'Коды производителей',
+            href: `/platform/${companyId}/wm/catalog/barcodes`,
+            exact: true
+        },
+        {
             label: 'Отчёты',
             href: `/platform/${companyId}/wm/catalog/reports`,
             strongParams: true,

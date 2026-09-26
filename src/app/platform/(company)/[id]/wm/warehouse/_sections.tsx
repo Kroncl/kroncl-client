@@ -8,15 +8,15 @@ export const sectionsList = (companyId: string): PlatformHeadSection[] => {
             href: `/platform/${companyId}/wm/warehouse`,
             exact: true
         },
-        {
-            label: 'Остатки',
-            href: `/platform/${companyId}/wm/warehouse/stocks`,
-            strongParams: true,
-        },
-        {
-            label: 'Отчёты',
-            href: `/platform/${companyId}/wm/warehouse/reports`,
-            strongParams: true,
-        },
+        // {
+        //     label: 'Остатки',
+        //     href: `/platform/${companyId}/wm/warehouse/stocks`,
+        //     strongParams: true,
+        // },
+        // {
+        //     label: 'Отчёты',
+        //     href: `/platform/${companyId}/wm/warehouse/reports`,
+        //     strongParams: true,
+        // },
     ]);
 }

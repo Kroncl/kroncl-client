@@ -6,6 +6,8 @@ import styles from './card.module.scss';
 import clsx from 'clsx';
 import { getUnitRu } from '../../../../catalog/units/new/_units';
 import { formatDate, formatDateTime } from '@/assets/utils/date';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 export interface BatchCardProps {
     className?: string;
@@ -32,6 +34,9 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 export function BatchCard({ className, batch }: BatchCardProps) {
+    const params = useParams();
+    const companyId = params.id as string;
+    
     const grouped = useMemo<GroupedItem[]>(() => {
         if (!batch.positions || batch.positions.length === 0) return [];
 
@@ -73,7 +78,7 @@ export function BatchCard({ className, batch }: BatchCardProps) {
     const totalPositions = batch.positions?.length ?? 0;
 
     return (
-        <div className={clsx(styles.card, className)}>
+        <Link href={`/platform/${companyId}/wm/warehouse/${batch.id}`} className={clsx(styles.card, className)}>
             <div className={clsx(styles.col, styles.info)}>
                 <div className={clsx(
                     styles.type,
@@ -134,6 +139,6 @@ export function BatchCard({ className, batch }: BatchCardProps) {
                     <div>{totalPositions} позиций</div>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }

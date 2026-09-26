@@ -590,6 +590,50 @@ export const PERMISSIONS_META: Record<PermissionCode, PermissionMeta> = {
         module: 'wm',
         category: 'stocks',
     },
+    // WM — MOVEMENTS
+    [PERMISSIONS.WM_STOCKS_MOVEMENTS]: {
+        code: PERMISSIONS.WM_STOCKS_MOVEMENTS,
+        title: 'Просмотр движений',
+        description: 'Доступ к журналу движений складских позиций',
+        module: 'wm',
+        category: 'stocks',
+    },
+    [PERMISSIONS.WM_STOCKS_MOVEMENTS_CREATE]: {
+        code: PERMISSIONS.WM_STOCKS_MOVEMENTS_CREATE,
+        title: 'Создание движений',
+        description: 'Списание, возврат, перемещение и корректировка позиций',
+        module: 'wm',
+        category: 'stocks',
+    },
+    // WM — BARCODES
+    [PERMISSIONS.WM_BARCODES]: {
+        code: PERMISSIONS.WM_BARCODES,
+        title: 'Просмотр баркодов',
+        description: 'Доступ к словарю штрихкодов',
+        module: 'wm',
+        category: 'barcodes',
+    },
+    [PERMISSIONS.WM_BARCODES_CREATE]: {
+        code: PERMISSIONS.WM_BARCODES_CREATE,
+        title: 'Создание баркодов',
+        description: 'Возможность добавлять новые штрихкоды в словарь',
+        module: 'wm',
+        category: 'barcodes',
+    },
+    [PERMISSIONS.WM_BARCODES_UPDATE]: {
+        code: PERMISSIONS.WM_BARCODES_UPDATE,
+        title: 'Редактирование баркодов',
+        description: 'Изменение привязки и данных штрихкодов',
+        module: 'wm',
+        category: 'barcodes',
+    },
+    [PERMISSIONS.WM_BARCODES_DELETE]: {
+        code: PERMISSIONS.WM_BARCODES_DELETE,
+        title: 'Удаление баркодов',
+        description: 'Возможность удалять штрихкоды из словаря',
+        module: 'wm',
+        category: 'barcodes',
+    },
 
     // DM
     [PERMISSIONS.DM]: {

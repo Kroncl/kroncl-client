@@ -2,11 +2,11 @@
 
 import { PlatformHead } from "@/app/platform/components/lib/head/head";
 import Plus from "@/assets/ui-kit/icons/plus";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useSearchParams, useRouter } from "next/navigation";
 import { sectionsList } from "../_sections";
 import styles from './page.module.scss';
 import { useEffect, useState } from 'react';
-import { StockBatch } from "@/apps/company/modules/wm/types";
+import { Barcode } from "@/apps/company/modules/wm/types";
 import Spinner from '@/assets/ui-kit/spinner/spinner';
 import { PlatformPagination } from '@/app/platform/components/lib/pagination/pagination';
 import { usePagination } from '@/apps/shared/pagination/hooks/usePagination';
@@ -20,21 +20,21 @@ import { PlatformLoading } from "@/app/platform/components/lib/loading/loading";
 import { PlatformError } from "@/app/platform/components/lib/error/block";
 import { PlatformNotAllowed } from "@/app/platform/components/lib/not-allowed/block";
 import { DOCS_LINK_WM } from "@/app/docs/(v1)/internal.config";
-import { BatchCard } from "./components/batch-card/card";
-import { useRouter } from "next/navigation";
+import { BarcodeCard } from "./components/barcode-card/card";
 
-export default function MovementPage() {
+export default function BarcodesPage() {
     const params = useParams();
     const companyId = params.id as string;
 
     const wmModule = useWm();
     const pathname = usePathname();
     const searchParams = useSearchParams();
+    const router = useRouter();
 
-    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_STOCKS_BATCHES);
-    const ALLOW_BATCH_CREATE = usePermission(PERMISSIONS.WM_STOCKS_BATCHES_CREATE);
+    const ALLOW_PAGE = usePermission(PERMISSIONS.WM_BARCODES);
+    const ALLOW_BARCODE_CREATE = usePermission(PERMISSIONS.WM_BARCODES_CREATE);
 
-    const [batches, setBatches] = useState<StockBatch[]>([]);
+    const [barcodes, setBarcodes] = useState<Barcode[]>([]);
     const [pagination, setPagination] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -48,8 +48,6 @@ export default function MovementPage() {
         if (ALLOW_PAGE.isLoading || !ALLOW_PAGE.allowed) return;
         loadData();
     }, [searchParams, ALLOW_PAGE.isLoading, ALLOW_PAGE.allowed]);
-
-    const router = useRouter();
 
     const handleSearch = (searchValue: string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -71,19 +69,17 @@ export default function MovementPage() {
             const page = parseInt(searchParams.get('page') || '1');
             const limit = parseInt(searchParams.get('limit') || '20');
             const search = searchParams.get('search') || undefined;
-            const direction = searchParams.get('direction') as any;
-            const status = searchParams.get('status') as any;
+            const catalogUnitId = searchParams.get('catalog_unit_id') || undefined;
 
-            const res = await wmModule.getStockBatches({
+            const res = await wmModule.getBarcodes({
                 page,
                 limit,
                 search,
-                direction,
-                status,
+                catalog_unit_id: catalogUnitId,
             });
 
             if (res.status) {
-                setBatches(res.data.batches);
+                setBarcodes(res.data.barcodes);
                 setPagination(res.data.pagination);
             }
         } catch (err) {
@@ -96,7 +92,7 @@ export default function MovementPage() {
     if (ALLOW_PAGE.isLoading) return <PlatformLoading />;
 
     if (!isAllowed(ALLOW_PAGE)) return (
-        <PlatformNotAllowed permission={PERMISSIONS.WM_STOCKS_BATCHES} />
+        <PlatformNotAllowed permission={PERMISSIONS.WM_BARCODES} />
     );
 
     if (loading) return <PlatformLoading />;
@@ -108,55 +104,48 @@ export default function MovementPage() {
     if (limitParam) queryParams.limit = limitParam;
     const searchParam = searchParams.get('search');
     if (searchParam) queryParams.search = searchParam;
-    const directionParam = searchParams.get('direction');
-    if (directionParam) queryParams.direction = directionParam;
-    const statusParam = searchParams.get('status');
-    if (statusParam) queryParams.status = statusParam;
+    const catalogUnitIdParam = searchParams.get('catalog_unit_id');
+    if (catalogUnitIdParam) queryParams.catalog_unit_id = catalogUnitIdParam;
 
     return (
         <>
             <PlatformHead
-                title='Поставки & Отгрузки'
-                description="Управление поставками и отгрузками. Движение товаров."
+                title='Баркоды'
+                description="Словарь штрихкодов. Связь внешних кодов с товарными позициями."
                 sections={sectionsList(companyId)}
                 docsEscort={{
                     href: DOCS_LINK_WM,
                     title: 'Подробнее о каталоге & складе'
                 }}
-                actions={isAllowed(ALLOW_BATCH_CREATE) ? [
+                actions={isAllowed(ALLOW_BARCODE_CREATE) ? [
                     {
-                        children: 'Поставка',
+                        children: 'Новый баркод',
+                        icon: <Plus />,
                         variant: 'accent',
                         as: 'link',
-                        href: `/platform/${companyId}/wm/warehouse/new?direction=income`
-                    },
-                    {
-                        children: 'Отгрузка',
-                        variant: 'contrast',
-                        as: 'link',
-                        href: `/platform/${companyId}/wm/warehouse/new?direction=outcome`
+                        href: `/platform/${companyId}/wm/catalog/barcodes/new`
                     }
                 ] : undefined}
                 showSearch={true}
                 searchProps={{
-                    placeholder: 'Поиск по комментарию...',
+                    placeholder: 'Поиск по баркоду или производителю...',
                     defaultValue: searchParams.get('search') || '',
                     onSearch: handleSearch,
                 }}
             />
 
-            {!batches ? (
+            {!barcodes ? (
                 <PlatformEmptyCanvas
-                    title='Поставок и отгрузок пока нет.'
+                    title='Баркодов пока нет.'
                     icon={<TwoCards />}
                 />
             ) : (
                 <>
                     <div className={styles.grid}>
-                        {batches.map(b => (
-                            <BatchCard
+                        {barcodes.map(b => (
+                            <BarcodeCard
                                 key={b.id}
-                                batch={b}
+                                barcode={b}
                                 className={styles.item}
                             />
                         ))}

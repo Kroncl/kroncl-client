@@ -101,6 +101,12 @@ export const PERMISSIONS = {
     WM_STOCKS_BATCHES_CREATE: 'wm.stocks.batches.create',
     WM_STOCKS_POSITIONS: 'wm.stocks.positions',
     WM_STOCKS_BALANCE: 'wm.stocks.balance',
+	WM_STOCKS_MOVEMENTS:  "wm.stocks.movements",
+	WM_STOCKS_MOVEMENTS_CREATE: "wm.stocks.movements.create",
+	WM_BARCODES: "wm.barcodes",
+	WM_BARCODES_CREATE: "wm.barcodes.create",
+	WM_BARCODES_UPDATE: "wm.barcodes.update",
+	WM_BARCODES_DELETE: "wm.barcodes.delete",
 
     // DM
     DM: 'dm',
