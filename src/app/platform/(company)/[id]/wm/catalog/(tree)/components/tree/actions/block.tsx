@@ -36,7 +36,7 @@ export function CatalogTreeItemActions({
     const parentCategoryId = isRoot
         ? null
         : isCategory
-            ? (props.category.parent_id ?? props.category.id)
+            ? props.category.id
             : props.unit.category_id;
 
     const categoryForm = useCategoryForm();
