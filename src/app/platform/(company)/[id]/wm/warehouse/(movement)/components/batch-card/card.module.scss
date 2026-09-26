@@ -1,0 +1,88 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.card {
+    display: flex;
+    // border: 1px dashed red;
+    min-height: 2em;
+    padding: 1em;
+    flex-flow: row nowrap;
+    gap: 1em;
+    @include cursor(pointer);
+    border-radius: 1em;
+    border: 1px solid var(--color-stroke-secondary);
+    transition: background-color var(--transition),
+                border-color var(--transition);
+
+    .col {
+        display: flex;
+        flex: 1;
+
+        &.info {
+            max-width: 20em;
+            flex-flow: column nowrap;
+            gap: .5em;
+            align-items: start;
+
+            .status {
+                font-size: .9em;
+                display: inline-block;
+                padding: .4em .6em;
+                border-radius: 1em;
+                background-color: var(--color-surface-light);
+                border: 1px solid var(--color-stroke-secondary);
+            }
+            .time {
+                margin-top: .7em;
+                font-size: .9em;
+                color: var(--color-text-secondary);
+            }
+        }
+        &.positions {
+            flex-flow: column nowrap;
+            gap: .5em;
+            // max-width: 20em;
+            color: var(--color-text-secondary);
+
+            .pos {
+                display: flex;
+                flex-flow: row nowrap;
+                gap: .5em;
+                justify-content: start;
+                font-size: .94em;
+
+                .num {
+                    width: .5em;
+                }
+                .name {
+                }
+                .quantity {
+                    display: inline-flex;
+                    color: var(--color-text-primary);
+                }
+            }
+        }
+        &.meta {
+            flex-flow: column nowrap;
+            gap: 1em;
+            font-size: .9em;
+            align-items: end;
+
+            .total {
+                display: flex;
+                flex-flow: column nowrap;
+                gap: .6em;
+                color: var(--color-text-secondary);
+
+                .accent {
+                    font-size: 1.2em;
+                    color: var(--color-text-primary);
+                }
+            }
+        }
+    }
+
+    &:hover {
+        background-color: var(--color-surface-glass-secondary);
+        border: 1px solid var(--color-stroke-secondary);
+    }
+}

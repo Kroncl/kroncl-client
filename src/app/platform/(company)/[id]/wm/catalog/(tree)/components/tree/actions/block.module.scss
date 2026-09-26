@@ -6,7 +6,7 @@
     gap: .5em;
     left: 100%;
     min-width: 20em;
-    max-width: 20em;
+    // max-width: 20em;
     background-color: var(--color-surface-glass);
     border: 1px solid var(--color-stroke-secondary);
     padding: 1em;
@@ -34,7 +34,7 @@
 
     .form {
         font-size: 1em !important;
-        min-width: 20em;
+        // min-width: 20em;
         max-width: 30em;
 
         .acts {
