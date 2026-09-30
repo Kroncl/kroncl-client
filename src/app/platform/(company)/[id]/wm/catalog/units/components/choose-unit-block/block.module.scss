@@ -1,0 +1,32 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+
+    .head {
+        display: flex;
+
+        .input {
+
+        }
+    }
+
+    .body {
+        font-size: 1.2em;
+
+        .plug {
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            padding: 2em;
+        }
+
+        .empty {
+            padding: .2em 0;
+            font-size: .9em;
+            color: var(--color-text-secondary);
+        }
+    }
+}

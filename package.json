@@ -27,6 +27,7 @@
     "clsx": "^2.1.1",
     "file-saver": "^2.0.5",
     "framer-motion": "^12.23.26",
+    "jsbarcode": "^3.12.3",
     "lodash": "^4.17.23",
     "mdx-mermaid": "^2.0.3",
     "mermaid": "^11.13.0",
