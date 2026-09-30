@@ -150,6 +150,7 @@ export interface StockBatch {
 
 export interface StockPosition {
     id: string;
+    short_code: string;
     type: StockPositionType;
     income_batch_id: string;
     unit_id: string;
@@ -163,6 +164,7 @@ export interface StockPosition {
 
 export interface PositionWithUnit {
     id: string;
+    short_code: string;
     type: StockPositionType;
     income_batch_id: string;
     unit_id: string;

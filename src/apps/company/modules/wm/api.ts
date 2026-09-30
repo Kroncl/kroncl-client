@@ -191,7 +191,12 @@ export const wmModule = (companyApi: CompanyApi) => ({
     async getStockPosition(id: string) {
         return companyApi.get<PositionWithUnit>(`/modules/wm/stocks/positions/${id}`);
     },
-
+    
+    async getStockPositionByShortCode(shortCode: string) {
+        return companyApi.get<PositionWithUnit>(
+            `/modules/wm/stocks/positions/by-code/${encodeURIComponent(shortCode)}`
+        );
+    },
     // --------
     // STOCKS — MOVEMENTS
     // --------
