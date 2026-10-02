@@ -142,7 +142,7 @@ export interface StockBatch {
     direction: StockDirection;
     status: StockBatchStatus;
     comment: string | null;
-    positions?: StockBatchPosition[];
+    positions: PositionWithUnit[];
     metadata: Record<string, any> | null;
     created_at: string;
     updated_at: string;
@@ -232,12 +232,28 @@ export interface BarcodesResponse {
 // STOCKS — REQUESTS
 // ============================================
 
+// ЗАПРОС — без unit
 export interface StockBatchPosition {
     unit_id: string;
     quantity: number;
     unit_price: number;
     maker?: string | null;
     barcode?: string | null;
+}
+
+export interface PositionWithUnit {
+    id: string;
+    short_code: string;
+    type: StockPositionType;
+    income_batch_id: string;
+    unit_id: string;
+    quantity: number;
+    unit_price: number;
+    maker: string | null;
+    barcode_id: string | null;
+    remaining: number;
+    created_at: string;
+    updated_at: string;
     unit: CatalogUnit;
 }
 

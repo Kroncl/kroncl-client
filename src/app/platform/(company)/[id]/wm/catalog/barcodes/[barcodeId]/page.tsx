@@ -237,7 +237,7 @@ export default function BarcodePage() {
                                 </div>
                                 {selectedUnit.inventory_type === 'tracked' && (
                                     <div className={styles.line}>
-                                        <span>Детализация</span>: {selectedUnit.tracking_detail === 'serial' ? 'Поштучный (serial)' : 'Партионный (batch)'}
+                                        <span>Детализация</span>: {selectedUnit.tracking_detail === 'serial' ? 'Поштучный' : 'Партионный'}
                                     </div>
                                 )}
                                 <div className={styles.line}>

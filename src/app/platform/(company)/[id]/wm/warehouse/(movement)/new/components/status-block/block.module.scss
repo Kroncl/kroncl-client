@@ -1,0 +1,34 @@
+@use '@/assets/styles/_mixins.scss' as *;
+
+.container {
+    display: flex;
+    flex-flow: row nowrap;
+    border-bottom: 1px dashed var(--color-stroke-secondary);
+
+    .col {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 1em;
+        flex: 1;
+        padding: 1em;
+        color: var(--color-surface-glass-secondary);
+        align-items: center;
+        justify-content: center;
+        transition: color var(--transition);
+
+        svg {
+            width: 1.7em;
+            height: 1.7em;
+        }
+        .capture {
+            display: block;
+            text-align: center;
+            white-space: nowrap;
+            font-size: .9em;
+        }
+
+        &.active {
+            color: var(--color-text-primary);
+        }
+    }
+}

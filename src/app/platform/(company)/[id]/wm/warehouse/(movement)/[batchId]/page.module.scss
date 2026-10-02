@@ -1,5 +1,17 @@
 @use '@/assets/styles/_mixins.scss' as *;
 
+.centerGrid {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    font-size: .8em;
+
+    .print {
+        flex: 1;
+        max-width: 32rem;
+    }
+}
+
 .grid {
     display: flex;
     flex-flow: row nowrap;
@@ -22,7 +34,7 @@
     .positions {
         display: flex;
         flex: 1;
-        background-color: var(--color-surface-glass-secondary);
+        background-color: var(--color-surface-glass);
         border-radius: .7rem;
 
         .structure {
