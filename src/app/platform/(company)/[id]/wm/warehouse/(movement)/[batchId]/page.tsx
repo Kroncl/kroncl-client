@@ -195,6 +195,10 @@ export default function BatchPage() {
                         positions={batch.positions}
                     />
                 </div>
+            ) : batch.status === 'cancelled' ? (
+                <div className={styles.centerGrid}>
+
+                </div>
             ) : (
                 <div className={styles.grid}>
                     <div className={styles.control}>
