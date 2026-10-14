@@ -8,6 +8,11 @@ export const sectionsList = (companyId: string): PlatformHeadSection[] => {
             href: `/platform/${companyId}/wm/warehouse`,
             exact: true
         },
+        {
+            label: 'Товары на складе',
+            href: `/platform/${companyId}/wm/warehouse/wm-positions`,
+            exact: true
+        },
         // {
         //     label: 'Остатки',
         //     href: `/platform/${companyId}/wm/warehouse/stocks`,
