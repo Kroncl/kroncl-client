@@ -4,11 +4,13 @@ import clsx from "clsx";
 import styles from './block.module.scss';
 import Button from "@/assets/ui-kit/button/button";
 import { BarcodePreview } from "@/app/components/BarCode/block";
-import { formatDate } from "@/assets/utils/date";
+import { formatDate, formatDateTime } from "@/assets/utils/date";
 import { getUnitRu } from "../../../../catalog/units/new/_units";
 import { PositionWithUnit, StockBatch } from "@/apps/company/modules/wm/types";
 import { useCallback, useState } from "react";
 import { useMessage } from "@/app/platform/components/lib/message/provider";
+import { PositionsBlock } from "../positions-block/block";
+import { StatusBlock } from "../../new/components/status-block/block";
 
 export interface CancelledBlockProps {
     className?: string;
@@ -24,12 +26,22 @@ export function CancelledBlock({
             <div className={styles.head}>
                 <div className={styles.title}>{batch.direction === 'income' ? 'Поставка' : 'Отгрузка'} отменена</div>
                 <div className={styles.description}>
-                    Напечатайте этикетки для товаров и подтвердите завершение этапа.
+                    Документ был отменён до подтверждения завершения. Изменить это действие нельзя.
                 </div>
+                <br />
+                <div className={styles.description}>{batch.comment ? batch.comment : 'Документ не имеет комментария'}</div>
             </div>
+            <div className={styles.head}>
+                <StatusBlock
+                    status={batch.status}
+                />
+            </div>
+            <PositionsBlock
+                className={styles.positions}
+                positions={batch.positions}
+            />
             <div className={styles.warning}>
-                Убедитесь, что состав поставки соответствует реальному поступлению.
-                На каждую отдельную партию или серийный товар — отдельная этикетка.
+                Последнее обновление {formatDateTime(batch.updated_at)}, документ создан {formatDateTime(batch.created_at)}
             </div>
         </div>
     );

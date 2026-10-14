@@ -14,6 +14,8 @@ import { useWebUSB } from "./_useWebUSB";
 import { useMessage } from "@/app/platform/components/lib/message/provider";
 import { generateCommands } from "./_generators";
 import { usePrinterSettings } from "./_usePrinterSettings";
+import { PositionsBlock } from "../positions-block/block";
+import { StatusBlock } from "../../new/components/status-block/block";
 
 export interface PrintBlockProps {
     className?: string;
@@ -77,34 +79,16 @@ export function PrintBlock({
                     Напечатайте этикетки для товаров и подтвердите завершение этапа.
                 </div>
             </div>
-
-            <div className={styles.positions}>
-                <div className={styles.title}>Состав поставки</div>
-                <div className={styles.items}>
-                    {positions.map(pos => (
-                        <div key={pos.short_code} className={styles.item}>
-                            <div className={styles.preview}>
-                                <BarcodePreview
-                                    className={styles.canvas}
-                                    value={pos.short_code}
-                                    format='CODE128'
-                                />
-                            </div>
-                            <div className={styles.info}>
-                                <div className={styles.code}><span>{pos.short_code}</span></div>
-                                <div className={styles.name}>
-                                    {pos.unit.name}{' '}
-                                    <span>
-                                        {pos.quantity}{getUnitRu(pos.unit.unit)}
-                                        {pos.type === 'batch' && <> в партии</>}
-                                    </span>
-                                </div>
-                                <div className={styles.meta}>{formatDate(pos.created_at)}</div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+            <div className={styles.head}>
+                <StatusBlock
+                    status='draft'
+                />
             </div>
+
+            <PositionsBlock
+                className={styles.positions}
+                positions={positions}
+            />
 
             <div className={styles.settings}>
                 <div className={styles.title}>Настройки печати</div>

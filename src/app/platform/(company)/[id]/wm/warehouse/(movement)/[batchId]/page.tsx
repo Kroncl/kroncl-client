@@ -20,6 +20,7 @@ import { PlatformModal } from "@/app/platform/components/lib/modal/modal";
 import { PlatformModalConfirmation } from "@/app/platform/components/lib/modal/confirmation/confirmation";
 import { PositionsBlock } from "./positions-block/block";
 import { PrintBlock } from "./print-block/block";
+import { CancelledBlock } from "./cancelled-block/block";
 
 export default function BatchPage() {
     const params = useParams();
@@ -191,13 +192,16 @@ export default function BatchPage() {
             {batch.status === 'draft' && batch.direction === 'income' ? (
                 <div className={styles.centerGrid}>
                     <PrintBlock
-                        className={styles.print}
+                        className={styles.area}
                         positions={batch.positions}
                     />
                 </div>
             ) : batch.status === 'cancelled' ? (
                 <div className={styles.centerGrid}>
-
+                    <CancelledBlock
+                        batch={batch}
+                        className={styles.area}
+                    />
                 </div>
             ) : (
                 <div className={styles.grid}>
